@@ -1,0 +1,16 @@
+/cpw/*
+/ibxm/*
+/net/*
+/paulscode/*
+/fml_at.cfg
+/fml_marker.cfg
+/fmlversion.properties
+/forge_at.cfg
+/forge_logo.png
+/mcp.png
+/mcpmod.info
+/Start.java
+
+*.bat
+*.sh
+*.lzma
