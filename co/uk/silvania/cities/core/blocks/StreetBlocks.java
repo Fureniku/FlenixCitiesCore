@@ -43,4 +43,9 @@ public class StreetBlocks extends Block {
 			list.add(new ItemStack(par1, 1, var4));
 		}
 	}
+	
+    @Override
+    public int damageDropped(int meta) {
+    	return meta;
+    }
 }

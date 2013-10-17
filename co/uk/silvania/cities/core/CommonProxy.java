@@ -1,18 +1,29 @@
 package co.uk.silvania.cities.core;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.items.*;
+import co.uk.silvania.cities.core.npc.EntityBanker;
+import co.uk.silvania.cities.econ.VillagerTradeHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.VillagerRegistry;
 
 public class CommonProxy {
 	
-    public void registerRenderThings() {
-    }
+	@Instance
+	public static FlenixCities_Core instance;
+	
+    public void registerRenderThings() {}
+    public void registerRenderers() {}
     
-    public void registerRenderers() {
+    public void entityStuff() {
+    	EntityRegistry.registerGlobalEntityID(EntityBanker.class,  "Banker", EntityRegistry.findGlobalUniqueEntityId());
+    	EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 1, instance, 128, 1, true);
     }
     
     public void registerBlocks() {
@@ -38,6 +49,8 @@ public class CommonProxy {
        	GameRegistry.registerBlock(CoreBlocks.silverOre, "silverOre");
        	GameRegistry.registerBlock(CoreBlocks.tecmoniumOre, "tecmoniumOre");
        	GameRegistry.registerBlock(CoreBlocks.titaniumOre, "titaniumOre");
+       	
+       	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
        	
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster1, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster1.getUnlocalizedName().substring(5)));
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster2, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster2.getUnlocalizedName().substring(5)));
@@ -85,6 +98,8 @@ public class CommonProxy {
         LanguageRegistry.addName(CoreBlocks.crystalOre, "Crystal Ore");
         LanguageRegistry.addName(CoreBlocks.titaniumOre, "Titanium Ore");
         LanguageRegistry.addName(CoreBlocks.silverOre, "Silver Ore");
+        
+    	LanguageRegistry.addName(CoreBlocks.rebarBlock, "Rebar");
         
         LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 0), "ATM Stone");
@@ -326,6 +341,10 @@ public class CommonProxy {
         LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster4, 1, 12), "Ad Slot 8");*/
     }
     
+    public void setVillagerTrades() {
+    	VillagerRegistry.instance().registerVillageTradeHandler(3, new VillagerTradeHandler());
+    }
+    
     public void addRecipes() {
     	ItemStack copperIngot = new ItemStack(CoreItems.copperIngot);
     	ItemStack tinIngot = new ItemStack(CoreItems.tinIngot);
@@ -335,6 +354,15 @@ public class CommonProxy {
     	ItemStack crystalItem = new ItemStack(CoreItems.crystalItem);
     	ItemStack rubyItem = new ItemStack(CoreItems.rubyItem);
     	ItemStack sapphireItem = new ItemStack(CoreItems.sapphireItem);
+    	
+    	ItemStack copperOre = new ItemStack(CoreBlocks.copperOre);
+    	ItemStack tinOre = new ItemStack(CoreBlocks.tinOre);
+    	ItemStack silverOre = new ItemStack(CoreBlocks.silverOre);
+    	ItemStack titaniumOre = new ItemStack(CoreBlocks.titaniumOre);
+    	ItemStack tecmoniumOre = new ItemStack(CoreBlocks.tecmoniumOre);
+    	ItemStack crystalOre = new ItemStack(CoreBlocks.crystalOre);
+    	ItemStack rubyOre = new ItemStack(CoreBlocks.rubyOre);
+    	ItemStack sapphireOre = new ItemStack(CoreBlocks.sapphireOre);
     	
     	ItemStack copperBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 0);
     	ItemStack tinBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 1);
@@ -346,6 +374,52 @@ public class CommonProxy {
     	ItemStack titaniumBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 7);
     	
     	
+    	ItemStack stoneBlock = new ItemStack(Block.stone);
+    	ItemStack quartzItem = new ItemStack(Item.netherQuartz);
+    	ItemStack skyscraperAny = new ItemStack(CoreBlocks.skyscraperBlocks);
+    	ItemStack skyscraperWhite = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0);
+    	ItemStack skyscraperLightGrey = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1);
+    	ItemStack skyscraperDarkGrey = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 2);
+    	ItemStack skyscraperBlack = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 3);
+    	ItemStack rebarBlock = new ItemStack(CoreBlocks.rebarBlock);
+    	
+    	ItemStack blackDye = new ItemStack(Item.dyePowder, 1, 0);
+    	ItemStack redDye = new ItemStack(Item.dyePowder, 1, 1);
+    	ItemStack greenDye = new ItemStack(Item.dyePowder, 1, 2);
+    	ItemStack brownDye = new ItemStack(Item.dyePowder, 1, 3);
+    	ItemStack blueDye = new ItemStack(Item.dyePowder, 1, 4);
+    	ItemStack purpleDye = new ItemStack(Item.dyePowder, 1, 5);
+    	ItemStack tealDye = new ItemStack(Item.dyePowder, 1, 6);
+    	ItemStack lightGreyDye = new ItemStack(Item.dyePowder, 1, 7);
+    	ItemStack darkGreyDye = new ItemStack(Item.dyePowder, 1, 8);
+    	ItemStack pinkDye = new ItemStack(Item.dyePowder, 1, 9);
+    	ItemStack limeGreenDye = new ItemStack(Item.dyePowder, 1, 10);
+    	ItemStack yellowDye = new ItemStack(Item.dyePowder, 1, 11);
+    	ItemStack lightBlueDye = new ItemStack(Item.dyePowder, 1, 12);
+    	ItemStack magentaDye = new ItemStack(Item.dyePowder, 1, 13);
+    	ItemStack orangeDye = new ItemStack(Item.dyePowder, 1, 14);
+    	ItemStack whiteDye = new ItemStack(Item.dyePowder, 1, 15);    	
+    	
+    	ItemStack blackWool = new ItemStack(Block.cloth, 1, 15);
+    	ItemStack redWool = new ItemStack(Block.cloth, 1, 14);
+    	ItemStack greenWool = new ItemStack(Block.cloth, 1, 13);
+    	ItemStack brownWool = new ItemStack(Block.cloth, 1, 12);
+    	ItemStack blueWool = new ItemStack(Block.cloth, 1, 11);
+    	ItemStack purpleWool = new ItemStack(Block.cloth, 1, 10);
+    	ItemStack tealWool = new ItemStack(Block.cloth, 1, 9);
+    	ItemStack lightGreyWool = new ItemStack(Block.cloth, 1, 8);
+    	ItemStack darkGreyWool = new ItemStack(Block.cloth, 1, 7);
+    	ItemStack pinkWool = new ItemStack(Block.cloth, 1, 6);
+    	ItemStack limeGreenWool = new ItemStack(Block.cloth, 1, 5);
+    	ItemStack yellowWool = new ItemStack(Block.cloth, 1, 4);
+    	ItemStack lightBlueWool = new ItemStack(Block.cloth, 1, 3);
+    	ItemStack magentaWool = new ItemStack(Block.cloth, 1, 2);
+    	ItemStack orangeWool = new ItemStack(Block.cloth, 1, 1);
+    	ItemStack whiteWool = new ItemStack(Block.cloth, 1, 0); 
+    	
+    	ItemStack ceilingTile = new ItemStack(CoreBlocks.floorBlocks, 1, 9);
+    	ItemStack woodBlock = new ItemStack(Block.planks);
+    	
     	GameRegistry.addRecipe(copperBlock, "iii", "iii", "iii", 'i', copperIngot);
     	GameRegistry.addRecipe(tinBlock, "iii", "iii", "iii", 'i', tinIngot);
     	GameRegistry.addRecipe(rubyBlock, "iii", "iii", "iii", 'i', rubyItem);
@@ -355,6 +429,24 @@ public class CommonProxy {
     	GameRegistry.addRecipe(silverBlock, "iii", "iii", "iii", 'i', silverIngot);
     	GameRegistry.addRecipe(titaniumBlock, "iii", "iii", "iii", 'i', titaniumIngot);
     	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), " t ", " t ", " t ", 't', titaniumIngot);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.floorBlocks, 1, 9), stoneBlock, quartzItem);
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 4), " s ", "dsd", " s ", 's', skyscraperWhite, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 5), " s ", "dsd", " s ", 's', skyscraperLightGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 6), " s ", "dsd", " s ", 's', skyscraperDarkGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 7), " s ", "dsd", " s ", 's', skyscraperBlack, 'd', blackDye);
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 8), " d ", "sss", " d ", 's', skyscraperWhite, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 9), " d ", "sss", " d ", 's', skyscraperLightGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 10), " d ", "sss", " d ", 's', skyscraperDarkGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 11), " d ", "sss", " d ", 's', skyscraperBlack, 'd', blackDye);
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 12), " d ", "dsd", " d ", 's', skyscraperWhite, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 13), " d ", "dsd", " d ", 's', skyscraperLightGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 14), " d ", "dsd", " d ", 's', skyscraperDarkGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 15), " d ", "dsd", " d ", 's', skyscraperBlack, 'd', blackDye);
+    	
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.copperIngot, 9, 0), copperBlock);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.tinIngot, 9, 0), tinBlock);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.rubyItem, 9, 0), rubyBlock);
@@ -363,6 +455,72 @@ public class CommonProxy {
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.crystalItem, 9, 0), crystalBlock);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.silverIngot, 9, 0), silverBlock);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.titaniumIngot, 9, 0), titaniumBlock);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.copperOre), copperOre);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.tinOre), tinOre);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.silverOre), silverOre);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.titaniumOre), titaniumOre);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.tecmoniumOre), tecmoniumOre);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.crystalOre), crystalOre);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.rubyOre), rubyOre);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.sapphireOre), sapphireOre);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 2, 0), stoneBlock, rebarBlock);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0), skyscraperAny, whiteDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1), skyscraperAny, lightGreyDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 2), skyscraperAny, darkGreyDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 3), skyscraperAny, blackDye);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 0), ceilingTile, whiteWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 1), ceilingTile, orangeWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 2), ceilingTile, magentaWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 3), ceilingTile, lightBlueWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 4), ceilingTile, yellowWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 5), ceilingTile, limeGreenWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 6), ceilingTile, pinkWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 7), ceilingTile, darkGreyWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 8), ceilingTile, lightGreyWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 9), ceilingTile, tealWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 10), ceilingTile, purpleWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 11), ceilingTile, blueWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 12), ceilingTile, brownWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 13), ceilingTile, greenWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 14), ceilingTile, redWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolCeilingTile, 1, 15), ceilingTile, blackWool);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 0), stoneBlock, whiteWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 1), stoneBlock, orangeWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 2), stoneBlock, magentaWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 3), stoneBlock, lightBlueWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 4), stoneBlock, yellowWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 5), stoneBlock, limeGreenWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 6), stoneBlock, pinkWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 7), stoneBlock, darkGreyWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 8), stoneBlock, lightGreyWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 9), stoneBlock, tealWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 10), stoneBlock, purpleWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 11), stoneBlock, blueWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 12), stoneBlock, brownWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 13), stoneBlock, greenWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 14), stoneBlock, redWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolStone, 1, 15), stoneBlock, blackWool);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 0), woodBlock, whiteWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 1), woodBlock, orangeWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 2), woodBlock, magentaWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 3), woodBlock, lightBlueWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 4), woodBlock, yellowWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 5), woodBlock, limeGreenWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 6), woodBlock, pinkWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 7), woodBlock, darkGreyWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 8), woodBlock, lightGreyWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 9), woodBlock, tealWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 10), woodBlock, purpleWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 11), woodBlock, blueWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 12), woodBlock, brownWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 13), woodBlock, greenWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 14), woodBlock, redWool);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 15), woodBlock, blackWool);
     	
     	GameRegistry.addSmelting(CoreBlocks.copperOre.blockID, copperIngot, 0.5F);
     	GameRegistry.addSmelting(CoreBlocks.tinOre.blockID, tinIngot, 0.5F);

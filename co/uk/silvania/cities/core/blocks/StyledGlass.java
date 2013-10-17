@@ -42,6 +42,11 @@ public class StyledGlass extends BlockGlass {
         return 1;
     }
     
+    @Override
+    public int damageDropped(int meta) {
+    	return meta;
+    }
+    
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int par1, int par2) {
 		return icons[par2];

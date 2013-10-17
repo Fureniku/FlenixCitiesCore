@@ -43,6 +43,8 @@ public class CityConfig {
 	public static int floorBlocksID;
 	public static int plasticBlockID;
 	
+	public static int rebarBlockID;
+	
 	public static int atmID;
 	public static int floatingShelvesID;
 	
@@ -136,6 +138,8 @@ public class CityConfig {
 			woolWoodID = config.getBlock("Wool Wood", 1415).getInt();
 			plasticBlockID = config.getBlock("Plastic Block", 1424).getInt();
 			floorBlocksID = config.getBlock("Floor Blocks", 1440).getInt();
+			
+			rebarBlockID = config.getBlock("Rebar Block", 1449).getInt();
 			
 			verticalPoster1ID = config.getBlock("Vertical Poster 1", 1441).getInt();
 			verticalPoster2ID = config.getBlock("Vertical Poster 2", 1442).getInt();

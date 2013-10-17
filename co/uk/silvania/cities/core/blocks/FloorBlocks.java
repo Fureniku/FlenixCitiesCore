@@ -23,25 +23,36 @@ public class FloorBlocks extends Block {
 	
 	@SideOnly(Side.CLIENT)
 	private Icon[] icons;
+	@SideOnly(Side.CLIENT)
+	private Icon ceilingTile;
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		icons = new Icon[8];
+		icons = new Icon[9];
 
 		for(int i = 0; i < icons.length; i++) {
 			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + i);
+			ceilingTile = iconRegister.registerIcon(FlenixCities_Core.modid + ":ceilingTile");
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int par1, int par2) {
+		if (par2 == 8) {
+			return ceilingTile;
+		}
 		return icons[par2];
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs creativeTabs, List list) {
-		for (int var4 = 0; var4 < 8; ++var4) {
+		for (int var4 = 0; var4 < 9; ++var4) {
 			list.add(new ItemStack(par1, 1, var4));
 		}
 	}
+	
+    @Override
+    public int damageDropped(int meta) {
+    	return meta;
+    }
 }

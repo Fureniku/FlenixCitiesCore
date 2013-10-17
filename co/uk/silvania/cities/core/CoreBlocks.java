@@ -31,6 +31,8 @@ public class CoreBlocks {
 	public static Block plasticBlock;
 	public static Block floorBlocks;
 	
+	public static Block rebarBlock;
+	
 	public static void init() {
 		initOres();
 		initBlocks();
@@ -65,6 +67,8 @@ public class CoreBlocks {
     	woolWood = new WoolWood(config.woolWoodID).setUnlocalizedName("woolWood");
     	plasticBlock = new PlasticBlocks(config.plasticBlockID).setUnlocalizedName("plasticBlock");
     	floorBlocks = new FloorBlocks(config.floorBlocksID).setUnlocalizedName("floorBlocks");
+    	
+    	rebarBlock = new RebarBlock(config.rebarBlockID).setUnlocalizedName("rebarBlock");
 	}
 
 }

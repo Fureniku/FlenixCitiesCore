@@ -12,9 +12,11 @@ import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
@@ -38,7 +40,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.3.0")
+@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.4.0")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ServerPacketHandler.class))
@@ -94,23 +96,16 @@ public class FlenixCities_Core {
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
     	
-
+    	//Start entity stuff here 
+    	//EntityList.addMapping(EntityBanker.class, "Banker", EntityRegistry.findGlobalUniqueEntityId(), 3515848, 12102);
         proxy.registerRenderThings();
         proxy.registerRenderers();
+        //proxy.entityStuff();
+        //End it here.
+        
     	NetworkRegistry.instance().registerGuiHandler(this, cityGuiHandler);
         CoreBlocks.init();
         CoreItems.init();
-    	
-    	//Posters TODO fix
-    	//verticalPoster1 = new BlockPosterVertical1(config.verticalPoster1ID).setUnlocalizedName("verticalPoster1");
-    	//verticalPoster2 = new BlockPosterVertical2(config.verticalPoster2ID).setUnlocalizedName("verticalPoster2");
-    	//verticalPoster3 = new BlockPosterVertical3(config.verticalPoster3ID).setUnlocalizedName("verticalPoster3");
-    	//verticalPoster4 = new BlockPosterVertical4(config.verticalPoster4ID).setUnlocalizedName("verticalPoster4");
-    	//horizontalPoster1 = new BlockPosterHorizontal(config.horizontalPoster1ID).setUnlocalizedName("horizontalPoster");
-    	//horizontalPoster2 = new BlockPosterHorizontal(config.horizontalPoster2ID).setUnlocalizedName("horizontalPoster");
-    	//horizontalPoster3 = new BlockPosterHorizontal(config.horizontalPoster3ID).setUnlocalizedName("horizontalPoster");
-    	//horizontalPoster4 = new BlockPosterHorizontal(config.horizontalPoster4ID).setUnlocalizedName("horizontalPoster");
-
     }
                
     @EventHandler
@@ -119,13 +114,13 @@ public class FlenixCities_Core {
         proxy.addNames();
         proxy.addRecipes();
         
+        MinecraftForge.EVENT_BUS.register(new EventDrops());
+        
         GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
         GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
         
         LanguageRegistry.instance().addStringLocalization("itemGroup.tabEcon", "en_US", "Cities: Economy");            
         LanguageRegistry.instance().addStringLocalization("itemGroup.tabCity", "en_US", "Cities: Blocks");
-        LanguageRegistry.instance().addStringLocalization("itemGroup.tabItems", "en_US", "Cities: Items");
-        LanguageRegistry.instance().addStringLocalization("itemGroup.tabPosters", "en_US", "Cities: Posters");
         
         GameRegistry.registerWorldGenerator(new WorldGen());
         
@@ -145,14 +140,12 @@ public class FlenixCities_Core {
         OreDictionary.registerOre("gemRuby", new ItemStack(CoreItems.rubyItem));
         OreDictionary.registerOre("gemCrystal", new ItemStack(CoreItems.crystalItem));
         OreDictionary.registerOre("gemSapphire", new ItemStack(CoreItems.sapphireItem));
-        
-        EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 2, this, 80, 3, true);
     }
 
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
     	int posterRenderID = RenderingRegistry.getNextAvailableRenderId();
-    	// Stub Method
+    	//TODO fix posters
     }
 };

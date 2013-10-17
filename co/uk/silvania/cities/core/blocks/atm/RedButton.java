@@ -45,7 +45,7 @@ public class RedButton extends GuiButton {
     public void drawButton(Minecraft par1Minecraft, int par2, int par3) {
         if (this.drawButton) {
             FontRenderer fontrenderer = par1Minecraft.fontRenderer;
-            par1Minecraft.func_110434_K().func_110577_a(field_110332_a);
+            par1Minecraft.getTextureManager().bindTexture(field_110332_a);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
             int k = this.getHoverState(this.field_82253_i);

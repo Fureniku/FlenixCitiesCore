@@ -206,4 +206,9 @@ public class TileEntityATMBlock extends BlockContainer {
         list.add(new ItemStack(par1, 1, 8));
         list.add(new ItemStack(par1, 1, 12));
 	}
+	
+    @Override
+    public int damageDropped(int meta) {
+    	return meta;
+    }
 }

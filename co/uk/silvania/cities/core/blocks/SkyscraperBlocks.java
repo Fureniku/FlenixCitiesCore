@@ -33,8 +33,56 @@ public class SkyscraperBlocks extends Block {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int par1, int par2) {
-		return icons[par2];
+	public Icon getIcon(int side, int meta) {
+		if (side == 0 && meta == 4) {
+			return icons[0];
+		}
+		if (side == 1 && meta == 4) {
+			return icons[0];
+		}
+		if (side == 0 && meta == 5) {
+			return icons[1];
+		}
+		if (side == 1 && meta == 5) {
+			return icons[1];
+		}
+		if (side == 0 && meta == 6) {
+			return icons[2];
+		}
+		if (side == 1 && meta == 6) {
+			return icons[2];
+		}
+		if (side == 0 && meta == 7) {
+			return icons[3];
+		}
+		if (side == 1 && meta == 7) {
+			return icons[3];
+		}
+		if (side == 1 && meta == 8) {
+			return icons[0];
+		}
+		if (side == 0 && meta == 8) {
+			return icons[0];
+		}
+		if (side == 1 && meta == 9) {
+			return icons[1];
+		}
+		if (side == 0 && meta == 9) {
+			return icons[1];
+		}
+		if (side == 1 && meta == 10) {
+			return icons[2];
+		}
+		if (side == 0 && meta == 10) {
+			return icons[2];
+		}
+		if (side == 1 && meta == 11) {
+			return icons[3];
+		}
+		if (side == 0 && meta == 11) {
+			return icons[3];
+		}
+		return icons[meta];
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -43,4 +91,9 @@ public class SkyscraperBlocks extends Block {
 			list.add(new ItemStack(par1, 1, var4));
 		}
 	}
+	
+    @Override
+    public int damageDropped(int meta) {
+    	return meta;
+    }
 }

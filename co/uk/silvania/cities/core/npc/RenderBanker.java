@@ -6,25 +6,23 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
-public class RenderBanker extends RenderLiving
-{
-    private static final ResourceLocation field_110833_a = new ResourceLocation("flenixcities", "textures/entities/npcbanker.png");
+public class RenderBanker extends RenderLiving {
+    private static final ResourceLocation bankerTexture = new ResourceLocation("flenixcities", "textures/entities/npcbanker.png");
 
-    public RenderBanker(ModelBase par1ModelBase, float par2)
-    {
+    public RenderBanker(ModelBase par1ModelBase, float par2) {
         super(par1ModelBase, par2);
     }
 
-    protected ResourceLocation func_110832_a(EntityBanker entity)
-    {
-        return field_110833_a;
+    protected ResourceLocation getBankerTexture(EntityBanker entity) {
+        return bankerTexture;
     }
 
-    protected ResourceLocation func_110775_a(Entity entity)
-    {
-        return this.func_110832_a((EntityBanker)entity);
-    }
+	@Override
+	protected ResourceLocation getEntityTexture(Entity entity) {
+		return this.getBankerTexture((EntityBanker)entity);
+	}
 }
