@@ -42,8 +42,14 @@ public class CityConfig {
 	public static int woolWoodID;
 	public static int floorBlocksID;
 	public static int plasticBlockID;
+	public static int lightingBlockID;
 	
 	public static int rebarBlockID;
+	public static int drywallWhiteID;
+	public static int drywallRedID;
+	public static int drywallBlueID;
+	public static int drywallGreenID;
+	public static int drywallGreyID;
 	
 	public static int atmID;
 	public static int floatingShelvesID;
@@ -140,6 +146,12 @@ public class CityConfig {
 			floorBlocksID = config.getBlock("Floor Blocks", 1440).getInt();
 			
 			rebarBlockID = config.getBlock("Rebar Block", 1449).getInt();
+			lightingBlockID = config.getBlock("Lighting Blocks", 1450).getInt();
+			drywallWhiteID = config.getBlock("Drywall White", 1451).getInt();
+			drywallRedID = config.getBlock("Drywall Red", 1452).getInt();
+			drywallBlueID = config.getBlock("Drywall Blue", 1453).getInt();
+			drywallGreenID = config.getBlock("Drywall Green", 1454).getInt();
+			drywallGreyID = config.getBlock("Drywall Grey", 1455).getInt();
 			
 			verticalPoster1ID = config.getBlock("Vertical Poster 1", 1441).getInt();
 			verticalPoster2ID = config.getBlock("Vertical Poster 2", 1442).getInt();

@@ -20,6 +20,9 @@ public class CommonProxy {
 	
     public void registerRenderThings() {}
     public void registerRenderers() {}
+    public boolean banCheck() {
+		return false;
+	}
     
     public void entityStuff() {
     	EntityRegistry.registerGlobalEntityID(EntityBanker.class,  "Banker", EntityRegistry.findGlobalUniqueEntityId());
@@ -51,6 +54,14 @@ public class CommonProxy {
        	GameRegistry.registerBlock(CoreBlocks.titaniumOre, "titaniumOre");
        	
        	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
+       	GameRegistry.registerBlock(CoreBlocks.lightingBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
+       	
+       	GameRegistry.registerBlock(CoreBlocks.drywallWhite, "drywallWhite");
+       	GameRegistry.registerBlock(CoreBlocks.drywallRed, "drywallRed");
+       	GameRegistry.registerBlock(CoreBlocks.drywallBlue, "drywallBlue");
+       	GameRegistry.registerBlock(CoreBlocks.drywallGreen, "drywallGreen");
+       	GameRegistry.registerBlock(CoreBlocks.drywallGrey, "drywallGrey");
+       	
        	
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster1, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster1.getUnlocalizedName().substring(5)));
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster2, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster2.getUnlocalizedName().substring(5)));
@@ -100,6 +111,12 @@ public class CommonProxy {
         LanguageRegistry.addName(CoreBlocks.silverOre, "Silver Ore");
         
     	LanguageRegistry.addName(CoreBlocks.rebarBlock, "Rebar");
+    	
+    	LanguageRegistry.addName(CoreBlocks.drywallWhite, "White Drywall");
+    	LanguageRegistry.addName(CoreBlocks.drywallRed, "Red Drywall");
+    	LanguageRegistry.addName(CoreBlocks.drywallBlue, "Blue Drywall");
+    	LanguageRegistry.addName(CoreBlocks.drywallGreen, "Green Drywall");
+    	LanguageRegistry.addName(CoreBlocks.drywallGrey, "Grey Drywall");
         
         LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 0), "ATM Stone");
@@ -310,6 +327,9 @@ public class CommonProxy {
         LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 13), "");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 14), "");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 15), "");
+        
+        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingBlocks, 1, 1), "Light Panel");
+        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingBlocks, 1, 2), "Ceiling Light");
         
         LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 0), "Copper Block");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 1), "Tin Block");

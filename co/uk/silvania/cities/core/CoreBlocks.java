@@ -3,6 +3,7 @@ package co.uk.silvania.cities.core;
 import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.blocks.atm.TileEntityATMBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
 public class CoreBlocks {
 	private static CityConfig config;
@@ -30,6 +31,12 @@ public class CoreBlocks {
 	public static Block woolWood;
 	public static Block plasticBlock;
 	public static Block floorBlocks;
+	public static Block lightingBlocks;
+	public static Block drywallWhite;
+	public static Block drywallRed;
+	public static Block drywallBlue;
+	public static Block drywallGreen;
+	public static Block drywallGrey;
 	
 	public static Block rebarBlock;
 	
@@ -67,6 +74,12 @@ public class CoreBlocks {
     	woolWood = new WoolWood(config.woolWoodID).setUnlocalizedName("woolWood");
     	plasticBlock = new PlasticBlocks(config.plasticBlockID).setUnlocalizedName("plasticBlock");
     	floorBlocks = new FloorBlocks(config.floorBlocksID).setUnlocalizedName("floorBlocks");
+    	lightingBlocks = new LightingBlocks(config.lightingBlockID).setUnlocalizedName("lightingBlocks");
+    	drywallWhite = new BlockDrywall(config.drywallWhiteID, FlenixCities_Core.modid + ":drywallWhite", FlenixCities_Core.modid + ":drywallWhite", true);
+    	drywallRed = new BlockDrywall(config.drywallRedID, FlenixCities_Core.modid + ":drywallRed", FlenixCities_Core.modid + ":drywallRed", true);
+    	drywallBlue = new BlockDrywall(config.drywallBlueID, FlenixCities_Core.modid + ":drywallBlue", FlenixCities_Core.modid + ":drywallBlue", true);
+    	drywallGreen = new BlockDrywall(config.drywallGreenID, FlenixCities_Core.modid + ":drywallGreen", FlenixCities_Core.modid + ":drywallGreen", true);
+    	drywallGrey = new BlockDrywall(config.drywallGreyID, FlenixCities_Core.modid + ":drywallGrey", FlenixCities_Core.modid + ":drywallGrey", true);
     	
     	rebarBlock = new RebarBlock(config.rebarBlockID).setUnlocalizedName("rebarBlock");
 	}

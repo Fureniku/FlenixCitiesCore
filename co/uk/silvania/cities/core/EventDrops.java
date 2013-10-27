@@ -158,11 +158,6 @@ public class EventDrops {
                     event.entityLiving.dropItem(CoreItems.coin5.itemID, 4);
                 }
             }
-            if (event.entityLiving instanceof EntityPlayer) {
-                if (Minecraft.getMinecraft().thePlayer.username.equals("Flenix")) {
-                    event.entityLiving.dropItem(CoreItems.coin1.itemID, 1);
-                }
-            }
         }
     }
 }

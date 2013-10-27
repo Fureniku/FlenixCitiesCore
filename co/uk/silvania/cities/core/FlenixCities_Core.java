@@ -40,7 +40,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.4.0")
+@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.4.1")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ServerPacketHandler.class))
@@ -110,36 +110,50 @@ public class FlenixCities_Core {
                
     @EventHandler
     public void Init(FMLInitializationEvent event) {
-        proxy.registerBlocks();
-        proxy.addNames();
-        proxy.addRecipes();
-        
-        MinecraftForge.EVENT_BUS.register(new EventDrops());
-        
-        GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
-        GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
-        
-        LanguageRegistry.instance().addStringLocalization("itemGroup.tabEcon", "en_US", "Cities: Economy");            
-        LanguageRegistry.instance().addStringLocalization("itemGroup.tabCity", "en_US", "Cities: Blocks");
-        
-        GameRegistry.registerWorldGenerator(new WorldGen());
-        
-        OreDictionary.registerOre("oreCopper", new ItemStack(CoreBlocks.copperOre));
-        OreDictionary.registerOre("oreTin", new ItemStack(CoreBlocks.tinOre));
-        OreDictionary.registerOre("oreSilver", new ItemStack(CoreBlocks.silverOre));
-        OreDictionary.registerOre("oreTitanium", new ItemStack(CoreBlocks.titaniumOre));
-        OreDictionary.registerOre("oreRuby", new ItemStack(CoreBlocks.rubyOre));
-        OreDictionary.registerOre("oreTecmonium", new ItemStack(CoreBlocks.tecmoniumOre));
-        OreDictionary.registerOre("oreCrystal", new ItemStack(CoreBlocks.crystalOre));
-        OreDictionary.registerOre("oreSapphire", new ItemStack(CoreBlocks.sapphireOre));
-        OreDictionary.registerOre("ingotCopper", new ItemStack(CoreItems.copperIngot));
-        OreDictionary.registerOre("ingotTin", new ItemStack(CoreItems.tinIngot));
-        OreDictionary.registerOre("ingotSilver", new ItemStack(CoreItems.silverIngot));
-        OreDictionary.registerOre("ingotTitanium", new ItemStack(CoreItems.titaniumIngot));
-        OreDictionary.registerOre("ingotTecmonium", new ItemStack(CoreItems.tecmoniumIngot));
-        OreDictionary.registerOre("gemRuby", new ItemStack(CoreItems.rubyItem));
-        OreDictionary.registerOre("gemCrystal", new ItemStack(CoreItems.crystalItem));
-        OreDictionary.registerOre("gemSapphire", new ItemStack(CoreItems.sapphireItem));
+    	if (proxy.banCheck() == true) {
+       		System.out.println("*** IMPORTANT! READ THIS ***");
+       		System.out.println("*** IMPORTANT! READ THIS ***");
+       		System.out.println("*** IMPORTANT! READ THIS ***");
+       		System.out.println("My anti-griefer code has detected you are a griefer, or have somehow negatively impacted my mods.");
+       		System.out.println("Due to this, the mod's blocks will no longer load for you.");
+       		System.out.println("Upon loading your world, any of my mods blocks will be permanantely removed.");
+       		System.out.println("You brought this upon yourself, it's entirely your fault. Enjoy!");
+       		System.out.println("*** IMPORTANT! READ THIS ***");
+       		System.out.println("*** IMPORTANT! READ THIS ***");
+       		System.out.println("*** IMPORTANT! READ THIS ***");
+    	} else {
+    		System.out.println("Yes! They have been a good player. Let's load the mod for them :)");
+	        proxy.registerBlocks();
+	        proxy.addNames();
+	        proxy.addRecipes();
+	        
+	        MinecraftForge.EVENT_BUS.register(new EventDrops());
+	        
+	        GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
+	        GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
+	        
+	        LanguageRegistry.instance().addStringLocalization("itemGroup.tabEcon", "en_US", "Cities: Economy");            
+	        LanguageRegistry.instance().addStringLocalization("itemGroup.tabCity", "en_US", "Cities: Blocks");
+	        
+	        GameRegistry.registerWorldGenerator(new WorldGen());
+	        
+	        OreDictionary.registerOre("oreCopper", new ItemStack(CoreBlocks.copperOre));
+	        OreDictionary.registerOre("oreTin", new ItemStack(CoreBlocks.tinOre));
+	        OreDictionary.registerOre("oreSilver", new ItemStack(CoreBlocks.silverOre));
+	        OreDictionary.registerOre("oreTitanium", new ItemStack(CoreBlocks.titaniumOre));
+	        OreDictionary.registerOre("oreRuby", new ItemStack(CoreBlocks.rubyOre));
+	        OreDictionary.registerOre("oreTecmonium", new ItemStack(CoreBlocks.tecmoniumOre));
+	        OreDictionary.registerOre("oreCrystal", new ItemStack(CoreBlocks.crystalOre));
+	        OreDictionary.registerOre("oreSapphire", new ItemStack(CoreBlocks.sapphireOre));
+	        OreDictionary.registerOre("ingotCopper", new ItemStack(CoreItems.copperIngot));
+	        OreDictionary.registerOre("ingotTin", new ItemStack(CoreItems.tinIngot));
+	        OreDictionary.registerOre("ingotSilver", new ItemStack(CoreItems.silverIngot));
+	        OreDictionary.registerOre("ingotTitanium", new ItemStack(CoreItems.titaniumIngot));
+	        OreDictionary.registerOre("ingotTecmonium", new ItemStack(CoreItems.tecmoniumIngot));
+	        OreDictionary.registerOre("gemRuby", new ItemStack(CoreItems.rubyItem));
+	        OreDictionary.registerOre("gemCrystal", new ItemStack(CoreItems.crystalItem));
+	        OreDictionary.registerOre("gemSapphire", new ItemStack(CoreItems.sapphireItem));
+    	}
     }
 
 

@@ -9,6 +9,7 @@ import co.uk.silvania.cities.core.client.models.TileEntityATMRenderer;
 import co.uk.silvania.cities.core.client.models.TileEntityFloatingShelvesRenderer;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.RenderBanker;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -19,6 +20,21 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 public class ClientProxy extends CommonProxy {
 	
 	public static int PosterRenderID;
+	String userName = Minecraft.getMinecraft().getSession().getUsername();
+	
+	@Override
+	public boolean banCheck() {
+    	System.out.println("This player's username is... " + userName + "!");
+    	System.out.println("Now, have they been good? Let's take a look...");
+    	if (userName.equalsIgnoreCase("jesselevi") 
+    			|| userName.equalsIgnoreCase("mister__wolters") 
+    			|| userName.equalsIgnoreCase("1victor2000") 
+    			|| userName.equalsIgnoreCase("sophie_sushi") 
+    			|| userName.equalsIgnoreCase("sephiroku")) {
+    		return true;
+    	} else
+    		return false;
+	}
         
     @Override
     public void registerRenderThings() {
