@@ -7,8 +7,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,6 +24,9 @@ public class LightingBlocks extends Block {
 		this.setLightValue(1.0F);
 	}
 	
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
+        return null;
+    }
 	
 	@SideOnly(Side.CLIENT)
 	private Icon[] icons;
@@ -51,7 +56,7 @@ public class LightingBlocks extends Block {
 
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs creativeTabs, List list) {
-		for (int var4 = 0; var4 < 4; ++var4) {
+		for (int var4 = 0; var4 < 5; ++var4) {
 			list.add(new ItemStack(par1, 1, var4));
 		}
 	}
@@ -79,9 +84,32 @@ public class LightingBlocks extends Block {
     	} else if (meta == 1) {
         	this.setBlockBounds(0.25F, 0.875F, 0.25F, 0.75F, 1.0F, 0.75F);
     	} else if (meta == 2) {
-        	this.setBlockBounds(0.0F, 0.875F, 0.25F, 1.0F, 1.0F, 0.75F);
+        	this.setBlockBounds(0.25F, 0.0F, 0.25F, 0.75F, 1.0F, 0.75F);
+    	} else if (meta == 3) {
+        	this.setBlockBounds(0.375F, 0.875F, 0.375F, 0.625F, 1.0F, 0.625F);
+    	} else if (meta == 4) {
+        	this.setBlockBounds(0.375F, 0.0F, 0.375F, 0.625F, 1.0F, 0.625F);
+    	/*} else if (meta == 5) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 6) {
+        	this.setBlockBounds(F, F, F, F, F, F);    		
+    	} else if (meta == 7) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 8) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 9) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 10) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 11) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 12) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 13) {
+        	this.setBlockBounds(F, F, F, F, F, F);
+    	} else if (meta == 14) {
+        	this.setBlockBounds(F, F, F, F, F, F);*/
     	} else
-        	this.setBlockBounds(0.25F, 0.875F, 0.0F, 0.75F, 1.0F, 1.0F);
+        	this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 	}
-
 }

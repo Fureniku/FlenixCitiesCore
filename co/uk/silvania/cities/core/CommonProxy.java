@@ -55,6 +55,7 @@ public class CommonProxy {
        	
        	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
        	GameRegistry.registerBlock(CoreBlocks.lightingBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
+       	GameRegistry.registerBlock(CoreBlocks.lightingRotateBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingRotateBlocks.getUnlocalizedName().substring(5)));
        	
        	GameRegistry.registerBlock(CoreBlocks.drywallWhite, "drywallWhite");
        	GameRegistry.registerBlock(CoreBlocks.drywallRed, "drywallRed");
@@ -330,6 +331,11 @@ public class CommonProxy {
         
         LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingBlocks, 1, 1), "Light Panel");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingBlocks, 1, 2), "Ceiling Light");
+        
+        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 0), "Vertical Light Strip");
+        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 4), "Vertical Light Strip (Short)");
+        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 8), "Vertical Light Panel");
+        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 12), "Vertical Light Panel (Small)");
         
         LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 0), "Copper Block");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 1), "Tin Block");

@@ -37,6 +37,7 @@ public class CoreBlocks {
 	public static Block drywallBlue;
 	public static Block drywallGreen;
 	public static Block drywallGrey;
+	public static Block lightingRotateBlocks;
 	
 	public static Block rebarBlock;
 	
@@ -80,6 +81,7 @@ public class CoreBlocks {
     	drywallBlue = new BlockDrywall(config.drywallBlueID, FlenixCities_Core.modid + ":drywallBlue", FlenixCities_Core.modid + ":drywallBlue", true);
     	drywallGreen = new BlockDrywall(config.drywallGreenID, FlenixCities_Core.modid + ":drywallGreen", FlenixCities_Core.modid + ":drywallGreen", true);
     	drywallGrey = new BlockDrywall(config.drywallGreyID, FlenixCities_Core.modid + ":drywallGrey", FlenixCities_Core.modid + ":drywallGrey", true);
+    	lightingRotateBlocks = new LightingRotateBlocks(config.lightingRotateBlocksID).setUnlocalizedName("lightingRotateBlocks");
     	
     	rebarBlock = new RebarBlock(config.rebarBlockID).setUnlocalizedName("rebarBlock");
 	}
