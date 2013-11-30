@@ -54,6 +54,7 @@ public class CityConfig {
 	
 	public static int atmID;
 	public static int floatingShelvesID;
+	public static int npcSpawnerBlockID;
 	
 	public static int verticalPoster1ID;
 	public static int verticalPoster2ID;
@@ -93,7 +94,11 @@ public class CityConfig {
 	public static int note10000ID;
 	public static int prePaidCardID;
 	public static int debitCardID;
+	public static int debitCardNewID;
 	public static int atmItemID;
+	public static int bankerSpawnerID;
+	
+	public static int idCardID;
 
 	public static int ringItemID;
 	public static int diamondRingID;
@@ -154,6 +159,7 @@ public class CityConfig {
 			drywallGreenID = config.getBlock("Drywall Green", 1454).getInt();
 			drywallGreyID = config.getBlock("Drywall Grey", 1455).getInt();
 			lightingRotateBlocksID = config.getBlock("Lighting Blocks (Rotatable)", 1456).getInt();
+			npcSpawnerBlockID = config.getBlock("NPC Spawner", 1457).getInt();
 			
 			verticalPoster1ID = config.getBlock("Vertical Poster 1", 1441).getInt();
 			verticalPoster2ID = config.getBlock("Vertical Poster 2", 1442).getInt();
@@ -192,8 +198,11 @@ public class CityConfig {
 			note5000ID = config.getItem("Note (5,000)", 18012).getInt();
 			note10000ID = config.getItem("Note (10,000)", 18013).getInt();
 			prePaidCardID = config.getItem("Pre-Paid Card", 18014).getInt();
-			debitCardID = config.getItem("Debit Card", 18015).getInt();
+			debitCardID = config.getItem("Debit Card (Damaged)", 18015).getInt();
+			debitCardNewID = config.getItem("Debit Card", 18017).getInt();
 			atmItemID = config.getItem("ATM Item", 18016).getInt();
+			bankerSpawnerID = config.getItem("Banker Spawner", 18018).getInt();
+			idCardID = config.getItem("ID Card", 18019).getInt();
 	
 			ringItemID = config.getItem("Ring Item", 18064).getInt();
 			diamondRingID = config.getItem("Diamond Ring", 18065).getInt();

@@ -1,12 +1,12 @@
 package co.uk.silvania.cities;
 
 import co.uk.silvania.cities.core.blocks.*;
-import co.uk.silvania.cities.core.blocks.atm.ContainerATM;
-import co.uk.silvania.cities.core.blocks.atm.GuiATM;
-import co.uk.silvania.cities.core.blocks.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.core.blocks.container.ContainerFloatingShelves;
 import co.uk.silvania.cities.core.blocks.container.GuiFloatingShelves;
 import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
+import co.uk.silvania.cities.econ.atm.ContainerATM;
+import co.uk.silvania.cities.econ.atm.GuiATM;
+import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

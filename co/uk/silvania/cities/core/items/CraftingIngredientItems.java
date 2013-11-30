@@ -4,13 +4,14 @@ import co.uk.silvania.cities.core.FlenixCities_Core;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 public class CraftingIngredientItems extends Item {
 
-	public CraftingIngredientItems(int id, int stack) {
+	public CraftingIngredientItems(int id, int stack, CreativeTabs tab) {
 		super(id);
-		this.setCreativeTab(FlenixCities_Core.tabCity);
+		this.setCreativeTab(tab);
 		this.maxStackSize = stack;
 	}
 	

@@ -6,15 +6,14 @@ import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockOre;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 
-public class RubyOre extends Block {
+public class RubyOre extends BlockOre {
 
 	public RubyOre(int id) {
-		super(id, Material.rock);
+		super(id);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
 		this.setHardness(1.8F);
 	}

@@ -1,7 +1,9 @@
 package co.uk.silvania.cities.core;
 
 import co.uk.silvania.cities.core.blocks.*;
-import co.uk.silvania.cities.core.blocks.atm.TileEntityATMBlock;
+import co.uk.silvania.cities.core.blocks.entity.FloatingShelvesBlock;
+import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerBlock;
+import co.uk.silvania.cities.econ.atm.TileEntityATMBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -20,6 +22,7 @@ public class CoreBlocks {
 	
 	public static Block atmBlock;
 	public static Block floatingShelvesBlock;
+	public static Block npcSpawnerBlock;
 	
 	public static Block skyscraperBlocks;
 	public static Block stainedGlass;
@@ -45,6 +48,7 @@ public class CoreBlocks {
 		initOres();
 		initBlocks();
 		initEconBlocks();
+		initSpecialBlocks();
 	}
 	
 	public static void initOres() {
@@ -84,6 +88,10 @@ public class CoreBlocks {
     	lightingRotateBlocks = new LightingRotateBlocks(config.lightingRotateBlocksID).setUnlocalizedName("lightingRotateBlocks");
     	
     	rebarBlock = new RebarBlock(config.rebarBlockID).setUnlocalizedName("rebarBlock");
+	}
+	
+	public static void initSpecialBlocks() {
+		npcSpawnerBlock = new NPCSpawnerBlock(config.npcSpawnerBlockID).setUnlocalizedName("npcSpawnerBlock");
 	}
 
 }

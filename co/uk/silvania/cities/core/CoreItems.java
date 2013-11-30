@@ -2,21 +2,10 @@ package co.uk.silvania.cities.core;
 
 import net.minecraft.item.Item;
 import co.uk.silvania.cities.core.items.CraftingIngredientItems;
-import co.uk.silvania.cities.core.items.econ.DebitCard;
-import co.uk.silvania.cities.core.items.econ.ItemCoin1;
-import co.uk.silvania.cities.core.items.econ.ItemCoin10;
-import co.uk.silvania.cities.core.items.econ.ItemCoin100;
-import co.uk.silvania.cities.core.items.econ.ItemCoin2;
-import co.uk.silvania.cities.core.items.econ.ItemCoin25;
-import co.uk.silvania.cities.core.items.econ.ItemCoin5;
-import co.uk.silvania.cities.core.items.econ.ItemCoin50;
-import co.uk.silvania.cities.core.items.econ.ItemNote1;
-import co.uk.silvania.cities.core.items.econ.ItemNote10;
-import co.uk.silvania.cities.core.items.econ.ItemNote100;
-import co.uk.silvania.cities.core.items.econ.ItemNote2;
-import co.uk.silvania.cities.core.items.econ.ItemNote20;
-import co.uk.silvania.cities.core.items.econ.ItemNote5;
-import co.uk.silvania.cities.core.items.econ.ItemNote50;
+import co.uk.silvania.cities.core.items.ItemIDCard;
+import co.uk.silvania.cities.core.npc.spawner.BankerSpawnerItem;
+import co.uk.silvania.cities.econ.DebitCardItem;
+import co.uk.silvania.cities.econ.money.*;
 
 public class CoreItems {
 	private static CityConfig config;
@@ -50,27 +39,33 @@ public class CoreItems {
 	public static Item note10000;
 
 	public static Item debitCard;
+	public static Item debitCardNew;
 	public static Item atmItem;
 	public static Item ringItem;
 	public static Item diamondRing;
 	public static Item necklaceItem;
 	public static Item rubyNecklace;
 	
+	public static Item bankerSpawner;
+	
+	public static Item idCard;
+	
 	public static void init() {
 		initMinerals();
 		initCrafting();
 		initEconItems();
+		initGenericItems();
 	}
 	
 	public static void initMinerals() {
-		rubyItem = new CraftingIngredientItems(config.rubyItemID, 64).setUnlocalizedName("rubyItem");
-		titaniumIngot = new CraftingIngredientItems(config.titaniumIngotID, 64).setUnlocalizedName("titaniumIngot");
-		tecmoniumIngot = new CraftingIngredientItems(config.tecmoniumIngotID, 64).setUnlocalizedName("tecmoniumIngot");
-		silverIngot = new CraftingIngredientItems(config.silverIngotID, 64).setUnlocalizedName("silverIngot");
-		copperIngot = new CraftingIngredientItems(config.copperIngotID, 64).setUnlocalizedName("copperIngot");
-		tinIngot = new CraftingIngredientItems(config.tinIngotID, 64).setUnlocalizedName("tinIngot");
-		crystalItem = new CraftingIngredientItems(config.crystalItemID, 64).setUnlocalizedName("crystalItem");
-		sapphireItem = new CraftingIngredientItems(config.sapphireItemID, 64).setUnlocalizedName("sapphireItem");
+		rubyItem = new CraftingIngredientItems(config.rubyItemID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("rubyItem");
+		titaniumIngot = new CraftingIngredientItems(config.titaniumIngotID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("titaniumIngot");
+		tecmoniumIngot = new CraftingIngredientItems(config.tecmoniumIngotID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("tecmoniumIngot");
+		silverIngot = new CraftingIngredientItems(config.silverIngotID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("silverIngot");
+		copperIngot = new CraftingIngredientItems(config.copperIngotID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("copperIngot");
+		tinIngot = new CraftingIngredientItems(config.tinIngotID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("tinIngot");
+		crystalItem = new CraftingIngredientItems(config.crystalItemID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("crystalItem");
+		sapphireItem = new CraftingIngredientItems(config.sapphireItemID, 64, FlenixCities_Core.tabCity).setUnlocalizedName("sapphireItem");
 	}
 	
 	public static void initCrafting() {
@@ -95,11 +90,17 @@ public class CoreItems {
     	note5000 = new ItemNote50(config.note5000ID).setUnlocalizedName("note5000");
     	note10000 = new ItemNote100(config.note10000ID).setUnlocalizedName("note10000");
     	
-    	debitCard = new DebitCard(config.debitCardID).setUnlocalizedName("debitCard");
+    	debitCardNew = new DebitCardItem(config.debitCardNewID).setUnlocalizedName("debitCardNew");
+    	debitCard = new CraftingIngredientItems(config.debitCardID, 1, FlenixCities_Core.tabEcon).setUnlocalizedName("debitCard");
+    	
+    	bankerSpawner = new BankerSpawnerItem(config.bankerSpawnerID).setUnlocalizedName("bankerSpawnerItem");
 		//ringItem = new CraftingIngredientItems(config.ringItemID, 64).setUnlocalizedName("ringItem");
 		//diamondRing = new CraftingIngredientItems(config.diamondRingID, 64).setUnlocalizedName("diamondRing");
 		//necklaceItem = new CraftingIngredientItems(config.necklaceItemID, 64).setUnlocalizedName("necklaceItem");
 		//rubyNecklace = new CraftingIngredientItems(config.rubyNecklaceID, 64).setUnlocalizedName("rubyNecklace");
 	}
-
+	
+	public static void initGenericItems() {
+		idCard = new ItemIDCard(config.idCardID).setUnlocalizedName("idCard");
+	}
 }

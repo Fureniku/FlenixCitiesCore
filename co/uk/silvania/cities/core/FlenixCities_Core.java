@@ -4,10 +4,11 @@ import co.uk.silvania.cities.GuiHandler;
 import co.uk.silvania.cities.ServerPacketHandler;
 import co.uk.silvania.cities.WorldGen;
 import co.uk.silvania.cities.ClientPacketHandler;
-import co.uk.silvania.cities.core.blocks.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.core.items.CraftingIngredientItems;
 import co.uk.silvania.cities.core.npc.EntityBanker;
+import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
+import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -40,7 +41,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.4.2")
+@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.5b")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ServerPacketHandler.class))
@@ -106,10 +107,7 @@ public class FlenixCities_Core {
     	NetworkRegistry.instance().registerGuiHandler(this, cityGuiHandler);
         CoreBlocks.init();
         CoreItems.init();
-    }
-               
-    @EventHandler
-    public void Init(FMLInitializationEvent event) {
+        
     	if (proxy.banCheck() == true) {
        		System.out.println("*** IMPORTANT! READ THIS ***");
        		System.out.println("*** IMPORTANT! READ THIS ***");
@@ -125,12 +123,13 @@ public class FlenixCities_Core {
     		System.out.println("Yes! They have been a good player. Let's load the mod for them :)");
 	        proxy.registerBlocks();
 	        proxy.addNames();
-	        proxy.addRecipes();
+	        proxy.entityStuff();
 	        
 	        MinecraftForge.EVENT_BUS.register(new EventDrops());
 	        
 	        GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
 	        GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
+	        GameRegistry.registerTileEntity(NPCSpawnerEntity.class, "npcSpawnerBlock");
 	        
 	        LanguageRegistry.instance().addStringLocalization("itemGroup.tabEcon", "en_US", "Cities: Economy");            
 	        LanguageRegistry.instance().addStringLocalization("itemGroup.tabCity", "en_US", "Cities: Blocks");
@@ -155,11 +154,16 @@ public class FlenixCities_Core {
 	        OreDictionary.registerOre("gemSapphire", new ItemStack(CoreItems.sapphireItem));
     	}
     }
+               
+    @EventHandler
+    public void Init(FMLInitializationEvent event) {
+        proxy.addRecipes();
+    }
 
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-    	int posterRenderID = RenderingRegistry.getNextAvailableRenderId();
+    	//int posterRenderID = RenderingRegistry.getNextAvailableRenderId();
     	//TODO fix posters
     }
 };

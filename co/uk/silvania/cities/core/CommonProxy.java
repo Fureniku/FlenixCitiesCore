@@ -25,13 +25,13 @@ public class CommonProxy {
 	}
     
     public void entityStuff() {
-    	EntityRegistry.registerGlobalEntityID(EntityBanker.class,  "Banker", EntityRegistry.findGlobalUniqueEntityId());
-    	EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 1, instance, 128, 1, true);
+    	EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 1, FlenixCities_Core.instance, 32, 5, true);
     }
     
     public void registerBlocks() {
         GameRegistry.registerBlock(CoreBlocks.atmBlock, ItemATMBlock.class, "FlenixCities" + (CoreBlocks.atmBlock.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.floatingShelvesBlock, "floatingShelvesBlock");
+        GameRegistry.registerBlock(CoreBlocks.npcSpawnerBlock, "npcSpawnerBlock");
         
         GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.stainedGlass, ItemStainedGlass.class, "FlenixCities" + (CoreBlocks.stainedGlass.getUnlocalizedName().substring(5)));
@@ -95,6 +95,8 @@ public class CommonProxy {
         GameRegistry.registerItem(CoreItems.note5000, "note5000");
         GameRegistry.registerItem(CoreItems.note10000, "note10000");
         GameRegistry.registerItem(CoreItems.debitCard, "debitCard");
+        GameRegistry.registerItem(CoreItems.debitCardNew, "debitCardNew");
+        GameRegistry.registerItem(CoreItems.bankerSpawner, "bankerSpawner");
 
     	/*GameRegistry.registerItem(CoreItems.ringItem, "ringItem");
     	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
@@ -157,7 +159,10 @@ public class CommonProxy {
         LanguageRegistry.addName(CoreItems.note2000, "20 " + CityConfig.currencyLargePlural);
         LanguageRegistry.addName(CoreItems.note5000, "50 " + CityConfig.currencyLargePlural);
         LanguageRegistry.addName(CoreItems.note10000, "100 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.debitCard, "Debit Card");
+        LanguageRegistry.addName(CoreItems.debitCard, "Debit Card (Broken)");
+        LanguageRegistry.addName(CoreItems.debitCardNew, "Debit Card");
+        LanguageRegistry.addName(CoreItems.bankerSpawner, "Banker Spawner");
+        LanguageRegistry.addName(CoreItems.idCard, "ID Card");
         
         LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0), "White Skyscraper Block");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1), "Light Grey Skyscraper Block");

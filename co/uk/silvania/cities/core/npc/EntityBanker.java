@@ -1,11 +1,14 @@
 package co.uk.silvania.cities.core.npc;
 
 import co.uk.silvania.cities.core.CoreItems;
+import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.core.npc.ai.NPCAITempt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIControlledByPlayer;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
@@ -31,9 +34,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
-public class EntityBanker extends EntityAnimal {
+public class EntityBanker extends EntityAnimal implements IMerchant, INpc {
 	
 	public EntityBanker(World par1World) {
 		super(par1World);
@@ -58,26 +63,24 @@ public class EntityBanker extends EntityAnimal {
 		return true;
 	}
 	
-	public boolean interact(EntityPlayer player) {
-		System.out.println("Try and interact? Ok.");
-		World world = Minecraft.getMinecraft().theWorld;
-		if (!world.isRemote) {
-            if (player.getHeldItem() != null) {
-                if (player.getHeldItem().getItem() == CoreItems.debitCard) {
-                    double balance = 0;
-                    NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
-                    if (nbt.hasKey(player.username)) {
-                        NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-                        if (playernbt.hasKey("Balance")) {
-                            balance = playernbt.getDouble("Balance");
-                        }
-                    }
-                    player.addChatMessage("Your Balance is: " + balance);
-                }
+    public boolean interact(EntityPlayer par1EntityPlayer) {
+        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+        boolean flag = itemstack != null && itemstack.itemID == Item.monsterPlacer.itemID;
+
+        if (!flag && this.isEntityAlive() && !this.isChild())
+        {
+            if (!this.worldObj.isRemote)
+            {
+                this.setCustomer(par1EntityPlayer);
+                par1EntityPlayer.displayGUIMerchant(this, this.getCustomNameTag());
             }
-		}
-		System.out.println("You have successfully interacted!");
-		return true;
+
+            return true;
+        }
+        else
+        {
+            return super.interact(par1EntityPlayer);
+        }
     }
 	
 	protected void applyEntityAttributes() {
@@ -107,5 +110,41 @@ public class EntityBanker extends EntityAnimal {
 	
 	public EntityAgeable createChild(EntityAgeable var1) {
 		return null;
+	}
+
+	@Override
+	public void setCustomer(EntityPlayer entityplayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public EntityPlayer getCustomer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MerchantRecipeList getRecipes(EntityPlayer entityplayer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setRecipes(MerchantRecipeList merchantrecipelist) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void useRecipe(MerchantRecipe merchantrecipe) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void func_110297_a_(ItemStack itemstack) {
+		// TODO Auto-generated method stub
+		
 	}
 }
