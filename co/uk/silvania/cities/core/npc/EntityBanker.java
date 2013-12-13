@@ -4,6 +4,7 @@ import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.core.npc.ai.NPCAITempt;
+import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -38,7 +39,9 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
-public class EntityBanker extends EntityAnimal implements IMerchant, INpc {
+public class EntityBanker extends EntityAnimal {
+	
+	boolean wander;
 	
 	public EntityBanker(World par1World) {
 		super(par1World);
@@ -58,34 +61,61 @@ public class EntityBanker extends EntityAnimal implements IMerchant, INpc {
         this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(10, new EntityAILookIdle(this));
 	}
+	
+	@Override
+	public boolean interact(EntityPlayer player) {
+		//Right now this is just here so I can right-click the mob and printline what his NBT is as an in-game check.
+		if (!player.inventory.hasItem(CoreItems.debitCardNew.itemID)) {
+			player.inventory.addItemStackToInventory(new ItemStack(CoreItems.debitCardNew));
+		}
+		NBTTagCompound nbt = new NBTTagCompound();
+		readEntityFromNBT(nbt);
+		return true;
+	}
 
+	public boolean onInteractFirst(EntityPlayer player) {
+		System.out.println("Interacting First!");
+		player.openGui(FlenixCities_Core.instance, 0, worldObj, 0, 0, 0);
+		return true;
+	}
+	
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt) {
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt) {
+		boolean wander = nbt.getBoolean("wander");
+		boolean locked = nbt.getBoolean("entityLocked");
+		boolean invincible = nbt.getBoolean("entityInvincible");
+		String playerName = nbt.getString("playerName");
+		int despawnTime = nbt.getInteger("despawnTime");
+		int heldID = nbt.getInteger("heldID");
+		int helmetID = nbt.getInteger("helmetID");
+		int chestID = nbt.getInteger("chestID");
+		int legsID = nbt.getInteger("legsID");
+		int bootsID = nbt.getInteger("bootsID");
+		System.out.println("NBT values are set as follows:");
+		System.out.println("Wander: " + wander);
+		System.out.println("Locked: " + locked);
+		System.out.println("Invincible: " + invincible);
+		System.out.println("Player Name: " + playerName);
+		System.out.println("Despawn Time: " + despawnTime);
+		System.out.println("Held ID: " + heldID);
+		System.out.println("Helmet ID: " + helmetID);
+		System.out.println("Chest ID: " + chestID);
+		System.out.println("Legs ID: " + legsID);
+		System.out.println("Boots ID: " + bootsID);
+	}
+	
 	public boolean isAIEnabled() {
 		return true;
 	}
 	
-    public boolean interact(EntityPlayer par1EntityPlayer) {
-        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
-        boolean flag = itemstack != null && itemstack.itemID == Item.monsterPlacer.itemID;
-
-        if (!flag && this.isEntityAlive() && !this.isChild())
-        {
-            if (!this.worldObj.isRemote)
-            {
-                this.setCustomer(par1EntityPlayer);
-                par1EntityPlayer.displayGUIMerchant(this, this.getCustomNameTag());
-            }
-
-            return true;
-        }
-        else
-        {
-            return super.interact(par1EntityPlayer);
-        }
-    }
-	
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue(); 
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue(); 
 	}
 	
 	protected String getLivingSound() {
@@ -110,41 +140,5 @@ public class EntityBanker extends EntityAnimal implements IMerchant, INpc {
 	
 	public EntityAgeable createChild(EntityAgeable var1) {
 		return null;
-	}
-
-	@Override
-	public void setCustomer(EntityPlayer entityplayer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public EntityPlayer getCustomer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public MerchantRecipeList getRecipes(EntityPlayer entityplayer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setRecipes(MerchantRecipeList merchantrecipelist) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void useRecipe(MerchantRecipe merchantrecipe) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void func_110297_a_(ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -6,6 +6,7 @@ import co.uk.silvania.cities.core.blocks.container.GuiFloatingShelves;
 import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.econ.atm.ContainerATM;
 import co.uk.silvania.cities.econ.atm.GuiATM;
+import co.uk.silvania.cities.econ.atm.GuiATMNoCard;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -13,10 +14,8 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
- 
 
 	public GuiHandler() {}
-	
 	
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -31,6 +30,12 @@ public class GuiHandler implements IGuiHandler {
 				TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
 				if(tileEntity instanceof TileEntityFloatingShelves) {
 					return new ContainerFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
+				}	
+			}
+			case 2: {
+				TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+				if(tileEntity instanceof TileEntityATMEntity) {
+					return new ContainerATM(player.inventory, (TileEntityATMEntity) tileEntity);
 				}	
 			}
 		}
@@ -52,6 +57,12 @@ public class GuiHandler implements IGuiHandler {
     				return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity, world, x, y, z);
     			}	
     		}
+    		case 2: {
+    			TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+    			if(tileEntity instanceof TileEntityATMEntity) {
+    				return new GuiATMNoCard(player.inventory, (TileEntityATMEntity) tileEntity, world, x, y, z);
+    			}	
+    		} 
     	}
     	return null;
     }

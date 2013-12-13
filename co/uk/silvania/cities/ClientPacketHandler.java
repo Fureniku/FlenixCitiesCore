@@ -11,16 +11,23 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
+import co.uk.silvania.cities.econ.atm.GuiATM;;
 
 public class ClientPacketHandler implements IPacketHandler {
 	
-	public static String balance = "";
+	String pktID = "";
+	double balance;
+	public static double initBal;
+	public static double shortValue;
+	public static int newPin;
+	public static boolean foundPlugin;
 	
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
-        //again we need to check for the proper channel
         if (packet.channel.equals("FCitiesPackets")) {
             handleRandom(packet, player);
+        } else if (packet.channel.equals("FCDigiCoinPkt")) {
+        	handleDigiCoin(packet, player);
         }
     }
 
@@ -28,32 +35,40 @@ public class ClientPacketHandler implements IPacketHandler {
         EntityPlayer p = (EntityPlayer) player;
         World world = p.worldObj;
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
-        System.out.println("Packet get");
+        System.out.println("Packet get [CLIENT]");
         try {
-            //here's that first integer again.
-        	int balID = dis.readInt();
+        	String pktID = dis.readUTF();
+        	double balance = dis.readDouble();
         	
-        	switch (balID) {
-        		case 1:
-        			String balance = dis.readUTF();
-        			System.out.println(balance);
+        	System.out.println("FC Client Packet Received: " + pktID + " " + balance);
+        	if (pktID.equals("InitBalance")) {
+        		initBal = balance;
+        		System.out.println("initbal's value is " + initBal);
+        	} else if (pktID.equals("ShortAmount")) {
+        		shortValue = balance;
         	}
-            System.out.println("Packet Received: " + balID);
-        }
-        catch  (IOException e) {
+        } catch (IOException e) {
+        	System.out.println("Failed to read packet");
+        } try {
+        	int pin = dis.readInt();
+        	newPin = pin;
+        } catch  (IOException e) {
             System.out.println("Failed to read packet");
         }
         finally {}
     }
     
-    public static String atmBalance() {
-        double currentBalance = 0;
-        NBTTagCompound playernbt = new NBTTagCompound();
-        if (playernbt.hasKey("Balance")) {
-            currentBalance = playernbt.getDouble("Balance");
+    private void handleDigiCoin(Packet250CustomPayload packet, Player player) {
+        DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
+        System.out.println("Packet get [CLIENT-DIGICOIN]");
+        try {
+        	String pktID = dis.readUTF();
+        	foundPlugin = dis.readBoolean();
+        	
+        	System.out.println("FC Client Packet Received: " + pktID + " " + foundPlugin);
+        } catch (IOException e) {
+        	System.out.println("Failed to read packet");
         }
-        String atmBalance = "" + currentBalance;
-		return atmBalance;
-    	
+        finally {}
     }
 }

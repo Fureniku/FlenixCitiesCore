@@ -22,6 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
@@ -40,7 +41,6 @@ import net.minecraft.world.World;
 public class TileEntityATMBlock extends BlockContainer {	
 	
 	public static double playerBalance = 0;
-    String balString = "";
 
 	public TileEntityATMBlock(int id) {
 		super(id, Material.iron);
@@ -76,10 +76,10 @@ public class TileEntityATMBlock extends BlockContainer {
     // Huge thanks to "maxpowa" in helping me get this working!!
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
-    	String victimPlayer = DebitCardItem.checkCardOwner(player);
         if (!world.isRemote) {
             if (player.getHeldItem() != null) {
                 if (player.getHeldItem().getItem() == CoreItems.debitCardNew) {
+                	String victimPlayer = DebitCardItem.checkCardOwner(player);
                     double balance = 0;
                     NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
                     if (nbt.hasKey(victimPlayer)) {
@@ -88,13 +88,18 @@ public class TileEntityATMBlock extends BlockContainer {
                             balance = playernbt.getDouble("Balance");
                         }
                     }
-                    if (balance == 0) {
-                        player.addChatMessage("The balance available on " + victimPlayer + "'s card is: " + EnumChatFormatting.RED + balance);
-                    } else {
-                        player.addChatMessage("The balance available on " + victimPlayer + "'s card is: " + EnumChatFormatting.GREEN + balance);
-                    }
                     player.openGui(FlenixCities_Core.instance, 0, world, x, y, z);
+                } else if (player.getHeldItem().getItem() != CoreItems.debitCardNew) {
+                	if (player.getHeldItem().getItem() instanceof ItemNote) {
+                		
+                	} else if (player.getHeldItem().getItem() instanceof ItemCoin) {
+                		
+                	} else {
+                    	player.openGui(FlenixCities_Core.instance, 2, world, x, y, z);
+                	}
                 }
+            } else if (player.getHeldItem() == null) {
+            	player.openGui(FlenixCities_Core.instance, 2, world, x, y, z);
             }
             NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
             ItemStack item = player.getHeldItem();
@@ -162,13 +167,15 @@ public class TileEntityATMBlock extends BlockContainer {
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
             try {
-            	out.writeUTF(balString + currentBalance);
+            	out.writeUTF("InitBalance");
+            	out.writeDouble(currentBalance);
+            	
             	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
             	
             	Player par1Player = (Player)player;
             	
             	PacketDispatcher.sendPacketToPlayer(packet, par1Player);
-            	System.out.println("Packet sent! Value: " + currentBalance);
+            	System.out.println("Balance Packet sent! Value: " + currentBalance);
             }
             catch (IOException ex) {
             	System.out.println("Packet Failed!");

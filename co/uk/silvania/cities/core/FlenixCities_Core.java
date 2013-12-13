@@ -41,10 +41,10 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.5b")
+@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.6")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
-	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ClientPacketHandler.class),
-	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets"}, packetHandler = ServerPacketHandler.class))
+	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin"}, packetHandler = ClientPacketHandler.class),
+	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin"}, packetHandler = ServerPacketHandler.class))
 public class FlenixCities_Core { 
 	
 	public static final String modid = "flenixcities";

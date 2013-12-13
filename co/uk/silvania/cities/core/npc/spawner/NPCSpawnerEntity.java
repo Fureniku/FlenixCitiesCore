@@ -7,20 +7,25 @@ public class NPCSpawnerEntity extends TileEntity {
 	
 	public String npcName;
 	public String playerName;
-	public double offsetX = 5;
-	public double offsetY = 5;
-	public double offsetZ = 5;
+	public double offsetX;
+	public double offsetY;
+	public double offsetZ;
 	public int spawnTime;
-	public int deSpawnTime;
-	public boolean invincible;
-	public boolean wander;
-	public boolean locked;
-	public boolean invisible;
+	public int despawnTime;
+	public boolean spawnerLocked;
+	public boolean spawnerInvisible;
+	
+	//Can be disabled per-entity
 	public int heldID;
 	public int helmetID;
 	public int chestID;
 	public int legsID;
 	public int bootsID;
+	public boolean wander;
+	public boolean entityLocked;
+	
+	//Available to ops only.
+	public boolean invincible;
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
@@ -28,6 +33,7 @@ public class NPCSpawnerEntity extends TileEntity {
 		nbt.setDouble("offsetX", offsetX);
 		nbt.setDouble("offsetY", offsetY);
 		nbt.setDouble("offsetZ", offsetZ);
+		nbt.setBoolean("canWander", true);
 	}
 	
 	@Override

@@ -116,6 +116,7 @@ public class CityConfig {
 	public static boolean generateTitanium;
 	public static boolean generateRuby;
 	
+	public static boolean disableOreDict;
 	public static boolean debugMode;
 	
 	
@@ -219,6 +220,8 @@ public class CityConfig {
 			generateTitanium = config.get(Configuration.CATEGORY_GENERAL, "generateTitanium", true).getBoolean(true);
 			generateSilver = config.get(Configuration.CATEGORY_GENERAL, "generateSilver", true).getBoolean(true);
 			generateRuby = config.get(Configuration.CATEGORY_GENERAL, "generateRuby", true).getBoolean(true);
+			
+			disableOreDict = config.get(Configuration.CATEGORY_GENERAL, "Disable OreDictionary (Do not use unless you know how!)", false).getBoolean(false);
 			debugMode = config.get(Configuration.CATEGORY_GENERAL, "debug mode", false).getBoolean(false);
 		}
 		catch (Exception e) {
