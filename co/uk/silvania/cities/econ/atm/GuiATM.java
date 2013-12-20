@@ -161,6 +161,26 @@ public class GuiATM extends GuiContainer {
     	 *  TODO Options menu- what do next?
     	 */
     	if (guiStage.equals("2")) {
+            ByteArrayOutputStream bt = new ByteArrayOutputStream();
+            DataOutputStream out = new DataOutputStream(bt);
+            
+    		try {
+            	if (CityConfig.debugMode == true) {
+            		System.out.println("Going to check if DigiCoin is installed");
+            	}
+    			out.writeUTF("digiCoinInstallCheck");
+    			out.writeDouble(0);
+    			out.writeUTF("");
+    			Packet250CustomPayload packet = new Packet250CustomPayload("FCDigiCoinPkt", bt.toByteArray());
+	            	
+    			PacketDispatcher.sendPacketToServer(packet);
+    			if (CityConfig.debugMode == true) {
+    				System.out.println("DigiCoin check packet sent!");
+    			}
+    		}
+    		catch (IOException ex) {
+    			System.out.println("Packet Failed!");
+    		}
     		switch(guibutton.id) {
 	    	case 4:
 	    		guiStage = "1";
@@ -178,27 +198,6 @@ public class GuiATM extends GuiContainer {
 	    		guiStage = "4";
 	    		break;
 	    	case 16:
-            	if (CityConfig.debugMode == true) {
-            		System.out.println("Doing test for DigiCoin plugin installed");
-            	}
-            	
-                ByteArrayOutputStream bt = new ByteArrayOutputStream();
-                DataOutputStream out = new DataOutputStream(bt);
-                try {
-                	out.writeUTF("digiCoinInstallCheck");
-                	out.writeDouble(0.0);
-                	out.writeUTF("");
-                	
-                	Packet250CustomPayload packet = new Packet250CustomPayload("FCDigiCoinPkt", bt.toByteArray());
-                	PacketDispatcher.sendPacketToServer(packet);
-                	if (CityConfig.debugMode == true) {
-                		System.out.println("Sending DigiCoin Check Packet...");
-                	}
-                }
-                catch (IOException ex) {
-                	System.out.println("Packet Failed!");
-                }
-            	
             	if (ClientPacketHandler.foundPlugin == true) {
             		if (CityConfig.debugMode == true) {
             			System.out.println("Open DigiCoin GUI");
@@ -448,7 +447,7 @@ public class GuiATM extends GuiContainer {
     			if (CityConfig.debugMode == true) {
     				System.out.println("DigiCoin Withdraw Screen");
     			}
-    			guiStage = "11";
+    			guiStage = "7";
     			break;
     		case 20:
     			guiStage = "2";
@@ -1137,7 +1136,8 @@ public class GuiATM extends GuiContainer {
     		fontRenderer.drawString("Transfer Screen!", 44, -2, 0x007F0E);
     		fontRenderer.drawString("Please select an option:", 28, 18, 0xFFD800);
 	    	fontRenderer.drawString("Deposit", 12, 51, 0x007F0E);
-	    	fontRenderer.drawString("Withdraw", 123, 51, 0x007F0E);
+	    	//Temporarily doesn't work.
+	    	fontRenderer.drawString("Withdraw", 123, 51, 0x404040);
         	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
     	}
     	if (guiStage.equals("8")) {

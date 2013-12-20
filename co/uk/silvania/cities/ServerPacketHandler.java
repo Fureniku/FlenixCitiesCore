@@ -32,7 +32,7 @@ public class ServerPacketHandler implements IPacketHandler {
 	String dcDirection = "";
 	String pktID = "";
 	boolean withdrawSuccess;
-	boolean foundPlugin = true;
+	boolean foundPlugin = false;
 	public static String playerName = "";
 	public static String newPin = "";
 	double atmValue;
@@ -53,15 +53,18 @@ public class ServerPacketHandler implements IPacketHandler {
 	
 	private void handleCardPin(Packet250CustomPayload packet, Player player) {
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
-		System.out.println("PIN Change request received");
-		
+    	if (CityConfig.debugMode == true) {
+    		System.out.println("PIN Change request received");
+    	}
 		try {
 			pktID = dis.readUTF();
 			newPin = dis.readUTF();
 			playerName = dis.readUTF();
-			System.out.println("Final Pin: " + newPin + " set for player " + playerName);
+        	if (CityConfig.debugMode == true) {
+        		System.out.println("Final Pin: " + newPin + " set for player " + playerName);
+        	}
 		} catch  (IOException e) {
-            System.out.println("Failed to read packet");
+            System.out.println("Failed to read packet [PIN Change]");
         }
         finally {}
 	}
@@ -70,9 +73,14 @@ public class ServerPacketHandler implements IPacketHandler {
         EntityPlayer entityPlayer = (EntityPlayer) player;
         World world = entityPlayer.worldObj;
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
-        System.out.println("Forge-side DigiCoin Packet get");
+        if (CityConfig.debugMode == true) {
+        	System.out.println("Forge-side DigiCoin Packet get");
+        }
         //Used for a stolen card. Defines the player who OWNES the card, not always the one holding it.
         String victimPlayer = DebitCardItem.checkCardOwner(entityPlayer);
+    	if (CityConfig.debugMode == true) {
+    		System.out.println("Before we even check it, EconUtils claims the balance to be " + EconUtils.getBalance(entityPlayer, world));
+    	}
         
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
         double currentBalance = 0;
@@ -80,40 +88,53 @@ public class ServerPacketHandler implements IPacketHandler {
         if (nbt.hasKey(victimPlayer)) {
         	if (playernbt.hasKey("Balance")) {
                 currentBalance = playernbt.getDouble("Balance");
-                System.out.println("DigiCoin Integration Packet Manager currently has the balance as: " + currentBalance);
+            	if (CityConfig.debugMode == true) {
+            		System.out.println("The balance is being read as " + playernbt.getDouble("Balance") + ", and saved as " + currentBalance);
+            	}
             }
+        }
+        if (CityConfig.debugMode == true) {
+        	System.out.println("Before we touch the packet checks, "+ victimPlayer + "'s balance is: " + currentBalance);
         }
                 
         try {
         	dcDirection = dis.readUTF();
         	dcAmount = dis.readDouble();
 			dcPlayerName = dis.readUTF();
-			double modifiedBalance = 0;
 			if (dcDirection.equals("digicoinDeposit")) {
-				System.out.println("Forge-Side DigiCoin Deposit Packet Received: " + dcAmount + " " + dcPlayerName);
+				double modifiedBalance = 0;
+		        if (CityConfig.debugMode == true) {
+		        	System.out.println("Forge-Side DigiCoin Deposit Packet Received: " + dcAmount + " " + dcPlayerName);
+		        }
 				modifiedBalance = currentBalance - dcAmount;
+		        if (CityConfig.debugMode == true) {
+		        	System.out.println("Numbers! Original Balance: " + currentBalance + " minus deposit amount (" + dcAmount + ") Gives us " + modifiedBalance);
+		        }
+				playernbt.setDouble("Balance", modifiedBalance);
+	    		nbt.setCompoundTag(victimPlayer, playernbt);
+				NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
 			} else if (dcDirection.equals("digicoinWithdrawConfirm")) {
-	    		System.out.println("Forge-Side DigiCoin Withdrawl Packet Received: " + dcAmount + " " + dcPlayerName);
+				double modifiedBalance = 0;
+            	if (CityConfig.debugMode == true) {
+            		System.out.println("Forge-Side DigiCoin Withdrawl Packet Received: " + dcAmount + " " + dcPlayerName);
+            	}
 	    		if (dcPlayerName.equals(victimPlayer)) {
-	    			System.out.println("Adding " + currentBalance + " to " + dcAmount + " to get " + currentBalance + dcAmount);
+	            	if (CityConfig.debugMode == true) {
+	            		System.out.println("Adding " + currentBalance + " to " + dcAmount + " to get " + currentBalance + dcAmount);
+	            	}
 	    			modifiedBalance = currentBalance + dcAmount;
+	    			playernbt.setDouble("Balance", modifiedBalance);
+	        		nbt.setCompoundTag(victimPlayer, playernbt);
+	    			NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
 	    		}
 			} else if (dcDirection.equals("digicoinWithdraw")) {
+				double modifiedBalance = 0;
 				modifiedBalance = currentBalance;
-				System.out.println("Sending the withdraw request to DigiCoin, value of " + modifiedBalance);
+            	if (CityConfig.debugMode == true) {
+            		System.out.println("Sending the withdraw request to DigiCoin, value of " + modifiedBalance);
+            	}
 			} else if (dcDirection.equals("digiCoinInstallCheck")) {
 				//TODO replace this. Change it to send a packet to DigiCoin
-            	try {
-            		Class c = Class.forName("co.uk.silvania.cities.digicoin.DigiCoin");
-                	if (CityConfig.debugMode == true) {
-                		System.out.println("Performing check");
-                	}
-            	} catch (ClassNotFoundException e) {
-            		foundPlugin = false;
-            		if (CityConfig.debugMode == true) {
-            			System.out.println("Had a look, couldn't find it. Sorry :(");
-            		}
-            	}
             	if (CityConfig.debugMode == true) {
             		System.out.println("Was DigiCoin detected? " + foundPlugin);
             	}
@@ -121,13 +142,17 @@ public class ServerPacketHandler implements IPacketHandler {
     			
     			Packet p = PacketDispatcher.getPacket("" + foundPlugin, new byte[1]);
                 PacketDispatcher.sendPacketToPlayer(p, player);
+			} else {
+				if (CityConfig.debugMode == true) {
+					System.out.println("Not sure what you wanted me to do here...");
+					System.out.println("UTF 1: " + dcDirection);
+					System.out.println("Double: " + dcAmount);
+					System.out.println("UTF 2: " + dcPlayerName);
+				}
 			}
-			playernbt.setDouble("Balance", modifiedBalance);
-    		nbt.setCompoundTag(victimPlayer, playernbt);
-			NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
 
         } catch  (IOException e) {
-            System.out.println("Failed to read packet");
+            System.out.println("Failed to read packet [DigiCoin -> Forge]");
         }
         finally {}
 	}
@@ -181,55 +206,9 @@ public class ServerPacketHandler implements IPacketHandler {
 	            		//Save ATM Value as a second double which we can safely modify, but remember the original amount.
 	            		//This means we can deduct the withdrawn amount from their balance later.
 	            		double atmWithdraw = atmValue;
-	            		while (atmWithdraw >= 100) {
-	            			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note10000));
-	            			atmWithdraw = atmWithdraw - 100;
-	                    	if (CityConfig.debugMode == true) {
-	                    		System.out.println("Withdrawing 100! Still left to withdraw: " + atmWithdraw);
-	                    	}
-	            		}
-	            		while (atmWithdraw >= 50) {
-	            			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note5000));
-	            			atmWithdraw = atmWithdraw - 50;
-	                    	if (CityConfig.debugMode == true) {
-	                    		System.out.println("Withdrawing 50! Still left to withdraw: " + atmWithdraw);
-	                    	}
-	            		}
-	            		while (atmWithdraw >= 20) {
-	            			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note2000));
-	            			atmWithdraw = atmWithdraw - 20;
-	                    	if (CityConfig.debugMode == true) {
-	                    		System.out.println("Withdrawing 20! Still left to withdraw: " + atmWithdraw);
-	                    	}
-	            		}
-	            		while (atmWithdraw >= 10) {
-	            			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note1000));
-	            			atmWithdraw = atmWithdraw - 10;
-	                    	if (CityConfig.debugMode == true) {
-	                    		System.out.println("Withdrawing 10! Still left to withdraw: " + atmWithdraw);
-	                    	}
-	            		}
-	            		while (atmWithdraw >= 5) {
-	            			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note500));
-	            			atmWithdraw = atmWithdraw - 5;
-	                    	if (CityConfig.debugMode == true) {
-	                    		System.out.println("Withdrawing 5! Still left to withdraw: " + atmWithdraw);
-	                    	}
-	                    }
-	            		while (atmWithdraw >= 2) {
-	            			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note200));
-	            			atmWithdraw = atmWithdraw - 2;
-	                    	if (CityConfig.debugMode == true) {
-	                    		System.out.println("Withdrawing 2! Still left to withdraw: " + atmWithdraw);
-	                    	}
-	            		}
-	            		while (atmWithdraw >= 1) {
-	            			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note100));
-	            			atmWithdraw = atmWithdraw - 1;
-	                    	if (CityConfig.debugMode == true) {
-	                    		System.out.println("Withdrawing 1! Still left to withdraw: " + atmWithdraw);
-	                    	}
-	            		}
+	            		
+	            		EconUtils.giveChange(atmWithdraw, 0, player);
+
 	            		double modifiedBalance = currentBalance - atmValue;
 	                	if (CityConfig.debugMode == true) {
 	                		System.out.println("Setting balance to " + modifiedBalance);
@@ -254,7 +233,7 @@ public class ServerPacketHandler implements IPacketHandler {
 	            }
 			} 
         } catch  (IOException e) {
-            System.out.println("Failed to read packet");
+            System.out.println("Failed to read packet [ATM Withdrawl]");
         } finally {}
     }
     

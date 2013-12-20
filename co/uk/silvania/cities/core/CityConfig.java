@@ -199,8 +199,8 @@ public class CityConfig {
 			note5000ID = config.getItem("Note (5,000)", 18012).getInt();
 			note10000ID = config.getItem("Note (10,000)", 18013).getInt();
 			prePaidCardID = config.getItem("Pre-Paid Card", 18014).getInt();
-			debitCardID = config.getItem("Debit Card (Damaged)", 18015).getInt();
-			debitCardNewID = config.getItem("Debit Card", 18017).getInt();
+			debitCardID = config.getItem("Debit Card", 18015).getInt();
+			debitCardNewID = config.getItem("Debit Card (New)", 18017).getInt();
 			atmItemID = config.getItem("ATM Item", 18016).getInt();
 			bankerSpawnerID = config.getItem("Banker Spawner", 18018).getInt();
 			idCardID = config.getItem("ID Card", 18019).getInt();

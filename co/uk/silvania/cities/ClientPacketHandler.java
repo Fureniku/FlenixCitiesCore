@@ -41,19 +41,14 @@ public class ClientPacketHandler implements IPacketHandler {
         	double balance = dis.readDouble();
         	
         	System.out.println("FC Client Packet Received: " + pktID + " " + balance);
-        	if (pktID.equals("InitBalance")) {
+        	if (pktID.equalsIgnoreCase("InitBalance")) {
         		initBal = balance;
         		System.out.println("initbal's value is " + initBal);
-        	} else if (pktID.equals("ShortAmount")) {
+        	} else if (pktID.equalsIgnoreCase("ShortAmount")) {
         		shortValue = balance;
         	}
         } catch (IOException e) {
-        	System.out.println("Failed to read packet");
-        } try {
-        	int pin = dis.readInt();
-        	newPin = pin;
-        } catch  (IOException e) {
-            System.out.println("Failed to read packet");
+        	System.out.println("Failed to read packet [Balance]");
         }
         finally {}
     }
@@ -67,7 +62,7 @@ public class ClientPacketHandler implements IPacketHandler {
         	
         	System.out.println("FC Client Packet Received: " + pktID + " " + foundPlugin);
         } catch (IOException e) {
-        	System.out.println("Failed to read packet");
+        	System.out.println("Failed to read packet [DigiCoin Check]");
         }
         finally {}
     }

@@ -19,7 +19,7 @@ public class GuiFloatingShelves extends GuiContainer {
     private static final ResourceLocation texture = new ResourceLocation("flenixcities", "textures/gui/floatingshelvesbuy.png");
 
         public GuiFloatingShelves (InventoryPlayer inventoryPlayer, TileEntityFloatingShelves tileEntity, World world, int x, int y, int z) {
-                                super(new ContainerFloatingShelves(inventoryPlayer, tileEntity));
+        	super(new ContainerFloatingShelves(inventoryPlayer, tileEntity));
         }
         
         /** The X size of the inventory window in pixels. */
@@ -33,7 +33,7 @@ public class GuiFloatingShelves extends GuiContainer {
         	//GUI Title
         	fontRenderer.drawString("Floating Shelves", -35, 32, 4210752);
         	//Temporary. This will be replaced with an NBT value from the block, stating the name of whoever placed it.
-        	fontRenderer.drawString("%Name%'s Shelf", -6, 18, 4210752);
+        	fontRenderer.drawString(TileEntityFloatingShelves.pOwnerName + "'s Shelf", -6, 18, 4210752);
         	//Titles. Always will be these.
         	fontRenderer.drawString("Buy", 4, 45, 0x00A012);
         	fontRenderer.drawString("Sell", 61, 45, 0xA80000);

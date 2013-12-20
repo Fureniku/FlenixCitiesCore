@@ -12,6 +12,7 @@ import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.econ.DebitCardItem;
+import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.money.ItemCoin;
 import co.uk.silvania.cities.econ.money.ItemNote;
 import cpw.mods.fml.common.Mod.Metadata;
@@ -89,6 +90,7 @@ public class TileEntityATMBlock extends BlockContainer {
                         }
                     }
                     player.openGui(FlenixCities_Core.instance, 0, world, x, y, z);
+                    EconUtils.getBalance(player, world);
                 } else if (player.getHeldItem().getItem() != CoreItems.debitCardNew) {
                 	if (player.getHeldItem().getItem() instanceof ItemNote) {
                 		
