@@ -39,6 +39,7 @@ public class FloatingShelvesBlock extends BlockContainer {
         	String ownerName = tileEntity.ownerName;
         	String userName = player.username;
         	System.out.println("Final balance: " + EconUtils.getInventoryCash(player));
+        	System.out.println("TE Owner: " + ownerName + ", Using Player: " + userName);
         	if (userName.equalsIgnoreCase(ownerName)) {
                 player.openGui(FlenixCities_Core.instance, 1, world, x, y, z);
         	} else {

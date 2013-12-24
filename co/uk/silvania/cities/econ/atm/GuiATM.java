@@ -67,7 +67,7 @@ public class GuiATM extends GuiContainer {
     //Stage 14 is the PIN confirm screen.
     //Stage 15 is the PIN change complete screen.
     //Stage 16 is the PIN change failed screen.
-    //Each stage has a TODO list so it can be easily found in eclipse. This is a damn long class, so added this for sanity.
+    //Each stage has a TO-DO list so it can be easily found in eclipse. This is a damn long class, so added this for sanity.
     //TODO Text String position/colours for 7-16, all active code for 7-16, NBT Balance Display in-ATM.
     
     @Override

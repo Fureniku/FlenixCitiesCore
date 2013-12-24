@@ -1,10 +1,12 @@
 package co.uk.silvania.cities.core.npc;
 
+import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.core.npc.ai.NPCAITempt;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -33,6 +35,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
@@ -41,7 +44,17 @@ import net.minecraft.world.World;
 
 public class EntityBanker extends EntityAnimal {
 	
+	int heldID;
+	int helmetID;
+	int chestID;
+	int legsID;
+	int bootsID;
+	int despawnTime;
 	boolean wander;
+	boolean invincible;
+	boolean locked;
+	String playerName = "bl";
+	String npcName = "ah";
 	
 	public EntityBanker(World par1World) {
 		super(par1World);
@@ -61,14 +74,14 @@ public class EntityBanker extends EntityAnimal {
         this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(10, new EntityAILookIdle(this));
 	}
-	
+		
 	@Override
 	public boolean interact(EntityPlayer player) {
 		//Right now this is just here so I can right-click the mob and printline what his NBT is as an in-game check.
 		if (!player.inventory.hasItem(CoreItems.debitCardNew.itemID)) {
 			player.inventory.addItemStackToInventory(new ItemStack(CoreItems.debitCardNew));
 		}
-		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagCompound nbt = this.getEntityData();
 		readEntityFromNBT(nbt);
 		return true;
 	}
@@ -82,40 +95,64 @@ public class EntityBanker extends EntityAnimal {
 	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
+		super.writeEntityToNBT(nbt);
 	}
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
-		boolean wander = nbt.getBoolean("wander");
-		boolean locked = nbt.getBoolean("entityLocked");
-		boolean invincible = nbt.getBoolean("entityInvincible");
-		String playerName = nbt.getString("playerName");
-		int despawnTime = nbt.getInteger("despawnTime");
-		int heldID = nbt.getInteger("heldID");
-		int helmetID = nbt.getInteger("helmetID");
-		int chestID = nbt.getInteger("chestID");
-		int legsID = nbt.getInteger("legsID");
-		int bootsID = nbt.getInteger("bootsID");
-		System.out.println("NBT values are set as follows:");
-		System.out.println("Wander: " + wander);
-		System.out.println("Locked: " + locked);
-		System.out.println("Invincible: " + invincible);
-		System.out.println("Player Name: " + playerName);
-		System.out.println("Despawn Time: " + despawnTime);
-		System.out.println("Held ID: " + heldID);
-		System.out.println("Helmet ID: " + helmetID);
-		System.out.println("Chest ID: " + chestID);
-		System.out.println("Legs ID: " + legsID);
-		System.out.println("Boots ID: " + bootsID);
+		super.readEntityFromNBT(nbt);
+		wander = nbt.getBoolean("wander");
+		locked = nbt.getBoolean("entityLocked");
+		invincible = nbt.getBoolean("entityInvincible");
+		
+		playerName = nbt.getString("playerName");
+		npcName = nbt.getString("npcName");
+		despawnTime = nbt.getInteger("despawnTime");
+		
+		heldID = nbt.getInteger("heldID");
+		helmetID = nbt.getInteger("helmetID");
+		chestID = nbt.getInteger("chestID");
+		legsID = nbt.getInteger("legsID");
+		bootsID = nbt.getInteger("bootsID");
+		if (CityConfig.debugMode == true) {
+			System.out.println("NBT values are set as follows:");
+			System.out.println("Wander: " + wander);
+			System.out.println("Locked: " + locked);
+			System.out.println("Invincible: " + invincible);
+			System.out.println("Player Name: " + playerName);
+			System.out.println("NPC Name: " + npcName);
+			System.out.println("Despawn Time: " + despawnTime);
+			System.out.println("Held ID: " + heldID);
+			System.out.println("Helmet ID: " + helmetID);
+			System.out.println("Chest ID: " + chestID);
+			System.out.println("Legs ID: " + legsID);
+			System.out.println("Boots ID: " + bootsID);
+		}
 	}
 	
 	public boolean isAIEnabled() {
-		return true;
+		if (wander == true) {
+			if (CityConfig.debugMode == true) {
+				System.out.println("Wander enabled. They can walk around.");
+			}
+			return true;
+		} else
+			if (CityConfig.debugMode == true) {
+				//System.out.println("Wander disabled. No moving!");
+			}
+			return false;
 	}
 	
 	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
+		if (invincible == false) {
+			super.applyEntityAttributes();
 			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue(); 
+			if (CityConfig.debugMode == true) {
+				System.out.println("Entity is not invincible. Can be attacked. Status: " + invincible);
+			}
+		} else {
+			System.out.println("Entity is invincible!");
+		}
 	}
 	
 	protected String getLivingSound() {

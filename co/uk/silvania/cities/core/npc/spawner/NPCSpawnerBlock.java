@@ -41,20 +41,23 @@ public class NPCSpawnerBlock extends BlockContainer {
 		if (!world.isRemote) {
 	    	if (tile != null) {
 				EntityBanker banker = new EntityBanker(world);
-				NBTTagCompound nbt = new NBTTagCompound();
-				banker.writeEntityToNBT(nbt);
+				NBTTagCompound nbt = banker.getEntityData();
 				//For now, just hard-coding some test values to get the NBT block -> mob working.
-				nbt.setBoolean("wander", false);// tile.wander);
-				nbt.setString("playerName", "Blah" );//tile.playerName);
-				nbt.setInteger("despawnTime", 12345);//tile.despawnTime);
-				nbt.setInteger("heldID", 6);//tile.heldID);
-				nbt.setInteger("helmetID", 7);//tile.helmetID);
-				nbt.setInteger("chestID", 8);//tile.chestID);
-				nbt.setInteger("legsID", 9);//tile.legsID);
-				nbt.setInteger("bootsID", 10);//tile.bootsID);
-				nbt.setBoolean("entityLocked", true);//tile.entityLocked);
-				nbt.setBoolean("entityInvincible", true);//tile.invincible);
-				banker.readEntityFromNBT(nbt);
+				nbt.setBoolean("wander", tile.wander);
+				nbt.setString("playerName", tile.playerName);
+				nbt.setString("npcName", tile.npcName);
+				nbt.setInteger("despawnTime", tile.despawnTime);
+				nbt.setInteger("heldID", tile.heldID);
+				nbt.setInteger("helmetID", tile.helmetID);
+				nbt.setInteger("chestID", tile.chestID);
+				nbt.setInteger("legsID", tile.legsID);
+				nbt.setInteger("bootsID", tile.bootsID);
+				nbt.setBoolean("entityLocked", tile.entityLocked);
+				nbt.setBoolean("entityInvincible", tile.invincible);
+				System.out.println("Seeting invincibility to " + tile.invincible);
+				banker.writeEntityToNBT(nbt);
+				banker.readEntityFromNBT(nbt); //This checks if the value is correct via a println in the read method
+				
 				//Ignore this bit - it doesn't need to be passed to the mob.
 				banker.posX = x;
 				banker.posY = y;
@@ -63,6 +66,7 @@ public class NPCSpawnerBlock extends BlockContainer {
 				banker.setLocationAndAngles((double)x + tile.offsetX, (double)y + tile.offsetY, (double)z + tile.offsetZ, 0.0F, 0.0F);
 				banker.onSpawnWithEgg(null);
 				world.spawnEntityInWorld(banker);
+				
 	    	}
 	    	return true;
 		} else {

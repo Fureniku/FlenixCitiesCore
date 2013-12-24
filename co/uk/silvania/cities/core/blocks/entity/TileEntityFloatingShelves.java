@@ -24,7 +24,6 @@ public class TileEntityFloatingShelves extends TileEntity {
 		super.writeToNBT(nbt);
 		nbt.setString("ownerName", ownerName);
 		System.out.println("Writing! Name: " + ownerName);
-		
 	}
 	
 	@Override
@@ -35,7 +34,7 @@ public class TileEntityFloatingShelves extends TileEntity {
 		System.out.println("Reading! Name: " + ownerName + " " + pOwnerName + ".");
 	}
 	
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-        return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : player.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
 }

@@ -5,8 +5,8 @@ import net.minecraft.tileentity.TileEntity;
 
 public class NPCSpawnerEntity extends TileEntity {
 	
-	public String npcName;
-	public String playerName;
+	public String npcName = "";
+	public String playerName = "";
 	public double offsetX;
 	public double offsetY;
 	public double offsetZ;
@@ -21,11 +21,11 @@ public class NPCSpawnerEntity extends TileEntity {
 	public int chestID;
 	public int legsID;
 	public int bootsID;
-	public boolean wander;
+	public boolean wander = false;
 	public boolean entityLocked;
 	
 	//Available to ops only.
-	public boolean invincible;
+	public boolean invincible = true;
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
