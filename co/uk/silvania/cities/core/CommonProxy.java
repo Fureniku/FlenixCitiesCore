@@ -223,7 +223,7 @@ public class CommonProxy {
         LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 5), "Blue Framed Horizontal Line");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 6), "Blue Horizontal Line");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 7), "Blue Framed Vertical Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 8), "blue Vertical Line");
+        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 8), "Blue Vertical Line");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 9), "Blue Small Squares");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 10), "Blue Cross");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 11), "Blue Supercross");
