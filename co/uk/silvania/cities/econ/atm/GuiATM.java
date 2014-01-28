@@ -9,6 +9,7 @@ import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -17,8 +18,8 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import co.uk.silvania.cities.ClientPacketHandler;
 import co.uk.silvania.cities.core.CityConfig;
+import co.uk.silvania.cities.core.ClientPacketHandler;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.EconUtils;
@@ -1031,11 +1032,20 @@ public class GuiATM extends GuiContainer {
     		enteredPin = "";
     		pinAttempt = "4";
     		
+            this.mc.displayGuiScreen(null);
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
     		
             try {
+            	Thread.sleep(3000);
+            } catch (InterruptedException ex) {
+            	Thread.currentThread().interrupt();
+            }
+            System.out.println("after that little nap we'll send the packet");
+            
+            try {
             	out.writeUTF("failedPin");
+            	out.writeDouble(0);
             	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
             	PacketDispatcher.sendPacketToServer(packet);
 	    		if (CityConfig.debugMode == true) {
@@ -1045,13 +1055,6 @@ public class GuiATM extends GuiContainer {
             catch (IOException ex) {
             	System.out.println("Packet Failed!");
             }
-    	}
-    }
-    
-    private void consumeCard (EntityPlayer player) {
-        ItemStack item = player.getHeldItem();
-    	if (player.getHeldItem().getItem() == CoreItems.debitCard) {
-            --item.stackSize;
     	}
     }
     
@@ -1209,5 +1212,10 @@ public class GuiATM extends GuiContainer {
             int x = (width - xSize) / 2;
             int y = (height - ySize) / 2;
             this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+    }
+    
+    @Override
+    public void onGuiClosed() {
+    	System.out.println("Closed GUI!");
     }
 }

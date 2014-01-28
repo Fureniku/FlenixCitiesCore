@@ -1,14 +1,16 @@
 package co.uk.silvania.cities.core;
 
-import co.uk.silvania.cities.GuiHandler;
-import co.uk.silvania.cities.ServerPacketHandler;
-import co.uk.silvania.cities.WorldGen;
-import co.uk.silvania.cities.ClientPacketHandler;
+import java.io.File;
+
+import co.uk.silvania.cities.api.npc.CommonSidedProxy;
 import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.core.items.CraftingIngredientItems;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
+import co.uk.silvania.cities.core.world.WorldGen;
+import co.uk.silvania.cities.econ.VillageHandlerBlacksmith;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
+import co.uk.silvania.cities.econ.store.VanillaItemValueConfig;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -17,16 +19,14 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -41,10 +41,10 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, name="FlenixCities", version="0.6")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.7")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
-	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin"}, packetHandler = ClientPacketHandler.class),
-	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin"}, packetHandler = ServerPacketHandler.class))
+	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket"}, packetHandler = ClientPacketHandler.class),
+	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket"}, packetHandler = ServerPacketHandler.class))
 public class FlenixCities_Core { 
 	
 	public static final String modid = "flenixcities";
@@ -70,17 +70,6 @@ public class FlenixCities_Core {
 	
 	public static String configPath;
 	
-	//public static Block verticalPoster1;
-	//public static Block verticalPoster2;
-	//public static Block verticalPoster3;
-	//public static Block verticalPoster4;
-	
-	//public static Block horizontalPoster1;
-	//public static Block horizontalPoster2;
-	//public static Block horizontalPoster3;
-	//public static Block horizontalPoster4;
-
-	
 	public static WorldGen worldGen = new WorldGen();
 
 	//And finally the worldgen
@@ -93,9 +82,38 @@ public class FlenixCities_Core {
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	
+    	File cfgfile = new File(event.getModConfigurationDirectory(), "FlenixCities");
+    	System.out.println("Checking to see if you're illegally using Technic...");
+    	if (cfgfile.getAbsolutePath().toLowerCase().contains(".technic")) {
+    		if (cfgfile.getAbsolutePath().toLowerCase().contains("lifemmo")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using LifeMMO. In that case, an agreement has been reached. Carry on.");
+    		//} else if (cfgfile.getAbsolutePath().toLowerCase().contains("")) {
+    			//System.out.println("Technic has been detected!");
+    			//System.out.println("Ah, but I see you're using GMC. In that case, an agreement has been reached. Carry on.");
+    		} else {
+    			System.out.println("##########################################################");
+    			System.out.println("##########################################################");
+    			System.out.println("##########################################################");
+	    		System.out.println("Technic has been detected!");
+	    		System.out.println("First, I'd like to thank Gregorius Techneticies for kindly sharing this code with me");
+	    		System.out.println("I have decided to block use of Technic due to the Technic Communities horrible approach to us modders");
+	    		System.out.println("If such a time comes that they treat us with just a TINY bit of respect, I'll remove this code.");
+	    		System.out.println("Until then, Technic is not allowed. Please use FTB or AtLauncher - both are much better anyway.");
+	    		System.out.println("www.feed-the-beast.org - www.atlauncher.com");
+	    		System.out.println("If you wish to discuss using my mods in Technic, please email me as below.");
+	    		System.out.println("I DO let people who ask nicely use it, and my code allows for that; LifeMMO is a perfect example.");
+	    		System.out.println("");
+	    		System.out.println("Yours, Flenix (flenix@silvania.co.uk)");
+	    		System.out.println("##########################################################");
+	    		System.out.println("##########################################################");
+	    		System.out.println("##########################################################");
+	    		return;
+    		}
+    	}
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
+    	VanillaItemValueConfig.init(configPath + "Prices/");
     	
     	//Start entity stuff here 
     	//EntityList.addMapping(EntityBanker.class, "Banker", EntityRegistry.findGlobalUniqueEntityId(), 3515848, 12102);
@@ -126,6 +144,7 @@ public class FlenixCities_Core {
 	        proxy.entityStuff();
 	        
 	        MinecraftForge.EVENT_BUS.register(new EventDrops());
+	        MinecraftForge.EVENT_BUS.register(new EventListener());
 	        
 	        GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
 	        GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");

@@ -4,16 +4,18 @@ import java.util.List;
 import java.util.Random;
 import java.lang.Math;
 
-import co.uk.silvania.cities.ServerPacketHandler;
+import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.core.NBTConfig;
+import co.uk.silvania.cities.core.ServerPacketHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -63,7 +65,21 @@ public class DebitCardItem extends Item {
 			} else {
 				list.add(EnumChatFormatting.RED + "Owner: " + playerName);
 			}
+			if (CityConfig.debugMode) {
+				if (playerName.equals(player.username)) {
+					list.add("PIN: " + item.stackTagCompound.getInteger("PIN"));
+				}
+			}
 		}
+	}
+	
+	@Override
+	public boolean onItemUse(ItemStack item, EntityPlayer entityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+		//((EntityPlayerMP) entityPlayer).sendContainerToPlayer(entityPlayer.inventoryContainer);
+		if (CityConfig.debugMode) {
+			System.out.println("Refreshing Inventory!");
+		}
+		return true;
 	}
 	
 	public static void setNewPIN(ItemStack item, EntityPlayer player, World world) {
@@ -109,4 +125,6 @@ public class DebitCardItem extends Item {
 	public void registerIcons(IconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)));
 	}
+	
+	
 }

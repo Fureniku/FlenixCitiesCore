@@ -2,23 +2,21 @@ package co.uk.silvania.cities.core.blocks;
 
 import java.util.List;
 
-import co.uk.silvania.cities.core.FlenixCities_Core;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockGlass;
+import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import co.uk.silvania.cities.core.FlenixCities_Core;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class StyledGlass extends BlockGlass {
-
-	public StyledGlass(int id) {
-		super(id, Material.glass, true);
+public class StyledGlassPane extends BlockPane {
+	
+	public StyledGlassPane(int par1, String par2Str, String par3Str, boolean par5) {
+		super(par1, par2Str, par3Str, Material.glass, par5);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
-		this.setHardness(0.3F);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -29,14 +27,10 @@ public class StyledGlass extends BlockGlass {
 		icons = new Icon[16];
 
 		for(int i = 0; i < 12; i++) {
-			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + i);
+			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":styledGlass" + i);
 		}
 	}
 	
-	public int getRenderId() {
-		return 34;
-	}
-
     public int getRenderBlockPass()
     {
         return 1;

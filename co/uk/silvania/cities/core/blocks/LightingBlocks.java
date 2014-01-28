@@ -37,9 +37,9 @@ public class LightingBlocks extends Block {
 	public void registerIcons(IconRegister iconRegister) {
 		icons = new Icon[16];
 
-		for(int i = 0; i < icons.length; i++) {
+		for(int i = 0; i < 6; i++) {
 			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + i);
-			sideIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":ceilingTile");	
+			sideIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":ceilingtile");	
 		}
 	}
 

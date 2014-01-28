@@ -5,6 +5,7 @@ import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -36,7 +37,16 @@ public class NPCSpawnerBlock extends BlockContainer {
 	
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
-    	NPCSpawnerEntity tile = (NPCSpawnerEntity) world.getBlockTileEntity(x, y, z);
+    	if (!world.isRemote) {
+    		EntityVillager villager = new EntityVillager(world, 41);
+    		villager.setLocationAndAngles(x, y, z, 0.0f, 0.0f);
+    		world.spawnEntityInWorld(villager);
+    		return true;
+    	} else {
+    	return false;
+    	}
+    	
+    	/*NPCSpawnerEntity tile = (NPCSpawnerEntity) world.getBlockTileEntity(x, y, z);
     	
 		if (!world.isRemote) {
 	    	if (tile != null) {
@@ -53,7 +63,7 @@ public class NPCSpawnerBlock extends BlockContainer {
 				nbt.setInteger("legsID", tile.legsID);
 				nbt.setInteger("bootsID", tile.bootsID);
 				nbt.setBoolean("entityLocked", tile.entityLocked);
-				nbt.setBoolean("entityInvincible", tile.invincible);
+				nbt.setBoolean("Invulnerable", tile.invincible);
 				System.out.println("Seeting invincibility to " + tile.invincible);
 				banker.writeEntityToNBT(nbt);
 				banker.readEntityFromNBT(nbt); //This checks if the value is correct via a println in the read method
@@ -71,7 +81,7 @@ public class NPCSpawnerBlock extends BlockContainer {
 	    	return true;
 		} else {
 			return false;
-		}
+		}*/
     }
 	
 	@Override

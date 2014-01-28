@@ -1,4 +1,4 @@
-package co.uk.silvania.cities;
+package co.uk.silvania.cities.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -8,9 +8,6 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
-import co.uk.silvania.cities.core.CityConfig;
-import co.uk.silvania.cities.core.CoreItems;
-import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.EconUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -175,12 +172,25 @@ public class ServerPacketHandler implements IPacketHandler {
         	}
 			
 			if (atmWithdraw.equals("failedPin")) {
-				if (entityPlayer.getHeldItem().getItem() == CoreItems.debitCard) {
+				if (entityPlayer.getHeldItem().getItem() == CoreItems.debitCardNew) {
 					ItemStack item = entityPlayer.getHeldItem();
 					--item.stackSize;
+					((EntityPlayerMP) player).sendContainerToPlayer(entityPlayer.inventoryContainer); //TODO TODO TODO SEND ON GUI CLOSE!
 		        	if (CityConfig.debugMode == true) {
 		        		System.out.println("STEALIN YO' CARD BIATCH!");
 		        	}
+				}
+			} else if (atmWithdraw.equalsIgnoreCase("removeCard")) {
+				if (entityPlayer.getHeldItem().getItem() == CoreItems.debitCardNew) {
+					ItemStack item = entityPlayer.getHeldItem();
+					--item.stackSize;
+				}
+				((EntityPlayerMP) player).sendContainerToPlayer(entityPlayer.inventoryContainer); //TODO TODO TODO SEND ON GUI CLOSE!
+				System.out.println("Updating Inventory!");
+			} else if (atmWithdraw.equalsIgnoreCase("updateInventory")) {
+				((EntityPlayerMP) player).sendContainerToPlayer(entityPlayer.inventoryContainer);
+				if (CityConfig.debugMode) {
+					System.out.println("Updating player inventory.");
 				}
 			} else {
 			
@@ -207,7 +217,7 @@ public class ServerPacketHandler implements IPacketHandler {
 	            		//This means we can deduct the withdrawn amount from their balance later.
 	            		double atmWithdraw = atmValue;
 	            		
-	            		EconUtils.giveChange(atmWithdraw, 0, player);
+	            		EconUtils.giveChange(atmWithdraw, 0, (EntityPlayer) player);
 
 	            		double modifiedBalance = currentBalance - atmValue;
 	                	if (CityConfig.debugMode == true) {

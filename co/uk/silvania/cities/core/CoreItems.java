@@ -1,10 +1,13 @@
 package co.uk.silvania.cities.core;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import co.uk.silvania.cities.core.items.CraftingIngredientItems;
 import co.uk.silvania.cities.core.items.ItemIDCard;
+import co.uk.silvania.cities.core.liquid.*;
 import co.uk.silvania.cities.core.npc.spawner.BankerSpawnerItem;
 import co.uk.silvania.cities.econ.DebitCardItem;
+import co.uk.silvania.cities.econ.VillageHandlerBlacksmith;
 import co.uk.silvania.cities.econ.money.*;
 
 public class CoreItems {
@@ -48,7 +51,13 @@ public class CoreItems {
 	
 	public static Item bankerSpawner;
 	
+	public static Item oilBucket;
+	public static Item petrolBucket;
+	public static Item dieselBucket;
+	public static Item redDieselBucket;
+	
 	public static Item idCard;
+	public static Item accessCard;
 	
 	public static void init() {
 		initMinerals();
@@ -94,6 +103,7 @@ public class CoreItems {
     	debitCard = new CraftingIngredientItems(config.debitCardID, 1, FlenixCities_Core.tabEcon).setUnlocalizedName("debitCard");
     	
     	bankerSpawner = new BankerSpawnerItem(config.bankerSpawnerID).setUnlocalizedName("bankerSpawnerItem");
+        VillageHandlerBlacksmith.init(config);
 		//ringItem = new CraftingIngredientItems(config.ringItemID, 64).setUnlocalizedName("ringItem");
 		//diamondRing = new CraftingIngredientItems(config.diamondRingID, 64).setUnlocalizedName("diamondRing");
 		//necklaceItem = new CraftingIngredientItems(config.necklaceItemID, 64).setUnlocalizedName("necklaceItem");
@@ -102,5 +112,16 @@ public class CoreItems {
 	
 	public static void initGenericItems() {
 		idCard = new ItemIDCard(config.idCardID).setUnlocalizedName("idCard");
+		//accessCard = new ItemAccessCard(config.accessCardID).setUnlocalizedName("accessCard");
+		
+		oilBucket = new OilBucket(config.oilBucketID).setUnlocalizedName("oilBucket");
+		petrolBucket = new PetrolBucket(config.petrolBucketID).setUnlocalizedName("petrolBucket");
+		dieselBucket = new DieselBucket(config.dieselBucketID).setUnlocalizedName("dieselBucket");
+		redDieselBucket = new RedDieselBucket(config.redDieselBucketID).setUnlocalizedName("redDieselBucket");
+		
+		MinecraftForge.EVENT_BUS.register(new OilBucketHandler());
+		MinecraftForge.EVENT_BUS.register(new PetrolBucketHandler());
+		MinecraftForge.EVENT_BUS.register(new DieselBucketHandler());
+		MinecraftForge.EVENT_BUS.register(new RedDieselBucketHandler());
 	}
 }

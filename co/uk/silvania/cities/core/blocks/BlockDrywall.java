@@ -9,6 +9,6 @@ public class BlockDrywall extends BlockPane {
 	public BlockDrywall(int id, String par2Str, String par3Str, boolean par5) {
 		super(id, par2Str, par3Str, Material.rock, par5);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
-		//his.setLightOpacity(10);
+		//this.setLightOpacity(10);
 	}
 }

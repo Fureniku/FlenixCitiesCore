@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import co.uk.silvania.cities.ClientPacketHandler;
+import co.uk.silvania.cities.core.ClientPacketHandler;
 
 public class GuiATMNoCard extends GuiContainer {
 

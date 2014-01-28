@@ -3,6 +3,8 @@ package co.uk.silvania.cities.core;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.items.*;
 import co.uk.silvania.cities.core.npc.EntityBanker;
@@ -26,6 +28,7 @@ public class CommonProxy {
     
     public void entityStuff() {
     	EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 1, FlenixCities_Core.instance, 32, 5, true);
+    	
     }
     
     public void registerBlocks() {
@@ -62,6 +65,15 @@ public class CommonProxy {
        	GameRegistry.registerBlock(CoreBlocks.drywallBlue, "drywallBlue");
        	GameRegistry.registerBlock(CoreBlocks.drywallGreen, "drywallGreen");
        	GameRegistry.registerBlock(CoreBlocks.drywallGrey, "drywallGrey");
+       	GameRegistry.registerBlock(CoreBlocks.styledGlassPane, "styledGlassPane"); //, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.styledGlassPane.getUnlocalizedName().substring(5)));
+       	GameRegistry.registerBlock(CoreBlocks.styledGlassWhitePane, "styledGlassWhitePane");
+       	
+       	GameRegistry.registerBlock(CoreBlocks.blockOil, "blockOil");
+       	GameRegistry.registerBlock(CoreBlocks.blockPetrol, "blockPetrol");
+       	GameRegistry.registerBlock(CoreBlocks.blockDiesel, "blockDiesel");
+       	GameRegistry.registerBlock(CoreBlocks.blockRedDiesel, "blockRedDiesel");
+       	
+       	GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
        	
        	
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster1, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster1.getUnlocalizedName().substring(5)));
@@ -97,6 +109,16 @@ public class CommonProxy {
         GameRegistry.registerItem(CoreItems.debitCard, "debitCard");
         GameRegistry.registerItem(CoreItems.debitCardNew, "debitCardNew");
         GameRegistry.registerItem(CoreItems.bankerSpawner, "bankerSpawner");
+        
+        GameRegistry.registerItem(CoreItems.oilBucket, "oilBucket");
+        GameRegistry.registerItem(CoreItems.petrolBucket, "petrolBucket");
+        GameRegistry.registerItem(CoreItems.dieselBucket, "dieselBucket");
+        GameRegistry.registerItem(CoreItems.redDieselBucket, "redDieselBucket");
+        
+        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("oil", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.oilBucket), new ItemStack(Item.bucketEmpty));
+        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("petrol", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.petrolBucket), new ItemStack(Item.bucketEmpty));
+        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("diesel", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.dieselBucket), new ItemStack(Item.bucketEmpty));
+        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("reddiesel", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.redDieselBucket), new ItemStack(Item.bucketEmpty));
 
     	/*GameRegistry.registerItem(CoreItems.ringItem, "ringItem");
     	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
@@ -113,6 +135,11 @@ public class CommonProxy {
         LanguageRegistry.addName(CoreBlocks.titaniumOre, "Titanium Ore");
         LanguageRegistry.addName(CoreBlocks.silverOre, "Silver Ore");
         
+        LanguageRegistry.addName(CoreBlocks.blockOil, "Oil");
+        LanguageRegistry.addName(CoreBlocks.blockPetrol, "Petrol");
+        LanguageRegistry.addName(CoreBlocks.blockDiesel, "Diesel");
+        LanguageRegistry.addName(CoreBlocks.blockRedDiesel, "Red Diesel");
+        
     	LanguageRegistry.addName(CoreBlocks.rebarBlock, "Rebar");
     	
     	LanguageRegistry.addName(CoreBlocks.drywallWhite, "White Drywall");
@@ -120,6 +147,8 @@ public class CommonProxy {
     	LanguageRegistry.addName(CoreBlocks.drywallBlue, "Blue Drywall");
     	LanguageRegistry.addName(CoreBlocks.drywallGreen, "Green Drywall");
     	LanguageRegistry.addName(CoreBlocks.drywallGrey, "Grey Drywall");
+    	LanguageRegistry.addName(CoreBlocks.styledGlassPane, "Styled Glass Pane");
+    	LanguageRegistry.addName(CoreBlocks.styledGlassWhitePane, "Styled Glass Pane");
         
         LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 0), "ATM Stone");
@@ -135,6 +164,11 @@ public class CommonProxy {
     	LanguageRegistry.addName(CoreItems.tinIngot, "Tin Ingot");
     	LanguageRegistry.addName(CoreItems.crystalItem, "Crystal");
     	LanguageRegistry.addName(CoreItems.sapphireItem, "Sapphire");
+    	
+    	LanguageRegistry.addName(CoreItems.oilBucket, "Bucket of Oil");
+    	LanguageRegistry.addName(CoreItems.petrolBucket, "Bucket of Petrol");
+    	LanguageRegistry.addName(CoreItems.dieselBucket, "Bucket of Diesel");
+    	LanguageRegistry.addName(CoreItems.redDieselBucket, "Bucket of Red Diesel");
     	
     	/*LanguageRegistry.addName(CoreItems.plasticItem, "Plastic");
     	LanguageRegistry.addName(CoreItems.smallPCB, "Small PCB");

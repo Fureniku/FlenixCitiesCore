@@ -51,6 +51,13 @@ public class CityConfig {
 	public static int drywallBlueID;
 	public static int drywallGreenID;
 	public static int drywallGreyID;
+	public static int styledGlassPaneID;
+	public static int styledGlassWhitePaneID;
+
+	public static int blockOilID;
+	public static int blockPetrolID;
+	public static int blockDieselID;
+	public static int blockRedDieselID;
 	
 	public static int atmID;
 	public static int floatingShelvesID;
@@ -99,6 +106,12 @@ public class CityConfig {
 	public static int bankerSpawnerID;
 	
 	public static int idCardID;
+	public static int accessCardID;
+	
+	public static int oilBucketID;
+	public static int petrolBucketID;
+	public static int dieselBucketID;
+	public static int redDieselBucketID;
 
 	public static int ringItemID;
 	public static int diamondRingID;
@@ -161,6 +174,12 @@ public class CityConfig {
 			drywallGreyID = config.getBlock("Drywall Grey", 1455).getInt();
 			lightingRotateBlocksID = config.getBlock("Lighting Blocks (Rotatable)", 1456).getInt();
 			npcSpawnerBlockID = config.getBlock("NPC Spawner", 1457).getInt();
+			blockOilID = config.getBlock("Oil", 1460).getInt();
+			blockPetrolID = config.getBlock("Petrol", 1461).getInt();
+			blockDieselID = config.getBlock("Diesel", 1462).getInt();
+			blockRedDieselID = config.getBlock("Red Diesel", 1463).getInt();
+			styledGlassPaneID = config.getBlock("Styled Glass Pane", 1464).getInt();
+			styledGlassWhitePaneID = config.getBlock("Styled Glass Pane (White)", 1465).getInt();
 			
 			verticalPoster1ID = config.getBlock("Vertical Poster 1", 1441).getInt();
 			verticalPoster2ID = config.getBlock("Vertical Poster 2", 1442).getInt();
@@ -204,6 +223,11 @@ public class CityConfig {
 			atmItemID = config.getItem("ATM Item", 18016).getInt();
 			bankerSpawnerID = config.getItem("Banker Spawner", 18018).getInt();
 			idCardID = config.getItem("ID Card", 18019).getInt();
+			accessCardID = config.getItem("Access Card", 18020).getInt();
+			oilBucketID = config.getItem("Oil Bucket", 18021).getInt();
+			petrolBucketID = config.getItem("Petrol Bucket", 18022).getInt();
+			dieselBucketID = config.getItem("Diesel Bucket", 18023).getInt();
+			redDieselBucketID = config.getItem("Red Diesel Bucket", 18024).getInt();
 	
 			ringItemID = config.getItem("Ring Item", 18064).getInt();
 			diamondRingID = config.getItem("Diamond Ring", 18065).getInt();

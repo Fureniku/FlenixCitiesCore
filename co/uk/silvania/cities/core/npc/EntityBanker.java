@@ -27,6 +27,7 @@ import net.minecraft.entity.ai.EntityAITargetNonTamed;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
@@ -62,6 +63,7 @@ public class EntityBanker extends EntityAnimal {
 		this.setSize(0.6F, 1.8F);
         this.isImmuneToFire = false;
 		float var2 = 0.25F;
+		this.isEntityInvulnerable();
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new NPCAITempt(this, 1.1D, CoreItems.note10000.itemID, false));
         this.tasks.addTask(2, new NPCAITempt(this, 1.0D, CoreItems.note5000.itemID, false));
@@ -103,7 +105,7 @@ public class EntityBanker extends EntityAnimal {
 		super.readEntityFromNBT(nbt);
 		wander = nbt.getBoolean("wander");
 		locked = nbt.getBoolean("entityLocked");
-		invincible = nbt.getBoolean("entityInvincible");
+		invincible = nbt.getBoolean("Invulnerable");
 		
 		playerName = nbt.getString("playerName");
 		npcName = nbt.getString("npcName");
@@ -118,7 +120,7 @@ public class EntityBanker extends EntityAnimal {
 			System.out.println("NBT values are set as follows:");
 			System.out.println("Wander: " + wander);
 			System.out.println("Locked: " + locked);
-			System.out.println("Invincible: " + invincible);
+			System.out.println("Invulnerable: " + invincible);
 			System.out.println("Player Name: " + playerName);
 			System.out.println("NPC Name: " + npcName);
 			System.out.println("Despawn Time: " + despawnTime);
@@ -129,6 +131,32 @@ public class EntityBanker extends EntityAnimal {
 			System.out.println("Boots ID: " + bootsID);
 		}
 	}
+	
+	@Override
+    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
+		System.out.println("Overriding");
+        if (this.isEntityInvulnerable()) {
+            return false;
+        }
+        else
+        {
+            this.fleeingTick = 60;
+
+            if (!this.isAIEnabled())
+            {
+                AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+
+                if (attributeinstance.getModifier(field_110179_h) == null)
+                {
+                    attributeinstance.applyModifier(field_110181_i);
+                }
+            }
+
+            this.entityToAttack = null;
+            this.inLove = 0;
+            return super.attackEntityFrom(par1DamageSource, par2);
+        }
+    }
 	
 	public boolean isAIEnabled() {
 		if (wander == true) {

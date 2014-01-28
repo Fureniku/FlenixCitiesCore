@@ -1,4 +1,4 @@
-package co.uk.silvania.cities;
+package co.uk.silvania.cities.core.world;
 
 import java.util.Random;
 
@@ -87,6 +87,12 @@ public class WorldGen implements IWorldGenerator {
 			int yCoord = random.nextInt(36);
 			int zCoord = chunkZ + random.nextInt(16);
 			(new WorldGenMinable(CoreBlocks.crystalOre.blockID, 12)).generate(world, random, xCoord, yCoord, zCoord);
+		}
+		for(int i = 0; i < 1; i++) {
+			int xCoord = chunkX + random.nextInt(16);
+			int yCoord = random.nextInt(32);
+			int zCoord = chunkZ + random.nextInt(16);
+			(new WorldGenLakes(CoreBlocks.blockOil.blockID)).generate(world, random, xCoord, yCoord, zCoord);
 		}
 	}
     

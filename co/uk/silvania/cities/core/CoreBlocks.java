@@ -2,10 +2,15 @@ package co.uk.silvania.cities.core;
 
 import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.blocks.entity.FloatingShelvesBlock;
+import co.uk.silvania.cities.core.liquid.*;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerBlock;
+import co.uk.silvania.cities.econ.VillageHandlerBlacksmith;
 import co.uk.silvania.cities.econ.atm.TileEntityATMBlock;
+import co.uk.silvania.cities.econ.store.AdminShopBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 public class CoreBlocks {
 	private static CityConfig config;
@@ -23,6 +28,7 @@ public class CoreBlocks {
 	public static Block atmBlock;
 	public static Block floatingShelvesBlock;
 	public static Block npcSpawnerBlock;
+	public static Block adminShopBlock;
 	
 	public static Block skyscraperBlocks;
 	public static Block stainedGlass;
@@ -41,14 +47,45 @@ public class CoreBlocks {
 	public static Block drywallGreen;
 	public static Block drywallGrey;
 	public static Block lightingRotateBlocks;
+	public static Block stainedGlassPane;
+	public static Block styledGlassPane;
+	public static Block styledGlassWhitePane;
 	
 	public static Block rebarBlock;
 	
+	public static Block blockOil;
+	public static Block blockPetrol;
+	public static Block blockDiesel;
+	public static Block blockRedDiesel;
+	
+	public static Fluid fluidOil;
+	public static Fluid fluidPetrol;
+	public static Fluid fluidDiesel;
+	public static Fluid fluidRedDiesel;
+	
 	public static void init() {
+		initFluids();
 		initOres();
 		initBlocks();
 		initEconBlocks();
 		initSpecialBlocks();
+	}
+	
+	public static void initFluids() {
+		fluidOil = new Fluid("oil").setBlockID(config.blockOilID).setViscosity(12000).setUnlocalizedName("fluidOil");
+		fluidPetrol = new Fluid("petrol").setBlockID(config.blockPetrolID).setViscosity(1000).setUnlocalizedName("fluidOil");
+		fluidDiesel = new Fluid("diesel").setBlockID(config.blockDieselID).setViscosity(800).setUnlocalizedName("fluidOil");
+		fluidRedDiesel = new Fluid("reddiesel").setBlockID(config.blockRedDieselID).setViscosity(800).setUnlocalizedName("fluidOil");
+		
+		FluidRegistry.registerFluid(fluidOil);
+		FluidRegistry.registerFluid(fluidPetrol);
+		FluidRegistry.registerFluid(fluidDiesel);
+		FluidRegistry.registerFluid(fluidRedDiesel);
+		
+		blockOil = new BlockOil(config.blockOilID, fluidOil);
+		blockPetrol = new BlockPetrol(config.blockPetrolID, fluidPetrol);
+		blockDiesel = new BlockDiesel(config.blockDieselID, fluidDiesel);
+		blockRedDiesel = new BlockRedDiesel(config.blockRedDieselID, fluidRedDiesel);
 	}
 	
 	public static void initOres() {
@@ -86,12 +123,16 @@ public class CoreBlocks {
     	drywallGreen = new BlockDrywall(config.drywallGreenID, FlenixCities_Core.modid + ":drywallGreen", FlenixCities_Core.modid + ":drywallGreen", true);
     	drywallGrey = new BlockDrywall(config.drywallGreyID, FlenixCities_Core.modid + ":drywallGrey", FlenixCities_Core.modid + ":drywallGrey", true);
     	lightingRotateBlocks = new LightingRotateBlocks(config.lightingRotateBlocksID).setUnlocalizedName("lightingRotateBlocks");
+    	styledGlassPane = new StainedGlassPane(config.styledGlassPaneID, FlenixCities_Core.modid + ":styledGlass0", FlenixCities_Core.modid + ":styledGlass0", false).setUnlocalizedName("styledGlassPane");
+    	styledGlassWhitePane = new StainedGlassPane(config.styledGlassWhitePaneID, FlenixCities_Core.modid + ":styledGlassWhite0", FlenixCities_Core.modid + ":styledGlassWhite0", false).setUnlocalizedName("styledGlassWhitePane");
+    	
     	
     	rebarBlock = new RebarBlock(config.rebarBlockID).setUnlocalizedName("rebarBlock");
 	}
 	
 	public static void initSpecialBlocks() {
 		npcSpawnerBlock = new NPCSpawnerBlock(config.npcSpawnerBlockID).setUnlocalizedName("npcSpawnerBlock");
+		adminShopBlock = new AdminShopBlock(500).setUnlocalizedName("adminShopBlock");
 	}
 
 }

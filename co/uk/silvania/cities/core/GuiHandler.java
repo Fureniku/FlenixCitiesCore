@@ -1,4 +1,4 @@
-package co.uk.silvania.cities;
+package co.uk.silvania.cities.core;
 
 import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.blocks.container.ContainerFloatingShelves;
@@ -39,7 +39,7 @@ public class GuiHandler implements IGuiHandler {
 				}	
 			}
 		}
-			return null;	
+		return null;	
     }
 
     @Override
@@ -54,7 +54,7 @@ public class GuiHandler implements IGuiHandler {
     		case 1: {
     			TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
     			if(tileEntity instanceof TileEntityFloatingShelves) {
-    				return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity, world, x, y, z);
+    				return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
     			}	
     		}
     		case 2: {
