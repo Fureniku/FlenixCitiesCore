@@ -58,6 +58,7 @@ public class CityConfig {
 	public static int blockPetrolID;
 	public static int blockDieselID;
 	public static int blockRedDieselID;
+	public static int adminShopBlockID;
 	
 	public static int atmID;
 	public static int floatingShelvesID;
@@ -180,6 +181,7 @@ public class CityConfig {
 			blockRedDieselID = config.getBlock("Red Diesel", 1463).getInt();
 			styledGlassPaneID = config.getBlock("Styled Glass Pane", 1464).getInt();
 			styledGlassWhitePaneID = config.getBlock("Styled Glass Pane (White)", 1465).getInt();
+			adminShopBlockID = config.getBlock("Admin Shop Block", 1466).getInt();
 			
 			verticalPoster1ID = config.getBlock("Vertical Poster 1", 1441).getInt();
 			verticalPoster2ID = config.getBlock("Vertical Poster 2", 1442).getInt();

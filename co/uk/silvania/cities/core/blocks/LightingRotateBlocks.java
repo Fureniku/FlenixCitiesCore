@@ -39,7 +39,7 @@ public class LightingRotateBlocks extends Block {
 
 		for(int i = 0; i < icons.length; i++) {
 			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)) + "0");
-			//sideIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":ceilingtile");	
+			//sideIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":ceilingTile");	
 		}
 	}
 

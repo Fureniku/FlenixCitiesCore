@@ -132,7 +132,7 @@ public class CoreBlocks {
 	
 	public static void initSpecialBlocks() {
 		npcSpawnerBlock = new NPCSpawnerBlock(config.npcSpawnerBlockID).setUnlocalizedName("npcSpawnerBlock");
-		adminShopBlock = new AdminShopBlock(500).setUnlocalizedName("adminShopBlock");
+		adminShopBlock = new AdminShopBlock(config.adminShopBlockID).setUnlocalizedName("adminShopBlock");
 	}
 
 }
