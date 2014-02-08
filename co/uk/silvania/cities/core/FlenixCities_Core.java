@@ -41,7 +41,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.7")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.7.1")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket"}, packetHandler = ServerPacketHandler.class))
@@ -105,6 +105,7 @@ public class FlenixCities_Core {
 	    		System.out.println("I DO let people who ask nicely use it, and my code allows for that; LifeMMO is a perfect example.");
 	    		System.out.println("");
 	    		System.out.println("Yours, Flenix (flenix@silvania.co.uk)");
+	    		System.out.println("PS. please include your Technic Pack link when contacting me!");
 	    		System.out.println("##########################################################");
 	    		System.out.println("##########################################################");
 	    		System.out.println("##########################################################");
