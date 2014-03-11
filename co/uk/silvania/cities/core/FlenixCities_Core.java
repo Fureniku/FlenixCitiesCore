@@ -3,7 +3,6 @@ package co.uk.silvania.cities.core;
 import java.io.File;
 
 import co.uk.silvania.cities.api.npc.CommonSidedProxy;
-import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.core.items.CraftingIngredientItems;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
@@ -11,6 +10,8 @@ import co.uk.silvania.cities.core.world.WorldGen;
 import co.uk.silvania.cities.econ.VillageHandlerBlacksmith;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.VanillaItemValueConfig;
+import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -41,10 +42,10 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.7.1")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.1")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
-	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket"}, packetHandler = ClientPacketHandler.class),
-	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket"}, packetHandler = ServerPacketHandler.class))
+	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ClientPacketHandler.class),
+	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ServerPacketHandler.class))
 public class FlenixCities_Core { 
 	
 	public static final String modid = "flenixcities";
@@ -88,9 +89,9 @@ public class FlenixCities_Core {
     		if (cfgfile.getAbsolutePath().toLowerCase().contains("lifemmo")) {
     			System.out.println("Technic has been detected!");
     			System.out.println("Ah, but I see you're using LifeMMO. In that case, an agreement has been reached. Carry on.");
-    		//} else if (cfgfile.getAbsolutePath().toLowerCase().contains("")) {
-    			//System.out.println("Technic has been detected!");
-    			//System.out.println("Ah, but I see you're using GMC. In that case, an agreement has been reached. Carry on.");
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("lg-city-life")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using LG's City Life. In that case, an agreement has been reached. Carry on.");
     		} else {
     			System.out.println("##########################################################");
     			System.out.println("##########################################################");
@@ -149,6 +150,7 @@ public class FlenixCities_Core {
 	        
 	        GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
 	        GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
+	        GameRegistry.registerTileEntity(TileEntityAdminShop.class, "tileEntityAdminShop");
 	        GameRegistry.registerTileEntity(NPCSpawnerEntity.class, "npcSpawnerBlock");
 	        
 	        LanguageRegistry.instance().addStringLocalization("itemGroup.tabEcon", "en_US", "Cities: Economy");            
@@ -163,7 +165,7 @@ public class FlenixCities_Core {
 	        OreDictionary.registerOre("oreRuby", new ItemStack(CoreBlocks.rubyOre));
 	        OreDictionary.registerOre("oreTecmonium", new ItemStack(CoreBlocks.tecmoniumOre));
 	        OreDictionary.registerOre("oreCrystal", new ItemStack(CoreBlocks.crystalOre));
-	        OreDictionary.registerOre("oreSapphire", new ItemStack(CoreBlocks.sapphireOre));
+	        //OreDictionary.registerOre("oreSapphire", new ItemStack(CoreBlocks.sapphireOre));
 	        OreDictionary.registerOre("ingotCopper", new ItemStack(CoreItems.copperIngot));
 	        OreDictionary.registerOre("ingotTin", new ItemStack(CoreItems.tinIngot));
 	        OreDictionary.registerOre("ingotSilver", new ItemStack(CoreItems.silverIngot));
@@ -171,7 +173,7 @@ public class FlenixCities_Core {
 	        OreDictionary.registerOre("ingotTecmonium", new ItemStack(CoreItems.tecmoniumIngot));
 	        OreDictionary.registerOre("gemRuby", new ItemStack(CoreItems.rubyItem));
 	        OreDictionary.registerOre("gemCrystal", new ItemStack(CoreItems.crystalItem));
-	        OreDictionary.registerOre("gemSapphire", new ItemStack(CoreItems.sapphireItem));
+	        //OreDictionary.registerOre("gemSapphire", new ItemStack(CoreItems.sapphireItem));
     	}
     }
                

@@ -58,21 +58,7 @@ public class TileEntityATMBlock extends BlockContainer {
 	@Override
 	public int getRenderType() {
 		return -1;
-	}
-	
-	public static double checkBalance(EntityPlayer player, World world) {
-		double balance = 0;
-		String victimPlayer = DebitCardItem.checkCardOwner(player);
-		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
-		if (nbt.hasKey(victimPlayer)) {
-			NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayer);
-			if (playernbt.hasKey("Balance")) {
-				balance = playernbt.getDouble("Balance");
-			}
-		}
-		return balance;
-	}
-	
+	}	
 
     // Huge thanks to "maxpowa" in helping me get this working!!
     @Override
@@ -101,7 +87,7 @@ public class TileEntityATMBlock extends BlockContainer {
                 	}
                 }
                 
-            } else if (player.getHeldItem() == null) {
+            } else {
             	if (player.isSneaking()) {
             		depositAllCash(player, world);
             	} else
@@ -137,7 +123,7 @@ public class TileEntityATMBlock extends BlockContainer {
                         nbt.setCompoundTag(player.username, playernbt);
                     }
                     NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-                    player.addChatMessage(coin.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + playernbt.getDouble("Balance") + " " + CityConfig.currencyLargePlural);
+                    player.addChatMessage(coin.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.roundedBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
                     NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
                     --item.stackSize;
                 } else if (player.getHeldItem().getItem() instanceof ItemNote) {
@@ -164,7 +150,7 @@ public class TileEntityATMBlock extends BlockContainer {
                         nbt.setCompoundTag(player.username, playernbt);
                     }
                     NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-                    player.addChatMessage(note.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + playernbt.getDouble("Balance") + " " + CityConfig.currencyLargePlural);
+                    player.addChatMessage(note.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.roundedBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
                     NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
                     --item.stackSize;
                 }
@@ -177,19 +163,18 @@ public class TileEntityATMBlock extends BlockContainer {
                     currentBalance = playernbt.getDouble("Balance");
                 }
             }
-            
+
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
             try {
             	out.writeUTF("InitBalance");
-            	out.writeDouble(currentBalance);
+            	out.writeDouble(EconUtils.getBalance(player, world));
             	
             	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
             	
             	Player par1Player = (Player)player;
             	
             	PacketDispatcher.sendPacketToPlayer(packet, par1Player);
-            	System.out.println("Balance Packet sent! Value: " + currentBalance);
             }
             catch (IOException ex) {
             	System.out.println("Packet Failed!");

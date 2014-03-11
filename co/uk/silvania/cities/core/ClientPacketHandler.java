@@ -19,8 +19,18 @@ public class ClientPacketHandler implements IPacketHandler {
 	double balance;
 	public static double initBal;
 	public static double shortValue;
+	public static double invBalance;
 	public static int newPin;
 	public static boolean foundPlugin;
+	
+	public static String buyPrice1;
+	public static String sellPrice1;
+	public static String buyPrice2;
+	public static String sellPrice2;
+	public static String buyPrice3;
+	public static String sellPrice3;
+	public static String buyPrice4;
+	public static String sellPrice4;
 	
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
@@ -45,9 +55,10 @@ public class ClientPacketHandler implements IPacketHandler {
         	System.out.println("FC Client Packet Received: " + pktID + " " + balance);
         	if (pktID.equalsIgnoreCase("InitBalance")) {
         		initBal = balance;
-        		System.out.println("initbal's value is " + initBal);
         	} else if (pktID.equalsIgnoreCase("ShortAmount")) {
         		shortValue = balance;
+        	} else if (pktID.equalsIgnoreCase("InventoryBalance")) {
+        		invBalance = balance;
         	}
         } catch (IOException e) {
         	System.out.println("Failed to read packet [Balance]");
@@ -70,63 +81,23 @@ public class ClientPacketHandler implements IPacketHandler {
     }
     
 	public static String ownerName;
-	
-	public static String item1;
-	public static int item1Qty;
-	public static double item1BuyValue ;
-	public static double item1SellValue;
-	
-	public static String item2;;
-	public static int item2Qty;
-	public static double item2BuyValue;
-	public static double item2SellValue;
-	
-	public static String item3;
-	public static int item3Qty;
-	public static double item3BuyValue;
-	public static double item3SellValue;
-	
-	public static String item4;
-	public static int item4Qty;
-	public static double item4BuyValue;
-	public static double item4SellValue;
     
     private void handleShopPacket(Packet250CustomPayload packet, Player player) {
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
         System.out.println("Packet get [CLIENT-SHOP]");
         try {
-        	String pktID = dis.readUTF();
         	ownerName = dis.readUTF();
+        	buyPrice1 = "" + dis.readDouble();
+        	sellPrice1 = "" +  dis.readDouble();
+        	buyPrice2 = "" + dis.readDouble();
+        	sellPrice2 = "" + dis.readDouble();
+        	buyPrice3 = "" + dis.readDouble();
+        	sellPrice3 = "" + dis.readDouble();
+        	buyPrice4 = "" + dis.readDouble();
+        	sellPrice4 = "" + dis.readDouble();
         	
-        	item1 = dis.readUTF();
-        	item1Qty = dis.readInt();
-        	item1BuyValue = dis.readDouble();
-        	item1SellValue = dis.readDouble();
-        	
-        	item2 = dis.readUTF();
-        	item2Qty = dis.readInt();
-        	item2BuyValue = dis.readDouble();
-        	item2SellValue = dis.readDouble();
-        	
-        	item3 = dis.readUTF();
-        	item3Qty = dis.readInt();
-        	item3BuyValue = dis.readDouble();
-        	item3SellValue = dis.readDouble();
-        	
-        	item4 = dis.readUTF();
-        	item4Qty = dis.readInt();
-        	item4BuyValue = dis.readDouble();
-        	item4SellValue = dis.readDouble();
-        	
-        	System.out.println("FC Client Packet Received: " + pktID + " " + ownerName);
-        	if (pktID.equalsIgnoreCase("InitBalance")) {
-        		initBal = balance;
-        		System.out.println("initbal's value is " + initBal);
-        	} else if (pktID.equalsIgnoreCase("ShortAmount")) {
-        		shortValue = balance;
-        	}
         } catch (IOException e) {
-        	System.out.println("Failed to read packet [Balance]");
+        	System.out.println("Failed to read packet [Shop]");
         }
         finally {}
     }

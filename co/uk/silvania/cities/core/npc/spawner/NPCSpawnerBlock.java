@@ -1,8 +1,8 @@
 package co.uk.silvania.cities.core.npc.spawner;
 
 import co.uk.silvania.cities.core.FlenixCities_Core;
-import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.core.npc.EntityBanker;
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityVillager;

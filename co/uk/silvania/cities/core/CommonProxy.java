@@ -151,6 +151,7 @@ public class CommonProxy {
     	LanguageRegistry.addName(CoreBlocks.styledGlassWhitePane, "Styled Glass Pane");
         
         LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
+        LanguageRegistry.addName(CoreBlocks.adminShopBlock, "Floating Shelves (Unlimited)");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 0), "ATM Stone");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 4), "ATM Stone Brick");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 8), "ATM City White");

@@ -115,10 +115,12 @@ public class DebitCardItem extends Item {
 	
 	public static String checkCardOwner(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
-		if (held.itemID != CoreItems.debitCardNew.itemID){
-			return "";
+		if (held != null) {
+			if (held.itemID == CoreItems.debitCardNew.itemID) {
+				return held.stackTagCompound.getString("playerName");
+			}
 		}
-		return held.stackTagCompound.getString("playerName");
+		return "";
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -5,12 +5,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import co.uk.silvania.cities.core.CityConfig;
+import co.uk.silvania.cities.core.ClientPacketHandler;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.econ.money.ItemCoin;
 import co.uk.silvania.cities.econ.money.ItemNote;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -29,6 +32,10 @@ public class EconUtils {
 	 * parseDouble(string) - Turn a string to a double
 	 * parseInt(string) - Turn a string to an int
 	 * moveIntToBalance - Turn an int into a double, used for balance stuff
+	 * 
+	 * reqClientInventoryBalance() - Fires off and receives a response packet, giving you the client's correct inventory balance. Uses packets to avoid item ghosts.
+	 * reqClientBankBalance() - Tells the client how much is in the players bank balance.
+	 * Both of these are CLIENT-side, for use in things like GUI and on-screen rendering. Please don't call them server-side, you will crash.
 	 * 
 	 * giveChange(d paid, d cost, player) - Calculates the change owed to a player. First double is the amount the player gave, second is the value.
 	 * getAllInventoryCash(player) - Calculates the total amount of cash in the players inventory.
@@ -63,6 +70,52 @@ public class EconUtils {
 	public static double moveIntToBalance(int i) {
 		double newBalance = i;
 		return newBalance;
+	}
+	
+	public static double reqClientInventoryBalance() {
+		return ClientPacketHandler.invBalance;
+	}
+	
+	public static double reqClientBankBalance() {
+		return ClientPacketHandler.initBal;
+	}
+	
+	//Send info to the client with players bank balance.
+	public static void triggerServerBankBalancePacket(EntityPlayer player, World world) {
+        ByteArrayOutputStream bt = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(bt);
+        try {
+        	out.writeUTF("InitBalance");
+        	out.writeDouble(getBalance(player, world));
+        	
+        	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
+        	
+        	Player par1Player = (Player)player;
+        	
+        	PacketDispatcher.sendPacketToPlayer(packet, par1Player);
+        }
+        catch (IOException ex) {
+        	System.out.println("Packet Failed!");
+        }
+	}
+	
+	//Send info to the client with players inventory balance.
+	public static void triggerServerInventoryBalancePacket(EntityPlayer player, World world) {
+        ByteArrayOutputStream bt = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(bt);
+        try {
+        	out.writeUTF("InventoryBalance");
+        	out.writeDouble(getInventoryCash(player));
+        	
+        	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
+        	
+        	Player par1Player = (Player)player;
+        	
+        	PacketDispatcher.sendPacketToPlayer(packet, par1Player);
+        }
+        catch (IOException ex) {
+        	System.out.println("Packet Failed!");
+        }
 	}
 	
 	//This takes the amount paid against the total cost, and pays the player the correct change.
@@ -159,28 +212,25 @@ public class EconUtils {
 		for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
+				double moneyValue = 0;
 				if (stack.getItem() instanceof ItemNote) {
-					int quantity = stack.stackSize;
 					ItemNote note = (ItemNote) stack.getItem();
-					double noteValue = note.getMoneyValue();
-					
-					double totalValue = noteValue * quantity;
-					if (CityConfig.debugMode == true) {
-						System.out.println("There is a note stack with value of " + noteValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
+					if (note.getMoneyValue() >= 0) {
+						moneyValue = note.getMoneyValue();
 					}
-					balance = balance + totalValue;
 				} else if (stack.getItem() instanceof ItemCoin) {
-					int quantity = stack.stackSize;
 					ItemCoin coin = (ItemCoin) stack.getItem();
-					double coinValue = coin.getMoneyValue();
-					
-					double totalValue = coinValue * quantity;
-					
-					if (CityConfig.debugMode == true) {
-						System.out.println("There is a coin stack with value of " + coinValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
+					if (coin.getMoneyValue() >= 0) {
+						moneyValue = coin.getMoneyValue();
 					}
-					balance = balance + totalValue;
 				}
+				int quantity = stack.stackSize;
+				double totalValue = moneyValue * quantity;
+				
+				if (CityConfig.debugMode == true) {
+					System.out.println("There is a money stack with value of " + moneyValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
+				}
+				balance = balance + totalValue;
 			}
 		}
 		return balance;
@@ -282,6 +332,59 @@ public class EconUtils {
 		}
 		//If they don't have enough cash, that's it - they can't buy it.
 		//Later, I'll add a secondary option for paying by card here.
+		return false;
+	}
+	
+	//Almost identical to findCashInInv, except it returns the value of the change.
+	//Useful for player owned shop systems, as change should be taken from the player and NOT generated.
+	public static double findCashInInventoryWithChange(EntityPlayer player, double value) {
+		if (getInventoryCash(player) >= value) {
+			for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
+				ItemStack stack = player.inventory.getStackInSlot(i);
+				if (stack != null) {
+					if (stack.getItem() instanceof ItemNote || stack.getItem() instanceof ItemCoin) {
+						int qty = stack.stackSize;
+						double noteValue = 0;
+						double coinValue = 0;
+						if (stack.getItem() instanceof ItemNote) {
+							ItemNote note = (ItemNote) stack.getItem();
+							noteValue = note.getMoneyValue();
+						}
+						if (stack.getItem() instanceof ItemCoin) {
+							ItemCoin coin = (ItemCoin) stack.getItem();
+							coinValue = coin.getMoneyValue();
+						}
+						double moneyValue = noteValue + coinValue;
+						double currentlyPaid = 0;
+						for(int x = 1; x <= qty; x++) {
+							if (CityConfig.debugMode) {
+								System.out.println("Nested Loop! Current stack value is: " + (moneyValue * x) + " - The target is " + value);
+							}
+							if (currentlyPaid + (moneyValue * x) >= value) {
+								System.out.println("This is fired if the moneyValue is higher than the value, allegedly");
+								if (x == qty) {
+									player.inventory.setInventorySlotContents(i, null);
+								} else
+									player.inventory.decrStackSize(i, x);
+								double paidAmount = moneyValue * x;
+								System.out.println("Give change: " + (paidAmount - value));
+								giveChange(paidAmount, value, player);
+								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
+								return paidAmount;
+							}
+						}
+						currentlyPaid = currentlyPaid + (moneyValue * qty);
+						player.inventory.setInventorySlotContents(i, null);
+						((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
+					}
+				}
+			}
+		}
+		return 0;
+	}
+	
+	//Attempt to give change from an inventory, such as a shop's cash register.
+	public static boolean giveChangeFromInventory(EntityPlayer player, World world, int x, int y, int z, double value) {
 		return false;
 	}
 	
@@ -421,6 +524,14 @@ public class EconUtils {
 		}
 		return false;
 	}
+	
+	//Used for printing the balance ONLY. Do NOT use anywhere money values are actually altered!
+	//Simply rounds any double to two decimal places, stops bugs where doubles add micro factions.
+	public static double roundedBalance(double bal) {
+		int balance = (int) Math.round(bal * 100);
+		double bal2 = balance / 100;
+		return bal2;
+	}
 
 	//Quick n' easy method of getting the players balance.
 	public static double getBalance(EntityPlayer player, World world) {
@@ -436,6 +547,7 @@ public class EconUtils {
                 balance = playernbt.getDouble("Balance");
             }
         }
-        return balance;
+        double bal = roundedBalance(balance);
+        return bal;
 	}
 }

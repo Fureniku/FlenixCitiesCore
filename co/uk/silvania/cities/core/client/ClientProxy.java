@@ -2,7 +2,6 @@ package co.uk.silvania.cities.core.client;
 
 import co.uk.silvania.cities.core.CommonProxy;
 import co.uk.silvania.cities.core.blocks.*;
-import co.uk.silvania.cities.core.blocks.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.core.client.models.BankerModel;
 import co.uk.silvania.cities.core.client.models.TileEntityATMRenderer;
 import co.uk.silvania.cities.core.client.models.TileEntityFloatingShelvesRenderer;
@@ -11,6 +10,8 @@ import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.RenderBanker;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
+import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -31,7 +32,10 @@ public class ClientProxy extends CommonProxy {
     	if (userName.equalsIgnoreCase("jesselevi") 
     			|| userName.equalsIgnoreCase("mister__wolters") 
     			|| userName.equalsIgnoreCase("1victor2000") 
-    			|| userName.equalsIgnoreCase("sophie_sushi") 
+    			|| userName.equalsIgnoreCase("sophie_sushi")
+    			|| userName.equalsIgnoreCase("Doutzen009") 
+    			|| userName.equalsIgnoreCase("generaljari") 
+    			|| userName.equalsIgnoreCase("padfis") 
     			|| userName.equalsIgnoreCase("sephiroku")) {
     		return true;
     	} else
@@ -42,6 +46,7 @@ public class ClientProxy extends CommonProxy {
     public void registerRenderThings() {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityATMEntity.class, new TileEntityATMRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFloatingShelves.class, new TileEntityFloatingShelvesRenderer());
+    	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAdminShop.class, new TileEntityFloatingShelvesRenderer());
     	
     	ClientRegistry.bindTileEntitySpecialRenderer(NPCSpawnerEntity.class, new NPCSpawnerRenderer());
     	

@@ -1,12 +1,12 @@
 package co.uk.silvania.cities.core;
 
 import co.uk.silvania.cities.core.blocks.*;
-import co.uk.silvania.cities.core.blocks.entity.FloatingShelvesBlock;
 import co.uk.silvania.cities.core.liquid.*;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerBlock;
 import co.uk.silvania.cities.econ.VillageHandlerBlacksmith;
 import co.uk.silvania.cities.econ.atm.TileEntityATMBlock;
-import co.uk.silvania.cities.econ.store.AdminShopBlock;
+import co.uk.silvania.cities.econ.store.entity.AdminShopBlock;
+import co.uk.silvania.cities.econ.store.entity.FloatingShelvesBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.Fluid;
