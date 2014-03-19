@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
 
@@ -39,12 +40,26 @@ public class GuiAdminShop extends GuiContainer {
 	String sellPrice3 = ClientPacketHandler.sellPrice3;
 	String buyPrice4 = ClientPacketHandler.buyPrice4;
 	String sellPrice4 = ClientPacketHandler.sellPrice4;
+	
+	private ItemStack slot0;
+	private ItemStack slot1;
+	private ItemStack slot2;
+	private ItemStack slot3;
+	
+	private TileEntityAdminShop shelvesEntity;
 
-	public GuiAdminShop(InventoryPlayer invPlayer, TileEntityAdminShop te) {
-		super(new ContainerAdminShop(invPlayer, te));
-		x = te.xCoord;
-		y = te.yCoord;
-		z = te.zCoord;
+	public GuiAdminShop(InventoryPlayer invPlayer, TileEntityAdminShop shelvesEntity) {
+		super(new ContainerAdminShop(invPlayer, shelvesEntity));
+		this.shelvesEntity = shelvesEntity;
+		
+		x = shelvesEntity.xCoord;
+		y = shelvesEntity.yCoord;
+		z = shelvesEntity.zCoord;
+		
+		this.slot0 = this.shelvesEntity.getStackInSlot(0);
+		this.slot1 = this.shelvesEntity.getStackInSlot(1);
+		this.slot2 = this.shelvesEntity.getStackInSlot(2);
+		this.slot3 = this.shelvesEntity.getStackInSlot(3);
 		
 		xSize = 256;
 		ySize = 223;
@@ -65,6 +80,14 @@ public class GuiAdminShop extends GuiContainer {
 	public GuiTextField slot2QtyText;
 	public GuiTextField slot3QtyText;
 	public GuiTextField slot4QtyText;
+	public GuiButton buyButton1;
+	public GuiButton sellButton1;
+	public GuiButton buyButton2;
+	public GuiButton sellButton2;
+	public GuiButton buyButton3;
+	public GuiButton sellButton3;
+	public GuiButton buyButton4;
+	public GuiButton sellButton4;
 	
 	int slot1Qty = 1;
 	int slot2Qty = 1;
@@ -72,10 +95,7 @@ public class GuiAdminShop extends GuiContainer {
 	int slot4Qty = 1;
 	
 	public boolean isShopOwner() {
-		String currentUser = mc.thePlayer.username;
-		String owner = ClientPacketHandler.ownerName;
-		
-		if (currentUser.equalsIgnoreCase(owner) && mc.thePlayer.capabilities.isCreativeMode) {
+		if (mc.thePlayer.capabilities.isCreativeMode) {
 			return true;
 		}
 		return false;
@@ -100,6 +120,11 @@ public class GuiAdminShop extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
+		this.slot0 = this.shelvesEntity.getStackInSlot(0);
+		this.slot1 = this.shelvesEntity.getStackInSlot(1);
+		this.slot2 = this.shelvesEntity.getStackInSlot(2);
+		this.slot3 = this.shelvesEntity.getStackInSlot(3);
+		
 		buttonList.add(new InvisibleButton(1, guiLeft + 34, guiTop + 51, 38, 14, "")); //Buy 1
 		buttonList.add(new InvisibleButton(2, guiLeft + 34, guiTop + 73, 38, 14, "")); //Buy 2
 		buttonList.add(new InvisibleButton(3, guiLeft + 34, guiTop + 95, 38, 14, "")); //Buy 3
@@ -112,14 +137,22 @@ public class GuiAdminShop extends GuiContainer {
 		buttonList.add(new InvisibleButton(9, guiLeft - 23, guiTop + 14, 26, 28, "")); //Buy View Tab
 		buttonList.add(new InvisibleButton(10, guiLeft - 23, guiTop + 43, 26, 28, "")); //Sell Overview Tab
 		
-		buttonList.add(new GuiButton(16, guiLeft + 187, guiTop + 48, 30, 20, "Buy"));
-		buttonList.add(new GuiButton(17, guiLeft + 221, guiTop + 48, 30, 20, "Sell"));
-		buttonList.add(new GuiButton(18, guiLeft + 187, guiTop + 70, 30, 20, "Buy"));
-		buttonList.add(new GuiButton(19, guiLeft + 221, guiTop + 70, 30, 20, "Sell"));
-		buttonList.add(new GuiButton(20, guiLeft + 187, guiTop + 92, 30, 20, "Buy"));
-		buttonList.add(new GuiButton(21, guiLeft + 221, guiTop + 92, 30, 20, "Sell"));
-		buttonList.add(new GuiButton(22, guiLeft + 187, guiTop + 114, 30, 20, "Buy"));
-		buttonList.add(new GuiButton(23, guiLeft + 221, guiTop + 114, 30, 20, "Sell"));
+		buyButton1 = new GuiButton(16, guiLeft + 187, guiTop + 48, 30, 20, "Buy");
+		sellButton1 = new GuiButton(17, guiLeft + 221, guiTop + 48, 30, 20, "Sell");
+		buyButton2 = new GuiButton(18, guiLeft + 187, guiTop + 70, 30, 20, "Buy");
+		sellButton2 = new GuiButton(19, guiLeft + 221, guiTop + 70, 30, 20, "Sell");
+		buyButton3 = new GuiButton(20, guiLeft + 187, guiTop + 92, 30, 20, "Buy");
+		sellButton3 = new GuiButton(21, guiLeft + 221, guiTop + 92, 30, 20, "Sell");
+		buyButton4 = new GuiButton(22, guiLeft + 187, guiTop + 114, 30, 20, "Buy");
+		sellButton4 = new GuiButton(23, guiLeft + 221, guiTop + 114, 30, 20, "Sell");
+		buttonList.add(buyButton1);
+		buttonList.add(sellButton1);
+		buttonList.add(buyButton2);
+		buttonList.add(sellButton2);
+		buttonList.add(buyButton3);
+		buttonList.add(sellButton3);
+		buttonList.add(buyButton4);
+		buttonList.add(sellButton4);
 		
 		buttonList.add(new InvisibleButton(24, guiLeft + 146, guiTop + 51, 36, 14, ""));
 		buttonList.add(new InvisibleButton(25, guiLeft + 146, guiTop + 73, 36, 14, ""));
@@ -215,6 +248,7 @@ public class GuiAdminShop extends GuiContainer {
 		if (sellMode == 0) {
 			switch(button.id) {
 			case 16:
+				System.out.println("Button 16 clicked");
 				sendSalePacket("salePacket", 1, EconUtils.parseInt(slot1QtyText.getText()));
 				break;
 			case 17:
@@ -259,7 +293,36 @@ public class GuiAdminShop extends GuiContainer {
 	}
 	
 	@Override
-	protected void drawGuiContainerForegroundLayer(int par1, int par2) {		
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+		if (sell1Text.getText().equals("0") || sell1Text.getText().equals("0.0") || (EconUtils.parseDouble(sell1Text.getText()) > EconUtils.parseDouble(buy1Text.getText()))) {
+			sellButton1.enabled = false;
+		}
+		if (sell2Text.getText().equals("0") || sell2Text.getText().equals("0.0") || (EconUtils.parseDouble(sell2Text.getText()) > EconUtils.parseDouble(buy2Text.getText()))) {
+			sellButton2.enabled = false;
+		}
+		if (sell3Text.getText().equals("0") || sell3Text.getText().equals("0.0") || (EconUtils.parseDouble(sell3Text.getText()) > EconUtils.parseDouble(buy3Text.getText()))) {
+			sellButton3.enabled = false;
+		}
+		if (sell4Text.getText().equals("0") || sell4Text.getText().equals("0.0") || (EconUtils.parseDouble(sell4Text.getText()) > EconUtils.parseDouble(buy4Text.getText()))) {
+			sellButton4.enabled = false;
+		}
+		if (slot0 == null) {
+			buyButton1.enabled = false;
+			sellButton1.enabled = false;
+		}
+		if (slot1 == null) {
+			buyButton2.enabled = false;
+			sellButton2.enabled = false;
+		}
+		if (slot2 == null) {
+			buyButton3.enabled = false;
+			sellButton3.enabled = false;
+		}
+		if (slot3 == null) {
+			buyButton4.enabled = false;
+			sellButton4.enabled = false;
+		}
+		
 		String mode = "";
 		if (sellMode == 0) {
 			mode = " - Buy View";
@@ -271,14 +334,6 @@ public class GuiAdminShop extends GuiContainer {
     	fontRenderer.drawString("Sell", 101, 39, 0xA80000);
     	
 		if (sellMode == 1) {
-			buttonList.add(new GuiButton(36, guiLeft + 187, guiTop + 48, 30, 20, "Buy"));
-			buttonList.add(new GuiButton(37, guiLeft + 221, guiTop + 48, 30, 20, "Sell"));
-			buttonList.add(new GuiButton(38, guiLeft + 187, guiTop + 70, 30, 20, "Buy"));
-			buttonList.add(new GuiButton(39, guiLeft + 221, guiTop + 70, 30, 20, "Sell"));
-			buttonList.add(new GuiButton(40, guiLeft + 187, guiTop + 92, 30, 20, "Buy"));
-			buttonList.add(new GuiButton(41, guiLeft + 221, guiTop + 92, 30, 20, "Sell"));
-			buttonList.add(new GuiButton(42, guiLeft + 187, guiTop + 114, 30, 20, "Buy"));
-			buttonList.add(new GuiButton(43, guiLeft + 221, guiTop + 114, 30, 20, "Sell"));
 			buy1Text.drawTextBox();
 			buy2Text.drawTextBox();
 			buy3Text.drawTextBox();
@@ -491,29 +546,27 @@ public class GuiAdminShop extends GuiContainer {
 	public void sendSalePacket(String id, int itemId, int itemQty) {
         ByteArrayOutputStream bt = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(bt);
-        if (isShopOwner()) {
-			try {
-	        	if (CityConfig.debugMode == true) {
-	        		System.out.println("Sending sale packet to server");
-	        	}
-				out.writeUTF(id);
-				out.writeInt(itemId);
-				out.writeInt(itemQty);
-				
-				out.writeInt(x);
-				out.writeInt(y);
-				out.writeInt(z);
-				Packet250CustomPayload packet = new Packet250CustomPayload("FCSalePacket", bt.toByteArray());
-	            	
-				PacketDispatcher.sendPacketToServer(packet);
-				if (CityConfig.debugMode == true) {
-					System.out.println("Floating Shelves packet sent: " + id + " " + itemId + " " + itemQty + " " + x + " " + y + " " + z);
-				}
+		try {
+	       	if (CityConfig.debugMode == true) {
+	       		System.out.println("Sending sale packet to server");
+	       	}
+			out.writeUTF(id);
+			out.writeInt(itemId);
+			out.writeInt(itemQty);
+			
+			out.writeInt(x);
+			out.writeInt(y);
+			out.writeInt(z);
+			Packet250CustomPayload packet = new Packet250CustomPayload("FCSalePacket", bt.toByteArray());
+	           	
+			PacketDispatcher.sendPacketToServer(packet);
+			if (CityConfig.debugMode == true) {
+				System.out.println("Floating Shelves packet sent: " + id + " " + itemId + " " + itemQty + " " + x + " " + y + " " + z);
 			}
-			catch (IOException ex) {
-				System.out.println("Packet Failed!");
-			}
-        }
+		}
+		catch (IOException ex) {
+			System.out.println("Packet Failed!");
+		}
 	}
 	
 	@Override

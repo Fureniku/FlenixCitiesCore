@@ -148,6 +148,47 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		}
 	}
 	
+	public void buyItem(int i, int q, EntityPlayer player) {
+		ItemStack item = getStackInSlot(i - 1);
+		int invQty = 0;
+		double itemCost = 0;
+		
+		if (i == 1) {
+			itemCost = buyPrice1;
+		}
+		if (i == 2) {
+			itemCost = buyPrice2;
+		}
+		if (i == 3) {
+			itemCost = buyPrice3;
+		}
+		if (i == 4) {
+			itemCost = buyPrice3;
+		}
+		
+		for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
+			ItemStack stack = player.inventory.getStackInSlot(x);
+			if (stack == item) {
+				invQty = invQty + stack.stackSize;
+			}
+		}
+		if (invQty >= q) {
+			int remain = q;
+			for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
+				ItemStack stack = player.inventory.getStackInSlot(x);
+				if (stack == item) {
+					if ((stack.stackSize) >= remain) {
+						stack.splitStack(q);
+						EconUtils.giveChange(itemCost, 0, player);
+					} else {
+						remain = remain - stack.stackSize;
+						setInventorySlotContents(x, null);
+					}
+				}
+			}
+		}
+	}
+	
 	int startSlot = 148; 
 	int endSlot = 184;
 	

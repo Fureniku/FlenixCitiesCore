@@ -3,15 +3,19 @@ package co.uk.silvania.cities.econ.store.entity;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
@@ -20,9 +24,57 @@ import cpw.mods.fml.common.network.Player;
 
 public class AdminShopBlock extends BlockContainer {
 
+	float minX = 0.0F;
+	float minY = 0.0F;
+	float minZ = 0.0F;
+	float maxX = 1.0F;
+	float maxY = 1.0F;
+	float maxZ = 1.0F;
+	
 	public AdminShopBlock(int id) {
 		super(id, Material.iron);
 		this.setCreativeTab(FlenixCities_Core.tabEcon);
+	}
+	
+	@Override
+	public void setBlockBoundsBasedOnState(IBlockAccess block, int x, int y, int z) {
+		int meta = block.getBlockMetadata(x, y, z);
+		if (meta == 0) {
+			minZ = 0.5F;
+			minX = 0.0F;
+			maxZ = 1.0F;
+			maxY = 1.0F;
+		} else if (meta == 1) {
+			minZ = 0.0F;
+			minX = 0.5F;
+			maxZ = 1.0F;
+			maxY = 1.0F;
+		} else if (meta == 2) {
+			minX = 0.0F;
+			minZ = 0.0F;
+			maxX = 1.0F;
+			maxZ = 0.5F;
+		} else {
+			minX = 0.0F;
+			minZ = 0.0F;
+			maxX = 0.5F;
+			maxZ = 1.0F;
+		}
+		this.setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+		return AxisAlignedBB.getAABBPool().getAABB((double)x + this.minX, (double)y + this.minY, (double)z + this.minZ, (double)x + this.maxX, (double)y + this.maxY, (double)z + this.maxZ);
+	}
+	
+	@Override
+	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axis, List list, Entity entity) {
+        AxisAlignedBB axisalignedbb1 = this.getCollisionBoundingBoxFromPool(world, x, y, z);
+
+        if (axisalignedbb1 != null && axis.intersectsWith(axisalignedbb1)) {
+            list.add(axisalignedbb1);
+        }
 	}
 	
 	@Override

@@ -1,16 +1,18 @@
 package co.uk.silvania.cities.econ.store.entity;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
-import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.money.ItemCoin;
 import co.uk.silvania.cities.econ.money.ItemNote;
-import co.uk.silvania.cities.econ.store.container.ContainerFloatingShelves;
 
 public class TileEntityAdminShop extends TileEntity implements IInventory {
 	
@@ -34,7 +36,6 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		//Credit to Lumien
 		for (int i = 0; i < this.items.length; ++i) {
 			if (this.items[i] != null) {
-				System.out.println("Writing Item in Slot " + i);
 				NBTTagCompound compound = new NBTTagCompound();
 				nbt.setByte("Slot", (byte)i);
 				this.items[i].writeToNBT(compound);
@@ -61,7 +62,6 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		for (int i = 0; i < nbtTagList.tagCount(); i++) {
 			NBTTagCompound nbt1 = (NBTTagCompound)nbtTagList.tagAt(i);
 			int j = nbt1.getByte("Slot") & 255;
-			System.out.println("Reading Item in Slot " + i + "/" + j);
 			this.items[i] = ItemStack.loadItemStackFromNBT(nbt1);
 		}
 		this.ownerName = nbt.getString("ownerName");
@@ -97,8 +97,40 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		return true;
 	}
 	
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagList items = new NBTTagList();
+		for (int i = 0; i < this.items.length; i++) {
+			ItemStack item = this.items[i];
+			if (item != null) {
+				NBTTagCompound tag = new NBTTagCompound();
+				tag.setByte("Slot", (byte)i);
+				item.writeToNBT(tag);
+				items.appendTag(tag);
+			}
+		}
+		nbt.setTag("ClientAShelfInv", items);
+		return new Packet132TileEntityData(xCoord, yCoord, zCoord, 1, nbt);
+	}
+	
+	@Override
+	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
+		NBTTagCompound nbt = pkt.data;
+		
+		NBTTagList tagList = nbt.getTagList("ClientAShelfInv");
+		this.items = new ItemStack[getSizeInventory()];
+		for (int i = 0; i < tagList.tagCount(); i++) {
+			NBTTagCompound tag = (NBTTagCompound)tagList.tagAt(i);
+			byte slot = tag.getByte("Slot");
+			if ((slot >= 0) && (slot < this.items.length)) {
+				this.items[slot] = ItemStack.loadItemStackFromNBT(tag);
+			}
+		}
+		this.worldObj.updateAllLightTypes(this.xCoord, this.yCoord, this.zCoord);
+	}
+	
 	public void sellItem(int i, int qty, EntityPlayer entityPlayer) {
-		System.out.println("Beginning Sale Process");
 		double itemCost = 0;
 		if (i == 1) {
 			itemCost = buyPrice1;
@@ -114,7 +146,6 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		}
 		double totalItemCost = itemCost * qty;
 		double invCash = EconUtils.getInventoryCash(entityPlayer);
-		System.out.println("Item Cost: " + totalItemCost + ", Inventory Cash: " + EconUtils.getInventoryCash(entityPlayer));
 		
 		if (invCash >= totalItemCost) {
 			//Two birds, one stone. Charges the player for us, then tells us how much they paid so we can calculate change.
@@ -124,15 +155,65 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				return;
 			} else {
 				ItemStack item = getStackInSlot(i - 1);
-				System.out.println("Item: " + item);
-				System.out.println("Qty: " + qty);
 				while (qty >= 1) {
-					System.out.println("Giving " + item.stackSize + " items, " + qty + " more stacks of this to go.");
 					entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 					qty--;
 				}
 			}
 		}
+	}
+	
+	public void buyItem(int i, int q, EntityPlayer player) {
+		ItemStack item = getStackInSlot(i - 1);
+		int invQty = 0;
+		double itemCost = 0;
+		
+		if (i == 1) {
+			itemCost = sellPrice1;
+		}
+		if (i == 2) {
+			itemCost = sellPrice2;
+		}
+		if (i == 3) {
+			itemCost = sellPrice3;
+		}
+		if (i == 4) {
+			itemCost = sellPrice3;
+		}
+		
+		for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
+			ItemStack stack = player.inventory.getStackInSlot(x);
+			if (stack != null) {
+				if (stack.getItem() == item.getItem()) {
+					invQty = invQty + stack.stackSize;
+					if (invQty >= q) {
+						invQty = q;
+					}
+				}
+			}
+		}
+		if (invQty >= q) {
+			int remain = q;
+			for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
+				ItemStack stack = player.inventory.getStackInSlot(x);
+				if (stack != null) {
+					if (remain > 0) {
+						if (stack.getItem() == item.getItem()) {
+							if (stack.stackSize >= remain) {
+								player.inventory.decrStackSize(x, q);
+								EconUtils.giveChange(itemCost * remain, 0, player);
+								remain = 0;
+							} else {
+								remain = remain - stack.stackSize;
+								EconUtils.giveChange(itemCost * stack.stackSize, 0, player);
+								player.inventory.setInventorySlotContents(x, null);
+							}
+						}
+					}
+				}
+			}
+		}
+		((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 	}
 
 	

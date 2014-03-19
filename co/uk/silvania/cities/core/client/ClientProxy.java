@@ -2,6 +2,7 @@ package co.uk.silvania.cities.core.client;
 
 import co.uk.silvania.cities.core.CommonProxy;
 import co.uk.silvania.cities.core.blocks.*;
+import co.uk.silvania.cities.core.client.models.AdminShelvesRenderer;
 import co.uk.silvania.cities.core.client.models.BankerModel;
 import co.uk.silvania.cities.core.client.models.TileEntityATMRenderer;
 import co.uk.silvania.cities.core.client.models.TileEntityFloatingShelvesRenderer;
@@ -46,7 +47,7 @@ public class ClientProxy extends CommonProxy {
     public void registerRenderThings() {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityATMEntity.class, new TileEntityATMRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFloatingShelves.class, new TileEntityFloatingShelvesRenderer());
-    	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAdminShop.class, new TileEntityFloatingShelvesRenderer());
+    	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAdminShop.class, new AdminShelvesRenderer());
     	
     	ClientRegistry.bindTileEntitySpecialRenderer(NPCSpawnerEntity.class, new NPCSpawnerRenderer());
     	

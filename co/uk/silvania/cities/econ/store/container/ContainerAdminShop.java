@@ -97,6 +97,7 @@ public class ContainerAdminShop extends Container {
 	
 	@Override
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer entityPlayer) {
+		System.out.println("Slot clicked!");
 		if (entityPlayer.capabilities.isCreativeMode) {
 			super.slotClick(par1, par2, par3, entityPlayer);
 		}

@@ -243,6 +243,7 @@ public class ServerPacketHandler implements IPacketHandler {
 					tileShelves.sellItem(id, qty, entityPlayer);
 				} else if (pktId.equalsIgnoreCase("buyPacket")) {
 					System.out.println("Buy Item process begun!");
+					tileShelves.buyItem(id, qty, entityPlayer);
 				}
 			} else {
 				TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getBlockTileEntity(x, y, z);
@@ -253,6 +254,7 @@ public class ServerPacketHandler implements IPacketHandler {
 					tileAdmin.sellItem(id, qty, entityPlayer);
 				} else if (pktId.equalsIgnoreCase("buyPacket")) {
 					System.out.println("Buy Item process begun!");
+					tileAdmin.buyItem(id, qty, entityPlayer);
 				}
 			}
 		} catch  (IOException e) {

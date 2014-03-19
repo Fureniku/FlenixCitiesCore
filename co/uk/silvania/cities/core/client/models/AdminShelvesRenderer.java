@@ -16,12 +16,12 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
+import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 
 
-public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer {
+public class AdminShelvesRenderer extends TileEntitySpecialRenderer {
 		
-	private final FloatingShelvesModel model;
+	private final AdminShelvesModel model;
 	private final RenderItem renderer;
 	
 	private ItemStack slot0;
@@ -29,10 +29,10 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 	private ItemStack slot2;
 	private ItemStack slot3;
 	
-	private TileEntityFloatingShelves shelvesEntity;
+	private TileEntityAdminShop shelvesEntity;
 		
-	public TileEntityFloatingShelvesRenderer() {
-		this.model = new FloatingShelvesModel();
+	public AdminShelvesRenderer() {
+		this.model = new AdminShelvesModel();
 		this.renderer = new RenderItem();
 		
 		renderer.setRenderManager(RenderManager.instance);
@@ -40,7 +40,7 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 	
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale) {
-		this.shelvesEntity = (TileEntityFloatingShelves) te;
+		this.shelvesEntity = (TileEntityAdminShop) te;
 		int i = te.getBlockMetadata();
 		int meta = 180;
 		
