@@ -40,20 +40,20 @@ public class AdminShopBlock extends BlockContainer {
 	public void setBlockBoundsBasedOnState(IBlockAccess block, int x, int y, int z) {
 		int meta = block.getBlockMetadata(x, y, z);
 		if (meta == 0) {
-			minZ = 0.5F;
 			minX = 0.0F;
-			maxZ = 1.0F;
-			maxY = 1.0F;
+			minZ = 0.0F;
+			maxX = 1.0F;
+			maxZ = 0.5F;
 		} else if (meta == 1) {
 			minZ = 0.0F;
 			minX = 0.5F;
 			maxZ = 1.0F;
 			maxY = 1.0F;
 		} else if (meta == 2) {
+			minZ = 0.5F;
 			minX = 0.0F;
-			minZ = 0.0F;
-			maxX = 1.0F;
-			maxZ = 0.5F;
+			maxZ = 1.0F;
+			maxY = 1.0F;
 		} else {
 			minX = 0.0F;
 			minZ = 0.0F;
@@ -65,7 +65,8 @@ public class AdminShopBlock extends BlockContainer {
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
-		return AxisAlignedBB.getAABBPool().getAABB((double)x + this.minX, (double)y + this.minY, (double)z + this.minZ, (double)x + this.maxX, (double)y + this.maxY, (double)z + this.maxZ);
+		this.setBlockBoundsBasedOnState(world, x, y, z);
+		return super.getCollisionBoundingBoxFromPool(world, x, y, z);
 	}
 	
 	@Override

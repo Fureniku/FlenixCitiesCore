@@ -150,7 +150,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		if (invCash >= totalItemCost) {
 			//Two birds, one stone. Charges the player for us, then tells us how much they paid so we can calculate change.
 			double paidAmount = EconUtils.findCashInInventoryWithChange(entityPlayer, totalItemCost); //Complex code to charge the player's inventory
-			if (paidAmount == 0) {
+			if (paidAmount < 0) {
 				//They didn't pay enough. Don't take the money, and tell 'em to piss off.
 				return;
 			} else {

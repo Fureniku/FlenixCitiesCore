@@ -42,7 +42,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.2")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.3")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ServerPacketHandler.class))
@@ -116,17 +116,13 @@ public class FlenixCities_Core {
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
     	VanillaItemValueConfig.init(configPath + "Prices/");
-    	
-    	//Start entity stuff here 
-    	//EntityList.addMapping(EntityBanker.class, "Banker", EntityRegistry.findGlobalUniqueEntityId(), 3515848, 12102);
-        proxy.registerRenderThings();
-        proxy.registerRenderers();
-        //proxy.entityStuff();
-        //End it here.
         
     	NetworkRegistry.instance().registerGuiHandler(this, cityGuiHandler);
         CoreBlocks.init();
         CoreItems.init();
+        
+        proxy.registerRenderThings();
+        proxy.registerRenderers();
         
     	if (proxy.banCheck() == true) {
        		System.out.println("*** IMPORTANT! READ THIS ***");

@@ -420,6 +420,7 @@ public class CommonProxy {
     	ItemStack crystalItem = new ItemStack(CoreItems.crystalItem);
     	ItemStack rubyItem = new ItemStack(CoreItems.rubyItem);
     	ItemStack sapphireItem = new ItemStack(CoreItems.sapphireItem);
+    	ItemStack ironIngot = new ItemStack(Item.ingotIron);
     	
     	ItemStack copperOre = new ItemStack(CoreBlocks.copperOre);
     	ItemStack tinOre = new ItemStack(CoreBlocks.tinOre);
@@ -428,7 +429,7 @@ public class CommonProxy {
     	ItemStack tecmoniumOre = new ItemStack(CoreBlocks.tecmoniumOre);
     	ItemStack crystalOre = new ItemStack(CoreBlocks.crystalOre);
     	ItemStack rubyOre = new ItemStack(CoreBlocks.rubyOre);
-    	ItemStack sapphireOre = new ItemStack(CoreBlocks.sapphireOre);
+    	//ItemStack sapphireOre = new ItemStack(CoreBlocks.sapphireOre);
     	
     	ItemStack copperBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 0);
     	ItemStack tinBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 1);
@@ -495,7 +496,8 @@ public class CommonProxy {
     	GameRegistry.addRecipe(silverBlock, "iii", "iii", "iii", 'i', silverIngot);
     	GameRegistry.addRecipe(titaniumBlock, "iii", "iii", "iii", 'i', titaniumIngot);
     	
-    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), " t ", " t ", " t ", 't', titaniumIngot);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), "   ", " t ", "   ", 't', titaniumIngot);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), " i ", " i ", " i ", 'i', ironIngot);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.floorBlocks, 1, 9), stoneBlock, quartzItem);
     	
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 4), " s ", "dsd", " s ", 's', skyscraperWhite, 'd', blackDye);
@@ -529,9 +531,8 @@ public class CommonProxy {
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.tecmoniumOre), tecmoniumOre);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.crystalOre), crystalOre);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.rubyOre), rubyOre);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.sapphireOre), sapphireOre);
     	
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 2, 0), stoneBlock, rebarBlock);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 8, 0), stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, rebarBlock);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0), skyscraperAny, whiteDye);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1), skyscraperAny, lightGreyDye);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 2), skyscraperAny, darkGreyDye);

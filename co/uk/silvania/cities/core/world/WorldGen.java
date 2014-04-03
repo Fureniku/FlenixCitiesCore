@@ -61,12 +61,12 @@ public class WorldGen implements IWorldGenerator {
 			(new WorldGenMinable(CoreBlocks.rubyOre.blockID, 5)).generate(world, random, xCoord, yCoord, zCoord);
 		}
 		
-		for(int i = 0; i < 3; i++) {
+		/*for(int i = 0; i < 3; i++) {
 			int xCoord = chunkX + random.nextInt(16);
 			int yCoord = random.nextInt(28);
 			int zCoord = chunkZ + random.nextInt(16);
 			(new WorldGenMinable(CoreBlocks.sapphireOre.blockID, 5)).generate(world, random, xCoord, yCoord, zCoord);
-		}
+		}*/
 		
 		for(int i = 0; i < 6; i++) {
 			int xCoord = chunkX + random.nextInt(16);

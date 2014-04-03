@@ -1,7 +1,11 @@
 package co.uk.silvania.cities.core.client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.MinecraftForgeClient;
 import co.uk.silvania.cities.core.CommonProxy;
-import co.uk.silvania.cities.core.blocks.*;
+import co.uk.silvania.cities.core.CoreBlocks;
+import co.uk.silvania.cities.core.client.models.ATMItemRenderer;
+import co.uk.silvania.cities.core.client.models.AdminShelvesItemRenderer;
 import co.uk.silvania.cities.core.client.models.AdminShelvesRenderer;
 import co.uk.silvania.cities.core.client.models.BankerModel;
 import co.uk.silvania.cities.core.client.models.TileEntityATMRenderer;
@@ -13,13 +17,8 @@ import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -48,6 +47,10 @@ public class ClientProxy extends CommonProxy {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityATMEntity.class, new TileEntityATMRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFloatingShelves.class, new TileEntityFloatingShelvesRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAdminShop.class, new AdminShelvesRenderer());
+    	
+    	MinecraftForgeClient.registerItemRenderer(CoreBlocks.adminShopBlock.blockID, new AdminShelvesItemRenderer());
+    	MinecraftForgeClient.registerItemRenderer(CoreBlocks.floatingShelvesBlock.blockID, new AdminShelvesItemRenderer());
+    	MinecraftForgeClient.registerItemRenderer(CoreBlocks.atmBlock.blockID, new ATMItemRenderer());
     	
     	ClientRegistry.bindTileEntitySpecialRenderer(NPCSpawnerEntity.class, new NPCSpawnerRenderer());
     	

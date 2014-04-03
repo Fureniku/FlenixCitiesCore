@@ -65,10 +65,9 @@ public class DebitCardItem extends Item {
 			} else {
 				list.add(EnumChatFormatting.RED + "Owner: " + playerName);
 			}
-			if (CityConfig.debugMode) {
-				if (playerName.equals(player.username)) {
-					list.add("PIN: " + item.stackTagCompound.getInteger("PIN"));
-				}
+
+			if (playerName.equals(player.username)) {
+				list.add("PIN: " + item.stackTagCompound.getInteger("PIN"));
 			}
 		}
 	}

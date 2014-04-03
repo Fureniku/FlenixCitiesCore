@@ -22,8 +22,9 @@ public class CoreBlocks {
 	public static Block copperOre;
 	public static Block tinOre;
 	public static Block crystalOre;
-	public static Block sapphireOre;
+	//public static Block sapphireOre;
 	public static Block oreStorageBlock;
+	public static Block oreBlocks; //Zinc, Silvanite
 	
 	public static Block atmBlock;
 	public static Block floatingShelvesBlock;
@@ -96,7 +97,7 @@ public class CoreBlocks {
     	copperOre = new CopperOre(config.copperOreID).setUnlocalizedName("copperOre");
     	tinOre = new TinOre(config.tinOreID).setUnlocalizedName("tinOre");
     	crystalOre = new CrystalOre(config.crystalOreID).setUnlocalizedName("crystalOre");
-    	sapphireOre = new SapphireOre(config.sapphireOreID).setUnlocalizedName("sapphireOre");
+    	//sapphireOre = new SapphireOre(config.sapphireOreID).setUnlocalizedName("sapphireOre");
     	oreStorageBlock = new OreStorageBlock(config.oreStorageID).setUnlocalizedName("oreStorageBlock");
 	}
 	
