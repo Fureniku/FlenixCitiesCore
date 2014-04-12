@@ -31,8 +31,7 @@ public class ContainerAdminShop extends Container {
 		addSlotToContainer(new Slot(te, 3, 8, 116));
 		bindPlayerInventory(invPlayer);
 	}
-	
-	
+
 	
 	protected void bindPlayerInventory(InventoryPlayer invPlayer) {
 		//C = vertical inventory slots, "columns"
@@ -55,35 +54,7 @@ public class ContainerAdminShop extends Container {
 	
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-		ItemStack stack = null;
-        Slot slotObject = (Slot) inventorySlots.get(slot);
-
-        if (slotObject != null && slotObject.getHasStack()) {
-        	ItemStack stackInSlot = slotObject.getStack();
-        	stack = stackInSlot.copy();
-
-        	if (slot < 9) {
-        		if (!this.mergeItemStack(stackInSlot, 9, 45, true)) {
-        			return null;
-        		}
-        	}
-
-        	else if (!this.mergeItemStack(stackInSlot, 0, 9, false)) {
-        		return null;
-        	}
-
-        	if (stackInSlot.stackSize == 10) {
-        		slotObject.putStack(null);
-        	} else {
-        		slotObject.onSlotChanged();
-        	}
-
-        	if (stackInSlot.stackSize == stack.stackSize) {
-        		return null;
-        	}
-        	slotObject.onPickupFromSlot(player, stackInSlot);
-        }
-        return stack;
+		return super.transferStackInSlot(player, slot);
 	}
 	
 	@Override

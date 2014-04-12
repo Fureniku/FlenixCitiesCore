@@ -52,6 +52,19 @@ public class CoreBlocks {
 	public static Block styledGlassPane;
 	public static Block styledGlassWhitePane;
 	
+	public static Block ironPanel;
+	public static Block blockSilk;
+	public static Block blockCloth;
+	public static Block polishedStone;
+	public static Block polishedBrick;
+	public static Block polishedSmallBrick;
+	public static Block polishedSlab;
+	public static Block dulledStone;
+	public static Block dulledBrick;
+	public static Block dulledSmallBrick;
+	public static Block dulledSlab;
+	public static Block brickMulti;
+	
 	public static Block rebarBlock;
 	
 	public static Block blockOil;
@@ -127,8 +140,20 @@ public class CoreBlocks {
     	styledGlassPane = new StainedGlassPane(config.styledGlassPaneID, FlenixCities_Core.modid + ":styledGlass0", FlenixCities_Core.modid + ":styledGlass0", false).setUnlocalizedName("styledGlassPane");
     	styledGlassWhitePane = new StainedGlassPane(config.styledGlassWhitePaneID, FlenixCities_Core.modid + ":styledGlassWhite0", FlenixCities_Core.modid + ":styledGlassWhite0", false).setUnlocalizedName("styledGlassWhitePane");
     	
-    	
     	rebarBlock = new RebarBlock(config.rebarBlockID).setUnlocalizedName("rebarBlock");
+    	
+    	ironPanel = new BlockDrywall(config.ironPanelID, Block.blockIron.getItemIconName(), Block.blockIron.getItemIconName(), false).setUnlocalizedName("ironPanel");
+    	blockSilk = new BlockMulti(config.blockSilkID, Material.cloth).setUnlocalizedName("blockSilk");
+    	blockCloth = new BlockMulti(config.blockClothID, Material.cloth).setUnlocalizedName("blockCloth");
+    	polishedStone = new BlockMulti(config.polishedStoneID, Material.rock).setUnlocalizedName("polishedStone");
+    	polishedBrick = new BlockMulti(config.polishedBrickID, Material.rock).setUnlocalizedName("polishedBrick");
+    	polishedSmallBrick = new BlockMulti(config.polishedSmallBrickID, Material.rock).setUnlocalizedName("polishedSmallBrick");
+    	polishedSlab = new BlockMulti(config.polishedSlabID, Material.rock).setUnlocalizedName("polishedSlab");
+    	dulledStone = new BlockMulti(config.dulledStoneID, Material.rock).setUnlocalizedName("dulledStone");
+    	dulledBrick = new BlockMulti(config.dulledBrickID, Material.rock).setUnlocalizedName("dulledBrick");
+    	dulledSmallBrick = new BlockMulti(config.dulledSmallBrickID, Material.rock).setUnlocalizedName("dulledSmallBrick");
+    	dulledSlab = new BlockMulti(config.dulledSlabID, Material.rock).setUnlocalizedName("dulledSlab");
+    	brickMulti = new BlockMulti(config.brickMultiID, Material.rock).setUnlocalizedName("brickMulti");
 	}
 	
 	public static void initSpecialBlocks() {

@@ -61,7 +61,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		NBTTagList nbtTagList = nbt.getTagList("Items");
 		for (int i = 0; i < nbtTagList.tagCount(); i++) {
 			NBTTagCompound nbt1 = (NBTTagCompound)nbtTagList.tagAt(i);
-			int j = nbt1.getByte("Slot") & 255;
+			i = nbt1.getByte("Slot") & 255;
 			this.items[i] = ItemStack.loadItemStackFromNBT(nbt1);
 		}
 		this.ownerName = nbt.getString("ownerName");
@@ -73,7 +73,6 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		this.sellPrice3 = nbt.getDouble("sellPrice3");
 		this.buyPrice4 = nbt.getDouble("buyPrice4");
 		this.sellPrice4 = nbt.getDouble("sellPrice4");
-
 	}
 	
 	public int getQuantity(int i) {
@@ -130,6 +129,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		this.worldObj.updateAllLightTypes(this.xCoord, this.yCoord, this.zCoord);
 	}
 	
+	//Selling items TO the player
 	public void sellItem(int i, int qty, EntityPlayer entityPlayer) {
 		double itemCost = 0;
 		if (i == 1) {
@@ -163,6 +163,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		}
 	}
 	
+	//Buying items FROM the player
 	public void buyItem(int i, int q, EntityPlayer player) {
 		ItemStack item = getStackInSlot(i - 1);
 		int invQty = 0;

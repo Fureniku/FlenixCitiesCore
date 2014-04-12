@@ -60,6 +60,19 @@ public class CityConfig {
 	public static int blockRedDieselID;
 	public static int adminShopBlockID;
 	
+	public static int ironPanelID;
+	public static int blockSilkID;
+	public static int blockClothID;
+	public static int polishedStoneID;
+	public static int polishedBrickID;
+	public static int polishedSmallBrickID;
+	public static int polishedSlabID;
+	public static int dulledStoneID;
+	public static int dulledBrickID;
+	public static int dulledSmallBrickID;
+	public static int dulledSlabID;
+	public static int brickMultiID;
+	
 	public static int atmID;
 	public static int floatingShelvesID;
 	public static int npcSpawnerBlockID;
@@ -249,6 +262,19 @@ public class CityConfig {
 			
 			disableOreDict = config.get(Configuration.CATEGORY_GENERAL, "Disable OreDictionary (Do not use unless you know how!)", false).getBoolean(false);
 			debugMode = config.get(Configuration.CATEGORY_GENERAL, "debug mode", false).getBoolean(false);
+			
+			ironPanelID = config.getBlock("Iron Panel", 1470).getInt();
+			blockSilkID = config.getBlock("Silk", 1471).getInt();
+			blockClothID = config.getBlock("Cloth", 1472).getInt();
+			polishedStoneID = config.getBlock("Polished Stone", 1473).getInt();
+			polishedBrickID = config.getBlock("Polished Brick", 1474).getInt();
+			polishedSmallBrickID = config.getBlock("Polished Small Brick", 1475).getInt();
+			polishedSlabID = config.getBlock("Polished Slab", 1476).getInt();
+			dulledStoneID = config.getBlock("Dulled Stone", 1477).getInt();
+			dulledBrickID = config.getBlock("Dulled Brick", 1478).getInt();
+			dulledSmallBrickID = config.getBlock("Dulled Small Brick", 1479).getInt();
+			dulledSlabID = config.getBlock("Dulled Slab", 1480).getInt();
+			brickMultiID = config.getBlock("Bricks", 1481).getInt();
 		}
 		catch (Exception e) {
 			FMLLog.log(Level.SEVERE, e, "### Warning! FlenixCities Core could not load it's config file! ###");
