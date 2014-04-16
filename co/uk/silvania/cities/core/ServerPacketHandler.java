@@ -223,7 +223,6 @@ public class ServerPacketHandler implements IPacketHandler {
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
         EntityPlayer entityPlayer = (EntityPlayer) player;
         World world = entityPlayer.worldObj;
-        System.out.println("Sale Packet Get!");
         
 		try {
 			String pktId = dis.readUTF();
@@ -233,16 +232,17 @@ public class ServerPacketHandler implements IPacketHandler {
 			int y = dis.readInt();
 			int z = dis.readInt();
 			TileEntity tileEntity = (TileEntity) world.getBlockTileEntity(x, y, z);
-			System.out.println("Pkt ID: " + pktId);
+			if (CityConfig.debugMode) {
+				System.out.println("Pkt ID: " + pktId);
+				System.out.println("Data: " + id + " " + qty + " " + x + " " + y + " " + z);
+			}
 			if (tileEntity instanceof TileEntityFloatingShelves) {
 				TileEntityFloatingShelves tileShelves = (TileEntityFloatingShelves) world.getBlockTileEntity(x, y, z);
 				if (pktId.equalsIgnoreCase("buttonSwitch")) {
 					tileShelves.tabButton = id;
 				} else if (pktId.equalsIgnoreCase("salePacket")) {
-					System.out.println("Sell Item process begun!");
 					tileShelves.sellItem(id, qty, entityPlayer);
 				} else if (pktId.equalsIgnoreCase("buyPacket")) {
-					System.out.println("Buy Item process begun!");
 					tileShelves.buyItem(id, qty, entityPlayer);
 				}
 			} else {
@@ -250,10 +250,8 @@ public class ServerPacketHandler implements IPacketHandler {
 				if (pktId.equalsIgnoreCase("buttonSwitch")) {
 					tileAdmin.tabButton = id;
 				} else if (pktId.equalsIgnoreCase("salePacket")) {
-					System.out.println("Sell Item process begun!");
 					tileAdmin.sellItem(id, qty, entityPlayer);
 				} else if (pktId.equalsIgnoreCase("buyPacket")) {
-					System.out.println("Buy Item process begun!");
 					tileAdmin.buyItem(id, qty, entityPlayer);
 				}
 			}

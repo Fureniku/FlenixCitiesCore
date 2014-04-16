@@ -31,19 +31,23 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		NBTTagList nbtTagList = new NBTTagList();
-		//Credit to Lumien
-		for (int i = 0; i < this.items.length; ++i) {
-			if (this.items[i] != null) {
-				NBTTagCompound compound = new NBTTagCompound();
-				nbt.setByte("Slot", (byte)i);
-				this.items[i].writeToNBT(compound);
-				nbtTagList.appendTag(compound);
-			}
-		}
-		nbt.setTag("Items",  nbtTagList);
-		nbt.setString("ownerName", ownerName);
+        super.writeToNBT(nbt);
+        NBTTagList nbttaglist = new NBTTagList();
+
+        for (int i = 0; i < this.items.length; ++i)
+        {
+            if (this.items[i] != null)
+            {
+                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                nbttagcompound1.setByte("Slot", (byte)i);
+                this.items[i].writeToNBT(nbttagcompound1);
+                nbttaglist.appendTag(nbttagcompound1);
+            }
+        }
+
+        nbt.setTag("Items", nbttaglist);
+        
+		nbt.setString("ownerName", ownerName + "");
 		nbt.setDouble("buyPrice1", buyPrice1);
 		nbt.setDouble("sellPrice1", sellPrice1);
 		nbt.setDouble("buyPrice2", buyPrice2);
@@ -52,18 +56,24 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		nbt.setDouble("sellPrice3", sellPrice3);
 		nbt.setDouble("buyPrice4", buyPrice4);
 		nbt.setDouble("sellPrice4", sellPrice4);
-
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		NBTTagList nbtTagList = nbt.getTagList("Items");
-		for (int i = 0; i < nbtTagList.tagCount(); i++) {
-			NBTTagCompound nbt1 = (NBTTagCompound)nbtTagList.tagAt(i);
-			i = nbt1.getByte("Slot") & 255;
-			this.items[i] = ItemStack.loadItemStackFromNBT(nbt1);
-		}
+        super.readFromNBT(nbt);
+        NBTTagList nbttaglist = nbt.getTagList("Items");
+        this.items = new ItemStack[this.getSizeInventory()];
+
+        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            int j = nbttagcompound1.getByte("Slot") & 255;
+
+            if (j >= 0 && j < this.items.length)
+            {
+                this.items[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            }
+        }
 		this.ownerName = nbt.getString("ownerName");
 		this.buyPrice1 = nbt.getDouble("buyPrice1");
 		this.sellPrice1 = nbt.getDouble("sellPrice1");
@@ -151,7 +161,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 			//Two birds, one stone. Charges the player for us, then tells us how much they paid so we can calculate change.
 			double paidAmount = EconUtils.findCashInInventoryWithChange(entityPlayer, totalItemCost); //Complex code to charge the player's inventory
 			if (paidAmount < 0) {
-				//They didn't pay enough. Don't take the money, and tell 'em to piss off.
+				entityPlayer.addChatMessage("You do not have enough money to do that!");
 				return;
 			} else {
 				ItemStack item = getStackInSlot(i - 1);
@@ -159,6 +169,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 					entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 					qty--;
 				}
+				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " of " + item.getDisplayName() + " from the server, for $" + itemCost);
 			}
 		}
 	}
@@ -168,6 +179,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		ItemStack item = getStackInSlot(i - 1);
 		int invQty = 0;
 		double itemCost = 0;
+		q = item.stackSize;
 		
 		if (i == 1) {
 			itemCost = sellPrice1;
@@ -201,12 +213,12 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 					if (remain > 0) {
 						if (stack.getItem() == item.getItem()) {
 							if (stack.stackSize >= remain) {
-								player.inventory.decrStackSize(x, q);
-								EconUtils.giveChange(itemCost * remain, 0, player);
+								player.inventory.decrStackSize(x, remain);
+								EconUtils.giveChange(itemCost, 0, player);
 								remain = 0;
+								System.out.println(player.getDisplayName() + " sold " + item.stackSize + " of " + item.getDisplayName() + " to the server, for $" + itemCost);
 							} else {
 								remain = remain - stack.stackSize;
-								EconUtils.giveChange(itemCost * stack.stackSize, 0, player);
 								player.inventory.setInventorySlotContents(x, null);
 							}
 						}

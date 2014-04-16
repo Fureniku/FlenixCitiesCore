@@ -142,7 +142,7 @@ public class CoreBlocks {
     	
     	rebarBlock = new RebarBlock(config.rebarBlockID).setUnlocalizedName("rebarBlock");
     	
-    	ironPanel = new BlockDrywall(config.ironPanelID, Block.blockIron.getItemIconName(), Block.blockIron.getItemIconName(), false).setUnlocalizedName("ironPanel");
+    	/*ironPanel = new BlockDrywall(config.ironPanelID, Block.blockIron.getItemIconName(), Block.blockIron.getItemIconName(), false).setUnlocalizedName("ironPanel");
     	blockSilk = new BlockMulti(config.blockSilkID, Material.cloth).setUnlocalizedName("blockSilk");
     	blockCloth = new BlockMulti(config.blockClothID, Material.cloth).setUnlocalizedName("blockCloth");
     	polishedStone = new BlockMulti(config.polishedStoneID, Material.rock).setUnlocalizedName("polishedStone");
@@ -153,7 +153,7 @@ public class CoreBlocks {
     	dulledBrick = new BlockMulti(config.dulledBrickID, Material.rock).setUnlocalizedName("dulledBrick");
     	dulledSmallBrick = new BlockMulti(config.dulledSmallBrickID, Material.rock).setUnlocalizedName("dulledSmallBrick");
     	dulledSlab = new BlockMulti(config.dulledSlabID, Material.rock).setUnlocalizedName("dulledSlab");
-    	brickMulti = new BlockMulti(config.brickMultiID, Material.rock).setUnlocalizedName("brickMulti");
+    	brickMulti = new BlockMulti(config.brickMultiID, Material.rock).setUnlocalizedName("brickMulti");*/
 	}
 	
 	public static void initSpecialBlocks() {

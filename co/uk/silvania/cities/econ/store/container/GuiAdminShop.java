@@ -248,7 +248,6 @@ public class GuiAdminShop extends GuiContainer {
 		if (sellMode == 0) {
 			switch(button.id) {
 			case 16:
-				System.out.println("Button 16 clicked");
 				sendSalePacket("salePacket", 1, EconUtils.parseInt(slot1QtyText.getText()));
 				break;
 			case 17:
