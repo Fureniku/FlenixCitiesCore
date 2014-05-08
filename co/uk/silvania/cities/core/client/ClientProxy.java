@@ -4,19 +4,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.MinecraftForgeClient;
 import co.uk.silvania.cities.core.CommonProxy;
 import co.uk.silvania.cities.core.CoreBlocks;
-import co.uk.silvania.cities.core.client.models.ATMItemRenderer;
-import co.uk.silvania.cities.core.client.models.AdminShelvesItemRenderer;
-import co.uk.silvania.cities.core.client.models.AdminShelvesRenderer;
-import co.uk.silvania.cities.core.client.models.BankerModel;
-import co.uk.silvania.cities.core.client.models.TileEntityATMRenderer;
-import co.uk.silvania.cities.core.client.models.TileEntityFloatingShelvesRenderer;
+import co.uk.silvania.cities.core.client.models.*;
 import co.uk.silvania.cities.core.client.npcspawner.NPCSpawnerRenderer;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.RenderBanker;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
-import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
-import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
+import co.uk.silvania.cities.econ.store.entity.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -36,7 +30,8 @@ public class ClientProxy extends CommonProxy {
     			|| userName.equalsIgnoreCase("Doutzen009") 
     			|| userName.equalsIgnoreCase("generaljari") 
     			|| userName.equalsIgnoreCase("padfis") 
-    			|| userName.equalsIgnoreCase("sephiroku")) {
+    			|| userName.equalsIgnoreCase("sephiroku")
+    			|| userName.equalsIgnoreCase("shobu9")) {
     		return true;
     	} else
     		return false;
@@ -47,6 +42,7 @@ public class ClientProxy extends CommonProxy {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityATMEntity.class, new TileEntityATMRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFloatingShelves.class, new TileEntityFloatingShelvesRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAdminShop.class, new AdminShelvesRenderer());
+    	//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAutoShelf.class, new TileEntityAutoShelfRenderer());
     	
     	MinecraftForgeClient.registerItemRenderer(CoreBlocks.adminShopBlock.blockID, new AdminShelvesItemRenderer());
     	MinecraftForgeClient.registerItemRenderer(CoreBlocks.floatingShelvesBlock.blockID, new AdminShelvesItemRenderer());

@@ -3,6 +3,9 @@ package co.uk.silvania.cities.econ.store.container;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -19,7 +22,6 @@ import org.lwjgl.opengl.GL11;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.ClientPacketHandler;
 import co.uk.silvania.cities.econ.EconUtils;
-import co.uk.silvania.cities.econ.atm.ATMButton;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
@@ -342,15 +344,31 @@ public class GuiAdminShop extends GuiContainer {
 			sell3Text.drawTextBox();
 			sell4Text.drawTextBox();
 		} else {
-			fontRenderer.drawString(buyPrice1, 54 - fontRenderer.getStringWidth(buyPrice1) / 2, 54, 4210752);
-			fontRenderer.drawString(buyPrice2, 54 - fontRenderer.getStringWidth(buyPrice2) / 2, 77, 4210752);
-			fontRenderer.drawString(buyPrice3, 54 - fontRenderer.getStringWidth(buyPrice3) / 2, 99, 4210752);
-			fontRenderer.drawString(buyPrice4, 54 - fontRenderer.getStringWidth(buyPrice4) / 2, 121, 4210752);
+			NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+			nf.setMinimumFractionDigits(2);
+			nf.setMaximumFractionDigits(2);
+			nf.setRoundingMode(RoundingMode.HALF_UP);
 			
-			fontRenderer.drawString(sellPrice1, 110 - fontRenderer.getStringWidth(sellPrice1) / 2, 54, 4210752);
-			fontRenderer.drawString(sellPrice2, 110 - fontRenderer.getStringWidth(sellPrice2) / 2, 77, 4210752);
-			fontRenderer.drawString(sellPrice3, 110 - fontRenderer.getStringWidth(sellPrice3) / 2, 99, 4210752);
-			fontRenderer.drawString(sellPrice4, 110 - fontRenderer.getStringWidth(sellPrice4) / 2, 121, 4210752);
+			String buy1 = nf.format(EconUtils.parseDouble("" + buyPrice1));
+			String buy2 = nf.format(EconUtils.parseDouble("" + buyPrice2));
+			String buy3 = nf.format(EconUtils.parseDouble("" + buyPrice3));
+			String buy4 = nf.format(EconUtils.parseDouble("" + buyPrice4));
+			
+			String sell1 = nf.format(EconUtils.parseDouble("" + sellPrice1));
+			String sell2 = nf.format(EconUtils.parseDouble("" + sellPrice2));
+			String sell3 = nf.format(EconUtils.parseDouble("" + sellPrice3));
+			String sell4 = nf.format(EconUtils.parseDouble("" + sellPrice4));
+			
+			
+			fontRenderer.drawString("$" + buy1, 51 - fontRenderer.getStringWidth(buy1) / 2, 54, 4210752);
+			fontRenderer.drawString("$" + buy2, 51 - fontRenderer.getStringWidth(buy2) / 2, 77, 4210752);
+			fontRenderer.drawString("$" + buy3, 51 - fontRenderer.getStringWidth(buy3) / 2, 99, 4210752);
+			fontRenderer.drawString("$" + buy4, 51 - fontRenderer.getStringWidth(buy4) / 2, 121, 4210752);
+			
+			fontRenderer.drawString("$" + sell1, 107 - fontRenderer.getStringWidth(sell1) / 2, 54, 4210752);
+			fontRenderer.drawString("$" + sell2, 107 - fontRenderer.getStringWidth(sell2) / 2, 77, 4210752);
+			fontRenderer.drawString("$" + sell3, 107 - fontRenderer.getStringWidth(sell3) / 2, 99, 4210752);
+			fontRenderer.drawString("$" + sell4, 107 - fontRenderer.getStringWidth(sell4) / 2, 121, 4210752);
 
 		}
 

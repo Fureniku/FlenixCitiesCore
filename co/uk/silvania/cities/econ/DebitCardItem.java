@@ -19,6 +19,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
@@ -48,8 +50,7 @@ public class DebitCardItem extends Item {
 				item.stackTagCompound.setString("playerName", player.username);
 				item.stackTagCompound.setInteger("PIN", rand.nextInt(9000) + 1000);
 				player.addChatMessage(gold + "Hello, " + item.stackTagCompound.getString("playerName") + 
-						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + 
-						gold + ". Please write this down!");
+						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + ".");
 				System.out.println("PIN has been set to " + item.stackTagCompound.getInteger("PIN"));
 				//System.out.println("Name has been set to " + item.stackTagCompound.getString("playerName"));	
 			}
@@ -62,19 +63,25 @@ public class DebitCardItem extends Item {
 			String playerName = item.stackTagCompound.getString("playerName");
 			if (playerName.equals(player.username)) {
 				list.add(EnumChatFormatting.GREEN + "Owner: " + playerName);
+				list.add("PIN: " + item.stackTagCompound.getInteger("PIN"));
 			} else {
 				list.add(EnumChatFormatting.RED + "Owner: " + playerName);
 			}
-
-			if (playerName.equals(player.username)) {
-				list.add("PIN: " + item.stackTagCompound.getInteger("PIN"));
+			
+			if (player.capabilities.isCreativeMode) {
+				list.add(EnumChatFormatting.GOLD + playerName + "'s PIN is " + item.stackTagCompound.getInteger("PIN"));
 			}
 		}
 	}
 	
 	@Override
 	public boolean onItemUse(ItemStack item, EntityPlayer entityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
-		//((EntityPlayerMP) entityPlayer).sendContainerToPlayer(entityPlayer.inventoryContainer);
+		if (!world.isRemote) {
+			if (MinecraftServer.getServer().getConfigurationManager().getOps().contains(entityPlayer.username)) {
+				entityPlayer.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.GOLD + "Player's PIN is " + item.stackTagCompound.getInteger("PIN")));
+				entityPlayer.addChatMessage(EnumChatFormatting.GOLD + "Player's PIN is " + item.stackTagCompound.getInteger("PIN"));
+			}
+		}
 		if (CityConfig.debugMode) {
 			System.out.println("Refreshing Inventory!");
 		}

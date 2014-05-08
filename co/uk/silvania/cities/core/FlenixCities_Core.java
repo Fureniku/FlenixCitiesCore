@@ -42,7 +42,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.4")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.7")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ServerPacketHandler.class))
@@ -89,9 +89,9 @@ public class FlenixCities_Core {
     		if (cfgfile.getAbsolutePath().toLowerCase().contains("lifemmo")) {
     			System.out.println("Technic has been detected!");
     			System.out.println("Ah, but I see you're using LifeMMO. In that case, an agreement has been reached. Carry on.");
-    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("lg-city-life")) {
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("pixelmon-the-new-age")) {
     			System.out.println("Technic has been detected!");
-    			System.out.println("Ah, but I see you're using LG's City Life. In that case, an agreement has been reached. Carry on.");
+    			System.out.println("Ah, but I see you're using Pixelmon: The New Age. In that case, an agreement has been reached. Carry on.");
     		} else {
     			System.out.println("##########################################################");
     			System.out.println("##########################################################");

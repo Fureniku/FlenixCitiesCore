@@ -123,7 +123,7 @@ public class TileEntityATMBlock extends BlockContainer {
                         nbt.setCompoundTag(player.username, playernbt);
                     }
                     NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-                    player.addChatMessage(coin.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.roundedBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
+                    player.addChatMessage(coin.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
                     NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
                     --item.stackSize;
                 } else if (player.getHeldItem().getItem() instanceof ItemNote) {
@@ -150,7 +150,7 @@ public class TileEntityATMBlock extends BlockContainer {
                         nbt.setCompoundTag(player.username, playernbt);
                     }
                     NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-                    player.addChatMessage(note.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.roundedBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
+                    player.addChatMessage(note.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
                     NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
                     --item.stackSize;
                 }
@@ -216,7 +216,7 @@ public class TileEntityATMBlock extends BlockContainer {
             nbt.setCompoundTag(player.username, playernbt);
         }
         NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-        player.addChatMessage(cash + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + playernbt.getDouble("Balance") + " " + CityConfig.currencyLargePlural);
+        player.addChatMessage("$" + EconUtils.formatBalance(cash) + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now $" + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         EconUtils.removeAllPlayerCash(player);
 	}

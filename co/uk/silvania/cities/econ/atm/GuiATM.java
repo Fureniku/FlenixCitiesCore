@@ -1062,12 +1062,8 @@ public class GuiATM extends GuiContainer {
     
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
-    	double shortBal = ClientPacketHandler.shortValue * 100;
-    	double initBal = ClientPacketHandler.initBal * 100;
-    	int tempShort = (int) Math.round(shortBal / 100);
-    	int tempInit = (int) Math.round(initBal / 100);
-    	shortBal = tempShort * 100;
-    	initBal = tempInit * 100;
+    	double shortBal = ClientPacketHandler.shortValue;
+    	double initBal = ClientPacketHandler.initBal;
     	String underScore = "";
     	if (tick < 80) {
     		tick++;
@@ -1078,8 +1074,6 @@ public class GuiATM extends GuiContainer {
     	if (tick < 40) {
     		underScore = "_";
     	}
-    	
-    	System.out.println("Tick: " + tick);
     	
     	if (guiStage.equals("1")) {
 	    	fontRenderer.drawString("ATM", -21, -30, 0x404040);
@@ -1137,21 +1131,21 @@ public class GuiATM extends GuiContainer {
     	if (guiStage.equals("4")) {
     		fontRenderer.drawString("ATM", -21, -30, 0x404040);
     		fontRenderer.drawString("Your current balance is: ", 26, 8, 0x007F0E);
-    		fontRenderer.drawString("" + initBal, 26, 18, 0x007F0E);
+    		fontRenderer.drawString("$" + EconUtils.formatBalance(initBal), 26, 18, 0x007F0E);
         	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
     	}
     	if (guiStage.equals("5")) {
         	fontRenderer.drawString("ATM", -21, -30, 0x404040);
     		fontRenderer.drawString("Withdrawl Successful!", 35, 8, 0x007F0E);
     		fontRenderer.drawString("You have withdrawn", 39, 18, 0x007F0E);
-    		fontRenderer.drawString(withdrawAmount + " " + CityConfig.currencyLargePlural, 50, 28, 0x007F0E);
+    		fontRenderer.drawString("$" + EconUtils.formatBalance(withdrawAmount) + " " + CityConfig.currencyLargePlural, 50, 28, 0x007F0E);
     		fontRenderer.drawString("Press Confirm to continue.", 22, 58, 0x007F0E);
 
     	}
     	if (guiStage.equals("6")) {
         	fontRenderer.drawString("ATM", -21, -30, 0x404040);
     		fontRenderer.drawString("Insufficient Funds!", 41, -2, 0x7F0000);
-    		fontRenderer.drawString(shortBal + " more needed!", 43, 8, 0x7F0000);
+    		fontRenderer.drawString("$" + EconUtils.formatBalance(shortBal) + " more needed!", 43, 8, 0x7F0000);
     		fontRenderer.drawString("Withdraw Less", 97, 24, 0x007F0E);
     		fontRenderer.drawString("Return to Menu", 90, 51, 0x007F0E);
         	fontRenderer.drawString("Eject Card", 109, 78, 0x007F0E);
