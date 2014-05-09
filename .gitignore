@@ -20,3 +20,4 @@
 *.iws
 build/
 eclipse/
+out/
