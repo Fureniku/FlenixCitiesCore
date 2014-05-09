@@ -14,3 +14,10 @@
 *.bat
 *.sh
 *.lzma
+.gradle/
+*.iml
+*.ipr
+*.iws
+build/
+eclipse/
+out/
