@@ -32,6 +32,9 @@ public class ClientPacketHandler implements IPacketHandler {
 	public static String buyPrice4;
 	public static String sellPrice4;
 	
+	public static String automaticStockPrice;
+	public static String automaticSaleQuantity;
+	
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
         if (packet.channel.equals("FCitiesPackets")) {

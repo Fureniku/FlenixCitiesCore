@@ -780,6 +780,8 @@ public class EconUtils {
         }
         NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
-        player.addChatMessage(EnumChatFormatting.GOLD + "" + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(player, player.worldObj)));
+        if (deposit >= 0.1) {
+        	player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
+        }
 	}
 }

@@ -52,7 +52,6 @@ public class DebitCardItem extends Item {
 				player.addChatMessage(gold + "Hello, " + item.stackTagCompound.getString("playerName") + 
 						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + ".");
 				System.out.println("PIN has been set to " + item.stackTagCompound.getInteger("PIN"));
-				//System.out.println("Name has been set to " + item.stackTagCompound.getString("playerName"));	
 			}
 		}
 	}

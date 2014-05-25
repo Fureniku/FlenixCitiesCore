@@ -246,7 +246,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 			itemCost = sellPrice3;
 		}
 		if (i == 4) {
-			itemCost = sellPrice3;
+			itemCost = sellPrice4;
 		}
 		
 		for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
