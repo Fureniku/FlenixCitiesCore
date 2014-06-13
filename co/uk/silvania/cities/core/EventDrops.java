@@ -19,9 +19,9 @@ public class EventDrops {
 
     @ForgeSubscribe
     public void onEntityDrop(LivingDropsEvent event) {
-        if (event.source.getEntity() instanceof EntityPlayer) {
+        if (event.source.getSourceOfDamage() instanceof EntityPlayer) {
     		Random rand = new Random();
-            int chance = rand.nextInt(100);
+            int chance = rand.nextInt(200);
             if (event.entityLiving instanceof EntityZombie) {
                 if (chance < 30) {
                     event.entityLiving.dropItem(CoreItems.coin25.itemID, 2);

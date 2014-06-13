@@ -158,7 +158,7 @@ public class CommonProxy {
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 12), "ATM City Grey");
         
     	LanguageRegistry.addName(CoreItems.rubyItem, "Ruby");
-    	LanguageRegistry.addName(CoreItems.titaniumIngot, "Titanium Ingot");
+    	LanguageRegistry.addName(CoreItems.titaniumIngot, "Impure Titanium Ingot");
     	LanguageRegistry.addName(CoreItems.tecmoniumIngot, "Tecmonium Ore");
     	LanguageRegistry.addName(CoreItems.silverIngot, "Silver Ingot");
     	LanguageRegistry.addName(CoreItems.copperIngot, "Copper Ingot");

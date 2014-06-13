@@ -42,7 +42,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.7")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.8c")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ServerPacketHandler.class))
@@ -92,6 +92,18 @@ public class FlenixCities_Core {
     		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("pixelmon-the-new-age")) {
     			System.out.println("Technic has been detected!");
     			System.out.println("Ah, but I see you're using Pixelmon: The New Age. In that case, an agreement has been reached. Carry on.");
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("businesselite")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using Business Elite. In that case, an agreement has been reached. Carry on.");
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("sims-")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using one of the Sims- packs. In that case, an agreement has been reached. Carry on.");
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("econony-plus")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using the Economy+ pack. In that case, an agreement has been reached. Carry on.");
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("kbts-drugs-and-guns-pack")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using KBT's Drugs and Guns. In that case, an agreement has been reached. Carry on.");
     		} else {
     			System.out.println("##########################################################");
     			System.out.println("##########################################################");
@@ -100,13 +112,15 @@ public class FlenixCities_Core {
 	    		System.out.println("First, I'd like to thank Gregorius Techneticies for kindly sharing this code with me");
 	    		System.out.println("I have decided to block use of Technic due to the Technic Communities horrible approach to us modders");
 	    		System.out.println("If such a time comes that they treat us with just a TINY bit of respect, I'll remove this code.");
-	    		System.out.println("Until then, Technic is not allowed. Please use FTB or AtLauncher - both are much better anyway.");
+	    		System.out.println("Until then, Technic is not allowed. Please use FTB or ATLauncher - both are much better anyway.");
 	    		System.out.println("www.feed-the-beast.org - www.atlauncher.com");
 	    		System.out.println("If you wish to discuss using my mods in Technic, please email me as below.");
-	    		System.out.println("I DO let people who ask nicely use it, and my code allows for that; LifeMMO is a perfect example.");
+	    		System.out.println("I DO let certain people bypass this restriction, and my code allows for that; LifeMMO is a perfect example.");
+	    		System.out.println("To meet the criteria you must A) be a public pack, B) be professional, and C) follow the license of all mods you use.");
+	    		System.out.println("I reserve the right to deny any Technic pack at any time for any reason I deem fit.");
 	    		System.out.println("");
 	    		System.out.println("Yours, Flenix (flenix@silvania.co.uk)");
-	    		System.out.println("PS. please include your Technic Pack link when contacting me!");
+	    		System.out.println("PS. please include your Technic Pack link (The one you give to players for your pack) when contacting me!");
 	    		System.out.println("##########################################################");
 	    		System.out.println("##########################################################");
 	    		System.out.println("##########################################################");
@@ -135,6 +149,7 @@ public class FlenixCities_Core {
        		System.out.println("*** IMPORTANT! READ THIS ***");
        		System.out.println("*** IMPORTANT! READ THIS ***");
        		System.out.println("*** IMPORTANT! READ THIS ***");
+       		return;
     	} else {
     		System.out.println("Yes! They have been a good player. Let's load the mod for them :)");
 	        proxy.registerBlocks();
@@ -165,7 +180,7 @@ public class FlenixCities_Core {
 	        OreDictionary.registerOre("ingotCopper", new ItemStack(CoreItems.copperIngot));
 	        OreDictionary.registerOre("ingotTin", new ItemStack(CoreItems.tinIngot));
 	        OreDictionary.registerOre("ingotSilver", new ItemStack(CoreItems.silverIngot));
-	        OreDictionary.registerOre("ingotTitanium", new ItemStack(CoreItems.titaniumIngot));
+	        OreDictionary.registerOre("ingotImpureTitanium", new ItemStack(CoreItems.titaniumIngot));
 	        OreDictionary.registerOre("ingotTecmonium", new ItemStack(CoreItems.tecmoniumIngot));
 	        OreDictionary.registerOre("gemRuby", new ItemStack(CoreItems.rubyItem));
 	        OreDictionary.registerOre("gemCrystal", new ItemStack(CoreItems.crystalItem));

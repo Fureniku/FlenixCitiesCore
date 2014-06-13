@@ -1,11 +1,11 @@
 [
 {
-  "modid": "FlenixRoads",
-  "name": "Roads",
-  "description": "Adds a whole load of blocks for paving your own modern style roads, as well as a few other things to help with a city.",
-  "version": "1.0",
-  "mcversion": "1.5.2",
-  "logoFile": "/roads.png",
+  "modid": "FlenixCities",
+  "name": "FlenixCitiesCore",
+  "description": "Core aspect of FlenixCities, providing basic blocks, money, and soon other things like power and world gen.",
+  "version": "0.8.8",
+  "mcversion": "1.6.4",
+  "logoFile": "/cities.png",
   "url": "http://www.silvania.co.uk/mods/",
   "updateUrl": "",
   "authors": ["Flenix"],

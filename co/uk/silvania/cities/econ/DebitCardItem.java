@@ -62,15 +62,31 @@ public class DebitCardItem extends Item {
 			String playerName = item.stackTagCompound.getString("playerName");
 			if (playerName.equals(player.username)) {
 				list.add(EnumChatFormatting.GREEN + "Owner: " + playerName);
-				list.add("PIN: " + item.stackTagCompound.getInteger("PIN"));
+				list.add("PIN: " + getPinAsString(item));
 			} else {
 				list.add(EnumChatFormatting.RED + "Owner: " + playerName);
 			}
 			
 			if (player.capabilities.isCreativeMode) {
-				list.add(EnumChatFormatting.GOLD + playerName + "'s PIN is " + item.stackTagCompound.getInteger("PIN"));
+				list.add(EnumChatFormatting.GOLD + playerName + "'s PIN is " + getPinAsString(item));
 			}
 		}
+	}
+	
+	public String getPinAsString(ItemStack item) {
+		int pinInt = item.stackTagCompound.getInteger("PIN");
+		String pin = "" + pinInt;
+		if (pinInt <= 0) {
+			pin = "0000";
+		} else if (pinInt < 10) {
+			pin = "000" + pinInt;
+		} else if (pinInt < 100) {
+			pin = "00" + pinInt;
+		} else if (pinInt < 1000) {
+			pin = "0" + pinInt;
+		}
+		System.out.println("PIN (int): " + pinInt + ", PIN (string): " + pin);
+		return pin;
 	}
 	
 	@Override
@@ -109,13 +125,24 @@ public class DebitCardItem extends Item {
 		}
 	}
 	
-	public static int checkCardPin(EntityPlayer player) {
+	public static String checkCardPin(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
 		if (held.itemID != CoreItems.debitCardNew.itemID) {
-			return -1;
+			return "";
 		}
 		
-		return held.stackTagCompound.getInteger("PIN");
+		int pinInt = held.stackTagCompound.getInteger("PIN");
+		String pin = "" + pinInt;
+		if (pinInt <= 0) {
+			pin = "0000";
+		} else if (pinInt < 10) {
+			pin = "000" + pinInt;
+		} else if (pinInt < 100) {
+			pin = "00" + pinInt;
+		} else if (pinInt < 1000) {
+			pin = "0" + pinInt;
+		}
+		return pin;
 	}
 	
 	public static String checkCardOwner(EntityPlayer player) {

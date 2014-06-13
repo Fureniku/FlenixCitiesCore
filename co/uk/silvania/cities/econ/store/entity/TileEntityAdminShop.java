@@ -173,7 +173,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				return;
 			} else {
 				while (giveAmount >= 1) {
-					entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+					entityPlayer.inventory.addItemStackToInventory(item.copy());
 					giveAmount--;
 				}
 				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize * qty + " " + item.getDisplayName() + " from the server, for $" + EconUtils.formatBalance(itemCost * qty));
