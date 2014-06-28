@@ -23,6 +23,9 @@ public class BankerSpawnerItem extends NPCPeripheral {
 			entity.setLocationAndAngles((double)x + 0.5, (double)y + 1, (double)z + 0.5, 0.0F, 0.0F);
 			entity.onSpawnWithEgg(null);
 			world.spawnEntityInWorld(entity);
+			if (!player.capabilities.isCreativeMode) {
+				item.stackSize--;
+			}
 			return true;
 		} else {
 			return false;

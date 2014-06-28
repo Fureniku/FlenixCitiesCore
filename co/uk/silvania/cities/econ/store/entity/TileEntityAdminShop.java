@@ -179,10 +179,11 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize * qty + " " + item.getDisplayName() + " from the server, for $" + EconUtils.formatBalance(itemCost * qty));
 				entityPlayer.addChatMessage(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!");
 			}
-		} else {
-			if (invCash < totalItemCost) {
+			//Disabled due to money dupe glitch, will be fixed when I come back to FC in a week or so.
+		}// else {
+			/*if (invCash < totalItemCost) {
 				double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
-				if ((bankBalance + invCash) >= totalItemCost && hasSpace) {
+				if (bankBalance >= totalItemCost && hasSpace) {
 					if (EconUtils.hasOwnCard(entityPlayer)) {
 						if (EconUtils.chargePlayerAnywhere(entityPlayer, totalItemCost)) {
 							while (giveAmount >= 1) {
@@ -209,8 +210,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 						entityPlayer.addChatMessage(EnumChatFormatting.RED + "You do not have enough money to do that! Next time, why not pay by card?");
 					}
 				}
-			}
-		}
+			}*/
 		if (!hasSpace) {
 			entityPlayer.addChatMessage(EnumChatFormatting.RED + "You do not have enough free inventory space to buy that!");
 		}

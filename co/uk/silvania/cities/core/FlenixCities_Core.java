@@ -42,7 +42,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.8c")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.9b")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false, 
 	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ClientPacketHandler.class),
 	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ServerPacketHandler.class))
@@ -104,6 +104,12 @@ public class FlenixCities_Core {
     		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("kbts-drugs-and-guns-pack")) {
     			System.out.println("Technic has been detected!");
     			System.out.println("Ah, but I see you're using KBT's Drugs and Guns. In that case, an agreement has been reached. Carry on.");
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("metrobuild-reloaded")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using Metrobuild Reloaded. In that case, an agreement has been reached. Carry on.");
+    		} else if (cfgfile.getAbsolutePath().toLowerCase().contains("ragetech")) {
+    			System.out.println("Technic has been detected!");
+    			System.out.println("Ah, but I see you're using Ragetech. In that case, an agreement has been reached. Carry on.");
     		} else {
     			System.out.println("##########################################################");
     			System.out.println("##########################################################");

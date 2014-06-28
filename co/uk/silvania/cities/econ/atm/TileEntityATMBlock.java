@@ -123,7 +123,7 @@ public class TileEntityATMBlock extends BlockContainer {
                         nbt.setCompoundTag(player.username, playernbt);
                     }
                     NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-                    player.addChatMessage(coin.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
+                    player.addChatMessage(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(coin.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance")));
                     NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
                     --item.stackSize;
                 } else if (player.getHeldItem().getItem() instanceof ItemNote) {
@@ -150,7 +150,7 @@ public class TileEntityATMBlock extends BlockContainer {
                         nbt.setCompoundTag(player.username, playernbt);
                     }
                     NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
-                    player.addChatMessage(note.getMoneyValue() + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now " + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural);
+                    player.addChatMessage(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(note.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance")));
                     NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
                     --item.stackSize;
                 }
