@@ -10,13 +10,13 @@ import net.minecraft.world.World;
 
 public class AutomaticShopBlock extends BlockContainer {
 
-	protected AutomaticShopBlock(int par1, Material par2Material) {
-		super(par1, par2Material);
+	protected AutomaticShopBlock(Material par2Material) {
+		super(par2Material);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

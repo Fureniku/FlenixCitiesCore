@@ -1,29 +1,11 @@
 package co.uk.silvania.cities.econ.atm;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
-
-import co.uk.silvania.cities.core.CityConfig;
-import co.uk.silvania.cities.core.ClientPacketHandler;
-import co.uk.silvania.cities.core.CoreItems;
-import co.uk.silvania.cities.econ.DebitCardItem;
-import co.uk.silvania.cities.econ.EconUtils;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiATM extends GuiContainer {
 
@@ -71,7 +53,7 @@ public class GuiATM extends GuiContainer {
     //Each stage has a TO-DO list so it can be easily found in eclipse. This is a damn long class, so added this for sanity.
     //TODO Text String position/colours for 7-16, all active code for 7-16, NBT Balance Display in-ATM.
     
-    @Override
+    /*@Override
     public void initGui() {
     	super.initGui();
     	initBalance = initBalance + ClientPacketHandler.initBal;
@@ -101,9 +83,7 @@ public class GuiATM extends GuiContainer {
     }
     
     public void actionPerformed(GuiButton guibutton) {
-    	/*
-    	 *  TODO Asks for PIN
-    	 */
+    	//TODO Asks for PIN
     	if (guiStage.equals("1")) {
     		switch(guibutton.id) {
 	    	case 1:
@@ -158,9 +138,8 @@ public class GuiATM extends GuiContainer {
 	    	}
     	}
     	
-    	/*
-    	 *  TODO Options menu- what do next?
-    	 */
+
+    	//TODO Options menu- what do next?
     	if (guiStage.equals("2")) {
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
@@ -222,9 +201,8 @@ public class GuiATM extends GuiContainer {
 	    	}
     	}
     	
-    	/*
-    	 *  TODO Withdraw Screen. Sends a packet with the withdraw amount, which checks you have enough. If so, it'll give you the cash and remove from your NBT.
-    	 */
+
+    	//TODO Withdraw Screen. Sends a packet with the withdraw amount, which checks you have enough. If so, it'll give you the cash and remove from your NBT.
     	if (guiStage.equals("3")) {
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
@@ -370,9 +348,7 @@ public class GuiATM extends GuiContainer {
 	    	}
     	}
     	
-    	/*
-    	 *  TODO balance screen.
-    	 */
+    	//TODO balance screen.
     	if (guiStage.equals("4")) {
     		switch(guibutton.id){
 	    	case 4:
@@ -384,9 +360,7 @@ public class GuiATM extends GuiContainer {
     		}
     	}
     	
-    	/*
-    	 *  TODO Confirm withdrawl.
-    	 */
+    	//TODO Confirm withdrawl.
     	if (guiStage.equals("5")) {
     		switch(guibutton.id) {
     		case 4:
@@ -401,9 +375,7 @@ public class GuiATM extends GuiContainer {
         	}
     	} 
     	
-    	/*
-    	 *  TODO Not enough moolah.
-    	 */
+    	//TODO Not enough moolah.
     	if (guiStage.equals("6")) {
     		switch(guibutton.id) {
     		case 4:
@@ -430,9 +402,7 @@ public class GuiATM extends GuiContainer {
         	}
     	} 
     	
-    	/*
-    	 *  TODO DigiCoin transfer screen
-    	 */
+    	//TODO DigiCoin transfer screen
     	if (guiStage.equals("7")) {
     		switch(guibutton.id) {
     		case 4:
@@ -459,9 +429,7 @@ public class GuiATM extends GuiContainer {
         	}
     	} 
     	
-    	/*
-    	 *  TODO Change PIN Code
-    	 */
+    	//TODO Change PIN Code
     	if (guiStage.equals("8")) {
     		switch(guibutton.id) {
 	    	case 1:
@@ -534,9 +502,7 @@ public class GuiATM extends GuiContainer {
     		}
 		}
     	
-    	/*
-    	 *  TODO Withdraw X amount screen
-    	 */
+    	//TODO Withdraw X amount screen
     	if (guiStage.equals("10")) {
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
@@ -609,10 +575,7 @@ public class GuiATM extends GuiContainer {
     		}
     	}
     	
-    	/*
-    	 *  TODO DigiCoin Withdraw Screen
-    	 */
-    	
+    	//TODO DigiCoin Withdraw Screen    	
     	if (guiStage.equals("11")) {
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
@@ -685,9 +648,7 @@ public class GuiATM extends GuiContainer {
 	    	}
     	}
     	
-    	/*
-    	 * TODO DigiCoin Deposit Screen
-    	 */
+    	//TODO DigiCoin Deposit Screen
     	if (guiStage.equals("12")) {
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
@@ -773,9 +734,6 @@ public class GuiATM extends GuiContainer {
 			}
     	}
 		
-		/*
-    	 *  TODO Change PIN Code
-    	 */
 		
     	if (guiStage.equals("14")) {
     		switch(guibutton.id) {
@@ -1057,12 +1015,14 @@ public class GuiATM extends GuiContainer {
             }
     	}
     }
-    
-    private int tick = 0;
+    */
+    //private int tick = 0;
     
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
-    	double shortBal = ClientPacketHandler.shortValue;
+    	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+    	fontRendererObj.drawString("Sorry, out of order.", 34, 8, 0x007F0E);
+    	/*double shortBal = ClientPacketHandler.shortValue;
     	double initBal = ClientPacketHandler.initBal;
     	String underScore = "";
     	if (tick < 80) {
@@ -1219,7 +1179,7 @@ public class GuiATM extends GuiContainer {
         	fontRenderer.drawString("ATM", -21, -30, 0x404040);
         	fontRenderer.drawString("   PIN Codes do not match!   ", 18, -2, 0x7F0000);
     		fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    	}
+    	}*/
     }
     
     @Override

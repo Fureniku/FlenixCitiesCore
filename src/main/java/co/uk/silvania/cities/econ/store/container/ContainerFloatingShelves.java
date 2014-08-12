@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.econ.store.container;
+/*package co.uk.silvania.cities.econ.store.container;
 
 import java.util.List;
 
@@ -80,7 +80,7 @@ public class ContainerFloatingShelves extends Container {
 			((Slot)inventorySlots.get(i + slotNumStart)).xDisplayPosition = SLOT_X_POSTITIONS[i];
 		}
 	}*/
-	
+	/*
 	protected void bindPlayerInventory(InventoryPlayer invPlayer) {
 		//C = vertical inventory slots, "columns"
 		//R = horizontal inventory slots, "rows"
@@ -141,7 +141,4 @@ public class ContainerFloatingShelves extends Container {
 	public IInventory getFloatingShelvesInveotry() {
 		return this.floatingShelvesInventory;
 	}
-	
-	
-	
-}
+}*/

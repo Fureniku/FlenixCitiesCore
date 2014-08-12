@@ -2,32 +2,26 @@ package co.uk.silvania.cities.econ;
 
 import java.util.List;
 import java.util.Random;
-import java.lang.Math;
 
-import co.uk.silvania.cities.core.CityConfig;
-import co.uk.silvania.cities.core.CoreItems;
-import co.uk.silvania.cities.core.FlenixCities_Core;
-import co.uk.silvania.cities.core.NBTConfig;
-import co.uk.silvania.cities.core.ServerPacketHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+import co.uk.silvania.cities.core.CityConfig;
+import co.uk.silvania.cities.core.CoreItems;
+import co.uk.silvania.cities.core.FlenixCities_Core;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class DebitCardItem extends Item {
 
-	public DebitCardItem(int id) {
-		super(id);
+	public DebitCardItem() {
+		super();
 		this.setMaxStackSize(1);
 		this.setCreativeTab(FlenixCities_Core.tabEcon);
 	}
@@ -41,26 +35,27 @@ public class DebitCardItem extends Item {
 		//Used for changing the PIN code. Checks if it's been set or not. Need to test in SMP...
 		if (item.stackTagCompound != null) {
 			if (!world.isRemote) {
-				setNewPIN(item, player, world);
+				//TODO setNewPIN(item, player, world);
 			}
 		}
 		if (item.stackTagCompound == null) {
 			if (!world.isRemote) {
 				item.stackTagCompound = new NBTTagCompound();
-				item.stackTagCompound.setString("playerName", player.username);
+				item.stackTagCompound.setString("playerName", player.getDisplayName());
 				item.stackTagCompound.setInteger("PIN", rand.nextInt(9000) + 1000);
-				player.addChatMessage(gold + "Hello, " + item.stackTagCompound.getString("playerName") + 
-						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + ".");
+				player.addChatComponentMessage(new ChatComponentText(gold + "Hello, " + item.stackTagCompound.getString("playerName") + 
+						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + "."));
 				System.out.println("PIN has been set to " + item.stackTagCompound.getInteger("PIN"));
 			}
 		}
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack item, EntityPlayer player, List list, boolean par4) {
 		if (item.stackTagCompound != null) {
 			String playerName = item.stackTagCompound.getString("playerName");
-			if (playerName.equals(player.username)) {
+			if (playerName.equals(player.getDisplayName())) {
 				list.add(EnumChatFormatting.GREEN + "Owner: " + playerName);
 				list.add("PIN: " + getPinAsString(item));
 			} else {
@@ -91,22 +86,16 @@ public class DebitCardItem extends Item {
 	
 	@Override
 	public boolean onItemUse(ItemStack item, EntityPlayer entityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
-		if (!world.isRemote) {
-			if (MinecraftServer.getServer().getConfigurationManager().getOps().contains(entityPlayer.username)) {
-				entityPlayer.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.GOLD + "Player's PIN is " + item.stackTagCompound.getInteger("PIN")));
-				entityPlayer.addChatMessage(EnumChatFormatting.GOLD + "Player's PIN is " + item.stackTagCompound.getInteger("PIN"));
-			}
-		}
 		if (CityConfig.debugMode) {
 			System.out.println("Refreshing Inventory!");
 		}
 		return true;
 	}
 	
-	public static void setNewPIN(ItemStack item, EntityPlayer player, World world) {
+	/*public static void setNewPIN(ItemStack item, EntityPlayer player, World world) {
 		String pin = ServerPacketHandler.newPin;
 		String name = ServerPacketHandler.playerName;
-		if (player.username.equalsIgnoreCase(name)) {
+		if (player.getDisplayName().equalsIgnoreCase(name)) {
 			//System.out.println("First things first, now we've got the packet we'll check it's for this player.");
 			//System.out.println("Now, Lets check this PIN is of the correct length");
 			if (pin.length() == 4) {
@@ -123,11 +112,11 @@ public class DebitCardItem extends Item {
 				}	
 			}
 		}
-	}
+	}*/
 	
 	public static String checkCardPin(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
-		if (held.itemID != CoreItems.debitCardNew.itemID) {
+		if (held.getItem() != CoreItems.debitCardNew) {
 			return "";
 		}
 		
@@ -148,7 +137,7 @@ public class DebitCardItem extends Item {
 	public static String checkCardOwner(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
 		if (held != null) {
-			if (held.itemID == CoreItems.debitCardNew.itemID) {
+			if (held.getItem() == CoreItems.debitCardNew) {
 				return held.stackTagCompound.getString("playerName");
 			}
 		}
@@ -156,7 +145,7 @@ public class DebitCardItem extends Item {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerIcons(IIconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)));
 	}
 	

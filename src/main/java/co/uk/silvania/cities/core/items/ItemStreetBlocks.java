@@ -1,12 +1,13 @@
 package co.uk.silvania.cities.core.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemStreetBlocks extends ItemBlock {
 
-	public ItemStreetBlocks(int par1) {
-		super(par1);
+	public ItemStreetBlocks(Block block) {
+		super(block);
 		this.setHasSubtypes(true);
 	}
 

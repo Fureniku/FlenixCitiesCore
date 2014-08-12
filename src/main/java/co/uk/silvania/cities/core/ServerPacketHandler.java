@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.core;
+/*package co.uk.silvania.cities.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -511,4 +511,4 @@ public class ServerPacketHandler implements IPacketHandler {
         	System.out.println("Packet Failed!");
         }
     }
-}
+}*/

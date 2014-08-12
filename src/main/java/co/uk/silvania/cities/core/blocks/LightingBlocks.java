@@ -4,11 +4,12 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import co.uk.silvania.cities.core.FlenixCities_Core;
@@ -17,11 +18,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class LightingBlocks extends Block {
 	
-	public LightingBlocks(int id) {
-		super(id, Material.glass);
+	public LightingBlocks() {
+		super(Material.glass);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
 		this.setHardness(0.3F);
-		this.setLightValue(1.0F);
+		this.setLightLevel(1.0F);
 	}
 	
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
@@ -29,13 +30,14 @@ public class LightingBlocks extends Block {
     }
 	
 	@SideOnly(Side.CLIENT)
-	private Icon[] icons;
+	private IIcon[] icons;
 	@SideOnly(Side.CLIENT)
-	private Icon sideIcon;
+	private IIcon sideIcon;
 
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		icons = new Icon[16];
+	@Override
+	public void registerBlockIcons(IIconRegister iconRegister) {
+		icons = new IIcon[16];
 
 		for(int i = 0; i < 6; i++) {
 			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + i);
@@ -44,7 +46,8 @@ public class LightingBlocks extends Block {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	@Override
+	public IIcon getIcon(int side, int meta) {
 		if (side == 0) {
 			return icons[meta];
 		}
@@ -54,10 +57,12 @@ public class LightingBlocks extends Block {
 		return sideIcon;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int par1, CreativeTabs creativeTabs, List list) {
-		for (int var4 = 0; var4 < 5; ++var4) {
-			list.add(new ItemStack(par1, 1, var4));
+	@Override
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
+		for (int meta = 0; meta < 5; ++meta) {
+			list.add(new ItemStack(item, 1, meta));
 		}
 	}
 	

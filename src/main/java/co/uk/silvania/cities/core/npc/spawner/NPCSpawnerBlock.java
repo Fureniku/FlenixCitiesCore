@@ -1,21 +1,18 @@
 package co.uk.silvania.cities.core.npc.spawner;
 
 import co.uk.silvania.cities.core.FlenixCities_Core;
-import co.uk.silvania.cities.core.npc.EntityBanker;
-import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class NPCSpawnerBlock extends BlockContainer {
 
-	public NPCSpawnerBlock(int id) {
-		super(id, Material.iron);
+	public NPCSpawnerBlock() {
+		super(Material.iron);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
 		this.setHardness(2.0F);
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
@@ -24,11 +21,6 @@ public class NPCSpawnerBlock extends BlockContainer {
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
         return null;
     }
-	
-	@Override
-	public TileEntity createNewTileEntity(World world) {
-		return new NPCSpawnerEntity();
-	}
 	
 	@Override
 	public int getRenderType() {
@@ -92,5 +84,10 @@ public class NPCSpawnerBlock extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World world, int id) {
+		return new NPCSpawnerEntity();
 	}
 }

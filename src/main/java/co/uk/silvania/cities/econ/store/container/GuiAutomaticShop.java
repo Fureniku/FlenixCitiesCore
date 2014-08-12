@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.econ.store.container;
+/*package co.uk.silvania.cities.econ.store.container;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -318,4 +318,4 @@ public class GuiAutomaticShop extends GuiContainer {
 		}
 		return false;
 	}
-}
+}*/

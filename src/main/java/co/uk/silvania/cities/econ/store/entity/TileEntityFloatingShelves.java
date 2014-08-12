@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.econ.store.entity;
+/*package co.uk.silvania.cities.econ.store.entity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -80,9 +80,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	}
 	
 	public int getQuantity(int i) {
-		int qty;
-		int startSlot;
-		int endSlot;
 		if (i == 0) {
 			
 		} else if (i == 1) {
@@ -102,7 +99,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	
 	public void sellItem(int i, int q, EntityPlayer entityPlayer) {
 		System.out.println("We are beginning!");
-		if (entityPlayer.username.equals(userName)) {
+		if (entityPlayer.getDisplayName().equals(userName)) {
 			System.out.println("It's the correct player; name matches packet ID");
 			double itemCost = 0;
 			if (i == 1) {
@@ -346,7 +343,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				setInventorySlotContents(i, null);
 			} else {
 				itemStack = itemStack.splitStack(amount);
-				onInventoryChanged(); //Update the inventory. TODO use this for card removal
 			}
 		}
 		return itemStack;
@@ -367,8 +363,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 			if (itemStack != null && itemStack.stackSize > getInventoryStackLimit()) {
 				itemStack.stackSize = getInventoryStackLimit();
 			}
-		
-			onInventoryChanged();
 		}
 	}
 	
@@ -379,20 +373,9 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 			if (itemStack != null && itemStack.stackSize > getInventoryStackLimit()) {
 				itemStack.stackSize = getInventoryStackLimit();
 			}
-		
-			onInventoryChanged();
 		}
 	}
 
-	@Override
-	public String getInvName() {
-		return "Floating Shelves";
-	}
-
-	@Override //Apparently not used...
-	public boolean isInvNameLocalized() {
-		return true;
-	}
 
 	//Max size of stacks placed inside.
 	@Override
@@ -407,14 +390,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		return entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64;
 	}
 
-	//Not used
-	@Override
-	public void openChest() {}
-
-	//Not used
-	@Override
-	public void closeChest() {}
-
 	//Checks that the item is valid. For shelves, use instanceof to see if it's item or block.
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack item) {
@@ -424,16 +399,16 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		ItemStack slot4 = getStackInSlot(3);
 		if (item != null) {
 			if (i > 3 && i <= 39) {
-				return item.itemID == slot1.itemID;
+				return item.getItem() == slot1.getItem();
 			}
 			if (i > 39 && i <= 75) {
-				return item.itemID == slot2.itemID;
+				return item.getItem() == slot2.getItem();
 			}
 			if (i > 75 && i <= 111) {
-				return item.itemID == slot3.itemID;
+				return item.getItem() == slot3.getItem();
 			}
 			if (i > 111 && i <= 147) {
-				return item.itemID == slot4.itemID;
+				return item.getItem() == slot4.getItem();
 			}
 			if (i > 147 && i <= 184) {
 				if (item.getItem() instanceof ItemCoin || item.getItem() instanceof ItemNote) {
@@ -447,4 +422,4 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		}
 		return true;
 	}
-}
+}*/

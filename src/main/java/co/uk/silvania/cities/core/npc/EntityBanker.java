@@ -3,44 +3,22 @@ package co.uk.silvania.cities.core.npc;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
-import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.core.npc.ai.NPCAITempt;
-import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.IMerchant;
-import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIControlledByPlayer;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITargetNonTamed;
-import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.AttributeInstance;
-import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.village.MerchantRecipe;
-import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
 public class EntityBanker extends EntityAnimal {
@@ -65,10 +43,10 @@ public class EntityBanker extends EntityAnimal {
 		float var2 = 0.25F;
 		this.isEntityInvulnerable();
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new NPCAITempt(this, 1.1D, CoreItems.note10000.itemID, false));
-        this.tasks.addTask(2, new NPCAITempt(this, 1.0D, CoreItems.note5000.itemID, false));
-        this.tasks.addTask(3, new NPCAITempt(this, 0.9D, CoreItems.note2000.itemID, false));
-        this.tasks.addTask(4, new NPCAITempt(this, 0.8D, CoreItems.note1000.itemID, false));
+        this.tasks.addTask(1, new NPCAITempt(this, 1.1D, CoreItems.note10000, false));
+        this.tasks.addTask(2, new NPCAITempt(this, 1.0D, CoreItems.note5000, false));
+        this.tasks.addTask(3, new NPCAITempt(this, 0.9D, CoreItems.note2000, false));
+        this.tasks.addTask(4, new NPCAITempt(this, 0.8D, CoreItems.note1000, false));
         this.tasks.addTask(5, new EntityAIPanic(this, 0.38F));
         this.tasks.addTask(6, new EntityAIMate(this, var2));
         this.tasks.addTask(7, new EntityAIFollowParent(this, 0.28F));
@@ -80,7 +58,7 @@ public class EntityBanker extends EntityAnimal {
 	@Override
 	public boolean interact(EntityPlayer player) {
 		//Right now this is just here so I can right-click the mob and printline what his NBT is as an in-game check.
-		if (!player.inventory.hasItem(CoreItems.debitCardNew.itemID)) {
+		if (!player.inventory.hasItem(CoreItems.debitCardNew)) {
 			player.inventory.addItemStackToInventory(new ItemStack(CoreItems.debitCardNew));
 		}
 		NBTTagCompound nbt = this.getEntityData();
@@ -144,7 +122,7 @@ public class EntityBanker extends EntityAnimal {
 
             if (!this.isAIEnabled())
             {
-                AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+                IAttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
 
                 if (attributeinstance.getModifier(field_110179_h) == null)
                 {
@@ -153,7 +131,6 @@ public class EntityBanker extends EntityAnimal {
             }
 
             this.entityToAttack = null;
-            this.inLove = 0;
             return super.attackEntityFrom(par1DamageSource, par2);
         }
     }
@@ -197,10 +174,6 @@ public class EntityBanker extends EntityAnimal {
 	
 	protected void playStepSound(int par1, int par2, int par3, int par4) {
 		this.worldObj.playSoundAtEntity(this, "mob.glog.step", 0.15F,  1.0F);
-	}
-	
-	protected int getDropItemId() {
-		return CoreItems.note1000.itemID;
 	}
 	
 	public EntityAgeable createChild(EntityAgeable var1) {

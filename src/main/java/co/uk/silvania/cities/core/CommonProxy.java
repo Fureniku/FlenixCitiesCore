@@ -1,19 +1,16 @@
 package co.uk.silvania.cities.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
-import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.items.*;
 import co.uk.silvania.cities.core.npc.EntityBanker;
-import co.uk.silvania.cities.econ.VillagerTradeHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.VillagerRegistry;
 
 public class CommonProxy {
 	
@@ -33,7 +30,7 @@ public class CommonProxy {
     
     public void registerBlocks() {
         GameRegistry.registerBlock(CoreBlocks.atmBlock, ItemATMBlock.class, "FlenixCities" + (CoreBlocks.atmBlock.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.floatingShelvesBlock, "floatingShelvesBlock");
+        //GameRegistry.registerBlock(CoreBlocks.floatingShelvesBlock, "floatingShelvesBlock");
         GameRegistry.registerBlock(CoreBlocks.npcSpawnerBlock, "npcSpawnerBlock");
         
         GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks.getUnlocalizedName().substring(5)));
@@ -46,15 +43,6 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.woolWood, ItemWoolStone.class, "FlenixCities" + (CoreBlocks.woolWood.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.plasticBlock, ItemPlasticBlocks.class, "FlenixCities" + (CoreBlocks.plasticBlock.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.floorBlocks, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.floorBlocks.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.oreStorageBlock, ItemOreStorageBlocks.class, "FlenixCities" + (CoreBlocks.oreStorageBlock.getUnlocalizedName().substring(5)));
-        
-        GameRegistry.registerBlock(CoreBlocks.copperOre, "copperOre");
-       	GameRegistry.registerBlock(CoreBlocks.tinOre, "tinOre");
-       	GameRegistry.registerBlock(CoreBlocks.crystalOre, "crystalOre");
-       	GameRegistry.registerBlock(CoreBlocks.rubyOre, "rubyOre");
-       	GameRegistry.registerBlock(CoreBlocks.silverOre, "silverOre");
-       	GameRegistry.registerBlock(CoreBlocks.tecmoniumOre, "tecmoniumOre");
-       	GameRegistry.registerBlock(CoreBlocks.titaniumOre, "titaniumOre");
        	
        	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
        	GameRegistry.registerBlock(CoreBlocks.lightingBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
@@ -67,13 +55,9 @@ public class CommonProxy {
        	GameRegistry.registerBlock(CoreBlocks.drywallGrey, "drywallGrey");
        	GameRegistry.registerBlock(CoreBlocks.styledGlassPane, "styledGlassPane"); //, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.styledGlassPane.getUnlocalizedName().substring(5)));
        	GameRegistry.registerBlock(CoreBlocks.styledGlassWhitePane, "styledGlassWhitePane");
+
        	
-       	GameRegistry.registerBlock(CoreBlocks.blockOil, "blockOil");
-       	GameRegistry.registerBlock(CoreBlocks.blockPetrol, "blockPetrol");
-       	GameRegistry.registerBlock(CoreBlocks.blockDiesel, "blockDiesel");
-       	GameRegistry.registerBlock(CoreBlocks.blockRedDiesel, "blockRedDiesel");
-       	
-       	GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
+        //GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
        	
        	
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster1, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster1.getUnlocalizedName().substring(5)));
@@ -84,15 +68,7 @@ public class CommonProxy {
     	//GameRegistry.registerItem(CoreItems.plasticItem, "plasticItem");
     	//GameRegistry.registerItem(CoreItems.smallPCB, "smallPCB");
     	//GameRegistry.registerItem(CoreItems.largePCB, "largePCB");
-    	GameRegistry.registerItem(CoreItems.rubyItem, "rubyItem");
-    	GameRegistry.registerItem(CoreItems.titaniumIngot, "titaniumIngot");
-    	GameRegistry.registerItem(CoreItems.tecmoniumIngot, "tecmoniumIngot");
-    	GameRegistry.registerItem(CoreItems.silverIngot, "silverIngot");
-    	GameRegistry.registerItem(CoreItems.copperIngot, "copperIngot");
-    	GameRegistry.registerItem(CoreItems.tinIngot, "tinIngot");
-    	GameRegistry.registerItem(CoreItems.crystalItem, "crystalItem");
-    	GameRegistry.registerItem(CoreItems.sapphireItem, "sapphireItem");
-    	
+
         GameRegistry.registerItem(CoreItems.coin1, "coin1");
         GameRegistry.registerItem(CoreItems.coin2, "coin2");
         GameRegistry.registerItem(CoreItems.coin5, "coin5");
@@ -106,19 +82,8 @@ public class CommonProxy {
         GameRegistry.registerItem(CoreItems.note2000, "note2000");
         GameRegistry.registerItem(CoreItems.note5000, "note5000");
         GameRegistry.registerItem(CoreItems.note10000, "note10000");
-        GameRegistry.registerItem(CoreItems.debitCard, "debitCard");
         GameRegistry.registerItem(CoreItems.debitCardNew, "debitCardNew");
         GameRegistry.registerItem(CoreItems.bankerSpawner, "bankerSpawner");
-        
-        GameRegistry.registerItem(CoreItems.oilBucket, "oilBucket");
-        GameRegistry.registerItem(CoreItems.petrolBucket, "petrolBucket");
-        GameRegistry.registerItem(CoreItems.dieselBucket, "dieselBucket");
-        GameRegistry.registerItem(CoreItems.redDieselBucket, "redDieselBucket");
-        
-        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("oil", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.oilBucket), new ItemStack(Item.bucketEmpty));
-        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("petrol", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.petrolBucket), new ItemStack(Item.bucketEmpty));
-        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("diesel", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.dieselBucket), new ItemStack(Item.bucketEmpty));
-        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("reddiesel", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(CoreItems.redDieselBucket), new ItemStack(Item.bucketEmpty));
 
     	/*GameRegistry.registerItem(CoreItems.ringItem, "ringItem");
     	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
@@ -127,19 +92,6 @@ public class CommonProxy {
     }
     
     public void addNames() {
-        LanguageRegistry.addName(CoreBlocks.copperOre, "Copper Ore");
-        LanguageRegistry.addName(CoreBlocks.tinOre, "Tin Ore");
-        LanguageRegistry.addName(CoreBlocks.rubyOre, "Ruby Ore");
-        LanguageRegistry.addName(CoreBlocks.tecmoniumOre, "Tecmonium Ore");
-        LanguageRegistry.addName(CoreBlocks.crystalOre, "Crystal Ore");
-        LanguageRegistry.addName(CoreBlocks.titaniumOre, "Titanium Ore");
-        LanguageRegistry.addName(CoreBlocks.silverOre, "Silver Ore");
-        
-        LanguageRegistry.addName(CoreBlocks.blockOil, "Oil");
-        LanguageRegistry.addName(CoreBlocks.blockPetrol, "Petrol");
-        LanguageRegistry.addName(CoreBlocks.blockDiesel, "Diesel");
-        LanguageRegistry.addName(CoreBlocks.blockRedDiesel, "Red Diesel");
-        
     	LanguageRegistry.addName(CoreBlocks.rebarBlock, "Rebar");
     	
     	LanguageRegistry.addName(CoreBlocks.drywallWhite, "White Drywall");
@@ -150,26 +102,12 @@ public class CommonProxy {
     	LanguageRegistry.addName(CoreBlocks.styledGlassPane, "Styled Glass Pane");
     	LanguageRegistry.addName(CoreBlocks.styledGlassWhitePane, "Styled Glass Pane");
         
-        LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
-        LanguageRegistry.addName(CoreBlocks.adminShopBlock, "Floating Shelves (Unlimited)");
+        //LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
+        //LanguageRegistry.addName(CoreBlocks.adminShopBlock, "Floating Shelves (Unlimited)");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 0), "ATM Stone");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 4), "ATM Stone Brick");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 8), "ATM City White");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 12), "ATM City Grey");
-        
-    	LanguageRegistry.addName(CoreItems.rubyItem, "Ruby");
-    	LanguageRegistry.addName(CoreItems.titaniumIngot, "Impure Titanium Ingot");
-    	LanguageRegistry.addName(CoreItems.tecmoniumIngot, "Tecmonium Ore");
-    	LanguageRegistry.addName(CoreItems.silverIngot, "Silver Ingot");
-    	LanguageRegistry.addName(CoreItems.copperIngot, "Copper Ingot");
-    	LanguageRegistry.addName(CoreItems.tinIngot, "Tin Ingot");
-    	LanguageRegistry.addName(CoreItems.crystalItem, "Crystal");
-    	LanguageRegistry.addName(CoreItems.sapphireItem, "Sapphire");
-    	
-    	LanguageRegistry.addName(CoreItems.oilBucket, "Bucket of Oil");
-    	LanguageRegistry.addName(CoreItems.petrolBucket, "Bucket of Petrol");
-    	LanguageRegistry.addName(CoreItems.dieselBucket, "Bucket of Diesel");
-    	LanguageRegistry.addName(CoreItems.redDieselBucket, "Bucket of Red Diesel");
     	
     	/*LanguageRegistry.addName(CoreItems.plasticItem, "Plastic");
     	LanguageRegistry.addName(CoreItems.smallPCB, "Small PCB");
@@ -194,10 +132,8 @@ public class CommonProxy {
         LanguageRegistry.addName(CoreItems.note2000, "20 " + CityConfig.currencyLargePlural);
         LanguageRegistry.addName(CoreItems.note5000, "50 " + CityConfig.currencyLargePlural);
         LanguageRegistry.addName(CoreItems.note10000, "100 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.debitCard, "Debit Card (Broken)");
         LanguageRegistry.addName(CoreItems.debitCardNew, "Debit Card");
         LanguageRegistry.addName(CoreItems.bankerSpawner, "Banker Spawner");
-        LanguageRegistry.addName(CoreItems.idCard, "ID Card");
         
         LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0), "White Skyscraper Block");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1), "Light Grey Skyscraper Block");
@@ -376,15 +312,7 @@ public class CommonProxy {
         LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 4), "Vertical Light Strip (Short)");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 8), "Vertical Light Panel");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 12), "Vertical Light Panel (Small)");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 0), "Copper Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 1), "Tin Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 2), "Ruby Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 3), "Sapphire Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 4), "Tecmonium Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 5), "Crystal Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 6), "Silver Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.oreStorageBlock, 1, 7), "Titanium Block");
+
         
         /*LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster1, 1, 0), "Silvania VA");
         LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster1, 1, 4), "Remula");
@@ -407,42 +335,12 @@ public class CommonProxy {
         LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster4, 1, 12), "Ad Slot 8");*/
     }
     
-    public void setVillagerTrades() {
-    	VillagerRegistry.instance().registerVillageTradeHandler(3, new VillagerTradeHandler());
-    }
-    
     public void addRecipes() {
-    	ItemStack copperIngot = new ItemStack(CoreItems.copperIngot);
-    	ItemStack tinIngot = new ItemStack(CoreItems.tinIngot);
-    	ItemStack silverIngot = new ItemStack(CoreItems.silverIngot);
-    	ItemStack titaniumIngot = new ItemStack(CoreItems.titaniumIngot);
-    	ItemStack tecmoniumIngot = new ItemStack(CoreItems.tecmoniumIngot);
-    	ItemStack crystalItem = new ItemStack(CoreItems.crystalItem);
-    	ItemStack rubyItem = new ItemStack(CoreItems.rubyItem);
-    	ItemStack sapphireItem = new ItemStack(CoreItems.sapphireItem);
-    	ItemStack ironIngot = new ItemStack(Item.ingotIron);
+
+    	ItemStack ironIngot = new ItemStack(Items.iron_ingot);
     	
-    	ItemStack copperOre = new ItemStack(CoreBlocks.copperOre);
-    	ItemStack tinOre = new ItemStack(CoreBlocks.tinOre);
-    	ItemStack silverOre = new ItemStack(CoreBlocks.silverOre);
-    	ItemStack titaniumOre = new ItemStack(CoreBlocks.titaniumOre);
-    	ItemStack tecmoniumOre = new ItemStack(CoreBlocks.tecmoniumOre);
-    	ItemStack crystalOre = new ItemStack(CoreBlocks.crystalOre);
-    	ItemStack rubyOre = new ItemStack(CoreBlocks.rubyOre);
-    	//ItemStack sapphireOre = new ItemStack(CoreBlocks.sapphireOre);
-    	
-    	ItemStack copperBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 0);
-    	ItemStack tinBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 1);
-    	ItemStack rubyBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 2);
-    	ItemStack sapphireBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 3);
-    	ItemStack tecmoniumBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 4);
-    	ItemStack crystalBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 5);
-    	ItemStack silverBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 6);
-    	ItemStack titaniumBlock = new ItemStack(CoreBlocks.oreStorageBlock, 1, 7);
-    	
-    	
-    	ItemStack stoneBlock = new ItemStack(Block.stone);
-    	ItemStack quartzItem = new ItemStack(Item.netherQuartz);
+    	ItemStack stoneBlock = new ItemStack(Blocks.stone);
+    	ItemStack quartzItem = new ItemStack(Items.quartz);
     	ItemStack skyscraperAny = new ItemStack(CoreBlocks.skyscraperBlocks);
     	ItemStack skyscraperWhite = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0);
     	ItemStack skyscraperLightGrey = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1);
@@ -450,52 +348,43 @@ public class CommonProxy {
     	ItemStack skyscraperBlack = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 3);
     	ItemStack rebarBlock = new ItemStack(CoreBlocks.rebarBlock);
     	
-    	ItemStack blackDye = new ItemStack(Item.dyePowder, 1, 0);
-    	ItemStack redDye = new ItemStack(Item.dyePowder, 1, 1);
-    	ItemStack greenDye = new ItemStack(Item.dyePowder, 1, 2);
-    	ItemStack brownDye = new ItemStack(Item.dyePowder, 1, 3);
-    	ItemStack blueDye = new ItemStack(Item.dyePowder, 1, 4);
-    	ItemStack purpleDye = new ItemStack(Item.dyePowder, 1, 5);
-    	ItemStack tealDye = new ItemStack(Item.dyePowder, 1, 6);
-    	ItemStack lightGreyDye = new ItemStack(Item.dyePowder, 1, 7);
-    	ItemStack darkGreyDye = new ItemStack(Item.dyePowder, 1, 8);
-    	ItemStack pinkDye = new ItemStack(Item.dyePowder, 1, 9);
-    	ItemStack limeGreenDye = new ItemStack(Item.dyePowder, 1, 10);
-    	ItemStack yellowDye = new ItemStack(Item.dyePowder, 1, 11);
-    	ItemStack lightBlueDye = new ItemStack(Item.dyePowder, 1, 12);
-    	ItemStack magentaDye = new ItemStack(Item.dyePowder, 1, 13);
-    	ItemStack orangeDye = new ItemStack(Item.dyePowder, 1, 14);
-    	ItemStack whiteDye = new ItemStack(Item.dyePowder, 1, 15);    	
+    	ItemStack blackDye = new ItemStack(Items.dye, 1, 0);
+    	ItemStack redDye = new ItemStack(Items.dye, 1, 1);
+    	ItemStack greenDye = new ItemStack(Items.dye, 1, 2);
+    	ItemStack brownDye = new ItemStack(Items.dye, 1, 3);
+    	ItemStack blueDye = new ItemStack(Items.dye, 1, 4);
+    	ItemStack purpleDye = new ItemStack(Items.dye, 1, 5);
+    	ItemStack tealDye = new ItemStack(Items.dye, 1, 6);
+    	ItemStack lightGreyDye = new ItemStack(Items.dye, 1, 7);
+    	ItemStack darkGreyDye = new ItemStack(Items.dye, 1, 8);
+    	ItemStack pinkDye = new ItemStack(Items.dye, 1, 9);
+    	ItemStack limeGreenDye = new ItemStack(Items.dye, 1, 10);
+    	ItemStack yellowDye = new ItemStack(Items.dye, 1, 11);
+    	ItemStack lightBlueDye = new ItemStack(Items.dye, 1, 12);
+    	ItemStack magentaDye = new ItemStack(Items.dye, 1, 13);
+    	ItemStack orangeDye = new ItemStack(Items.dye, 1, 14);
+    	ItemStack whiteDye = new ItemStack(Items.dye, 1, 15);    	
     	
-    	ItemStack blackWool = new ItemStack(Block.cloth, 1, 15);
-    	ItemStack redWool = new ItemStack(Block.cloth, 1, 14);
-    	ItemStack greenWool = new ItemStack(Block.cloth, 1, 13);
-    	ItemStack brownWool = new ItemStack(Block.cloth, 1, 12);
-    	ItemStack blueWool = new ItemStack(Block.cloth, 1, 11);
-    	ItemStack purpleWool = new ItemStack(Block.cloth, 1, 10);
-    	ItemStack tealWool = new ItemStack(Block.cloth, 1, 9);
-    	ItemStack lightGreyWool = new ItemStack(Block.cloth, 1, 8);
-    	ItemStack darkGreyWool = new ItemStack(Block.cloth, 1, 7);
-    	ItemStack pinkWool = new ItemStack(Block.cloth, 1, 6);
-    	ItemStack limeGreenWool = new ItemStack(Block.cloth, 1, 5);
-    	ItemStack yellowWool = new ItemStack(Block.cloth, 1, 4);
-    	ItemStack lightBlueWool = new ItemStack(Block.cloth, 1, 3);
-    	ItemStack magentaWool = new ItemStack(Block.cloth, 1, 2);
-    	ItemStack orangeWool = new ItemStack(Block.cloth, 1, 1);
-    	ItemStack whiteWool = new ItemStack(Block.cloth, 1, 0); 
+    	ItemStack blackWool = new ItemStack(Blocks.wool, 1, 15);
+    	ItemStack redWool = new ItemStack(Blocks.wool, 1, 14);
+    	ItemStack greenWool = new ItemStack(Blocks.wool, 1, 13);
+    	ItemStack brownWool = new ItemStack(Blocks.wool, 1, 12);
+    	ItemStack blueWool = new ItemStack(Blocks.wool, 1, 11);
+    	ItemStack purpleWool = new ItemStack(Blocks.wool, 1, 10);
+    	ItemStack tealWool = new ItemStack(Blocks.wool, 1, 9);
+    	ItemStack lightGreyWool = new ItemStack(Blocks.wool, 1, 8);
+    	ItemStack darkGreyWool = new ItemStack(Blocks.wool, 1, 7);
+    	ItemStack pinkWool = new ItemStack(Blocks.wool, 1, 6);
+    	ItemStack limeGreenWool = new ItemStack(Blocks.wool, 1, 5);
+    	ItemStack yellowWool = new ItemStack(Blocks.wool, 1, 4);
+    	ItemStack lightBlueWool = new ItemStack(Blocks.wool, 1, 3);
+    	ItemStack magentaWool = new ItemStack(Blocks.wool, 1, 2);
+    	ItemStack orangeWool = new ItemStack(Blocks.wool, 1, 1);
+    	ItemStack whiteWool = new ItemStack(Blocks.wool, 1, 0); 
     	
-    	ItemStack woodBlock = new ItemStack(Block.planks);
+    	ItemStack woodBlock = new ItemStack(Blocks.planks);
     	
-    	GameRegistry.addRecipe(copperBlock, "iii", "iii", "iii", 'i', copperIngot);
-    	GameRegistry.addRecipe(tinBlock, "iii", "iii", "iii", 'i', tinIngot);
-    	GameRegistry.addRecipe(rubyBlock, "iii", "iii", "iii", 'i', rubyItem);
-    	GameRegistry.addRecipe(sapphireBlock, "iii", "iii", "iii", 'i', sapphireItem);
-    	GameRegistry.addRecipe(tecmoniumBlock, "iii", "iii", "iii", 'i', tecmoniumIngot);
-    	GameRegistry.addRecipe(crystalBlock, "iii", "iii", "iii", 'i', crystalItem);
-    	GameRegistry.addRecipe(silverBlock, "iii", "iii", "iii", 'i', silverIngot);
-    	GameRegistry.addRecipe(titaniumBlock, "iii", "iii", "iii", 'i', titaniumIngot);
-    	
-    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), "   ", " t ", "   ", 't', titaniumIngot);
+    	//TODO  GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), "   ", " t ", "   ", 't', titaniumIngot);
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), " i ", " i ", " i ", 'i', ironIngot);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.floorBlocks, 1, 9), stoneBlock, quartzItem);
     	
@@ -513,23 +402,6 @@ public class CommonProxy {
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 13), " d ", "dsd", " d ", 's', skyscraperLightGrey, 'd', blackDye);
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 14), " d ", "dsd", " d ", 's', skyscraperDarkGrey, 'd', blackDye);
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 15), " d ", "dsd", " d ", 's', skyscraperBlack, 'd', blackDye);
-    	
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.copperIngot, 9, 0), copperBlock);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.tinIngot, 9, 0), tinBlock);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.rubyItem, 9, 0), rubyBlock);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.sapphireItem, 9, 0), sapphireBlock);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.tecmoniumIngot, 9, 0), tecmoniumBlock);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.crystalItem, 9, 0), crystalBlock);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.silverIngot, 9, 0), silverBlock);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.titaniumIngot, 9, 0), titaniumBlock);
-    	
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.copperOre), copperOre);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.tinOre), tinOre);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.silverOre), silverOre);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.titaniumOre), titaniumOre);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.tecmoniumOre), tecmoniumOre);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.crystalOre), crystalOre);
-    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.rubyOre), rubyOre);
     	
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 8, 0), stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, rebarBlock);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0), skyscraperAny, whiteDye);
@@ -587,12 +459,6 @@ public class CommonProxy {
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 13), woodBlock, greenWool);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 14), woodBlock, redWool);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 15), woodBlock, blackWool);
-    	
-    	GameRegistry.addSmelting(CoreBlocks.copperOre.blockID, copperIngot, 0.5F);
-    	GameRegistry.addSmelting(CoreBlocks.tinOre.blockID, tinIngot, 0.5F);
-    	GameRegistry.addSmelting(CoreBlocks.silverOre.blockID, silverIngot, 0.8F);
-    	GameRegistry.addSmelting(CoreBlocks.titaniumOre.blockID, titaniumIngot, 1.0F);
-    	GameRegistry.addSmelting(CoreBlocks.tecmoniumOre.blockID, tecmoniumIngot, 1.2F);
     }
 
 }

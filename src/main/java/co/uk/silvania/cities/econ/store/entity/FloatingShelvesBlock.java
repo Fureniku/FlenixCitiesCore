@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.econ.store.entity;
+/*package co.uk.silvania.cities.econ.store.entity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -9,19 +9,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
 public class FloatingShelvesBlock extends BlockContainer {
 
-	public FloatingShelvesBlock(int id) {
-		super(id, Material.iron);
+	public FloatingShelvesBlock() {
+		super(Material.iron);
 		this.setCreativeTab(FlenixCities_Core.tabEcon);
 	}
 	
@@ -108,7 +105,7 @@ public class FloatingShelvesBlock extends BlockContainer {
 	}	
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int id) {
 		return new TileEntityFloatingShelves();
 	}
 }

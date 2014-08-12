@@ -2,34 +2,35 @@ package co.uk.silvania.cities.core.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class RebarBlock extends Block {
 	
-	public RebarBlock(int id) {
-		super(id, Material.iron);
+	public RebarBlock() {
+		super(Material.iron);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
 		this.setHardness(1.8F);
 		this.setBlockBounds(0.45F, 0.0F, 0.45F, 0.55F, 1.0F, 0.55F);
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public Icon side1;
+	public IIcon side1;
 	@SideOnly(Side.CLIENT)
-	public Icon side2;
+	public IIcon side2;
 	@SideOnly(Side.CLIENT)
-	public Icon side3;
+	public IIcon side3;
 	@SideOnly(Side.CLIENT)
-	public Icon side4;
+	public IIcon side4;
 	@SideOnly(Side.CLIENT)
-	public Icon top;
+	public IIcon top;
 	
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	@Override
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		side1 = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + 1);
 		side2 = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + 2);
 		side3 = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + 3);
@@ -48,7 +49,8 @@ public class RebarBlock extends Block {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int metadata) {
+	@Override
+	public IIcon getIcon(int side, int metadata) {
 		if (side == 2) {
 			return side1;
 		}

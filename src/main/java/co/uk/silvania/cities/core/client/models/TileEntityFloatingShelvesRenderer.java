@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.core.client.models;
+/*package co.uk.silvania.cities.core.client.models;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -106,7 +106,7 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.585F, (float) z + S1zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
 			entity.setEntityItemStack(slot0);
-			renderer.doRenderItem(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
@@ -117,7 +117,7 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 			GL11.glTranslated((float) x + S2xOffset, (float) y + 0.585F, (float) z + S2zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
 			entity.setEntityItemStack(slot1);
-			renderer.doRenderItem(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
@@ -128,7 +128,7 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.064F, (float) z + S1zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
 			entity.setEntityItemStack(slot2);
-			renderer.doRenderItem(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
@@ -139,18 +139,18 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 			GL11.glTranslated((float) x + S2xOffset, (float) y + 0.064F, (float) z + S2zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
 			entity.setEntityItemStack(slot3);
-			renderer.doRenderItem(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 	}
 
 	private void adjustLightFixture(World world, int i, int j, int k, Block block) {
 		Tessellator tess = Tessellator.instance;
-		float brightness = block.getBlockBrightness(world, i, j, k);
+		float brightness = block.getLightValue(world, i, j, k);
 		int skyLight = world.getLightBrightnessForSkyBlocks(i, j, k, 0);
 		int modulousModifier = skyLight % 65536;
 		int divModifier = skyLight / 65536;
 		tess.setColorOpaque_F(brightness, brightness, brightness);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit,  (float) modulousModifier,  divModifier);
 	}
-}
+}*/

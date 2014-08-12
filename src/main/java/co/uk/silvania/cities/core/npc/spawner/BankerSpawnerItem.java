@@ -8,8 +8,8 @@ import co.uk.silvania.cities.core.npc.EntityBanker;
 
 public class BankerSpawnerItem extends NPCPeripheral {
 
-	public BankerSpawnerItem(int id) {
-		super(id);
+	public BankerSpawnerItem() {
+		super();
 		this.setCreativeTab(FlenixCities_Core.tabEcon);
 	}
 	

@@ -4,12 +4,13 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,22 +21,23 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class LightingRotateBlocks extends Block {
 	
-	public LightingRotateBlocks(int id) {
-		super(id, Material.glass);
+	public LightingRotateBlocks() {
+		super(Material.glass);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
 		this.setHardness(0.3F);
-		this.setLightValue(1.0F);
+		this.setLightLevel(1.0F);
 	}
 	
 	
 	@SideOnly(Side.CLIENT)
-	private Icon[] icons;
+	private IIcon[] icons;
 	//@SideOnly(Side.CLIENT)
-	//private Icon sideIcon;
+	//private IIcon sideIcon;
 
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		icons = new Icon[16];
+	@Override
+	public void registerBlockIcons(IIconRegister iconRegister) {
+		icons = new IIcon[16];
 
 		for(int i = 0; i < icons.length; i++) {
 			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)) + "0");
@@ -44,17 +46,19 @@ public class LightingRotateBlocks extends Block {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	@Override
+	public IIcon getIcon(int side, int meta) {
 		return icons[meta];
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int par1, CreativeTabs creativeTabs, List list) {
-        list.add(new ItemStack(par1, 1, 0));
-        list.add(new ItemStack(par1, 1, 4));
-        list.add(new ItemStack(par1, 1, 8));
-        list.add(new ItemStack(par1, 1, 12));
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
+        list.add(new ItemStack(item, 1, 0));
+        list.add(new ItemStack(item, 1, 4));
+        list.add(new ItemStack(item, 1, 8));
+        list.add(new ItemStack(item, 1, 12));
 	}
 	
 	@Override

@@ -2,29 +2,13 @@ package co.uk.silvania.cities.core;
 
 import java.io.File;
 
-import co.uk.silvania.cities.api.npc.CommonSidedProxy;
-import co.uk.silvania.cities.core.items.CraftingIngredientItems;
-import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
-import co.uk.silvania.cities.core.world.WorldGen;
-import co.uk.silvania.cities.econ.VillageHandlerBlacksmith;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
-import co.uk.silvania.cities.econ.store.VanillaItemValueConfig;
-import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
-import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
-import net.minecraft.block.Block;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -32,20 +16,9 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.8.9b")
-@NetworkMod(clientSideRequired=true, serverSideRequired=false, 
-	clientPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ClientPacketHandler.class),
-	serverPacketHandlerSpec = @SidedPacketHandler(channels={"FCitiesPackets", "FCDigiCoinPkt", "FCCardPin", "FCShopPacket", "FCSalePacket"}, packetHandler = ServerPacketHandler.class))
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.9.0")
 public class FlenixCities_Core { 
 	
 	public static final String modid = "flenixcities";
@@ -58,8 +31,9 @@ public class FlenixCities_Core {
     public static CommonProxy proxy;
     
 	public static CreativeTabs tabCity = new CreativeTabs("tabCity") {
-		public ItemStack getIconItemStack() {
-			return new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0);
+		@Override
+		public Item getTabIconItem() {
+			return new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0).getItem();
 		}
 	};
 	
@@ -67,19 +41,14 @@ public class FlenixCities_Core {
 		public ItemStack getIconItemStack() {
 			return new ItemStack(CoreBlocks.atmBlock, 1, 0);
 		}
+
+		@Override
+		public Item getTabIconItem() {
+			return new ItemStack(CoreBlocks.atmBlock, 1, 0).getItem();
+		}
 	};
 	
 	public static String configPath;
-	
-	public static WorldGen worldGen = new WorldGen();
-
-	//And finally the worldgen
-	//public static WorldGen worldGen = new WorldGen();
-
-	@EventHandler
-	public void serverStart(FMLServerStartingEvent event) {
-		MinecraftServer server = MinecraftServer.getServer();
-	}
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -135,9 +104,8 @@ public class FlenixCities_Core {
     	}
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
-    	VanillaItemValueConfig.init(configPath + "Prices/");
         
-    	NetworkRegistry.instance().registerGuiHandler(this, cityGuiHandler);
+    	//TODO NetworkRegistry.instance().registerGuiHandler(this, cityGuiHandler);
         CoreBlocks.init();
         CoreItems.init();
         
@@ -163,34 +131,11 @@ public class FlenixCities_Core {
 	        proxy.entityStuff();
 	        
 	        MinecraftForge.EVENT_BUS.register(new EventDrops());
-	        MinecraftForge.EVENT_BUS.register(new EventListener());
 	        
 	        GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
-	        GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
-	        GameRegistry.registerTileEntity(TileEntityAdminShop.class, "tileEntityAdminShop");
+	        //TODO GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
+	        //GameRegistry.registerTileEntity(TileEntityAdminShop.class, "tileEntityAdminShop");
 	        GameRegistry.registerTileEntity(NPCSpawnerEntity.class, "npcSpawnerBlock");
-	        
-	        LanguageRegistry.instance().addStringLocalization("itemGroup.tabEcon", "en_US", "Cities: Economy");            
-	        LanguageRegistry.instance().addStringLocalization("itemGroup.tabCity", "en_US", "Cities: Blocks");
-	        
-	        GameRegistry.registerWorldGenerator(new WorldGen());
-	        
-	        OreDictionary.registerOre("oreCopper", new ItemStack(CoreBlocks.copperOre));
-	        OreDictionary.registerOre("oreTin", new ItemStack(CoreBlocks.tinOre));
-	        OreDictionary.registerOre("oreSilver", new ItemStack(CoreBlocks.silverOre));
-	        OreDictionary.registerOre("oreTitanium", new ItemStack(CoreBlocks.titaniumOre));
-	        OreDictionary.registerOre("oreRuby", new ItemStack(CoreBlocks.rubyOre));
-	        OreDictionary.registerOre("oreTecmonium", new ItemStack(CoreBlocks.tecmoniumOre));
-	        OreDictionary.registerOre("oreCrystal", new ItemStack(CoreBlocks.crystalOre));
-	        //OreDictionary.registerOre("oreSapphire", new ItemStack(CoreBlocks.sapphireOre));
-	        OreDictionary.registerOre("ingotCopper", new ItemStack(CoreItems.copperIngot));
-	        OreDictionary.registerOre("ingotTin", new ItemStack(CoreItems.tinIngot));
-	        OreDictionary.registerOre("ingotSilver", new ItemStack(CoreItems.silverIngot));
-	        OreDictionary.registerOre("ingotImpureTitanium", new ItemStack(CoreItems.titaniumIngot));
-	        OreDictionary.registerOre("ingotTecmonium", new ItemStack(CoreItems.tecmoniumIngot));
-	        OreDictionary.registerOre("gemRuby", new ItemStack(CoreItems.rubyItem));
-	        OreDictionary.registerOre("gemCrystal", new ItemStack(CoreItems.crystalItem));
-	        //OreDictionary.registerOre("gemSapphire", new ItemStack(CoreItems.sapphireItem));
     	}
     }
                
@@ -201,8 +146,5 @@ public class FlenixCities_Core {
 
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-    	//int posterRenderID = RenderingRegistry.getNextAvailableRenderId();
-    	//TODO fix posters
-    }
+    public void postInit(FMLPostInitializationEvent event) {}
 };

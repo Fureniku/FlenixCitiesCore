@@ -3,10 +3,10 @@ package co.uk.silvania.cities.core.npc.ai;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class NPCAITempt extends EntityAIBase
-{
+public class NPCAITempt extends EntityAIBase {
 
     private EntityCreature temptedEntity;
     private double temptedSpeed;
@@ -21,13 +21,12 @@ public class NPCAITempt extends EntityAIBase
     private int delayTemptCounter;
     private boolean field_75287_j;
 
-    private int temptItem;
+    private Item temptItem;
 
     private boolean scaredByPlayerMovement;
     private boolean avoidWater;
 
-    public NPCAITempt(EntityCreature creature, double speed, int item, boolean fear)
-    {
+    public NPCAITempt(EntityCreature creature, double speed, Item item, boolean fear) {
         this.temptedEntity = creature;
         this.temptedSpeed = speed;
         this.temptItem = item;
@@ -53,7 +52,7 @@ public class NPCAITempt extends EntityAIBase
             else
             {
                 ItemStack itemstack = this.temptingPlayer.getCurrentEquippedItem();
-                return itemstack == null ? false : itemstack.itemID == this.temptItem;
+                return itemstack == null ? false : itemstack.getItem() == this.temptItem;
             }
         }
     }

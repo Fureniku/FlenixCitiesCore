@@ -1,12 +1,13 @@
 package co.uk.silvania.cities.core.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemBlockPosterVertical extends ItemBlock {
 
-	public ItemBlockPosterVertical(int par1) {
-		super(par1);
+	public ItemBlockPosterVertical(Block block) {
+		super(block);
 		this.setHasSubtypes(true);
 	}
 

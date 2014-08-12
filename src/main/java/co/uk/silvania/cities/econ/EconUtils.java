@@ -1,30 +1,18 @@
 package co.uk.silvania.cities.econ;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import co.uk.silvania.cities.core.CityConfig;
-import co.uk.silvania.cities.core.ClientPacketHandler;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.NBTConfig;
 import co.uk.silvania.cities.econ.money.ItemCoin;
 import co.uk.silvania.cities.econ.money.ItemNote;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.server.management.ServerConfigurationManager;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class EconUtils {
@@ -75,15 +63,17 @@ public class EconUtils {
 		return newBalance;
 	}
 	
-	public static double reqClientInventoryBalance() {
+	/*TODO public static double reqClientInventoryBalance() {
 		return ClientPacketHandler.invBalance;
 	}
 	
 	public static double reqClientBankBalance() {
 		return ClientPacketHandler.initBal;
-	}
+	}*/
 	
+	/*
 	//Send info to the client with players bank balance.
+	TODO
 	public static void triggerServerBankBalancePacket(EntityPlayer player, World world) {
         ByteArrayOutputStream bt = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(bt);
@@ -103,6 +93,7 @@ public class EconUtils {
 	}
 	
 	//Send info to the client with players inventory balance.
+	TODO 
 	public static void triggerServerInventoryBalancePacket(EntityPlayer player, World world) {
         ByteArrayOutputStream bt = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(bt);
@@ -119,7 +110,7 @@ public class EconUtils {
         catch (IOException ex) {
         	System.out.println("Packet Failed!");
         }
-	}
+	}*/
 	
 	//This takes the amount paid against the total cost, and pays the player the correct change.
 	//Also used by the ATM withdrawl.
@@ -554,7 +545,7 @@ public class EconUtils {
 			double cardBalance = getBalance(player, world);
 			
 			double totalBalance = invBalance + cardBalance;
-			if (player.inventory.hasItem(CoreItems.debitCardNew.itemID)) {
+			if (player.inventory.hasItem(CoreItems.debitCardNew)) {
 				if (invBalance < value) {
 					if (totalBalance >= value) {
 						double payAmount = value - invBalance;
@@ -576,7 +567,6 @@ public class EconUtils {
 				if (stack != null) {
 					if (stack.getItem() instanceof ItemCoin) {
 						int qty = stack.stackSize;
-						double noteValue = 0;
 						double coinValue = 0;
 						ItemCoin coin = (ItemCoin) stack.getItem();
 						coinValue = coin.getMoneyValue();
@@ -654,20 +644,18 @@ public class EconUtils {
 			//Open GUI
 			//Check PIN
 
-	        ByteArrayOutputStream bt = new ByteArrayOutputStream();
-	        DataOutputStream out = new DataOutputStream(bt);
 			
 			String victimPlayer = DebitCardItem.checkCardOwner(player);
 	        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
 			double currentBalance = 0;
-	        if (nbt.hasKey(player.username)) {
-	            NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
+	        if (nbt.hasKey(player.getDisplayName())) {
+	            NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
 	            if (playernbt.hasKey("Balance")) {
 	                currentBalance = playernbt.getDouble("Balance");
 	            }
 	            double modifiedBalance = currentBalance - value;
 	            playernbt.setDouble("Balance", modifiedBalance);
-	            nbt.setCompoundTag(player.username, playernbt);
+	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        } else {
 	            NBTTagCompound playernbt = new NBTTagCompound();
 	            if (playernbt.hasKey("Balance")) {
@@ -675,9 +663,9 @@ public class EconUtils {
 	            }
 	            double modifiedBalance = currentBalance - value;
 	            playernbt.setDouble("Balance", modifiedBalance);
-	            nbt.setCompoundTag(player.username, playernbt);
+	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        }
-	        NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
+	        NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
 	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
 			return true;
 		}
@@ -699,9 +687,6 @@ public class EconUtils {
 
 	//Quick n' easy method of getting the players balance.
 	public static double getBalance(EntityPlayer player, World world) {
-        ByteArrayOutputStream bt = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(bt);
-		
 		String victimPlayer = DebitCardItem.checkCardOwner(player);
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
         double balance = 0;
@@ -749,7 +734,7 @@ public class EconUtils {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
 				if (stack.getItem() == CoreItems.debitCardNew) {
-					if (player.username.equals(stack.stackTagCompound.getString("playerName"))) {
+					if (player.getDisplayName().equals(stack.stackTagCompound.getString("playerName"))) {
 						return true;
 					}
 				}
@@ -761,14 +746,14 @@ public class EconUtils {
 	public static void depositToAccount(EntityPlayer player, World world, double deposit) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
 		double currentBalance = 0;
-        if (nbt.hasKey(player.username)) {
-            NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
+        if (nbt.hasKey(player.getDisplayName())) {
+            NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
             if (playernbt.hasKey("Balance")) {
                 currentBalance = playernbt.getDouble("Balance");
             }
             double modifiedBalance = currentBalance + deposit;
             playernbt.setDouble("Balance", modifiedBalance);
-            nbt.setCompoundTag(player.username, playernbt);
+            //TODO nbt.setCompoundTag(player.username, playernbt);
         } else {
             NBTTagCompound playernbt = new NBTTagCompound();
             if (playernbt.hasKey("Balance")) {
@@ -776,12 +761,12 @@ public class EconUtils {
             }
             double modifiedBalance = currentBalance + deposit;
             playernbt.setDouble("Balance", modifiedBalance);
-            nbt.setCompoundTag(player.username, playernbt);
+            //TODO nbt.setCompoundTag(player.username, playernbt);
         }
-        NBTTagCompound playernbt = nbt.getCompoundTag(player.username);
+        NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         if (deposit >= 0.1) {
-        	player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
+        	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
         }
 	}
 }

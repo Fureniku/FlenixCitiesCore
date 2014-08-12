@@ -3,6 +3,7 @@ package co.uk.silvania.cities.core.client.models;
 import org.lwjgl.opengl.GL11;
 
 
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -44,7 +45,8 @@ public class TileEntityATMRenderer extends TileEntitySpecialRenderer {
 	            break;
 	    }
 
-	    String texture = "textures/entities/atm.png";
+	    @SuppressWarnings("unused")
+		String texture = "textures/entities/atm.png";
 	    switch(te.getBlockMetadata() / 4) {
 	        case 0:
 	            texture = "blockset1";
@@ -85,7 +87,7 @@ public class TileEntityATMRenderer extends TileEntitySpecialRenderer {
 
 	private void adjustLightFixture(World world, int i, int j, int k, Block block) {
 		Tessellator tess = Tessellator.instance;
-		float brightness = block.getBlockBrightness(world, i, j, k);
+		float brightness = block.getLightValue(world, i, j, k);
 		int skyLight = world.getLightBrightnessForSkyBlocks(i, j, k, 0);
 		int modulousModifier = skyLight % 65536;
 		int divModifier = skyLight / 65536;

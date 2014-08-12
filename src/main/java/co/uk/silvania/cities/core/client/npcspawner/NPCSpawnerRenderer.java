@@ -33,7 +33,7 @@ public class NPCSpawnerRenderer extends TileEntitySpecialRenderer {
 	
 	private void adjustLightFixture(World world, int i, int j, int k, Block block) {
 		Tessellator tess = Tessellator.instance;
-		float brightness = block.getBlockBrightness(world, i, j, k);
+		float brightness = block.getLightValue(world, i, j, k);
 		int skyLight = world.getLightBrightnessForSkyBlocks(i, j, k, 0);
 		int modulousModifier = skyLight % 65536;
 		int divModifier = skyLight / 65536;

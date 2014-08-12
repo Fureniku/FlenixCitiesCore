@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.econ.store.entity;
+/*package co.uk.silvania.cities.econ.store.entity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -31,8 +31,8 @@ public class AdminShopBlock extends BlockContainer {
 	float maxY = 1.0F;
 	float maxZ = 1.0F;
 	
-	public AdminShopBlock(int id) {
-		super(id, Material.iron);
+	public AdminShopBlock() {
+		super(Material.iron);
 		this.setCreativeTab(FlenixCities_Core.tabEcon);
 	}
 	
@@ -158,7 +158,8 @@ public class AdminShopBlock extends BlockContainer {
 	}	
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int id) {
 		return new TileEntityAdminShop();
 	}
-}
+
+}*/

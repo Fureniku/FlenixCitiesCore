@@ -1,4 +1,4 @@
-package co.uk.silvania.cities.core.client;
+/*package co.uk.silvania.cities.core.client;
 
 import org.lwjgl.opengl.GL11;
 
@@ -107,4 +107,4 @@ public class PosterRender implements ISimpleBlockRenderingHandler {
 	public int getRenderId() {
 		return ClientProxy.PosterRenderID;
 	}
-}
+}*/

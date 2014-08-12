@@ -1,12 +1,13 @@
 package co.uk.silvania.cities.core.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemStyledGlass extends ItemBlock {
 
-	public ItemStyledGlass(int par1) {
-		super(par1);
+	public ItemStyledGlass(Block block) {
+		super(block);
 		this.setHasSubtypes(true);
 	}
 

@@ -1,12 +1,13 @@
 package co.uk.silvania.cities.core.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemATMBlock extends ItemBlock {
 
-	public ItemATMBlock(int par1) {
-		super(par1);
+	public ItemATMBlock(Block block) {
+		super(block);
 		this.setHasSubtypes(true);
 	}
 

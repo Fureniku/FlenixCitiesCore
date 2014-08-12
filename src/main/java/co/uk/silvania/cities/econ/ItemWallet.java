@@ -21,8 +21,8 @@ public class ItemWallet extends Item {
 	int hundredNQty;
 	
 	
-	public ItemWallet(int id) {
-		super(id);
+	public ItemWallet() {
+		super();
 	}
 
 	
