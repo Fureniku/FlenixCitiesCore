@@ -19,7 +19,7 @@ apply plugin: 'forge'
 
 version = "0.9.0"
 group= "co.uk.silvania.cities" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "FlenixCitiesCore"
+archivesBaseName = "FlenixCitiesCore_[1.7.10]"
 
 minecraft {
     version = "1.7.10-10.13.0.1180"
