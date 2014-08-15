@@ -7,8 +7,6 @@ import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -130,7 +128,7 @@ public class FlenixCities_Core {
 	        proxy.addNames();
 	        proxy.entityStuff();
 	        
-	        MinecraftForge.EVENT_BUS.register(new EventDrops());
+	        //MinecraftForge.EVENT_BUS.register(new EventDrops());
 	        
 	        GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
 	        //TODO GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
