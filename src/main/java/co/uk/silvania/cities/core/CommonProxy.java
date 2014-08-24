@@ -56,7 +56,7 @@ public class CommonProxy {
        	GameRegistry.registerBlock(CoreBlocks.styledGlassPane, "styledGlassPane"); //, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.styledGlassPane.getUnlocalizedName().substring(5)));
        	GameRegistry.registerBlock(CoreBlocks.styledGlassWhitePane, "styledGlassWhitePane");
        	
-       	GameRegistry.registerBlock(CoreBlocks.quartzDecorBlocks, "quartzDecorBlocks");
+       	GameRegistry.registerBlock(CoreBlocks.quartzDecorBlocks, ItemFloorBlocks.class, "quartzDecorBlocks");
 
        	
         //GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
