@@ -1,5 +1,7 @@
 package co.uk.silvania.cities.econ.atm;
 
+import java.util.List;
+
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
@@ -12,8 +14,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -39,7 +43,6 @@ public class TileEntityATMBlock extends BlockContainer {
 		return -1;
 	}	
 
-    // Huge thanks to "maxpowa" in helping me get this working!!
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
         if (!world.isRemote) {
@@ -199,7 +202,7 @@ public class TileEntityATMBlock extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		icons = new IIcon[16];
+		icons = new IIcon[4];
 
 		for(int i = 0; i < 4; i++) {
 			icons[i] = iconRegister.registerIcon("FlenixCities:" + (this.getUnlocalizedName().toLowerCase().substring(5)) + i);
@@ -214,14 +217,15 @@ public class TileEntityATMBlock extends BlockContainer {
 
 
 
-	/*@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int par1, CreativeTabs creativeTabs, List list) {
-        list.add(new ItemStack(par1, 1, 0));
-        list.add(new ItemStack(par1, 1, 4));
-        list.add(new ItemStack(par1, 1, 8));
-        list.add(new ItemStack(par1, 1, 12));
-	}*/
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
+        list.add(new ItemStack(item, 1, 0));
+        list.add(new ItemStack(item, 1, 4));
+        list.add(new ItemStack(item, 1, 8));
+        list.add(new ItemStack(item, 1, 12));
+	}
 	
     @Override
     public int damageDropped(int meta) {

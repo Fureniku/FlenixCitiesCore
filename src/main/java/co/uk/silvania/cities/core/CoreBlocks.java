@@ -4,6 +4,7 @@ import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerBlock;
 import co.uk.silvania.cities.econ.atm.TileEntityATMBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
 public class CoreBlocks {
 	private static CityConfig config;
@@ -46,6 +47,7 @@ public class CoreBlocks {
 	public static Block dulledSmallBrick;
 	public static Block dulledSlab;
 	public static Block brickMulti;
+	public static Block quartzDecorBlocks;
 	
 	public static Block rebarBlock;
 	
@@ -81,6 +83,8 @@ public class CoreBlocks {
     	lightingRotateBlocks = new LightingRotateBlocks().setBlockName("lightingRotateBlocks");
     	styledGlassPane = new StainedGlassPane(FlenixCities_Core.modid + ":styledGlass0", FlenixCities_Core.modid + ":styledGlass0", false).setBlockName("styledGlassPane");
     	styledGlassWhitePane = new StainedGlassPane(FlenixCities_Core.modid + ":styledGlassWhite0", FlenixCities_Core.modid + ":styledGlassWhite0", false).setBlockName("styledGlassWhitePane");
+    	quartzDecorBlocks = new BlockMulti(Material.rock).setBlockName("quartzDecorBlocks");
+    	
     	
     	rebarBlock = new RebarBlock().setBlockName("rebarBlock");
     	
