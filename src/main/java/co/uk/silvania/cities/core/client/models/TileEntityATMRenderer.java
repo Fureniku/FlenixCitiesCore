@@ -45,8 +45,7 @@ public class TileEntityATMRenderer extends TileEntitySpecialRenderer {
 	            break;
 	    }
 
-	    @SuppressWarnings("unused")
-		String texture = "textures/entities/atm.png";
+	    String texture = "textures/entities/atm.png";
 	    switch(te.getBlockMetadata() / 4) {
 	        case 0:
 	            texture = "blockset1";

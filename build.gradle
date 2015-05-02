@@ -17,13 +17,13 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.9.0"
-group= "co.uk.silvania.cities" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "FlenixCitiesCore_[1.7.10]"
+version = “0.10”
+group= "co.uk.silvania.flenixcities” // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = “flenixcities”
 
 minecraft {
-    version = "1.7.10-10.13.0.1180"
-    assetDir = "eclipse/assets"
+    version = "1.7.10-10.13.2.1291"
+    runDir = "eclipse"
 }
 
 dependencies {
@@ -60,13 +60,4 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
-}
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    appendix = 'deobf'
-}
-
-artifacts {
-    archives deobfJar
 }
