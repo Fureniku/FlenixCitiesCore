@@ -18,8 +18,7 @@ public class EventDrops {
 
 	@SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
-        boolean player = event.source.getSourceOfDamage().getClass() == EntityPlayerMP.class;
-        if (player) {
+        if(event.source.getSourceOfDamage().getClass() == EntityPlayerMP.class) {
     		Random rand = new Random();
             int chance = rand.nextInt(200);
             if (event.entityLiving instanceof EntityZombie) {
