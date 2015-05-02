@@ -12,6 +12,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,7 +20,9 @@ public class EventDrops {
 
 	@SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
-        if (event.source.getSourceOfDamage() instanceof EntityPlayer) {
+        if (event.source.getSourceOfDamage() instanceof FakePlayer) {
+        	System.out.println("Bad FakePlayer! No money for you!");
+        } else if (event.source.getSourceOfDamage() instanceof EntityPlayerMP) {
         	System.out.println("Source: " + event.source.getSourceOfDamage());
         	System.out.println("Entity: " + event.source.getEntity());
         	System.out.println("Damage Type" + event.source.getDamageType());
