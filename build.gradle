@@ -17,9 +17,9 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = “0.10”
-group= "co.uk.silvania.flenixcities” // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = “flenixcities”
+version = "0.10.0"
+group= "co.uk.silvania.flenixcities"
+archivesBaseName = "flenixcities"
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
