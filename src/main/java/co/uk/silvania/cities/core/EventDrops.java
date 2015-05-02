@@ -10,7 +10,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -18,7 +18,8 @@ public class EventDrops {
 
 	@SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
-        if (event.source.getSourceOfDamage() instanceof EntityPlayer) {
+        boolean player = event.source.getSourceOfDamage().getClass() == EntityPlayerMP.class;
+        if (player) {
     		Random rand = new Random();
             int chance = rand.nextInt(200);
             if (event.entityLiving instanceof EntityZombie) {
