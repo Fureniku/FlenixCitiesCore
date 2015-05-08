@@ -20,6 +20,8 @@ public class EconUtils {
 	
 	/*
 	 * Methods available in this class:
+	 * createAccount(string) - Create a bank account, string is name.
+	 * 
 	 * parseDouble(string) - Turn a string to a double
 	 * parseInt(string) - Turn a string to an int
 	 * moveIntToBalance - Turn an int into a double, used for balance stuff
@@ -41,6 +43,10 @@ public class EconUtils {
 		
 	//Use to convert things like a string to a double, usable by the economy.
 	//VERY useful for example in the ATM, keying in values from the buttons.
+	public static void createAccount(String s) {
+		
+	}
+	
 	public static double parseDouble(String s) {
 		try { 
 			return Double.parseDouble(s);

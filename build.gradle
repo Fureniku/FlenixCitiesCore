@@ -19,7 +19,7 @@ apply plugin: 'forge'
 
 version = "0.10.0"
 group= "co.uk.silvania.flenixcities"
-archivesBaseName = "flenixcities"
+archivesBaseName = “FlenixCitiesCore_[1.7.10]”
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
@@ -60,4 +60,13 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    appendix = ‘deobf’
+}
+
+artifacts {
+    archives deobfJar
 }
