@@ -3,6 +3,7 @@ package co.uk.silvania.cities.core.blocks;
 import java.util.List;
 
 import net.minecraft.block.BlockPane;
+import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,10 +14,10 @@ import co.uk.silvania.cities.core.FlenixCities_Core;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class StyledGlassPane extends BlockPane {
+public class StyledGlassPane extends BlockStainedGlassPane {
 	
 	public StyledGlassPane(String par2Str, String par3Str, boolean par5) {
-		super(par2Str, par3Str, Material.glass, par5);
+		super();
 		this.setCreativeTab(FlenixCities_Core.tabCity);
 	}
 	

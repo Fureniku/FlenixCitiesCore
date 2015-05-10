@@ -5,7 +5,7 @@ import java.util.List;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockGlass;
+import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,10 +13,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class StyledGlass extends BlockGlass {
+public class StyledGlass extends BlockStainedGlass {
 
 	public StyledGlass() {
-		super(Material.glass, true);
+		super(Material.glass);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
 		this.setHardness(0.3F);
 	}
