@@ -2,14 +2,15 @@ package co.uk.silvania.cities.api;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class GeneralUtils {
 	
-	public static int getPlayerTemperature(EntityPlayer player) {
-		int x = player.serverPosX;
-		int y = player.serverPosY;
-		int z = player.serverPosZ;
+	public static int getPlayerTemperature(EntityPlayer player, World world) {
+		int x = (int) Math.round(player.posX);
+		int y = (int) Math.round(player.posY);
+		int z = (int) Math.round(player.posZ);
 		BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(x, z);
 		float temp = biome.getFloatTemperature(x, y, z) * 10;
 		int tempMult = (int) Math.round(temp) * 2;
