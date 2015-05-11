@@ -7,7 +7,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class GeneralUtils {
 	
-	public static int getPlayerTemperature(EntityPlayer player, World world) {
+	public static int getPlayerTemperature(EntityPlayer player) {
 		int x = (int) Math.round(player.posX);
 		int y = (int) Math.round(player.posY);
 		int z = (int) Math.round(player.posZ);
