@@ -21,7 +21,6 @@ public class EventDrops {
 	@SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
         if (event.source.getSourceOfDamage() instanceof FakePlayer) {
-        	System.out.println("Bad FakePlayer! No money for you!");
         } else if (event.source.getSourceOfDamage() instanceof EntityPlayerMP) {
         	System.out.println("Source: " + event.source.getSourceOfDamage());
         	System.out.println("Entity: " + event.source.getEntity());
