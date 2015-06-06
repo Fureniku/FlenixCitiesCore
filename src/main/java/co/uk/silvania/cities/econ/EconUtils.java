@@ -41,12 +41,12 @@ public class EconUtils {
 	 * TODO payBalanceViaCard(d cost, player, playerOwner, world) - Opens the GUI for a card transaction to send money from the player to the shop owner
 	 */
 		
-	//Use to convert things like a string to a double, usable by the economy.
-	//VERY useful for example in the ATM, keying in values from the buttons.
 	public static void createAccount(String s) {
 		
 	}
 	
+	//Use to convert things like a string to a double, usable by the economy.
+	//VERY useful for example in the ATM, keying in values from the buttons.
 	public static double parseDouble(String s) {
 		try { 
 			return Double.parseDouble(s);

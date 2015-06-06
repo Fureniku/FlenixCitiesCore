@@ -1,11 +1,20 @@
 package co.uk.silvania.cities.econ.atm;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
+
+import co.uk.silvania.cities.core.CityConfig;
+import co.uk.silvania.cities.core.FlenixCities_Core;
+import co.uk.silvania.cities.econ.DebitCardItem;
+import co.uk.silvania.cities.econ.EconUtils;
+import co.uk.silvania.cities.network.ATMPacket;
 
 public class GuiATM extends GuiContainer {
 
@@ -20,14 +29,10 @@ public class GuiATM extends GuiContainer {
     protected int ySize = 242;
     
     String enteredPin = "";
-    String newPin = "";
-    String confirmNewPin = "";
     String pinAttempt = "1";
     String guiStage = "1";
     String balance = "0";
     String withdrawCustom = "";
-    String depositDCCustom = "";
-    String withdrawDCCustom = "";
     double withdrawAmount;
     String digicoinDepositAmount = "";
     double initBalance;
@@ -39,24 +44,15 @@ public class GuiATM extends GuiContainer {
     //Stage 4 is the Balance screen, and shows your balance.
     //Stage 5 is the withdraw confirm screen.
     //Stage 6 is the insufficient funds error message.
-    //From here still needs to be coded.
-    //Stage 7 is the DigiCoin Transfer screen.
-    //Stage 8 is the Change PIN screen.
-    //Stage 9 is EMPTY (ex-deposit screen)
-    //Stage 10 is the Withdraw X Amount screen.
-    //Stage 11 is the DigiCoin Withdraw screen
-    //Stage 12 is the DigiCoin Deposit screen
-    //Stage 13 is the DigiCoin confirm screen
-    //Stage 14 is the PIN confirm screen.
-    //Stage 15 is the PIN change complete screen.
-    //Stage 16 is the PIN change failed screen.
+    //Stage 7 is the Withdraw X Amount screen.
+    //Stage 8+ informs of an invalid selection (due to removed options in 1.7.10 (DigiCoin, PIN change))
     //Each stage has a TO-DO list so it can be easily found in eclipse. This is a damn long class, so added this for sanity.
     //TODO Text String position/colours for 7-16, all active code for 7-16, NBT Balance Display in-ATM.
     
-    /*@Override
+    @Override
     public void initGui() {
     	super.initGui();
-    	initBalance = initBalance + ClientPacketHandler.initBal;
+    	//initBalance = initBalance + ClientPacketHandler.initBal;
     	buttonList.add(new ATMButton(1, guiLeft + 21, guiTop + 109, 24, 15, "7")); // 7
     	buttonList.add(new ATMButton(2, guiLeft + 53, guiTop + 109, 24, 15, "8")); // 8
     	buttonList.add(new ATMButton(3, guiLeft + 85, guiTop + 109, 24, 15, "9")); // 9
@@ -80,10 +76,12 @@ public class GuiATM extends GuiContainer {
     	buttonList.add(new ATMButtonRight(17, guiLeft + 173, guiTop + 20, 24, 15, "")); //Mid-Upper Right
     	buttonList.add(new ATMButtonRight(19, guiLeft + 173, guiTop + 47, 24, 15, "")); //Mid-Lower Right
     	buttonList.add(new ATMButtonRight(21, guiLeft + 173, guiTop + 74, 24, 15, "")); //Bottom Right
+    	FlenixCities_Core.network.sendToServer(new ATMPacket(10));
+    	System.out.println("Packet sent! 10!");
     }
     
     public void actionPerformed(GuiButton guibutton) {
-    	//TODO Asks for PIN
+    	/*//TODO Asks for PIN
     	if (guiStage.equals("1")) {
     		switch(guibutton.id) {
 	    	case 1:
@@ -141,26 +139,7 @@ public class GuiATM extends GuiContainer {
 
     	//TODO Options menu- what do next?
     	if (guiStage.equals("2")) {
-            ByteArrayOutputStream bt = new ByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream(bt);
-            
-    		try {
-            	if (CityConfig.debugMode == true) {
-            		System.out.println("Going to check if DigiCoin is installed");
-            	}
-    			out.writeUTF("digiCoinInstallCheck");
-    			out.writeDouble(0);
-    			out.writeUTF("");
-    			Packet250CustomPayload packet = new Packet250CustomPayload("FCDigiCoinPkt", bt.toByteArray());
-	            	
-    			PacketDispatcher.sendPacketToServer(packet);
-    			if (CityConfig.debugMode == true) {
-    				System.out.println("DigiCoin check packet sent!");
-    			}
-    		}
-    		catch (IOException ex) {
-    			System.out.println("Packet Failed!");
-    		}
+
     		switch(guibutton.id) {
 	    	case 4:
 	    		guiStage = "1";
@@ -178,14 +157,6 @@ public class GuiATM extends GuiContainer {
 	    		guiStage = "4";
 	    		break;
 	    	case 16:
-            	if (ClientPacketHandler.foundPlugin == true) {
-            		if (CityConfig.debugMode == true) {
-            			System.out.println("Open DigiCoin GUI");
-            		}
-            		guiStage = "7";
-            	} else if (ClientPacketHandler.foundPlugin == false) {
-            		guiStage = "9";
-            	}
 	    		break;
 	    	case 17:
 	    		if (CityConfig.debugMode == true) {
@@ -204,9 +175,9 @@ public class GuiATM extends GuiContainer {
 
     	//TODO Withdraw Screen. Sends a packet with the withdraw amount, which checks you have enough. If so, it'll give you the cash and remove from your NBT.
     	if (guiStage.equals("3")) {
-            ByteArrayOutputStream bt = new ByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream(bt);
-            double currentBal = ClientPacketHandler.initBal;
+            //ByteArrayOutputStream bt = new ByteArrayOutputStream();
+            //DataOutputStream out = new DataOutputStream(bt);
+            //double currentBal = ClientPacketHandler.initBal;
             
     		switch(guibutton.id) {
 	    	case 4:
@@ -218,26 +189,14 @@ public class GuiATM extends GuiContainer {
 	    		}
 	    		
 	    		withdrawAmount = 10.0;
-	    		if (currentBal >= withdrawAmount) {
+	    		//if (currentBal >= withdrawAmount) {
 	    			guiStage = "5";
-	    		} else {
-	    			guiStage = "6";
-	    		}
+	    		//} else {
+	    		//	guiStage = "6";
+	    		//}
 	    		
-	            try {
-	            	out.writeUTF("atmWithdraw");
-	            	out.writeDouble(withdrawAmount);
-	            	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-	            	
-	            	PacketDispatcher.sendPacketToServer(packet);
-		    		if (CityConfig.debugMode == true) {
-		    			System.out.println("Packet sent! withdraw " + withdrawAmount);
-		    		}
-	            }
-	            catch (IOException ex) {
-	            	System.out.println("Packet Failed!");
-	            }
-	    		break;
+	    		FlenixCities_Core.network.sendToServer(new ATMPacket(10));
+
 	    	case 17:
 	    		if (CityConfig.debugMode == true) {
 	    			System.out.println("Withdraw 20");
@@ -400,110 +359,10 @@ public class GuiATM extends GuiContainer {
     			guiStage = "1";
     			break;
         	}
-    	} 
-    	
-    	//TODO DigiCoin transfer screen
-    	if (guiStage.equals("7")) {
-    		switch(guibutton.id) {
-    		case 4:
-    			guiStage = "1";
-    			break;
-    		case 18:
-    			if (CityConfig.debugMode == true) {
-    				System.out.println("DigiCoin Deposit Screen");
-    			}
-    			guiStage = "12";
-    			break;
-    		case 19:
-    			if (CityConfig.debugMode == true) {
-    				System.out.println("DigiCoin Withdraw Screen");
-    			}
-    			guiStage = "7";
-    			break;
-    		case 20:
-    			guiStage = "2";
-    			break;
-    		case 21:
-    			guiStage = "7";
-    			break;
-        	}
-    	} 
-    	
-    	//TODO Change PIN Code
-    	if (guiStage.equals("8")) {
-    		switch(guibutton.id) {
-	    	case 1:
-	    		newPin = newPin + "7";
-	    		break;
-			case 2:
-				newPin = newPin + "8";
-				break;
-	    	case 3:
-	    		newPin = newPin + "9";
-	    		break;
-	    	case 4:
-	    		guiStage = "1";
-	    		break;
-	    	case 5:
-	    		newPin = newPin + "4";
-	    		break;
-	    	case 6:
-	    		newPin = newPin + "5";
-	    		break;
-	    	case 7:
-	    		newPin = newPin + "6";
-	    		break;
-	    	case 8:
-	    		newPin = "";
-	    		break;
-	    	case 9:
-	    		newPin = newPin + "1";
-	    		break;
-	    	case 10:
-	    		newPin = newPin + "2";
-	    		break;
-	    	case 11:
-	    		newPin = newPin + "3";
-	    		break;
-	    	case 12:
-	    		if (newPin.length() == 4) {
-                	if (CityConfig.debugMode == true) {
-                		System.out.println("New Pin (1) currently: " + newPin);
-                	}
-	        		guiStage = "14";
-	    		}
-	    		break;
-	    	case 13:
-	    		newPin = newPin + "0";
-	    		break;
-    		case 21:
-	    		if (CityConfig.debugMode == true) {
-	    			System.out.println("Ejected card.");
-	    		}
-    			guiStage = "1";
-    			break;
-    		case 20:
-    			guiStage = "2";
-    			break;
-        	}
-    	}
-    	
-		if (guiStage.equals("9")) {
-			switch(guibutton.id) {
-	    	case 4: //Cancel
-	    		guiStage = "1";
-	    		break;
-    		case 20:
-    			guiStage = "2";
-    			break;
-    		case 21:
-    			guiStage = "7";
-    			break;
-    		}
-		}
+    	} */
     	
     	//TODO Withdraw X amount screen
-    	if (guiStage.equals("10")) {
+    	/*if (guiStage.equals("8")) {
             ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
     		switch(guibutton.id) {
@@ -573,405 +432,99 @@ public class GuiATM extends GuiContainer {
     			withdrawCustom = "";
     			break;
     		}
-    	}
+    	}*/
     	
-    	//TODO DigiCoin Withdraw Screen    	
-    	if (guiStage.equals("11")) {
-            ByteArrayOutputStream bt = new ByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream(bt);
-            
-    		switch(guibutton.id) {
-	    	case 9:
-	    		withdrawDCCustom = withdrawDCCustom + "1";
-	    		break;
-	    	case 10:
-	    		withdrawDCCustom = withdrawDCCustom + "2";
-	    		break;
-	    	case 11:
-	    		withdrawDCCustom = withdrawDCCustom + "3";
-	    		break;
-	    	case 5:
-	    		withdrawDCCustom = withdrawDCCustom + "4";
-	    		break;
-	    	case 6:
-	    		withdrawDCCustom = withdrawDCCustom + "5";
-	    		break;
-	    	case 7:
-	    		withdrawDCCustom = withdrawDCCustom + "6";
-	    		break;
-	    	case 1:
-	    		withdrawDCCustom = withdrawDCCustom + "7";
-	    		break;
-			case 2:
-				withdrawDCCustom = withdrawDCCustom + "8";
-				break;
-	    	case 3:
-	    		withdrawDCCustom = withdrawDCCustom + "9";
-	    		break;
-	    	case 13:
-	    		withdrawDCCustom = withdrawDCCustom + "0";
-	    		break;
-	    	case 8: //Clear
-	    		withdrawDCCustom = "";
-	    		break;
-	    	case 12: //Confirm
-	    		double customWithdrawDCFinal = EconUtils.parseDouble(withdrawDCCustom);
-	    		try {
-                	if (CityConfig.debugMode == true) {
-                		System.out.println("Send the packet with value of " + withdrawDCCustom);
-                	}
-	    			out.writeUTF("digicoinWithdraw");
-	    			out.writeDouble(customWithdrawDCFinal);
-	    			out.writeUTF("" + Minecraft.getMinecraft().getSession().getUsername());
-	    			Packet250CustomPayload packet = new Packet250CustomPayload("FCDigiCoinPkt", bt.toByteArray());
-		            	
-	    			PacketDispatcher.sendPacketToServer(packet);
-	    			if (CityConfig.debugMode == true) {
-	    				System.out.println("Packet sent! DigiCoin Deposit " + customWithdrawDCFinal);
-	    			}
-	    		}
-	    		catch (IOException ex) {
-	    			System.out.println("Packet Failed!");
-	    		}
-	    		withdrawAmount = customWithdrawDCFinal;
-	    		guiStage = "13";
-	    		withdrawDCCustom = "";
-	    		break;
-	    	case 4: //Cancel
-	    		guiStage = "1";
-	    		withdrawDCCustom = "";
-	    		break;
-    		case 20:
-    			guiStage = "2";
-	    		withdrawDCCustom = "";
-    			break;
-	    	}
-    	}
-    	
-    	//TODO DigiCoin Deposit Screen
-    	if (guiStage.equals("12")) {
-            ByteArrayOutputStream bt = new ByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream(bt);
-            
-    		switch(guibutton.id) {
-	    	case 9:
-	    		depositDCCustom = depositDCCustom + "1";
-	    		break;
-	    	case 10:
-	    		depositDCCustom = depositDCCustom + "2";
-	    		break;
-	    	case 11:
-	    		depositDCCustom = depositDCCustom + "3";
-	    		break;
-	    	case 5:
-	    		depositDCCustom = depositDCCustom + "4";
-	    		break;
-	    	case 6:
-	    		depositDCCustom = depositDCCustom + "5";
-	    		break;
-	    	case 7:
-	    		depositDCCustom = depositDCCustom + "6";
-	    		break;
-	    	case 1:
-	    		depositDCCustom = depositDCCustom + "7";
-	    		break;
-			case 2:
-				depositDCCustom = depositDCCustom + "8";
-				break;
-	    	case 3:
-	    		depositDCCustom = depositDCCustom + "9";
-	    		break;
-	    	case 13:
-	    		depositDCCustom = depositDCCustom + "0";
-	    		break;
-	    	case 8: //Clear
-	    		depositDCCustom = "";
-	    		break;
-	    	case 12: //Confirm
-	    		double customDepositDCFinal = EconUtils.parseDouble(depositDCCustom);
-	    		if (ClientPacketHandler.initBal >= customDepositDCFinal) {
-		    		try {
-	                	if (CityConfig.debugMode == true) {
-	                		System.out.println("Send the packet with value of " + depositDCCustom);
-	                	}
-		    			out.writeUTF("digicoinDeposit");
-		            	out.writeDouble(customDepositDCFinal);
-		            	out.writeUTF("" + Minecraft.getMinecraft().getSession().getUsername());
-		            	Packet250CustomPayload packet = new Packet250CustomPayload("FCDigiCoinPkt", bt.toByteArray());
-		            	
-		            	PacketDispatcher.sendPacketToServer(packet);
-			    		if (CityConfig.debugMode == true) {
-			    			System.out.println("Packet sent! DigiCoin Deposit " + customDepositDCFinal);
-			    		}
-		            }
-		            catch (IOException ex) {
-		            	System.out.println("Packet Failed!");
-		            }
-		            withdrawAmount = customDepositDCFinal;
-		    		guiStage = "13";
-		    		depositDCCustom = "";
-	    		}
-	    		break;
-	    	case 4: //Cancel
-	    		guiStage = "1";
-	    		depositDCCustom = "";
-	    		break;
-    		case 20:
-    			guiStage = "2";
-    			depositDCCustom = "";
-    			break;
-	    	}
-    	}
-    	
-		if (guiStage.equals("13")) {
+		/*if (EconUtils.parseInt(guiStage) >= 9) {
 			switch(guibutton.id) {
-			case 4: //Cancel
-				guiStage = "1";
-				break;
-			case 20:
-				guiStage = "2";
-				break;
-			}
-    	}
-		
-		
-    	if (guiStage.equals("14")) {
-    		switch(guibutton.id) {
-	    	case 1:
-	    		confirmNewPin = confirmNewPin + "7";
-	    		break;
-			case 2:
-				confirmNewPin = confirmNewPin + "8";
-				break;
-	    	case 3:
-	    		confirmNewPin = confirmNewPin + "9";
-	    		break;
-	    	case 4:
+	    	case 4: //Cancel
 	    		guiStage = "1";
 	    		break;
-	    	case 5:
-	    		confirmNewPin = confirmNewPin + "4";
-	    		break;
-	    	case 6:
-	    		confirmNewPin = confirmNewPin + "5";
-	    		break;
-	    	case 7:
-	    		confirmNewPin = confirmNewPin + "6";
-	    		break;
-	    	case 8:
-	    		confirmNewPin = "";
-	    		break;
-	    	case 9:
-	    		confirmNewPin = confirmNewPin + "1";
-	    		break;
-	    	case 10:
-	    		confirmNewPin = confirmNewPin + "2";
-	    		break;
-	    	case 11:
-	    		confirmNewPin = confirmNewPin + "3";
-	    		break;
-	    	case 12:
-            	if (CityConfig.debugMode == true) {
-            		System.out.println("Confirming the new PIN, value is: " + confirmNewPin);
-            	}
-	    		if (confirmNewPin.length() == 4) {
-                	if (CityConfig.debugMode == true) {
-                		System.out.println("New Pin currently: " + confirmNewPin);
-                	}
-	    		}
-	    		if (newPin.length() == 4 && confirmNewPin.length() == 4) {
-                	if (CityConfig.debugMode == true) {
-                		System.out.println("PINs are: " + newPin + " & " + confirmNewPin);
-                	}
-	    			if (newPin.equals(confirmNewPin)) {
-	                	if (CityConfig.debugMode == true) {
-	                		System.out.println("And they match!");
-	                	}
-		    			guiStage = "15";
-		    			
-		    			//Let the server know the PIN has been changed.
-		    			//Not that secure right now, I'll fix that later.
-		                ByteArrayOutputStream bt = new ByteArrayOutputStream();
-		                DataOutputStream out = new DataOutputStream(bt);
-		                try {
-		                	out.writeUTF("changePin");
-		                	out.writeUTF(newPin);
-		                	out.writeUTF("" + Minecraft.getMinecraft().getSession().getUsername());
-		                	
-		                	Packet250CustomPayload packet = new Packet250CustomPayload("FCCardPin", bt.toByteArray());
-		                	PacketDispatcher.sendPacketToServer(packet);
-		                	if (CityConfig.debugMode == true) {
-		                		System.out.println("PIN Packet sent! Value: " + newPin);
-		                	}
-		                	newPin = "";
-		                	confirmNewPin = "";
-		                }
-		                catch (IOException ex) {
-		                	System.out.println("Packet Failed!");
-		                }
-	    			} else {
-	    				System.out.println("But they don't match!");
-	                	newPin = "";
-	                	confirmNewPin = "";
-	    				guiStage = "16";
-	    			}
-	    		}
-	    		break;
-	    	case 13:
-	    		confirmNewPin = confirmNewPin + "0";
-	    		break;
+    		case 20:
+    			guiStage = "2";
+    			break;
     		case 21:
-    			guiStage = "1";
-    			break;
-    		case 20:
-    			guiStage = "2";
-    			break;
-        	}
-    	}
-    	
-		if (guiStage.equals("15")) {
-			switch(guibutton.id) {
-	    	case 4: //Cancel
-	    		guiStage = "1";
-	    		withdrawCustom = "";
-	    		break;
-    		case 20:
-    			guiStage = "2";
-    			withdrawCustom = "";
+    			guiStage = "7";
     			break;
     		}
-		}
-		
-		if (guiStage.equals("16")) {
-			switch(guibutton.id) {
-	    	case 4: //Cancel
-	    		guiStage = "1";
-	    		withdrawCustom = "";
-	    		break;
-    		case 20:
-    			guiStage = "2";
-    			withdrawCustom = "";
-    			break;
-    		}
-		}
+		}*/
 		
 		//Debug Messages
-		switch(guibutton.id) {
-		case 1:
-			if (CityConfig.debugMode == true) {
+		if (CityConfig.debugMode == true) {
+			switch(guibutton.id) {
+			case 1:
 				System.out.println("You pressed 7");
-			}
-			break;
-		case 2:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 2:
 				System.out.println("You pressed 8");
-			}
-			break;
-		case 3:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 3:
 				System.out.println("You pressed 9");
-			}
-			break;
-		case 4:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 4:
 				System.out.println("You pressed Cancel");
-			}
-			break;
-		case 5:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 5:
 				System.out.println("You pressed 4");
-			}
-			break;
-		case 6:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 6:
 				System.out.println("You pressed 5");
-			}
-			break;
-		case 7:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 7:
 				System.out.println("You pressed 6");
-			}
-			break;
-		case 8:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 8:
 				System.out.println("You pressed Clear");
-			}
-			break;
-		case 9:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 9:
 				System.out.println("You pressed 1");
-			}
-			break;
-		case 10:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 10:
 				System.out.println("You pressed 2");
-			}
-			break;
-		case 11:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 11:
 				System.out.println("You pressed 3");
-			}
-			break;
-		case 12:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 12:
 				System.out.println("You pressed Confirm");
-			}
-			break;
-		case 13:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 13:
 				System.out.println("You pressed 0");
-			}
-			break;
-		case 14:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 14:
 				System.out.println("You pressed the Top-Left ATM Button");
-			}
-			break;
-		case 15:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 15:
 				System.out.println("You pressed the Top-Right ATM Button");
-			}
-			break;
-		case 16:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 16:
 				System.out.println("You pressed the Mid-Upper-Left ATM Button");
-			}
-			break;
-		case 17:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 17:
 				System.out.println("You pressed the Mid-Upper-Right ATM Button");
-			}
-			break;
-		case 18:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 18:
 				System.out.println("You pressed the Mid-Lower-Left ATM Button");
-			}
-			break;
-		case 19:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 19:
 				System.out.println("You pressed the Mid-Lower-Right ATM Button");
-			}
-			break;
-		case 20:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 20:
 				System.out.println("You pressed the Bottom-Left ATM Button");
-			}
-			break;
-		case 21:
-			if (CityConfig.debugMode == true) {
+				break;
+			case 21:
 				System.out.println("You pressed the Bottom-Right ATM Button");
+				break;
 			}
-			break;
 		}
 
     }
     
-    private void isPinLongEnough (String pinCode) {
+    /*private void isPinLongEnough (String pinCode) {
     	if (pinCode.length() == 5)
     		this.authenticatePin(pinCode);
-    }
+    }*/
         
-    private void authenticatePin (String pinCode) {
+    /*private void authenticatePin (String pinCode) {
 		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
     	if (pinCode.equals(DebitCardItem.checkCardPin(player) + "c")) {
     		if (CityConfig.debugMode == true) {
@@ -1014,16 +567,15 @@ public class GuiATM extends GuiContainer {
             	System.out.println("Packet Failed!");
             }
     	}
-    }
-    */
-    //private int tick = 0;
+    }*/
+    private int tick = 0;
     
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
     	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     	fontRendererObj.drawString("Sorry, out of order.", 34, 8, 0x007F0E);
-    	/*double shortBal = ClientPacketHandler.shortValue;
-    	double initBal = ClientPacketHandler.initBal;
+    	//double shortBal = ClientPacketHandler.shortValue;
+    	//double initBal = ClientPacketHandler.initBal;
     	String underScore = "";
     	if (tick < 80) {
     		tick++;
@@ -1036,150 +588,83 @@ public class GuiATM extends GuiContainer {
     	}
     	
     	if (guiStage.equals("1")) {
-	    	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-	    	fontRenderer.drawString("Welcome!", 68, -2, 0x007F0E);
-	    	fontRenderer.drawString("Please enter your PIN,", 32, 8, 0x007F0E);
-	    	fontRenderer.drawString("followed by 'Confirm'", 37, 18, 0x007F0E);
+	    	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+	    	fontRendererObj.drawString("Welcome!", 68, -2, 0x007F0E);
+	    	fontRendererObj.drawString("Please enter your PIN,", 32, 8, 0x007F0E);
+	    	fontRendererObj.drawString("followed by 'Confirm'", 37, 18, 0x007F0E);
     		if (enteredPin.length() == 0) {
-    			fontRenderer.drawString(underScore, 78, 48, 0x007F0E);
+    			fontRendererObj.drawString(underScore, 78, 48, 0x007F0E);
     		} else if (enteredPin.length() == 1) {
-    			fontRenderer.drawString("*" + underScore, 78, 48, 0x007F0E);
+    			fontRendererObj.drawString("*" + underScore, 78, 48, 0x007F0E);
     		} else if (enteredPin.length() == 2) {
-    			fontRenderer.drawString("**" + underScore, 78, 48, 0x007F0E);
+    			fontRendererObj.drawString("**" + underScore, 78, 48, 0x007F0E);
     		} else if (enteredPin.length() == 3) {
-    			fontRenderer.drawString("***" + underScore, 78, 48, 0x007F0E);
+    			fontRendererObj.drawString("***" + underScore, 78, 48, 0x007F0E);
     		} else if (enteredPin.length() >= 4) {
-    			fontRenderer.drawString("****", 78, 48, 0x007F0E);
+    			fontRendererObj.drawString("****", 78, 48, 0x007F0E);
     		}
 	    	if (pinAttempt.equals("1")) {
-		    	fontRenderer.drawString("Attempt 1 of 3.", 52, 68, 0x007F0E);
+		    	fontRendererObj.drawString("Attempt 1 of 3.", 52, 68, 0x007F0E);
 	    	}
 	    	if (pinAttempt.equals("2")) {
-		    	fontRenderer.drawString("Attempt 2 of 3.", 52, 68, 0xFFD800);
+		    	fontRendererObj.drawString("Attempt 2 of 3.", 52, 68, 0xFFD800);
 	    	}
 	    	if (pinAttempt.equals("3")) {
-		    	fontRenderer.drawString("Attempt 3 of 3.", 52, 68, 0xFF6A00);
+		    	fontRendererObj.drawString("Attempt 3 of 3.", 52, 68, 0xFF6A00);
 	    	}
 	    	if (pinAttempt.equals("4")) {
-		    	fontRenderer.drawString("Attempt 3 of 3.", 52, 68, 0x007F0E);
-	    		fontRenderer.drawString("Card declined!", 53, 78, 0x7F0000);
+		    	fontRendererObj.drawString("Attempt 3 of 3.", 52, 68, 0x007F0E);
+	    		fontRendererObj.drawString("Card declined!", 53, 78, 0x7F0000);
 	    	}
     	}
     	if (guiStage.equals("2")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-        	fontRenderer.drawString("Withdraw", 12, -3, 0x007F0E);
-        	fontRenderer.drawString("Balance", 126, -3, 0x007F0E);
-        	if (ClientPacketHandler.foundPlugin == true) {
-        		fontRenderer.drawString("DigiCoin", 12, 24, 0x007F0E);
-        	} else if (ClientPacketHandler.foundPlugin == false) {
-        		fontRenderer.drawString("DigiCoin", 12, 24, 0x404040);
-        	}
-        	fontRenderer.drawString("Change PIN", 109, 24, 0x007F0E);
-        	fontRenderer.drawString("Eject Card", 109, 78, 0x007F0E);
+        	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+        	fontRendererObj.drawString("Withdraw", 12, -3, 0x007F0E);
+        	fontRendererObj.drawString("Balance", 126, -3, 0x007F0E);
+        	fontRendererObj.drawString("Change PIN", 109, 24, 0x007F0E);
+        	fontRendererObj.drawString("Eject Card", 109, 78, 0x007F0E);
     	}
     	if (guiStage.equals("3")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please select the amount", 26, -12, 0xFFD800);
-	    	fontRenderer.drawString("you wish to withdraw.", 37, -2, 0xFFD800);
-        	fontRenderer.drawString("10", 12, 24, 0x007F0E);
-        	fontRenderer.drawString("50", 12, 51, 0x007F0E);
-        	fontRenderer.drawString("250", 12, 78, 0x007F0E);
-        	fontRenderer.drawString("20", 153, 24, 0x007F0E);
-        	fontRenderer.drawString("100", 147, 51, 0x007F0E);
-        	fontRenderer.drawString("Input Amount", 100, 78, 0x007F0E);
+        	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+    		fontRendererObj.drawString("Please select the amount", 26, -12, 0xFFD800);
+	    	fontRendererObj.drawString("you wish to withdraw.", 37, -2, 0xFFD800);
+        	fontRendererObj.drawString("10", 12, 24, 0x007F0E);
+        	fontRendererObj.drawString("50", 12, 51, 0x007F0E);
+        	fontRendererObj.drawString("250", 12, 78, 0x007F0E);
+        	fontRendererObj.drawString("20", 153, 24, 0x007F0E);
+        	fontRendererObj.drawString("100", 147, 51, 0x007F0E);
+        	fontRendererObj.drawString("Input Amount", 100, 78, 0x007F0E);
     	}
     	if (guiStage.equals("4")) {
-    		fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Your current balance is: ", 26, 8, 0x007F0E);
-    		fontRenderer.drawString("$" + EconUtils.formatBalance(initBal), 26, 18, 0x007F0E);
-        	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
+    		fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+    		fontRendererObj.drawString("Your current balance is: ", 26, 8, 0x007F0E);
+    		fontRendererObj.drawString("$METHOD MISSING"/* + EconUtils.formatBalance(initBal)*/, 26, 18, 0x007F0E);
+        	fontRendererObj.drawString("Back", 12, 78, 0x007F0E);
     	}
     	if (guiStage.equals("5")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Withdrawl Successful!", 35, 8, 0x007F0E);
-    		fontRenderer.drawString("You have withdrawn", 39, 18, 0x007F0E);
-    		fontRenderer.drawString("$" + EconUtils.formatBalance(withdrawAmount) + " " + CityConfig.currencyLargePlural, 50, 28, 0x007F0E);
-    		fontRenderer.drawString("Press Confirm to continue.", 22, 58, 0x007F0E);
+        	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+    		fontRendererObj.drawString("Withdrawl Successful!", 35, 8, 0x007F0E);
+    		fontRendererObj.drawString("You have withdrawn", 39, 18, 0x007F0E);
+    		fontRendererObj.drawString("$" + EconUtils.formatBalance(withdrawAmount) + " " + CityConfig.currencyLargePlural, 50, 28, 0x007F0E);
+    		fontRendererObj.drawString("Press Confirm to continue.", 22, 58, 0x007F0E);
 
     	}
     	if (guiStage.equals("6")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Insufficient Funds!", 41, -2, 0x7F0000);
-    		fontRenderer.drawString("$" + EconUtils.formatBalance(shortBal) + " more needed!", 43, 8, 0x7F0000);
-    		fontRenderer.drawString("Withdraw Less", 97, 24, 0x007F0E);
-    		fontRenderer.drawString("Return to Menu", 90, 51, 0x007F0E);
-        	fontRenderer.drawString("Eject Card", 109, 78, 0x007F0E);
-    	}
-    	if (guiStage.equals("7")) {
-        	fontRenderer.drawString("ATM - DigiCoin", -21, -30, 0x404040);
-    		fontRenderer.drawString("Welcome to the DigiCoin", 32, -12, 0x007F0E);
-    		fontRenderer.drawString("Transfer Screen!", 44, -2, 0x007F0E);
-    		fontRenderer.drawString("Please select an option:", 28, 18, 0xFFD800);
-	    	fontRenderer.drawString("Deposit", 12, 51, 0x007F0E);
-	    	//Temporarily doesn't work.
-	    	fontRenderer.drawString("Withdraw", 123, 51, 0x404040);
-        	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    	}
-    	if (guiStage.equals("8")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please enter your new PIN.", 20, -12, 0xFFD800);
-    		fontRenderer.drawString("" + newPin, 74, 48, 0x007F0E);
-    		fontRenderer.drawString("Cancel", 12, 78, 0x007F0E);
-    	}
-    	if (guiStage.equals("9")) {
-        	fontRenderer.drawString("ATM - DigiCoin", -21, -30, 0x404040);
-    		fontRenderer.drawString("DigiCoin is not installed on this", 12, -12, 0xFFD800);
-    		fontRenderer.drawString("server.", 12, -2, 0xFFD800);
-    		fontRenderer.drawString("Please install MCPC+, then add", 12, 18, 0xFFD800);
-    		fontRenderer.drawString("the DigiCoin plugin to your", 12, 28, 0xFFD800);
-    		fontRenderer.drawString("plugins folder.", 12, 38, 0xFFD800);
-    		fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    		fontRenderer.drawString("Continue Anyway", 82, 78, 0x007F0E);
+        	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+    		fontRendererObj.drawString("Insufficient Funds!", 41, -2, 0x7F0000);
+    		fontRendererObj.drawString("$METHOD MISSING" /*+ EconUtils.formatBalance(shortBal)*/ + " more needed!", 43, 8, 0x7F0000);
+    		fontRendererObj.drawString("Withdraw Less", 97, 24, 0x007F0E);
+    		fontRendererObj.drawString("Return to Menu", 90, 51, 0x007F0E);
+        	fontRendererObj.drawString("Eject Card", 109, 78, 0x007F0E);
     	}
     	if (guiStage.equals("10")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please enter the amount", 26, -12, 0xFFD800);
-    		fontRenderer.drawString("you wish to withdraw:", 37, -2, 0xFFD800);
-    		fontRenderer.drawString("" + withdrawCustom, 72, 24, 0x007F0E);
-        	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
+        	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+    		fontRendererObj.drawString("Please enter the amount", 26, -12, 0xFFD800);
+    		fontRendererObj.drawString("you wish to withdraw:", 37, -2, 0xFFD800);
+    		fontRendererObj.drawString("" + withdrawCustom, 72, 24, 0x007F0E);
+        	fontRendererObj.drawString("Back", 12, 78, 0x007F0E);
     	}
-    	if (guiStage.equals("11")) {
-        	fontRenderer.drawString("ATM - DigiCoin", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please enter the amount", 26, -12, 0xFFD800);
-	    	fontRenderer.drawString("you wish to withdraw.", 37, -2, 0xFFD800);
-        	fontRenderer.drawString("" + withdrawDCCustom, 72, 24, 0x007F0E);
-        	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    	}
-    	if (guiStage.equals("12")) {
-        	fontRenderer.drawString("ATM - DigiCoin", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please enter the amount", 26, -12, 0xFFD800);
-	    	fontRenderer.drawString("you wish to deposit.", 37, -2, 0xFFD800);
-        	fontRenderer.drawString("" + depositDCCustom, 72, 24, 0x007F0E);
-        	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    	}
-    	if (guiStage.equals("13")) {
-        	fontRenderer.drawString("ATM - DigiCoin", -21, -30, 0x404040);
-        	fontRenderer.drawString("Congratulations;", 47, -12, 0xFFD800);
-        	fontRenderer.drawString("Transfer Successful!", 34, -2, 0xFFD800);
-        	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    	}
-    	if (guiStage.equals("14")) {
-    		fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please confirm your PIN", 26, -12, 0xFFD800);
-    		fontRenderer.drawString("" + confirmNewPin, 74, 48, 0x007F0E);
-    		fontRenderer.drawString("Cancel", 12, 78, 0x007F0E);
-    	}
-    	if (guiStage.equals("15")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Your PIN has been changed!", 16, -12, 0x007F0E);
-    		fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    	}
-    	
-    	if (guiStage.equals("16")) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-        	fontRenderer.drawString("   PIN Codes do not match!   ", 18, -2, 0x7F0000);
-    		fontRenderer.drawString("Back", 12, 78, 0x007F0E);
-    	}*/
+
     }
     
     @Override
