@@ -8,7 +8,9 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class ATMPacket implements IMessage {
 	
-	public int withdrawAmount;
+	private int withdrawAmount;
+	
+	public ATMPacket() {}
 	
 	public ATMPacket(int withdrawAmt) {
 		withdrawAmount = withdrawAmt;

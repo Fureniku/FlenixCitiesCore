@@ -76,6 +76,7 @@ public class GuiATM extends GuiContainer {
     	buttonList.add(new ATMButtonRight(17, guiLeft + 173, guiTop + 20, 24, 15, "")); //Mid-Upper Right
     	buttonList.add(new ATMButtonRight(19, guiLeft + 173, guiTop + 47, 24, 15, "")); //Mid-Lower Right
     	buttonList.add(new ATMButtonRight(21, guiLeft + 173, guiTop + 74, 24, 15, "")); //Bottom Right
+    	System.out.println("Going to try and send a packet... SIT TIGHT!");
     	FlenixCities_Core.network.sendToServer(new ATMPacket(10));
     	System.out.println("Packet sent! 10!");
     }

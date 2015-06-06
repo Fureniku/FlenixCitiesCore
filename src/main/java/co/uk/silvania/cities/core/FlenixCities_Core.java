@@ -56,8 +56,7 @@ public class FlenixCities_Core {
     public void preInit(FMLPreInitializationEvent event) {
     	network = NetworkRegistry.INSTANCE.newSimpleChannel("FlenixCitiesCore_ATM");
     	//Handler class, Packet class, Packet ID (+1), RECIEVING Side
-    	network.registerMessage(ATMPacket.Handler.class, ATMPacket.class, 0, Side.SERVER);
-    	
+    	network.registerMessage(ATMPacket.Handler.class, ATMPacket.class, 0, Side.SERVER);    	
     	
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
