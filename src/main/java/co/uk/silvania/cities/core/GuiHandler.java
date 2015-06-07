@@ -28,12 +28,12 @@ public class GuiHandler implements IGuiHandler {
 					//return new ContainerFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
 				//}	
 			}
-			case 2: {
+			/*case 2: {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
 				if(tileEntity instanceof TileEntityATMEntity) {
 					return new ContainerATM(player.inventory, (TileEntityATMEntity) tileEntity);
 				}	
-			}
+			}*/
 			case 3: {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
 				//if(tileEntity instanceof TileEntityAdminShop) {
@@ -63,7 +63,7 @@ public class GuiHandler implements IGuiHandler {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
     			if (tileEntity instanceof TileEntityATMEntity) {
     				System.out.println("Opening no card GUI");
-    				return new GuiATMNoCard(player.inventory, (TileEntityATMEntity) tileEntity);
+    				return new GuiATMNoCard();
     			}	
     		}
     		case 3: {
