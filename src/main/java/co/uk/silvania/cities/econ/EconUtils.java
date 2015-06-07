@@ -727,11 +727,11 @@ public class EconUtils {
 
 	//Quick n' easy method of getting the players balance.
 	public static double getBalance(EntityPlayer player, World world) {
-		String victimPlayer = DebitCardItem.checkCardOwner(player);
+		String victimPlayerUUID = DebitCardItem.checkCardOwner(player);
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
         double balance = 0;
-        if (nbt.hasKey(victimPlayer)) {
-            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayer);
+        if (nbt.hasKey(victimPlayerUUID)) {
+            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
             if (playernbt.hasKey("Balance")) {
                 balance = playernbt.getDouble("Balance");
             }

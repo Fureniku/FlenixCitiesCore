@@ -32,16 +32,12 @@ public class DebitCardItem extends Item {
 		Random rand = new Random();
 		String gold = EnumChatFormatting.GOLD + "";
 		String green = EnumChatFormatting.DARK_GREEN + "";
-		//Used for changing the PIN code. Checks if it's been set or not. Need to test in SMP...
-		if (item.stackTagCompound != null) {
-			if (!world.isRemote) {
-				//TODO setNewPIN(item, player, world);
-			}
-		}
+
 		if (item.stackTagCompound == null) {
 			if (!world.isRemote) {
 				item.stackTagCompound = new NBTTagCompound();
 				item.stackTagCompound.setString("playerName", player.getDisplayName());
+				item.stackTagCompound.setString("playerUUID", player.getUniqueID().toString());
 				item.stackTagCompound.setInteger("PIN", rand.nextInt(9000) + 1000);
 				player.addChatComponentMessage(new ChatComponentText(gold + "Hello, " + item.stackTagCompound.getString("playerName") + 
 						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + "."));
@@ -91,28 +87,6 @@ public class DebitCardItem extends Item {
 		return true;
 	}
 	
-	/*public static void setNewPIN(ItemStack item, EntityPlayer player, World world) {
-		String pin = ServerPacketHandler.newPin;
-		String name = ServerPacketHandler.playerName;
-		if (player.getDisplayName().equalsIgnoreCase(name)) {
-			//System.out.println("First things first, now we've got the packet we'll check it's for this player.");
-			//System.out.println("Now, Lets check this PIN is of the correct length");
-			if (pin.length() == 4) {
-				//System.out.println("It is, lets turn it to an INT. as a string, it's" + pin);
-				int intPin = EconUtils.parseInt(pin);
-				//System.out.println("Now it should be an int. Is it still the same?" + intPin);
-				if (item.stackTagCompound != null) {
-					if (!world.isRemote) {
-						item.stackTagCompound.setInteger("PIN", intPin);
-						//System.out.println("And now, the PIN should be changed on the card. Am I good or what?");
-						pin = "";
-						name = "";
-					}
-				}	
-			}
-		}
-	}*/
-	
 	public static String checkCardPin(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
 		if (held.getItem() != CoreItems.debitCardNew) {
@@ -137,7 +111,7 @@ public class DebitCardItem extends Item {
 		ItemStack held = player.inventory.getCurrentItem();
 		if (held != null) {
 			if (held.getItem() == CoreItems.debitCardNew) {
-				return held.stackTagCompound.getString("playerName");
+				return held.stackTagCompound.getString("playerUUID");
 			}
 		}
 		return "";

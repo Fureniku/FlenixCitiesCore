@@ -423,10 +423,10 @@ public class GuiATM extends GuiContainer {
     private void withdrawFunds(int amt) {
 		if (initBalance >= withdrawAmount) {
 			guiStage = "5";
+			FlenixCities_Core.network.sendToServer(new ATMWithdrawPacket(amt));
 		} else {
 			guiStage = "6";
 		}
-		FlenixCities_Core.network.sendToServer(new ATMWithdrawPacket(amt));
     }
     
     private void isPinLongEnough (String pinCode) {
