@@ -122,9 +122,12 @@ public class TileEntityATMBlock extends BlockContainer {
                 }
             }
         }
-        EntityPlayerMP playerMP = (EntityPlayerMP) player;
-        FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, world)), playerMP);
-        System.out.println("Current Balance Packet Sent! Balance: $" + EconUtils.getBalance(player, world));
+        
+        if (!world.isRemote) {
+        	EntityPlayerMP playerMP = (EntityPlayerMP) player;
+        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, world)), playerMP);
+        	System.out.println("Current Balance Packet Sent! Balance: $" + EconUtils.getBalance(player, world));
+        }
         return true;
     }
 	
