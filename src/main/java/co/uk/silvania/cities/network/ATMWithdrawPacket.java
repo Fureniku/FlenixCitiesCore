@@ -34,7 +34,7 @@ public class ATMWithdrawPacket implements IMessage {
 		@Override
 		public IMessage onMessage(ATMWithdrawPacket message, MessageContext ctx) {
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
-			EconUtils.withdrawFunds(message.withdrawAmount, player);
+			EconUtils.withdrawFunds(message.withdrawAmount, player, player.worldObj);
 			System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
 			return null;
 		}

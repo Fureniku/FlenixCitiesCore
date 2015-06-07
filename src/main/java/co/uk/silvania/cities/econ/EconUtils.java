@@ -119,82 +119,7 @@ public class EconUtils {
         }
 	}*/
 	
-	//This takes the amount paid against the total cost, and pays the player the correct change.
-	//Also used by the ATM withdrawl.
-	
-	/*public static void giveChange(double paid, double cost, EntityPlayer entityPlayer) {
-		World world = entityPlayer.worldObj;
-		double change = parseDouble(formatBalance(paid - cost));
-		double toBank = change;
-		
-		ItemStack dollar100 = new ItemStack(CoreItems.note10000);
-		ItemStack dollar50 = new ItemStack(CoreItems.note5000);
-		ItemStack dollar20 = new ItemStack(CoreItems.note2000);
-		ItemStack dollar10 = new ItemStack(CoreItems.note1000);
-		ItemStack dollar5 = new ItemStack(CoreItems.note500);
-		ItemStack dollar2 = new ItemStack(CoreItems.note200);
-		ItemStack dollar1 = new ItemStack(CoreItems.note100);
-		
-		ItemStack cent50 = new ItemStack(CoreItems.coin50);
-		ItemStack cent25 = new ItemStack(CoreItems.coin25);
-		ItemStack cent10 = new ItemStack(CoreItems.coin10);
-		ItemStack cent5 = new ItemStack(CoreItems.coin5);
-		ItemStack cent2 = new ItemStack(CoreItems.coin2);
-		ItemStack cent1 = new ItemStack(CoreItems.coin1);
-		
-		while (change >= 100) {
-			entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note10000));
-			change = change - 100;
-		}
-		while (change >= 50) {
-			entityPlayer.inventory.addItemStackToInventory(dollar50);
-			change = change - 50;
-		} 
-		while (change >= 20) {
-			entityPlayer.inventory.addItemStackToInventory(dollar20);
-			change = change - 20;
-		}
-		while (change >= 10) {
-			entityPlayer.inventory.addItemStackToInventory(dollar10);
-			change = change - 10;
-		}
-		while (change >= 5) {
-			entityPlayer.inventory.addItemStackToInventory(dollar5);
-			change = change - 5;
-		}
-		while (change >= 2) {
-			entityPlayer.inventory.addItemStackToInventory(dollar2);
-			change = change - 2;
-		}
-		while (change >= 1) {
-			entityPlayer.inventory.addItemStackToInventory(dollar1);
-			change = change - 1;
-		}
-		while (change >= 0.5) {
-			entityPlayer.inventory.addItemStackToInventory(cent50);
-			change = change - 0.5;
-		}
-		while (change >= 0.25) {
-			entityPlayer.inventory.addItemStackToInventory(cent25);
-			change = change - 0.25;
-		}
-		while (change >= 0.1) {
-			entityPlayer.inventory.addItemStackToInventory(cent10);
-			change = change - 0.1;
-		}
-		while (change >= 0.05) {
-			entityPlayer.inventory.addItemStackToInventory(cent5);
-			change = change - 0.05;
-		}
-		while (change >= 0.02) {
-			entityPlayer.inventory.addItemStackToInventory(cent2);
-			change = change - 0.02;
-		}
-		while (change > 0) {
-			entityPlayer.inventory.addItemStackToInventory(cent1);
-			change = change - 0.01;
-		}
-	}*/
+
 	
 	public static void depositAllCash(EntityPlayer player, World world) {
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
@@ -225,11 +150,17 @@ public class EconUtils {
         EconUtils.removeAllPlayerCash(player);
 	}
 	
-	public static void withdrawFunds(double amount, EntityPlayer entityPlayer) {
-		giveChange(amount, 0, entityPlayer);
+	public static void withdrawFunds(double amount, EntityPlayer entityPlayer, World world) {
+		double balance = getBalance(entityPlayer, world);
+		if ((balance - amount) >= 0) {
+			chargeBalance(entityPlayer, amount);
+			giveChange(amount, 0, entityPlayer);
+		}
 	}
 	
-	//New WIP version which checks inventory space before giving it, and sends the remainder to the bank account.
+	//This takes the amount paid against the total cost, and pays the player the correct change.
+	//It ensures you have space for it, and if you don't it'll send the excess to your bank account instead.
+	//This method is also used by the withdrawl system - so if you don't have room to withdraw, it basically will just stay in your account.
 	public static void giveChange(double paid, double cost, EntityPlayer entityPlayer) {
 		World world = entityPlayer.worldObj;
 		double change = parseDouble(formatBalance(paid - cost));
@@ -676,6 +607,7 @@ public class EconUtils {
 		return false;
 	}
 	
+	//Basically removes value from the players account
 	public static boolean payBalanceByCard(EntityPlayer player, double value) {
 		World world = player.worldObj;
 		double cardBalance = getBalance(player, world);
@@ -683,17 +615,25 @@ public class EconUtils {
 			//They can pay by card!
 			//Open GUI
 			//Check PIN
-
-			
-			String victimPlayer = DebitCardItem.checkCardOwner(player);
+			chargeBalance(player, value);
+		}
+		return false;
+	}
+	
+	//Removes money from the players account- for withdrawl etc.
+	public static boolean chargeBalance(EntityPlayer player, double amt) {
+		World world = player.worldObj;
+		double cardBalance = getBalance(player, world);
+		if (amt <= cardBalance) {			
+			String victimPlayerUUID = DebitCardItem.checkCardOwner(player);
 	        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
 			double currentBalance = 0;
-	        if (nbt.hasKey(player.getDisplayName())) {
-	            NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
+	        if (nbt.hasKey(victimPlayerUUID)) {
+	            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
 	            if (playernbt.hasKey("Balance")) {
 	                currentBalance = playernbt.getDouble("Balance");
 	            }
-	            double modifiedBalance = currentBalance - value;
+	            double modifiedBalance = currentBalance - amt;
 	            playernbt.setDouble("Balance", modifiedBalance);
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        } else {
@@ -701,11 +641,11 @@ public class EconUtils {
 	            if (playernbt.hasKey("Balance")) {
 	                currentBalance = playernbt.getDouble("Balance");
 	            }
-	            double modifiedBalance = currentBalance - value;
+	            double modifiedBalance = currentBalance - amt;
 	            playernbt.setDouble("Balance", modifiedBalance);
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        }
-	        NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
+	        NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
 	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
 			return true;
 		}
@@ -786,14 +726,15 @@ public class EconUtils {
 	public static void depositToAccount(EntityPlayer player, World world, double deposit) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
 		double currentBalance = 0;
-        if (nbt.hasKey(player.getDisplayName())) {
-            NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
+		String playerUUID = player.getUniqueID().toString();
+        if (nbt.hasKey(playerUUID)) {
+            NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
             if (playernbt.hasKey("Balance")) {
                 currentBalance = playernbt.getDouble("Balance");
             }
             double modifiedBalance = currentBalance + deposit;
             playernbt.setDouble("Balance", modifiedBalance);
-            //TODO nbt.setCompoundTag(player.username, playernbt);
+            nbt.setTag(playerUUID, playernbt);
         } else {
             NBTTagCompound playernbt = new NBTTagCompound();
             if (playernbt.hasKey("Balance")) {
@@ -801,9 +742,9 @@ public class EconUtils {
             }
             double modifiedBalance = currentBalance + deposit;
             playernbt.setDouble("Balance", modifiedBalance);
-            //TODO nbt.setCompoundTag(player.username, playernbt);
+            nbt.setTag(playerUUID, playernbt);
         }
-        NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
+        NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         if (deposit >= 0.1) {
         	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
