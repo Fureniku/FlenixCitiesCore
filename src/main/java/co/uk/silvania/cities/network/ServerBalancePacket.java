@@ -33,7 +33,7 @@ public class ServerBalancePacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(ServerBalancePacket message, MessageContext ctx) {
-			System.out.println(String.format("Received %s from %s", message.balanceAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
+			System.out.println(String.format("Received %s", message.balanceAmount));
 			return null;
 		}
 		
