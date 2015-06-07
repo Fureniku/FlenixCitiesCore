@@ -80,7 +80,7 @@ public class GuiATM extends GuiContainer {
     }
     
     public void actionPerformed(GuiButton guibutton) {
-    	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:block.atm.atmButton"));
+    	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
     	System.out.println("Beep?");
     	//TODO Asks for PIN
     	if (guiStage.equals("1")) {
