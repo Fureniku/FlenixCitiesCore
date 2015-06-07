@@ -45,7 +45,7 @@ public class DebitCardItem extends Item {
 				item.stackTagCompound.setInteger("PIN", rand.nextInt(9000) + 1000);
 				player.addChatComponentMessage(new ChatComponentText(gold + "Hello, " + item.stackTagCompound.getString("playerName") + 
 						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + "."));
-				System.out.println("PIN has been set to " + item.stackTagCompound.getInteger("PIN"));
+				System.out.println(player.getDisplayName() + "'s PIN has been set to " + item.stackTagCompound.getInteger("PIN"));
 			}
 		}
 	}
@@ -80,7 +80,6 @@ public class DebitCardItem extends Item {
 		} else if (pinInt < 1000) {
 			pin = "0" + pinInt;
 		}
-		System.out.println("PIN (int): " + pinInt + ", PIN (string): " + pin);
 		return pin;
 	}
 	

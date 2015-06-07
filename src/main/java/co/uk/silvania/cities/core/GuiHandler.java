@@ -49,25 +49,26 @@ public class GuiHandler implements IGuiHandler {
     	switch(id) {
     		case 0: {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
-    			if(tileEntity instanceof TileEntityATMEntity) {
+    			if (tileEntity instanceof TileEntityATMEntity) {
     				return new GuiATM(player.inventory, (TileEntityATMEntity) tileEntity, world, x, y, z);
     			}	
     		}        	
     		case 1: {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
-    			//if(tileEntity instanceof TileEntityFloatingShelves) {
+    			//if (tileEntity instanceof TileEntityFloatingShelves) {
     				//return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
     			//}	
     		}
     		case 2: {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
-    			if(tileEntity instanceof TileEntityATMEntity) {
-    				return new GuiATMNoCard(player.inventory, (TileEntityATMEntity) tileEntity, world, x, y, z);
+    			if (tileEntity instanceof TileEntityATMEntity) {
+    				System.out.println("Opening no card GUI");
+    				return new GuiATMNoCard(player.inventory, (TileEntityATMEntity) tileEntity);
     			}	
     		}
     		case 3: {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
-    			//if(tileEntity instanceof TileEntityAdminShop) {
+    			//if (tileEntity instanceof TileEntityAdminShop) {
     				//return new GuiAdminShop(player.inventory, (TileEntityAdminShop) tileEntity);
     			//}	
     		}
