@@ -25,7 +25,7 @@ public class NBTConfig {
     }
     
     public static File getWorldConfig(World world) {
-        return new File(getWorldDir(world), "flenixcities");
+        return new File(getWorldDir(world), "FC_Econ.dat");
     }
     
     public static File getWorldDir(World world) {

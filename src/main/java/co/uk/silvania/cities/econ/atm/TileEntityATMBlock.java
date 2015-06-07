@@ -161,17 +161,18 @@ public class TileEntityATMBlock extends BlockContainer {
 	
 	public void depositAllCash(EntityPlayer player, World world) {
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+        String uuid = player.getUniqueID().toString();
         
 		double cash = EconUtils.getInventoryCash(player); //Check how much cash the player has on them
 		double currentBalance = 0;
-        if (nbt.hasKey(player.getDisplayName())) {
-            NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
+        if (nbt.hasKey(uuid)) {
+            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
             if (playernbt.hasKey("Balance")) {
                 currentBalance = playernbt.getDouble("Balance");
             }
             double modifiedBalance = currentBalance + cash;
             playernbt.setDouble("Balance", modifiedBalance);
-            //nbt.setCompoundTag(player.getDisplayName(), playernbt);
+            nbt.setTag(uuid, playernbt);
         } else {
             NBTTagCompound playernbt = new NBTTagCompound();
             if (playernbt.hasKey("Balance")) {
@@ -179,9 +180,9 @@ public class TileEntityATMBlock extends BlockContainer {
             }
             double modifiedBalance = currentBalance + cash;
             playernbt.setDouble("Balance", modifiedBalance);
-            //nbt.setCompoundTag(player.getDisplayName(), playernbt);
+            nbt.setTag(uuid, playernbt);
         }
-        NBTTagCompound playernbt = nbt.getCompoundTag(player.getDisplayName());
+        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
         player.addChatComponentMessage(new ChatComponentText("$" + EconUtils.formatBalance(cash) + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now $" + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural));
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         EconUtils.removeAllPlayerCash(player);

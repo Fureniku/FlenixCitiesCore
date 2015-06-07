@@ -53,6 +53,7 @@ public class GuiATM extends GuiContainer {
     @Override
     public void initGui() {
     	super.initGui();
+    	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:cardInsert"));
     	//initBalance = initBalance + ClientPacketHandler.initBal;
     	buttonList.add(new ATMButton(1, guiLeft + 21, guiTop + 109, 24, 15, "7")); // 7
     	buttonList.add(new ATMButton(2, guiLeft + 53, guiTop + 109, 24, 15, "8")); // 8
@@ -222,7 +223,7 @@ public class GuiATM extends GuiContainer {
 	    		break;
 	    	case 21:
 	    		System.out.println("Define Amount");
-	    		guiStage = "10";
+	    		guiStage = "7";
 	    		break;
 	    	}
     	}
@@ -241,6 +242,7 @@ public class GuiATM extends GuiContainer {
     	
     	//TODO Confirm withdrawl.
     	if (guiStage.equals("5")) {
+    		FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
     		switch(guibutton.id) {
     		case 4:
     			guiStage = "1";
@@ -282,7 +284,7 @@ public class GuiATM extends GuiContainer {
     	}
     	
     	//TODO Withdraw X amount screen
-    	if (guiStage.equals("8")) {
+    	if (guiStage.equals("7")) {
     		switch(guibutton.id) {
 	    	case 9:
 	    		withdrawCustom = withdrawCustom + "1";
@@ -341,19 +343,16 @@ public class GuiATM extends GuiContainer {
     		}
     	}
     	
-		/*if (EconUtils.parseInt(guiStage) >= 9) {
+		if (EconUtils.parseInt(guiStage) >= 8) {
 			switch(guibutton.id) {
 	    	case 4: //Cancel
 	    		guiStage = "1";
 	    		break;
-    		case 20:
+    		case 14:
     			guiStage = "2";
     			break;
-    		case 21:
-    			guiStage = "7";
-    			break;
-    		}
-		}*/
+			}
+		}
 		
 		//Debug Messages
 		if (CityConfig.debugMode == true) {
@@ -423,7 +422,6 @@ public class GuiATM extends GuiContainer {
 				break;
 			}
 		}
-
     }
     
     private void withdrawFunds(int amt) {
@@ -572,14 +570,18 @@ public class GuiATM extends GuiContainer {
     		fontRendererObj.drawString("Return to Menu", 90, 51, 0x007F0E);
         	fontRendererObj.drawString("Eject Card", 109, 78, 0x007F0E);
     	}
-    	if (guiStage.equals("10")) {
+    	if (guiStage.equals("7")) {
         	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     		fontRendererObj.drawString("Please enter the amount", 26, -12, 0xFFD800);
     		fontRendererObj.drawString("you wish to withdraw:", 37, -2, 0xFFD800);
-    		fontRendererObj.drawString("" + withdrawCustom, 72, 24, 0x007F0E);
+    		fontRendererObj.drawString("$" + withdrawCustom, 72, 24, 0x007F0E);
         	fontRendererObj.drawString("Back", 12, 78, 0x007F0E);
     	}
-
+    	if (EconUtils.parseInt(guiStage) >= 8) {
+        	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
+    		fontRendererObj.drawString("   Invalid Selection    ", 26, -12, 0xFFD800);
+        	fontRendererObj.drawString("Main Menu", 12, 24, 0x007F0E);
+    	}
     }
     
     @Override
