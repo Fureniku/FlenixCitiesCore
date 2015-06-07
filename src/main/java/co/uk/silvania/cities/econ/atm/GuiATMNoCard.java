@@ -15,6 +15,7 @@ public class GuiATMNoCard extends GuiContainer {
     
     public GuiATMNoCard (InventoryPlayer inventoryPlayer, TileEntityATMEntity tileEntity) {
     	super(new ContainerATM(inventoryPlayer, tileEntity));
+    	System.out.println("ATM No card CONSTRUCTER");
     }
     
     protected int xSize = 232;
@@ -22,6 +23,7 @@ public class GuiATMNoCard extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
+    	System.out.println("ATM No card DRAW FOREGROUND");
     	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     	//fontRendererObj.drawString("Welcome!", 68, -2, 0x007F0E);
     	//fontRendererObj.drawString("Please insert your card.", 28, 8, 0x007F0E);
@@ -30,6 +32,7 @@ public class GuiATMNoCard extends GuiContainer {
     
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
+    	System.out.println("ATM No card DRAW BACKGROUND");
     	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     	Minecraft.getMinecraft().renderEngine.bindTexture(texture);
     	int x = (width - xSize) / 2;
