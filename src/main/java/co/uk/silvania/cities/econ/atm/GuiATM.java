@@ -15,6 +15,7 @@ import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.network.ATMWithdrawPacket;
+import co.uk.silvania.cities.network.ServerBalancePacket;
 import co.uk.silvania.cities.network.SoundPacket;
 
 public class GuiATM extends GuiContainer {
@@ -35,7 +36,6 @@ public class GuiATM extends GuiContainer {
     String balance = "0";
     String withdrawCustom = "";
     int withdrawAmount;
-    String digicoinDepositAmount = "";
     double initBalance;
     
     //GUI Stage changes the current active screen. It enables different features on the buttons, and changes the text.
@@ -53,8 +53,9 @@ public class GuiATM extends GuiContainer {
     @Override
     public void initGui() {
     	super.initGui();
+    	initBalance = EconUtils.parseDouble(ServerBalancePacket.balanceAmount);
+    	System.out.println("Balance available in GUI! Balance: $" + initBalance);
     	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:cardInsert"));
-    	//initBalance = initBalance + ClientPacketHandler.initBal;
     	buttonList.add(new ATMButton(1, guiLeft + 21, guiTop + 109, 24, 15, "7")); // 7
     	buttonList.add(new ATMButton(2, guiLeft + 53, guiTop + 109, 24, 15, "8")); // 8
     	buttonList.add(new ATMButton(3, guiLeft + 85, guiTop + 109, 24, 15, "9")); // 9
@@ -82,7 +83,6 @@ public class GuiATM extends GuiContainer {
     
     public void actionPerformed(GuiButton guibutton) {
     	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
-    	System.out.println("Beep?");
     	//TODO Asks for PIN
     	if (guiStage.equals("1")) {
     		switch(guibutton.id) {
@@ -176,11 +176,7 @@ public class GuiATM extends GuiContainer {
     	
 
     	//TODO Withdraw Screen. Sends a packet with the withdraw amount, which checks you have enough. If so, it'll give you the cash and remove from your NBT.
-    	if (guiStage.equals("3")) {
-            //ByteArrayOutputStream bt = new ByteArrayOutputStream();
-            //DataOutputStream out = new DataOutputStream(bt);
-            //double currentBal = ClientPacketHandler.initBal;
-            
+    	if (guiStage.equals("3")) {            
     		switch(guibutton.id) {
 	    	case 4:
 	    		guiStage = "1";
@@ -425,11 +421,11 @@ public class GuiATM extends GuiContainer {
     }
     
     private void withdrawFunds(int amt) {
-		//if (currentBal >= withdrawAmount) {
-		guiStage = "5";
-		//} else {
-		//	guiStage = "6";
-		//}
+		if (initBalance >= withdrawAmount) {
+			guiStage = "5";
+		} else {
+			guiStage = "6";
+		}
 		FlenixCities_Core.network.sendToServer(new ATMWithdrawPacket(amt));
     }
     
@@ -487,7 +483,8 @@ public class GuiATM extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
     	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
-    	//double shortBal = ClientPacketHandler.shortValue;
+    	String bal = EconUtils.formatBalance(initBalance);
+    	String shortAmt = "" + (withdrawAmount - EconUtils.parseDouble(bal));
     	//double initBal = ClientPacketHandler.initBal;
     	String underScore = "";
     	if (tick < 80) {
@@ -551,7 +548,7 @@ public class GuiATM extends GuiContainer {
     	if (guiStage.equals("4")) {
     		fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     		fontRendererObj.drawString("Your current balance is: ", 26, 8, 0x007F0E);
-    		fontRendererObj.drawString("$METHOD MISSING"/* + EconUtils.formatBalance(initBal)*/, 26, 18, 0x007F0E);
+    		fontRendererObj.drawString("$" + bal, 26, 18, 0x007F0E);
         	fontRendererObj.drawString("Back", 12, 78, 0x007F0E);
     	}
     	if (guiStage.equals("5")) {
@@ -565,7 +562,7 @@ public class GuiATM extends GuiContainer {
     	if (guiStage.equals("6")) {
         	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     		fontRendererObj.drawString("Insufficient Funds!", 41, -2, 0x7F0000);
-    		fontRendererObj.drawString("$METHOD MISSING" /*+ EconUtils.formatBalance(shortBal)*/ + " more needed!", 43, 8, 0x7F0000);
+    		fontRendererObj.drawString("$" + shortAmt + " more needed!", 43, 8, 0x7F0000);
     		fontRendererObj.drawString("Withdraw Less", 97, 24, 0x007F0E);
     		fontRendererObj.drawString("Return to Menu", 90, 51, 0x007F0E);
         	fontRendererObj.drawString("Eject Card", 109, 78, 0x007F0E);

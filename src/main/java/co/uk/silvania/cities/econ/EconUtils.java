@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class EconUtils {
@@ -194,6 +195,35 @@ public class EconUtils {
 			change = change - 0.01;
 		}
 	}*/
+	
+	public static void depositAllCash(EntityPlayer player, World world) {
+        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+        String uuid = player.getUniqueID().toString();
+        
+		double cash = EconUtils.getInventoryCash(player); //Check how much cash the player has on them
+		double currentBalance = 0;
+        if (nbt.hasKey(uuid)) {
+            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+            if (playernbt.hasKey("Balance")) {
+                currentBalance = playernbt.getDouble("Balance");
+            }
+            double modifiedBalance = currentBalance + cash;
+            playernbt.setDouble("Balance", modifiedBalance);
+            nbt.setTag(uuid, playernbt);
+        } else {
+            NBTTagCompound playernbt = new NBTTagCompound();
+            if (playernbt.hasKey("Balance")) {
+                currentBalance = playernbt.getDouble("Balance");
+            }
+            double modifiedBalance = currentBalance + cash;
+            playernbt.setDouble("Balance", modifiedBalance);
+            nbt.setTag(uuid, playernbt);
+        }
+        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+        player.addChatComponentMessage(new ChatComponentText("$" + EconUtils.formatBalance(cash) + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now $" + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural));
+        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+        EconUtils.removeAllPlayerCash(player);
+	}
 	
 	public static void withdrawFunds(double amount, EntityPlayer entityPlayer) {
 		giveChange(amount, 0, entityPlayer);

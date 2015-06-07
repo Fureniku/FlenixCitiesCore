@@ -32,7 +32,6 @@ public class SoundPacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(SoundPacket message, MessageContext ctx) {
-			System.out.println("BEEP?!");
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
 			player.worldObj.playSoundAtEntity(player, message.soundName, 1, 1);
 			return null;
