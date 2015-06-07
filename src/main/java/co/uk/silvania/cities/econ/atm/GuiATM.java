@@ -14,7 +14,7 @@ import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.EconUtils;
-import co.uk.silvania.cities.network.ATMPacket;
+import co.uk.silvania.cities.network.ATMWithdrawPacket;
 
 public class GuiATM extends GuiContainer {
 
@@ -33,7 +33,7 @@ public class GuiATM extends GuiContainer {
     String guiStage = "1";
     String balance = "0";
     String withdrawCustom = "";
-    double withdrawAmount;
+    int withdrawAmount;
     String digicoinDepositAmount = "";
     double initBalance;
     
@@ -77,12 +77,12 @@ public class GuiATM extends GuiContainer {
     	buttonList.add(new ATMButtonRight(19, guiLeft + 173, guiTop + 47, 24, 15, "")); //Mid-Lower Right
     	buttonList.add(new ATMButtonRight(21, guiLeft + 173, guiTop + 74, 24, 15, "")); //Bottom Right
     	System.out.println("Going to try and send a packet... SIT TIGHT!");
-    	FlenixCities_Core.network.sendToServer(new ATMPacket(10));
+    	FlenixCities_Core.network.sendToServer(new ATMWithdrawPacket(10));
     	System.out.println("Packet sent! 10!");
     }
     
     public void actionPerformed(GuiButton guibutton) {
-    	/*//TODO Asks for PIN
+    	//TODO Asks for PIN
     	if (guiStage.equals("1")) {
     		switch(guibutton.id) {
 	    	case 1:
@@ -188,118 +188,37 @@ public class GuiATM extends GuiContainer {
 	    		if (CityConfig.debugMode == true) {
 	    			System.out.println("Withdraw 10");
 	    		}
-	    		
-	    		withdrawAmount = 10.0;
-	    		//if (currentBal >= withdrawAmount) {
-	    			guiStage = "5";
-	    		//} else {
-	    		//	guiStage = "6";
-	    		//}
-	    		
-	    		FlenixCities_Core.network.sendToServer(new ATMPacket(10));
-
+	    		withdrawAmount = 10;
+	    		withdrawFunds(withdrawAmount);
+	    		break;
 	    	case 17:
 	    		if (CityConfig.debugMode == true) {
 	    			System.out.println("Withdraw 20");
 	    		}
-	    		
-	    		withdrawAmount = 20.0;
-	    		if (currentBal >= withdrawAmount) {
-	    			guiStage = "5";
-	    		} else {
-	    			guiStage = "6";
-	    		}
-	    		
-	            try {
-	            	out.writeUTF("atmWithdraw");
-	            	out.writeDouble(withdrawAmount);
-	            	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-	            	
-	            	PacketDispatcher.sendPacketToServer(packet);
-		    		if (CityConfig.debugMode == true) {
-		    			System.out.println("Packet sent! withdraw" + withdrawAmount);
-		    		}
-	            }
-	            catch (IOException ex) {
-	            	System.out.println("Packet Failed!");
-	            }
+	    		withdrawAmount = 20;
+	    		withdrawFunds(withdrawAmount);
 	    		break;
 	    	case 18:
             	if (CityConfig.debugMode == true) {
             		System.out.println("Withdraw 50");
             	}
-            		
-	    		withdrawAmount = 50.0;
-	    		if (currentBal >= withdrawAmount) {
-	    			guiStage = "5";
-	    		} else {
-	    			guiStage = "6";
-	    		}
-	    		
-	            try {
-	            	out.writeUTF("atmWithdraw");
-	            	out.writeDouble(withdrawAmount);
-	            	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-	            	
-	            	PacketDispatcher.sendPacketToServer(packet);
-		    		if (CityConfig.debugMode == true) {
-		    			System.out.println("Packet sent! withdraw" + withdrawAmount);
-		    		}
-	            }
-	            catch (IOException ex) {
-	            	System.out.println("Packet Failed!");
-	            }
+            	withdrawAmount = 50;
+            	withdrawFunds(withdrawAmount);
 	    		break;
 	    	case 19:
             	if (CityConfig.debugMode == true) {
             		System.out.println("Withdraw 100");
     			}
-	    		withdrawAmount = 100.0;
-	    		if (currentBal >= withdrawAmount) {
-	    			guiStage = "5";
-	    		} else {
-	    			guiStage = "6";
-	    		}
-	    		
-	            try {
-	            	out.writeUTF("atmWithdraw");
-	            	out.writeDouble(withdrawAmount);
-	            	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-	            	
-	            	PacketDispatcher.sendPacketToServer(packet);
-		    		if (CityConfig.debugMode == true) {
-		    			System.out.println("Packet sent! withdraw " + withdrawAmount);
-		    		}
-	            }
-	            catch (IOException ex) {
-	            	System.out.println("Packet Failed!");
-	            }
+	    		withdrawAmount = 100;
+	    		withdrawFunds(withdrawAmount);
 	    		break;
 	    	case 20:
             	if (CityConfig.debugMode == true) {
             		System.out.println("Withdraw 250");
             	}
 
-	    		withdrawAmount = 250.0;
-	    		if (currentBal >= withdrawAmount) {
-	    			guiStage = "5";
-	    		} else {
-	    			guiStage = "6";
-	    		}
-	    		
-	            try {
-	            	out.writeUTF("atmWithdraw");
-	            	out.writeDouble(withdrawAmount);
-	            	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-	            	
-	            	PacketDispatcher.sendPacketToServer(packet);
-		    		if (CityConfig.debugMode == true) {
-		    			System.out.println("Packet sent! withdraw " + withdrawAmount);
-		    		}
-	            }
-	            catch (IOException ex) {
-	            	System.out.println("Packet Failed!");
-	            }
+	    		withdrawAmount = 250;
+	    		withdrawFunds(withdrawAmount);
 	    		break;
 	    	case 21:
 	    		System.out.println("Define Amount");
@@ -360,12 +279,10 @@ public class GuiATM extends GuiContainer {
     			guiStage = "1";
     			break;
         	}
-    	} */
+    	}
     	
     	//TODO Withdraw X amount screen
-    	/*if (guiStage.equals("8")) {
-            ByteArrayOutputStream bt = new ByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream(bt);
+    	if (guiStage.equals("8")) {
     		switch(guibutton.id) {
 	    	case 9:
 	    		withdrawCustom = withdrawCustom + "1";
@@ -401,27 +318,16 @@ public class GuiATM extends GuiContainer {
 	    		withdrawCustom = "";
 	    		break;
 	    	case 12: //Confirm
-	    		double customWithdrawFinal = EconUtils.parseDouble(withdrawCustom);
-	            try {
-	            	out.writeUTF("atmWithdraw");
-	            	out.writeDouble(customWithdrawFinal);
-	            	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-	            	
-	            	PacketDispatcher.sendPacketToServer(packet);
-		    		if (CityConfig.debugMode == true) {
-		    			System.out.println("Packet sent! withdraw" + customWithdrawFinal);
-		    		}
-	            }
-	            catch (IOException ex) {
-	            	System.out.println("Packet Failed!");
-	            }
-	            withdrawAmount = customWithdrawFinal;
+	    		int customWithdrawFinal = EconUtils.parseInt(withdrawCustom);
 	            
-	    		if (ClientPacketHandler.initBal >= withdrawAmount) {
-	    			guiStage = "5";
-	    		} else {
+	            withdrawAmount = customWithdrawFinal;
+	            withdrawFunds(withdrawAmount);
+	            
+	    		//if (ClientPacketHandler.initBal >= withdrawAmount) {
+	    		//	guiStage = "5";
+	    		//} else {
 	    			guiStage = "6";
-	    		}
+	    		//}
 	            withdrawCustom = "";
 	    		break;
 	    	case 4: //Cancel
@@ -433,7 +339,7 @@ public class GuiATM extends GuiContainer {
     			withdrawCustom = "";
     			break;
     		}
-    	}*/
+    	}
     	
 		/*if (EconUtils.parseInt(guiStage) >= 9) {
 			switch(guibutton.id) {
@@ -520,12 +426,21 @@ public class GuiATM extends GuiContainer {
 
     }
     
-    /*private void isPinLongEnough (String pinCode) {
+    private void withdrawFunds(int amt) {
+		//if (currentBal >= withdrawAmount) {
+		guiStage = "5";
+		//} else {
+		//	guiStage = "6";
+		//}
+		FlenixCities_Core.network.sendToServer(new ATMWithdrawPacket(amt));
+    }
+    
+    private void isPinLongEnough (String pinCode) {
     	if (pinCode.length() == 5)
     		this.authenticatePin(pinCode);
-    }*/
+    }
         
-    /*private void authenticatePin (String pinCode) {
+    private void authenticatePin (String pinCode) {
 		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
     	if (pinCode.equals(DebitCardItem.checkCardPin(player) + "c")) {
     		if (CityConfig.debugMode == true) {
@@ -545,7 +460,7 @@ public class GuiATM extends GuiContainer {
     		pinAttempt = "4";
     		
             this.mc.displayGuiScreen(null);
-            ByteArrayOutputStream bt = new ByteArrayOutputStream();
+            /*ByteArrayOutputStream bt = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bt);
     		
             try {
@@ -566,9 +481,9 @@ public class GuiATM extends GuiContainer {
             }
             catch (IOException ex) {
             	System.out.println("Packet Failed!");
-            }
+            }*/
     	}
-    }*/
+    }
     private int tick = 0;
     
     @Override

@@ -1,20 +1,20 @@
 package co.uk.silvania.cities.network;
 
-import co.uk.silvania.cities.core.CoreItems;
+import co.uk.silvania.cities.econ.EconUtils;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class ATMPacket implements IMessage {
+public class ATMWithdrawPacket implements IMessage {
 	
 	private int withdrawAmount;
 	
-	public ATMPacket() {}
+	public ATMWithdrawPacket() {}
 	
-	public ATMPacket(int withdrawAmt) {
+	public ATMWithdrawPacket(int withdrawAmt) {
 		withdrawAmount = withdrawAmt;
 	}
 
@@ -29,11 +29,12 @@ public class ATMPacket implements IMessage {
 		ByteBufUtils.writeVarShort(buf, withdrawAmount);	
 	}
 	
-	public static class Handler implements IMessageHandler<ATMPacket, IMessage> {
+	public static class Handler implements IMessageHandler<ATMWithdrawPacket, IMessage> {
 
 		@Override
-		public IMessage onMessage(ATMPacket message, MessageContext ctx) {
-			ctx.getServerHandler().playerEntity.inventory.addItemStackToInventory(new ItemStack(CoreItems.note1000));
+		public IMessage onMessage(ATMWithdrawPacket message, MessageContext ctx) {
+			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
+			EconUtils.withdrawFunds(message.withdrawAmount, player);
 			System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
 			return null;
 		}

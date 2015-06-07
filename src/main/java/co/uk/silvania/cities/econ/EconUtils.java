@@ -195,6 +195,10 @@ public class EconUtils {
 		}
 	}*/
 	
+	public static void withdrawFunds(double amount, EntityPlayer entityPlayer) {
+		giveChange(amount, 0, entityPlayer);
+	}
+	
 	//New WIP version which checks inventory space before giving it, and sends the remainder to the bank account.
 	public static void giveChange(double paid, double cost, EntityPlayer entityPlayer) {
 		World world = entityPlayer.worldObj;
