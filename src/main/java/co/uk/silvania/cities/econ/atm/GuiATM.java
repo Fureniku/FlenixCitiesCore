@@ -15,6 +15,7 @@ import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.network.ATMWithdrawPacket;
+import co.uk.silvania.cities.network.SoundPacket;
 
 public class GuiATM extends GuiContainer {
 
@@ -79,6 +80,8 @@ public class GuiATM extends GuiContainer {
     }
     
     public void actionPerformed(GuiButton guibutton) {
+    	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:block.atm.atmButton"));
+    	System.out.println("Beep?");
     	//TODO Asks for PIN
     	if (guiStage.equals("1")) {
     		switch(guibutton.id) {
@@ -486,7 +489,6 @@ public class GuiATM extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
     	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
-    	fontRendererObj.drawString("Sorry, out of order.", 34, 8, 0x007F0E);
     	//double shortBal = ClientPacketHandler.shortValue;
     	//double initBal = ClientPacketHandler.initBal;
     	String underScore = "";

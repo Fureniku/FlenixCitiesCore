@@ -48,7 +48,7 @@ public class TileEntityATMBlock extends BlockContainer {
         if (!world.isRemote) {
             if (player.getHeldItem() != null) {
                 if (player.getHeldItem().getItem() == CoreItems.debitCardNew) {
-
+                	world.playSoundEffect(20, 70, 20, "FlenixCities:block.atm.cardInsert", 1, 1);
                     player.openGui(FlenixCities_Core.instance, 0, world, x, y, z);
                     EconUtils.getBalance(player, world);
                 } else if (player.getHeldItem().getItem() != CoreItems.debitCardNew) {

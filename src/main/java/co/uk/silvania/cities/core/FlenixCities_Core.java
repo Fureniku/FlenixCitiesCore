@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.network.ATMWithdrawPacket;
+import co.uk.silvania.cities.network.SoundPacket;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -56,7 +57,8 @@ public class FlenixCities_Core {
     public void preInit(FMLPreInitializationEvent event) {
     	network = NetworkRegistry.INSTANCE.newSimpleChannel("FlenixCitiesCore_ATM");
     	//Handler class, Packet class, Packet ID (+1), RECIEVING Side
-    	network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);    	
+    	network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);
+    	network.registerMessage(SoundPacket.Handler.class, SoundPacket.class, 1, Side.SERVER);
     	
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
