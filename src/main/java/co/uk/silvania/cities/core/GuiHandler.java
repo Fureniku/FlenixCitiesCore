@@ -63,7 +63,7 @@ public class GuiHandler implements IGuiHandler {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
     			if (tileEntity instanceof TileEntityATMEntity) {
     				System.out.println("Opening no card GUI");
-    				return new GuiATMNoCard();
+    				return new GuiATMNoCard(player.inventory, (TileEntityATMEntity) tileEntity);
     			}	
     		}
     		case 3: {
