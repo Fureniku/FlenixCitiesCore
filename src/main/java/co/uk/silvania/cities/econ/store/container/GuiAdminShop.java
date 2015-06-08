@@ -1,8 +1,5 @@
 package co.uk.silvania.cities.econ.store.container;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -18,10 +15,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import co.uk.silvania.cities.core.CityConfig;
+import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
+import co.uk.silvania.cities.network.AdminShopClientPacket;
 import co.uk.silvania.cities.network.AdminShopPricePacket;
+import co.uk.silvania.cities.network.SalePacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -76,10 +75,6 @@ public class GuiAdminShop extends GuiContainer {
 	public GuiTextField sell2Text;
 	public GuiTextField sell3Text;
 	public GuiTextField sell4Text;
-	public GuiTextField slot1QtyText;
-	public GuiTextField slot2QtyText;
-	public GuiTextField slot3QtyText;
-	public GuiTextField slot4QtyText;
 	public GuiButton buyButton1;
 	public GuiButton sellButton1;
 	public GuiButton buyButton2;
@@ -111,10 +106,6 @@ public class GuiAdminShop extends GuiContainer {
 		sell3Text.setFocused(false);
 		buy4Text.setFocused(false);
 		sell4Text.setFocused(false);
-		slot1QtyText.setFocused(false);
-		slot2QtyText.setFocused(false);
-		slot3QtyText.setFocused(false);
-		slot4QtyText.setFocused(false);
 	}
 	
 	@Override
@@ -154,11 +145,6 @@ public class GuiAdminShop extends GuiContainer {
 		buttonList.add(buyButton4);
 		buttonList.add(sellButton4);
 		
-		buttonList.add(new InvisibleButton(24, guiLeft + 146, guiTop + 51, 36, 14, ""));
-		buttonList.add(new InvisibleButton(25, guiLeft + 146, guiTop + 73, 36, 14, ""));
-		buttonList.add(new InvisibleButton(26, guiLeft + 146, guiTop + 95, 36, 14, ""));
-		buttonList.add(new InvisibleButton(27, guiLeft + 146, guiTop + 117, 36, 14, ""));
-		
 		buy1Text = new GuiTextField(this.fontRendererObj, 34, 51, 38, 14);
 		buy2Text = new GuiTextField(this.fontRendererObj, 34, 73, 38, 14);
 		buy3Text = new GuiTextField(this.fontRendererObj, 34, 95, 38, 14);
@@ -167,11 +153,6 @@ public class GuiAdminShop extends GuiContainer {
 		sell2Text = new GuiTextField(this.fontRendererObj, 90, 73, 38, 14);
 		sell3Text = new GuiTextField(this.fontRendererObj, 90, 95, 38, 14);
 		sell4Text = new GuiTextField(this.fontRendererObj, 90, 117, 38, 14);
-		
-		slot1QtyText = new GuiTextField(this.fontRendererObj, 146, 51, 36, 14);
-		slot2QtyText = new GuiTextField(this.fontRendererObj, 146, 73, 36, 14);
-		slot3QtyText = new GuiTextField(this.fontRendererObj, 146, 95, 36, 14);
-		slot4QtyText = new GuiTextField(this.fontRendererObj, 146, 117, 36, 14);
 		
 		buy1Text.setFocused(true);
 		buy1Text.setText("" + buyPrice1);
@@ -182,16 +163,6 @@ public class GuiAdminShop extends GuiContainer {
 		sell3Text.setText("" + sellPrice3);
 		buy4Text.setText("" + buyPrice4);
 		sell4Text.setText("" + sellPrice4);
-		
-		slot1QtyText.setMaxStringLength(4);
-		slot2QtyText.setMaxStringLength(4);
-		slot3QtyText.setMaxStringLength(4);
-		slot4QtyText.setMaxStringLength(4);
-		
-		slot1QtyText.setText("" + slot1Qty);
-		slot2QtyText.setText("" + slot2Qty);
-		slot3QtyText.setText("" + slot3Qty);
-		slot4QtyText.setText("" + slot4Qty);
 	}
 	
 	public void actionPerformed(GuiButton button) {
@@ -235,57 +206,41 @@ public class GuiAdminShop extends GuiContainer {
 		case 9:
 			if (isShopOwner()) {
 				sellMode = 0;
-				sendSalePacket("buttonSwitch", sellMode, 0);
+				sendSalePacket("buttonSwitch", sellMode);
 			}
 			break;
 		case 10:
 			if (isShopOwner()) {
 				sellMode = 1;
-				sendSalePacket("buttonSwitch", sellMode, 0);
+				sendSalePacket("buttonSwitch", sellMode);
 			}
 			break;
 		}
 		if (sellMode == 0) {
 			switch(button.id) {
 			case 16:
-				sendSalePacket("salePacket", 1, EconUtils.parseInt(slot1QtyText.getText()));
+				sendSalePacket("salePacket", 1);
 				break;
 			case 17:
-				sendSalePacket("buyPacket", 1, EconUtils.parseInt(slot1QtyText.getText()));
+				sendSalePacket("buyPacket", 1);
 				break;
 			case 18:
-				sendSalePacket("salePacket", 2, EconUtils.parseInt(slot2QtyText.getText()));
+				sendSalePacket("salePacket", 2);
 				break;
 			case 19:
-				sendSalePacket("buyPacket", 2, EconUtils.parseInt(slot2QtyText.getText()));
+				sendSalePacket("buyPacket", 2);
 				break;
 			case 20:
-				sendSalePacket("salePacket", 3, EconUtils.parseInt(slot3QtyText.getText()));
+				sendSalePacket("salePacket", 3);
 				break;
 			case 21:
-				sendSalePacket("buyPacket", 3, EconUtils.parseInt(slot3QtyText.getText()));
+				sendSalePacket("buyPacket", 3);
 				break;
 			case 22:
-				sendSalePacket("salePacket", 4, EconUtils.parseInt(slot4QtyText.getText()));
+				sendSalePacket("salePacket", 4);
 				break;
 			case 23:
-				sendSalePacket("buyPacket", 4, EconUtils.parseInt(slot4QtyText.getText()));
-				break;
-			case 24:
-				unfocusAllTextInputs();
-				slot1QtyText.setFocused(true);
-				break;
-			case 25:
-				unfocusAllTextInputs();
-				slot2QtyText.setFocused(true);
-				break;
-			case 26:
-				unfocusAllTextInputs();
-				slot3QtyText.setFocused(true);
-				break;
-			case 27:
-				unfocusAllTextInputs();
-				slot4QtyText.setFocused(true);
+				sendSalePacket("buyPacket", 4);
 				break;
 			}
 		}
@@ -324,9 +279,9 @@ public class GuiAdminShop extends GuiContainer {
 		
 		String mode = "";
 		if (sellMode == 0) {
-			mode = " - Buy View";
+			mode = "Customer Interface";
 		} else if (sellMode == 1) {
-			mode = " - Seller's Overview";
+			mode = "Store Owner Interface";
 		}
 		
     	fontRendererObj.drawString("Buy", 44, 39, 0x00A012);
@@ -369,14 +324,9 @@ public class GuiAdminShop extends GuiContainer {
 			fontRendererObj.drawString("$" + sell4, 107 - fontRendererObj.getStringWidth(sell4) / 2, 121, 4210752);
 
 		}
-
-	    slot1QtyText.drawTextBox();
-	    slot2QtyText.drawTextBox();
-	    slot3QtyText.drawTextBox();
-	    slot4QtyText.drawTextBox();
 	    
-		fontRendererObj.drawString("Floating Shelves" + mode, 5, 19, 4210752);
-		fontRendererObj.drawString("Server Shop", 34, 5, 4210752);
+		fontRendererObj.drawString(mode, 5, 19, 4210752);
+		fontRendererObj.drawString("Server Shop", 36, 5, 4210752);
     	//fontRendererObj.drawString("You have: " + EconUtils.reqClientInventoryBalance(), 100, 5, 4210752);
 	}
 	
@@ -397,14 +347,6 @@ public class GuiAdminShop extends GuiContainer {
 			return 7;
 		} else if (sell4Text.isFocused()) {
 			return 8;
-		} else if (slot1QtyText.isFocused()) {
-			return 9;
-		} else if (slot2QtyText.isFocused()) {
-			return 10;
-		} else if (slot3QtyText.isFocused()) {
-			return 11;
-		} else if (slot4QtyText.isFocused()) {
-			return 12;
 		}
 		return 0;
 	}
@@ -418,38 +360,6 @@ public class GuiAdminShop extends GuiContainer {
 		if (sellMode == 0) {
 			if (keyCode == Keyboard.KEY_RETURN) {
 				unfocusAllTextInputs();
-			}
-			if (focus() == 9) {
-				slot4QtyText.setFocused(false);
-				slot1QtyText.textboxKeyTyped(c, keyCode);
-				if (keyCode == Keyboard.KEY_TAB) {
-					slot2QtyText.setFocused(true);
-					slot1QtyText.setFocused(false);
-				}
-			}
-			if (focus() == 10) {
-				slot1QtyText.setFocused(false);
-				slot2QtyText.textboxKeyTyped(c, keyCode);
-				if (keyCode == Keyboard.KEY_TAB) {
-					slot3QtyText.setFocused(true);
-					slot2QtyText.setFocused(false);
-				}
-			}
-			if (focus() == 11) {
-				slot2QtyText.setFocused(false);
-				slot3QtyText.textboxKeyTyped(c, keyCode);
-				if (keyCode == Keyboard.KEY_TAB) {
-					slot4QtyText.setFocused(true);
-					slot3QtyText.setFocused(false);
-				}
-			}
-			if (focus() == 12) {
-				slot3QtyText.setFocused(false);
-				slot4QtyText.textboxKeyTyped(c, keyCode);
-				if (keyCode == Keyboard.KEY_TAB) {
-					slot1QtyText.setFocused(true);
-					slot4QtyText.setFocused(false);
-				}
 			}
 		}
 		if (sellMode == 1) {
@@ -526,63 +436,22 @@ public class GuiAdminShop extends GuiContainer {
 	}
 	
 	public void updateTileEntity() {
-        ByteArrayOutputStream bt = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(bt);
         if (isShopOwner()) {
-			/*try {
-	        	if (CityConfig.debugMode == true) {
-	        		System.out.println("Sending shop values to server");
-	        	}
-				out.writeUTF(buy1Text.getText());
-				out.writeUTF(sell1Text.getText());
-				out.writeUTF(buy2Text.getText());
-				out.writeUTF(sell2Text.getText());
-				out.writeUTF(buy3Text.getText());
-				out.writeUTF(sell3Text.getText());
-				out.writeUTF(buy4Text.getText());
-				out.writeUTF(sell4Text.getText());
-				
-				out.writeInt(x);
-				out.writeInt(y);
-				out.writeInt(z);
-				Packet250CustomPayload packet = new Packet250CustomPayload("FCShopPacket", bt.toByteArray());
-	            	
-				PacketDispatcher.sendPacketToServer(packet);
-				if (CityConfig.debugMode == true) {
-					System.out.println("Floating Shelves packet sent!");
-				}
-			}
-			catch (IOException ex) {
-				System.out.println("Packet Failed!");
-			}*/
+        	FlenixCities_Core.network.sendToServer(new AdminShopClientPacket(
+        			buy1Text.getText(), 
+        			sell1Text.getText(), 
+        			buy2Text.getText(), 
+        			sell2Text.getText(), 
+        			buy3Text.getText(), 
+        			sell3Text.getText(), 
+        			buy4Text.getText(), 
+        			sell4Text.getText(), 
+        			x, y, z));
         }
 	}
 	
-	public void sendSalePacket(String id, int itemId, int itemQty) {
-		
-        ByteArrayOutputStream bt = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(bt);
-		/*try {
-	       	if (CityConfig.debugMode == true) {
-	       		System.out.println("Sending sale packet to server");
-	       	}
-			out.writeUTF(id);
-			out.writeInt(itemId);
-			out.writeInt(itemQty);
-			
-			out.writeInt(x);
-			out.writeInt(y);
-			out.writeInt(z);
-			Packet250CustomPayload packet = new Packet250CustomPayload("FCSalePacket", bt.toByteArray());
-	           	
-			PacketDispatcher.sendPacketToServer(packet);
-			if (CityConfig.debugMode == true) {
-				System.out.println("Floating Shelves packet sent: " + id + " " + itemId + " " + itemQty + " " + x + " " + y + " " + z);
-			}
-		}
-		catch (IOException ex) {
-			System.out.println("Packet Failed!");
-		}*/
+	public void sendSalePacket(String pktId, int slotId) {
+		FlenixCities_Core.network.sendToServer(new SalePacket(pktId, slotId, x, y, z));
 	}
 	
 	@Override

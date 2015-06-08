@@ -8,7 +8,9 @@ import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import co.uk.silvania.cities.network.ATMWithdrawPacket;
+import co.uk.silvania.cities.network.AdminShopClientPacket;
 import co.uk.silvania.cities.network.AdminShopPricePacket;
+import co.uk.silvania.cities.network.SalePacket;
 import co.uk.silvania.cities.network.ServerBalancePacket;
 import co.uk.silvania.cities.network.SoundPacket;
 import cpw.mods.fml.common.Mod;
@@ -64,6 +66,8 @@ public class FlenixCities_Core {
     	network.registerMessage(SoundPacket.Handler.class, SoundPacket.class, 1, Side.SERVER);
     	network.registerMessage(ServerBalancePacket.Handler.class, ServerBalancePacket.class, 2, Side.CLIENT);
     	network.registerMessage(AdminShopPricePacket.Handler.class, AdminShopPricePacket.class, 3, Side.CLIENT);
+    	network.registerMessage(SalePacket.Handler.class, SalePacket.class, 4, Side.SERVER);
+    	network.registerMessage(AdminShopClientPacket.Handler.class, AdminShopClientPacket.class, 5, Side.SERVER);
     	
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);

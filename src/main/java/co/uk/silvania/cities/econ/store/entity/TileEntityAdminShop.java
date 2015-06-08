@@ -35,7 +35,6 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 	public double sellPrice3;
 	public double buyPrice4;
 	public double sellPrice4;
-	public int tabButton;
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
