@@ -151,30 +151,28 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 	}
 	
 	//Selling items TO the player
-	public void sellItem(int i, int qty, EntityPlayer entityPlayer) {
-		qty = 1;
+	public void sellItem(int slotId, EntityPlayer entityPlayer) {
 		double itemCost = 0;
-		if (i == 1) {
+		if (slotId == 1) {
 			itemCost = buyPrice1;
 		}
-		if (i == 2) {
+		if (slotId == 2) {
 			itemCost = buyPrice2;
 		}
-		if (i == 3) {
+		if (slotId == 3) {
 			itemCost = buyPrice3;
 		}
-		if (i == 4) {
+		if (slotId == 4) {
 			itemCost = buyPrice4;
 		}
-		double totalItemCost = itemCost * qty;
 		double invCash = EconUtils.getInventoryCash(entityPlayer);
-		int giveAmount = qty;
-		boolean hasSpace = EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(i - 1));
-		ItemStack item = getStackInSlot(i - 1);
+		int giveAmount = 1;
+		boolean hasSpace = EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1));
+		ItemStack item = getStackInSlot(slotId - 1);
 		
-		if (invCash >= totalItemCost && hasSpace) {
+		if (invCash >= itemCost && hasSpace) {
 			//Two birds, one stone. Charges the player for us, then tells us how much they paid so we can calculate change.
-			double paidAmount = EconUtils.findCashInInventoryWithChange(entityPlayer, totalItemCost); //Complex code to charge the player's inventory
+			double paidAmount = EconUtils.findCashInInventoryWithChange(entityPlayer, itemCost); //Complex code to charge the player's inventory
 			if (paidAmount < 0) {
 				return;
 			} else {
@@ -182,32 +180,32 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 					entityPlayer.inventory.addItemStackToInventory(item.copy());
 					giveAmount--;
 				}
-				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize * qty + " " + item.getDisplayName() + " from the server, for $" + EconUtils.formatBalance(itemCost * qty));
-				entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!"));
+				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from the server, for $" + EconUtils.formatBalance(itemCost));
+				entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
 			}
 			//Disabled due to money dupe glitch, will be fixed when I come back to FC in a week or so.
 		}// else {
-			if (invCash < totalItemCost) {
+			if (invCash < itemCost) {
 				double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
-				if (bankBalance >= totalItemCost && hasSpace) {
+				if (bankBalance >= itemCost && hasSpace) {
 					if (EconUtils.hasOwnCard(entityPlayer)) {
-						if (EconUtils.chargePlayerAnywhere(entityPlayer, totalItemCost)) {
+						if (EconUtils.chargePlayerAnywhere(entityPlayer, itemCost)) {
 							while (giveAmount >= 1) {
 								entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 								giveAmount--;
 							}
-							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!"));
+							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
 							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so the cost was split between your cash, and your bank balance. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
 						}
 					}
-				} else if (bankBalance >= totalItemCost && hasSpace) {
+				} else if (bankBalance >= itemCost && hasSpace) {
 					if (EconUtils.hasOwnCard(entityPlayer)) {
-						if (EconUtils.payBalanceByCard(entityPlayer, totalItemCost)) {
+						if (EconUtils.payBalanceByCard(entityPlayer, itemCost)) {
 							while (giveAmount >= 1) {
 								entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 								giveAmount--;
 							}
-							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!"));
+							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
 							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
 						}
 					}
@@ -233,23 +231,22 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 	}
 	
 	//Buying items FROM the player
-	public void buyItem(int i, int q, EntityPlayer player) {
-		ItemStack item = getStackInSlot(i - 1);
+	public void buyItem(int slotId, EntityPlayer player) {
+		ItemStack item = getStackInSlot(slotId - 1);
 		int ss = item.stackSize;
 		int invQty = 0;
 		double itemCost = 0;
-		q = ss * 1;//q * item.stackSize;
 		
-		if (i == 1) {
+		if (slotId == 1) {
 			itemCost = sellPrice1;
 		}
-		if (i == 2) {
+		if (slotId == 2) {
 			itemCost = sellPrice2;
 		}
-		if (i == 3) {
+		if (slotId == 3) {
 			itemCost = sellPrice3;
 		}
-		if (i == 4) {
+		if (slotId == 4) {
 			itemCost = sellPrice4;
 		}
 		
@@ -258,14 +255,14 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 			if (stack != null) {
 				if (stack.getItem() == item.getItem()) {
 					invQty = invQty + stack.stackSize;
-					if (invQty >= q) {
-						invQty = q;
+					if (invQty >= ss) {
+						invQty = ss;
 					}
 				}
 			}
 		}
-		if (invQty >= q) {
-			int remain = q;
+		if (invQty >= ss) {
+			int remain = ss;
 			for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
 				ItemStack stack = player.inventory.getStackInSlot(x);
 				if (stack != null) {
@@ -276,7 +273,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 								EconUtils.giveChange(itemCost, 0, player);
 								remain = 0;
 								System.out.println(player.getDisplayName() + " sold " + item.stackSize + " " + item.getDisplayName() + " to the server, for $" + EconUtils.formatBalance(itemCost));
-								player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You sold " + EnumChatFormatting.GOLD + q + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " to the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
+								player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You sold " + EnumChatFormatting.GOLD + ss + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " to the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
 							} else {
 								remain = remain - stack.stackSize;
 								player.inventory.setInventorySlotContents(x, null);
