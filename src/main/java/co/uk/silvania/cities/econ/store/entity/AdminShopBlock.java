@@ -1,4 +1,6 @@
-/*package co.uk.silvania.cities.econ.store.entity;
+package co.uk.silvania.cities.econ.store.entity;
+
+import ibxm.Player;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -10,8 +12,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
@@ -19,8 +21,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+import co.uk.silvania.cities.network.AdminShopPricePacket;
+import co.uk.silvania.cities.network.ServerBalancePacket;
 
 public class AdminShopBlock extends BlockContainer {
 
@@ -80,36 +82,15 @@ public class AdminShopBlock extends BlockContainer {
 	
 	@Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
-		TileEntityAdminShop tileEntity = (TileEntityAdminShop) world.getBlockTileEntity(x, y, z);
+		TileEntityAdminShop tileEntity = (TileEntityAdminShop) world.getTileEntity(x, y, z);
         if (tileEntity != null) {
         	String ownerName = tileEntity.ownerName;
-        	String userName = player.username;
+        	//String userName = player.getDisplayName()
         	
-        	ByteArrayOutputStream bt = new ByteArrayOutputStream();
-        	DataOutputStream out = new DataOutputStream(bt);
-        	try {
-        		out.writeUTF("" + tileEntity.ownerName);
-        		out.writeDouble(tileEntity.buyPrice1);
-        		out.writeDouble(tileEntity.sellPrice1);
-        		out.writeDouble(tileEntity.buyPrice2);
-        		out.writeDouble(tileEntity.sellPrice2);
-        		out.writeDouble(tileEntity.buyPrice3);
-        		out.writeDouble(tileEntity.sellPrice3);
-        		out.writeDouble(tileEntity.buyPrice4);
-        		out.writeDouble(tileEntity.sellPrice4);
-        		
-        		Packet250CustomPayload packet = new Packet250CustomPayload("FCShopPacket", bt.toByteArray());
-            	
-            	Player par1Player = (Player)player;
-            	
-            	PacketDispatcher.sendPacketToPlayer(packet, par1Player);
-            }
-            catch (IOException ex) {
-            	System.out.println("Packet Failed!");
-            }
+        	FlenixCities_Core.network.sendToServer(new AdminShopPricePacket(tileEntity.ownerName, tileEntity.buyPrice1, tileEntity.sellPrice1, tileEntity.buyPrice2, tileEntity.sellPrice2,
+        			tileEntity.buyPrice3, tileEntity.sellPrice3, tileEntity.buyPrice4, tileEntity.sellPrice4));
         	
-            player.openGui(FlenixCities_Core.instance, 1, world, x, y, z);        	
-        	EconUtils.triggerServerInventoryBalancePacket(player, world);
+        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
         }
         return true;
     }
@@ -151,8 +132,8 @@ public class AdminShopBlock extends BlockContainer {
 		
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			String name = player.username;
-			TileEntityAdminShop tileEntity = (TileEntityAdminShop) world.getBlockTileEntity(x, y, z);
+			String name = player.getDisplayName();
+			TileEntityAdminShop tileEntity = (TileEntityAdminShop) world.getTileEntity(x, y, z);
 			tileEntity.ownerName = name;
 		}
 	}	
@@ -162,4 +143,4 @@ public class AdminShopBlock extends BlockContainer {
 		return new TileEntityAdminShop();
 	}
 
-}*/
+}

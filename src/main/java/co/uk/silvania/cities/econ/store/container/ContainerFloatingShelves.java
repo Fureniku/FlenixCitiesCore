@@ -63,24 +63,7 @@ public class ContainerFloatingShelves extends Container {
 			}
 		}
 	}
-	
-	/*public void setCurrentPage(int page) {
-		int currentPage = tabButton;
 
-		// move all slots out of the screen
-		for (Slot slot : (List<Slot>)inventorySlots) {
-			if (!(slot.inventory instanceof InventoryPlayer)) {
-				slot.xDisplayPosition = Integer.MIN_VALUE;
-			}
-		}
-
-		// "reactivate" the ones for the current page
-		int slotNumStart = page * 10;
-		for (int i = 0; i < 10; i++) {
-			((Slot)inventorySlots.get(i + slotNumStart)).xDisplayPosition = SLOT_X_POSTITIONS[i];
-		}
-	}*/
-	/*
 	protected void bindPlayerInventory(InventoryPlayer invPlayer) {
 		//C = vertical inventory slots, "columns"
 		//R = horizontal inventory slots, "rows"

@@ -1,4 +1,4 @@
-/*package co.uk.silvania.cities.econ.store.container;
+package co.uk.silvania.cities.econ.store.container;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -104,4 +104,4 @@ public class ContainerAdminShop extends Container {
 		}
 		return null;
 	}
-}*/
+}

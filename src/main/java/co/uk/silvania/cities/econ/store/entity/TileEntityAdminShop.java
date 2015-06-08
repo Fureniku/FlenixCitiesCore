@@ -1,4 +1,4 @@
-/*package co.uk.silvania.cities.econ.store.entity;
+package co.uk.silvania.cities.econ.store.entity;
 
 import java.util.logging.Logger;
 
@@ -8,13 +8,16 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.EnumSkyBlock;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.CoreItems;
+import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.money.ItemCoin;
 import co.uk.silvania.cities.econ.money.ItemNote;
@@ -66,12 +69,12 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        NBTTagList nbttaglist = nbt.getTagList("Items");
+        NBTTagList nbttaglist = nbt.getTagList("Items", 10);
         this.items = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
             int j = nbttagcompound1.getByte("Slot") & 255;
 
             if (j >= 0 && j < this.items.length)
@@ -125,23 +128,23 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 			}
 		}
 		nbt.setTag("ClientAShelfInv", items);
-		return new Packet132TileEntityData(xCoord, yCoord, zCoord, 1, nbt);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
 	}
 	
 	@Override
-	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		NBTTagCompound nbt = pkt.data;
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		NBTTagCompound nbt = pkt.func_148857_g();
 		
-		NBTTagList tagList = nbt.getTagList("ClientAShelfInv");
+		NBTTagList tagList = nbt.getTagList("ClientAShelfInv", 10);
 		this.items = new ItemStack[getSizeInventory()];
 		for (int i = 0; i < tagList.tagCount(); i++) {
-			NBTTagCompound tag = (NBTTagCompound)tagList.tagAt(i);
+			NBTTagCompound tag = tagList.getCompoundTagAt(i);
 			byte slot = tag.getByte("Slot");
 			if ((slot >= 0) && (slot < this.items.length)) {
 				this.items[slot] = ItemStack.loadItemStackFromNBT(tag);
 			}
 		}
-		this.worldObj.updateAllLightTypes(this.xCoord, this.yCoord, this.zCoord);
+		this.worldObj.updateLightByType(EnumSkyBlock.Block, this.xCoord, this.yCoord, this.zCoord);
 	}
 	
 	//Selling items TO the player
@@ -177,11 +180,11 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 					giveAmount--;
 				}
 				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize * qty + " " + item.getDisplayName() + " from the server, for $" + EconUtils.formatBalance(itemCost * qty));
-				entityPlayer.addChatMessage(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!");
+				entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!"));
 			}
 			//Disabled due to money dupe glitch, will be fixed when I come back to FC in a week or so.
 		}// else {
-			/*if (invCash < totalItemCost) {
+			if (invCash < totalItemCost) {
 				double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
 				if (bankBalance >= totalItemCost && hasSpace) {
 					if (EconUtils.hasOwnCard(entityPlayer)) {
@@ -190,8 +193,8 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 								entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 								giveAmount--;
 							}
-							entityPlayer.addChatMessage(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!");
-							entityPlayer.addChatMessage(EnumChatFormatting.GREEN + "You didn't have enough money with you, so the cost was split between your cash, and your bank balance. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj)));
+							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!"));
+							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so the cost was split between your cash, and your bank balance. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
 						}
 					}
 				} else if (bankBalance >= totalItemCost && hasSpace) {
@@ -201,18 +204,18 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 								entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 								giveAmount--;
 							}
-							entityPlayer.addChatMessage(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!");
-							entityPlayer.addChatMessage(EnumChatFormatting.GREEN + "You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj)));
+							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize * qty + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost * qty) + "!"));
+							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
 						}
 					}
 				} else {
 					if (hasSpace) {
-						entityPlayer.addChatMessage(EnumChatFormatting.RED + "You do not have enough money to do that! Next time, why not pay by card?");
+						entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not have enough money to do that! Next time, why not pay by card?"));
 					}
 				}
-			}*/ //TODO
-		/*if (!hasSpace) {
-			entityPlayer.addChatMessage(EnumChatFormatting.RED + "You do not have enough free inventory space to buy that!");
+			} //TODO
+		if (!hasSpace) {
+			entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not have enough free inventory space to buy that!"));
 		}
 	}
 	
@@ -220,9 +223,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		for (int i = player.inventory.getSizeInventory(); i >= 0; --i) {
 			ItemStack item = player.inventory.getStackInSlot(i);
 			if (item.getItem() == CoreItems.debitCardNew) {
-				if (player.username.equals(item.stackTagCompound.getString("playerName"))) {
-					return true;
-				}
+				return (DebitCardItem.checkCardOwner(player).equalsIgnoreCase(player.getUniqueID().toString()));
 			}
 		}
 		return false;
@@ -272,7 +273,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 								EconUtils.giveChange(itemCost, 0, player);
 								remain = 0;
 								System.out.println(player.getDisplayName() + " sold " + item.stackSize + " " + item.getDisplayName() + " to the server, for $" + EconUtils.formatBalance(itemCost));
-								player.addChatMessage(EnumChatFormatting.GREEN + "You sold " + EnumChatFormatting.GOLD + q + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " to the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!");
+								player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You sold " + EnumChatFormatting.GOLD + q + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " to the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
 							} else {
 								remain = remain - stack.stackSize;
 								player.inventory.setInventorySlotContents(x, null);
@@ -282,7 +283,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				}
 			}
 		} else {
-			player.addChatMessage(EnumChatFormatting.RED + "You don't have enough of these to sell right now.");
+			player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You don't have enough of these to sell right now."));
 		}
 		((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 	}
@@ -311,7 +312,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				setInventorySlotContents(i, null);
 			} else {
 				itemStack = itemStack.splitStack(amount);
-				onInventoryChanged(); //Update the inventory. TODO use this for card removal
+				//onInventoryChanged(); //Update the inventory. TODO use this for card removal
 			}
 		}
 		return itemStack;
@@ -333,7 +334,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				itemStack.stackSize = getInventoryStackLimit();
 			}
 		
-			onInventoryChanged();
+			//onInventoryChanged();
 		}
 	}
 	
@@ -345,18 +346,8 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				itemStack.stackSize = getInventoryStackLimit();
 			}
 		
-			onInventoryChanged();
+			//onInventoryChanged();
 		}
-	}
-
-	@Override
-	public String getInvName() {
-		return "Floating Shelves";
-	}
-
-	@Override //Apparently not used...
-	public boolean isInvNameLocalized() {
-		return true;
 	}
 
 	//Max size of stacks placed inside.
@@ -372,14 +363,6 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		return entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64;
 	}
 
-	//Not used
-	@Override
-	public void openChest() {}
-
-	//Not used
-	@Override
-	public void closeChest() {}
-
 	//Checks that the item is valid. For shelves, use instanceof to see if it's item or block.
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack item) {
@@ -389,16 +372,16 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		ItemStack slot4 = getStackInSlot(3);
 		if (item != null) {
 			if (i > 3 && i <= 39) {
-				return item.itemID == slot1.itemID;
+				return item.getItem() == slot1.getItem();
 			}
 			if (i > 39 && i <= 75) {
-				return item.itemID == slot2.itemID;
+				return item.getItem() == slot2.getItem();
 			}
 			if (i > 75 && i <= 111) {
-				return item.itemID == slot3.itemID;
+				return item.getItem() == slot3.getItem();
 			}
 			if (i > 111 && i <= 147) {
-				return item.itemID == slot4.itemID;
+				return item.getItem() == slot4.getItem();
 			}
 			if (i > 147 && i <= 184) {
 				if (item.getItem() instanceof ItemCoin || item.getItem() instanceof ItemNote) {
@@ -412,4 +395,20 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		}
 		return true;
 	}
-}/**/
+
+	@Override
+	public String getInventoryName() {
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return false;
+	}
+
+	@Override
+	public void openInventory() {}
+
+	@Override
+	public void closeInventory() {}
+}

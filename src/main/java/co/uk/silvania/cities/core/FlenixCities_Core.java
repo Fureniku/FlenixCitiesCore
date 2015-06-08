@@ -6,7 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
+import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import co.uk.silvania.cities.network.ATMWithdrawPacket;
+import co.uk.silvania.cities.network.AdminShopPricePacket;
 import co.uk.silvania.cities.network.ServerBalancePacket;
 import co.uk.silvania.cities.network.SoundPacket;
 import cpw.mods.fml.common.Mod;
@@ -61,6 +63,7 @@ public class FlenixCities_Core {
     	network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);
     	network.registerMessage(SoundPacket.Handler.class, SoundPacket.class, 1, Side.SERVER);
     	network.registerMessage(ServerBalancePacket.Handler.class, ServerBalancePacket.class, 2, Side.CLIENT);
+    	network.registerMessage(AdminShopPricePacket.Handler.class, AdminShopPricePacket.class, 3, Side.SERVER);
     	
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
@@ -80,7 +83,7 @@ public class FlenixCities_Core {
 	        
 	    GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
 	    //TODO GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
-	    //GameRegistry.registerTileEntity(TileEntityAdminShop.class, "tileEntityAdminShop");
+	    GameRegistry.registerTileEntity(TileEntityAdminShop.class, "tileEntityAdminShop");
 	    GameRegistry.registerTileEntity(NPCSpawnerEntity.class, "npcSpawnerBlock");
     }
                

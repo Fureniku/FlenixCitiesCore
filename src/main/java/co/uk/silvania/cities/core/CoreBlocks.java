@@ -3,6 +3,7 @@ package co.uk.silvania.cities.core;
 import co.uk.silvania.cities.core.blocks.*;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerBlock;
 import co.uk.silvania.cities.econ.atm.TileEntityATMBlock;
+import co.uk.silvania.cities.econ.store.entity.AdminShopBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -12,7 +13,7 @@ public class CoreBlocks {
 	public static Block atmBlock;
 	//public static Block floatingShelvesBlock;
 	public static Block npcSpawnerBlock;
-	//public static Block adminShopBlock;
+	public static Block adminShopBlock;
 	
 	public static Block skyscraperBlocks;
 	public static Block stainedGlass;
@@ -104,7 +105,7 @@ public class CoreBlocks {
 	
 	public static void initSpecialBlocks() {
 		npcSpawnerBlock = new NPCSpawnerBlock().setBlockName("npcSpawnerBlock");
-		//adminShopBlock = new AdminShopBlock().setBlockName("adminShopBlock");
+		adminShopBlock = new AdminShopBlock().setBlockName("adminShopBlock");
 	}
 
 }
