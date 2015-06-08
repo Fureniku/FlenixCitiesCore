@@ -79,6 +79,7 @@ public class CommonProxy {
         GameRegistry.registerItem(CoreItems.coin50, "coin50");
         GameRegistry.registerItem(CoreItems.coin100, "coin100");
         GameRegistry.registerItem(CoreItems.note100, "note100");
+        GameRegistry.registerItem(CoreItems.note200, "note200");
         GameRegistry.registerItem(CoreItems.note500, "note500");
         GameRegistry.registerItem(CoreItems.note1000, "note1000");
         GameRegistry.registerItem(CoreItems.note2000, "note2000");

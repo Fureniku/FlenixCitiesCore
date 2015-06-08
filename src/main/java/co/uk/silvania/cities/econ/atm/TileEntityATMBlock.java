@@ -51,81 +51,81 @@ public class TileEntityATMBlock extends BlockContainer {
         if (!world.isRemote) {
         	if (player.isSneaking()) {
         		EconUtils.depositAllCash(player, world);
-        	} else if (player.getHeldItem().getItem() == CoreItems.debitCardNew) {
-               	world.playSoundEffect(20, 70, 20, "FlenixCities:block.atm.cardInsert", 1, 1);
-               	player.openGui(FlenixCities_Core.instance, 0, world, x, y, z);
-               	EconUtils.getBalance(player, world);                 
-            } else {  
-	            NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
-	            ItemStack item = player.getHeldItem();
-	            String uuid = player.getUniqueID().toString();
-	            // Coin 1
+        	} else if (player.getHeldItem().getItem() != null) {
+        		if (player.getHeldItem().getItem() == CoreItems.debitCardNew) {
+        			world.playSoundEffect(20, 70, 20, "FlenixCities:block.atm.cardInsert", 1, 1);
+        			player.openGui(FlenixCities_Core.instance, 0, world, x, y, z);
+        			EconUtils.getBalance(player, world);                 
+        		} else {  
+        			NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+        			ItemStack item = player.getHeldItem();
+        			String uuid = player.getUniqueID().toString();
+        			// Coin 1
 
-                if (player.getHeldItem().getItem() instanceof ItemCoin) {
-                	if (player.isSneaking()) {
+        			if (player.getHeldItem().getItem() instanceof ItemCoin) {
+        				if (player.isSneaking()) {
                 		EconUtils.depositAllCash(player, world);
-                	}
-                    ItemCoin coin = (ItemCoin) player.getHeldItem().getItem();
-                    double currentBalance = 0;
-                    if (nbt.hasKey(uuid)) {
-                        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-                        if (playernbt.hasKey("Balance")) {
-                            currentBalance = playernbt.getDouble("Balance");
-                        }
-                        double modifiedBalance = currentBalance + coin.getMoneyValue();
-                        playernbt.setDouble("Balance", modifiedBalance);
-                        nbt.setTag(uuid, playernbt);
-                    } else {
-                        NBTTagCompound playernbt = new NBTTagCompound();
-                        if (playernbt.hasKey("Balance")) {
-                            currentBalance = playernbt.getDouble("Balance");
-                        }
-                        double modifiedBalance = currentBalance + coin.getMoneyValue();
-                        playernbt.setDouble("Balance", modifiedBalance);
-                        nbt.setTag(uuid, playernbt);
-                    }
-                    NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(coin.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
-                    NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
-                    --item.stackSize;
-                } else if (player.getHeldItem().getItem() instanceof ItemNote) {
-                	if (player.isSneaking()) {
-                		EconUtils.depositAllCash(player, world);
-                	}
-                    ItemNote note = (ItemNote) player.getHeldItem().getItem();
-                    double currentBalance = 0;
-                    if (nbt.hasKey(uuid)) {
-                        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-                        if (playernbt.hasKey("Balance")) {
-                            currentBalance = playernbt.getDouble("Balance");
-                        }
-                        double modifiedBalance = currentBalance + note.getMoneyValue();
-                        playernbt.setDouble("Balance", modifiedBalance);
-                        nbt.setTag(uuid, playernbt);
-                    } else {
-                        NBTTagCompound playernbt = new NBTTagCompound();
-                        if (playernbt.hasKey("Balance")) {
-                            currentBalance = playernbt.getDouble("Balance");
-                        }
-                        double modifiedBalance = currentBalance + note.getMoneyValue();
-                        playernbt.setDouble("Balance", modifiedBalance);
-                        nbt.setTag(uuid, playernbt);
-                    }
-                    NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(note.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
-                    NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
-                    --item.stackSize;
-                } else {
-                	player.openGui(FlenixCities_Core.instance, 2, world, x, y, z);
-                }
-            }
-        }
+        				}
+        				ItemCoin coin = (ItemCoin) player.getHeldItem().getItem();
+        				double currentBalance = 0;
+        				if (nbt.hasKey(uuid)) {
+        					NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+        					if (playernbt.hasKey("Balance")) {
+        						currentBalance = playernbt.getDouble("Balance");
+        					}
+        					double modifiedBalance = currentBalance + coin.getMoneyValue();
+        					playernbt.setDouble("Balance", modifiedBalance);
+        					nbt.setTag(uuid, playernbt);
+        				} else {
+        					NBTTagCompound playernbt = new NBTTagCompound();
+        					if (playernbt.hasKey("Balance")) {
+        						currentBalance = playernbt.getDouble("Balance");
+        					}
+        					double modifiedBalance = currentBalance + coin.getMoneyValue();
+        					playernbt.setDouble("Balance", modifiedBalance);
+        					nbt.setTag(uuid, playernbt);
+        				}
+        				NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+        				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(coin.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
+        				NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+        				--item.stackSize;
+        			} else if (player.getHeldItem().getItem() instanceof ItemNote) {
+        				if (player.isSneaking()) {
+        					EconUtils.depositAllCash(player, world);
+	                	}
+	                    ItemNote note = (ItemNote) player.getHeldItem().getItem();
+	                    double currentBalance = 0;
+	                    if (nbt.hasKey(uuid)) {
+	                        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+	                        if (playernbt.hasKey("Balance")) {
+	                            currentBalance = playernbt.getDouble("Balance");
+	                        }
+	                        double modifiedBalance = currentBalance + note.getMoneyValue();
+	                        playernbt.setDouble("Balance", modifiedBalance);
+	                        nbt.setTag(uuid, playernbt);
+	                    } else {
+	                    	NBTTagCompound playernbt = new NBTTagCompound();
+	                        if (playernbt.hasKey("Balance")) {
+	                            currentBalance = playernbt.getDouble("Balance");
+	                        }
+	                        double modifiedBalance = currentBalance + note.getMoneyValue();
+	                        playernbt.setDouble("Balance", modifiedBalance);
+	                        nbt.setTag(uuid, playernbt);
+	                    }
+	                    NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(note.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
+	                    NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+	                    --item.stackSize;
+        			} else {
+        				player.openGui(FlenixCities_Core.instance, 2, world, x, y, z);
+        			}
+        		}
+        	}
         
-        if (!world.isRemote) {
         	EntityPlayerMP playerMP = (EntityPlayerMP) player;
         	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, world)), playerMP);
-        	System.out.println("Current Balance Packet Sent! Balance: $" + EconUtils.getBalance(player, world));
-        }
+       		System.out.println("Current Balance Packet Sent! Balance: $" + EconUtils.getBalance(player, world));
+       	}
         return true;
     }
 	
