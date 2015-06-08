@@ -60,7 +60,7 @@ public class FlenixCities_Core {
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	network = NetworkRegistry.INSTANCE.newSimpleChannel("FlenixCitiesCore_ATM");
+    	network = NetworkRegistry.INSTANCE.newSimpleChannel("FlenixCitiesCore");
     	//Handler class, Packet class, Packet ID (+1), RECIEVING Side
     	network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);
     	network.registerMessage(SoundPacket.Handler.class, SoundPacket.class, 1, Side.SERVER);

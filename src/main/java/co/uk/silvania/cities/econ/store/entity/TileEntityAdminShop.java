@@ -146,6 +146,10 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		this.worldObj.updateLightByType(EnumSkyBlock.Block, this.xCoord, this.yCoord, this.zCoord);
 	}
 	
+	public void sellItem2(int i, int qty, EntityPlayer player) {
+		System.out.println("Trying to sell an item to the player! Slot: " + i + ", qty: " + qty + " (should be 1), player: " + player);
+	}
+	
 	//Selling items TO the player
 	public void sellItem(int i, int qty, EntityPlayer entityPlayer) {
 		qty = 1;

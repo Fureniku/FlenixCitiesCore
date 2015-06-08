@@ -70,7 +70,7 @@ public class SalePacket implements IMessage {
 			}
 			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
 			if (pktId.equalsIgnoreCase("salePacket")) {
-				tileAdmin.sellItem(slotId, 1, entityPlayer);
+				tileAdmin.sellItem2(slotId, 1, entityPlayer);
 			} else if (pktId.equalsIgnoreCase("buyPacket")) {
 				tileAdmin.buyItem(slotId, 1, entityPlayer);
 			}
