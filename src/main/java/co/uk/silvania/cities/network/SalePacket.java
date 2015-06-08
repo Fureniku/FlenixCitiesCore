@@ -39,19 +39,12 @@ public class SalePacket implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 		packetId = ByteBufUtils.readUTF8String(buf);
 		slotId = ByteBufUtils.readVarShort(buf);
-		x = ByteBufUtils.readVarShort(buf);
-		y = ByteBufUtils.readVarShort(buf);
-		z = ByteBufUtils.readVarShort(buf);
-		
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		ByteBufUtils.writeUTF8String(buf, packetId);	
 		ByteBufUtils.writeVarShort(buf, slotId);
-		ByteBufUtils.writeVarShort(buf, x);
-		ByteBufUtils.writeVarShort(buf, y);
-		ByteBufUtils.writeVarShort(buf, z);
 	}
 	
 	public static class Handler implements IMessageHandler<SalePacket, IMessage> {
