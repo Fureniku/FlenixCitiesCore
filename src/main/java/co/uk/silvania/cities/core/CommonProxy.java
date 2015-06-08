@@ -59,7 +59,7 @@ public class CommonProxy {
        	GameRegistry.registerBlock(CoreBlocks.quartzDecorBlocks, ItemFloorBlocks.class, "quartzDecorBlocks");
 
        	
-        //GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
+        GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
        	
        	
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster1, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster1.getUnlocalizedName().substring(5)));
