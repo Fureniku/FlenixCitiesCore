@@ -19,11 +19,11 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class SalePacket implements IMessage {
 	
-	private String packetId;
-	private int slotId;
-	private int x;
-	private int y;
-	private int z;
+	private static String packetId;
+	private static int slotId;
+	private static int x;
+	private static int y;
+	private static int z;
 	
 	public SalePacket() {}
 	
@@ -51,17 +51,7 @@ public class SalePacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(SalePacket message, MessageContext ctx) {
-			World world = ctx.getServerHandler().playerEntity.worldObj;
-			EntityPlayer player = ctx.getServerHandler().playerEntity;
-			
-			String str1 = message.packetId;
-			int x = message.x;
-			int y = message.y;
-			int z = message.z;
-			
-			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
-			tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
-			/*String pktId = message.packetId;
+			String pktId = message.packetId;
 			int slotId = message.slotId;
 			int x = message.x;
 			int y = message.y;
@@ -85,7 +75,7 @@ public class SalePacket implements IMessage {
 				//sellItem(slotId, entityPlayer, x, y, z);
 			} else if (pktId.equalsIgnoreCase("buyPacket")) {
 				//tileAdmin.buyItem(slotId, 1, entityPlayer);
-			}*/
+			}
 			return null;
 		}
 		

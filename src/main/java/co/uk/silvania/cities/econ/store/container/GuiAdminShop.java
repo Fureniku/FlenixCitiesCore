@@ -437,6 +437,7 @@ public class GuiAdminShop extends GuiContainer {
 	
 	public void updateTileEntity() {
         if (isShopOwner()) {
+        	System.out.println("Sending AdminShopClientPacket");
         	FlenixCities_Core.network.sendToServer(new AdminShopClientPacket(
         			buy1Text.getText(), 
         			sell1Text.getText(), 
@@ -451,7 +452,11 @@ public class GuiAdminShop extends GuiContainer {
 	}
 	
 	public void sendSalePacket(String pktId, int slotId) {
-		FlenixCities_Core.network.sendToServer(new SalePacket(pktId, slotId, x, y, z));
+		System.out.println("sending sale packet: " + pktId + ", slot: " + slotId);
+		FlenixCities_Core.network.sendToServer(new SalePacket(
+				pktId, 
+				slotId, 
+				x, y, z));
 	}
 	
 	@Override
