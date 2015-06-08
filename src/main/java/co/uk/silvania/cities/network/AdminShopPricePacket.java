@@ -12,15 +12,15 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class AdminShopPricePacket implements IMessage {
 	
-	private String ownerName;
-	private double buyPrice1;
-	private double sellPrice1;
-	private double buyPrice2;
-	private double sellPrice2;
-	private double buyPrice3;
-	private double sellPrice3;
-	private double buyPrice4;
-	private double sellPrice4;
+	public static String ownerName;
+	public static double buyPrice1;
+	public static double sellPrice1;
+	public static double buyPrice2;
+	public static double sellPrice2;
+	public static double buyPrice3;
+	public static double sellPrice3;
+	public static double buyPrice4;
+	public static double sellPrice4;
 	
 	public AdminShopPricePacket() {}
 	

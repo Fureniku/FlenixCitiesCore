@@ -7,6 +7,8 @@ import co.uk.silvania.cities.econ.atm.ContainerATM;
 import co.uk.silvania.cities.econ.atm.GuiATM;
 import co.uk.silvania.cities.econ.atm.GuiATMNoCard;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
+import co.uk.silvania.cities.econ.store.container.ContainerAdminShop;
+import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
@@ -36,9 +38,9 @@ public class GuiHandler implements IGuiHandler {
 			}*/
 			case 3: {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
-				//if(tileEntity instanceof TileEntityAdminShop) {
-					//return new ContainerAdminShop(player.inventory, (TileEntityAdminShop) tileEntity);
-				//}	
+				if(tileEntity instanceof TileEntityAdminShop) {
+					return new ContainerAdminShop(player.inventory, (TileEntityAdminShop) tileEntity);
+				}	
 			}
 		}
 		return null;	
@@ -68,9 +70,9 @@ public class GuiHandler implements IGuiHandler {
     		}
     		case 3: {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
-    			//if (tileEntity instanceof TileEntityAdminShop) {
-    				//return new GuiAdminShop(player.inventory, (TileEntityAdminShop) tileEntity);
-    			//}	
+    			if (tileEntity instanceof TileEntityAdminShop) {
+    				return new GuiAdminShop(player.inventory, (TileEntityAdminShop) tileEntity);
+    			}	
     		}
     	}
     	return null;

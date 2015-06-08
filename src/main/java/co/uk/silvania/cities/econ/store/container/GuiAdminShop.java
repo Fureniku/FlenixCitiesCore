@@ -1,4 +1,4 @@
-/*package co.uk.silvania.cities.econ.store.container;
+package co.uk.silvania.cities.econ.store.container;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -13,17 +13,15 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.cities.core.CityConfig;
-import co.uk.silvania.cities.core.ClientPacketHandler;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
-import cpw.mods.fml.common.network.PacketDispatcher;
+import co.uk.silvania.cities.network.AdminShopPricePacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -34,14 +32,14 @@ public class GuiAdminShop extends GuiContainer {
 	int x;
 	int y;
 	int z;
-	String buyPrice1 = ClientPacketHandler.buyPrice1;
-	String sellPrice1 = ClientPacketHandler.sellPrice1;
-	String buyPrice2 = ClientPacketHandler.buyPrice2;
-	String sellPrice2 = ClientPacketHandler.sellPrice2;
-	String buyPrice3 = ClientPacketHandler.buyPrice3;
-	String sellPrice3 = ClientPacketHandler.sellPrice3;
-	String buyPrice4 = ClientPacketHandler.buyPrice4;
-	String sellPrice4 = ClientPacketHandler.sellPrice4;
+	String buyPrice1 = "" + AdminShopPricePacket.buyPrice1;
+	String sellPrice1 = "" + AdminShopPricePacket.sellPrice1;
+	String buyPrice2 = "" + AdminShopPricePacket.buyPrice2;
+	String sellPrice2 = "" + AdminShopPricePacket.sellPrice2;
+	String buyPrice3 = "" + AdminShopPricePacket.buyPrice3;
+	String sellPrice3 = "" + AdminShopPricePacket.sellPrice3;
+	String buyPrice4 = "" + AdminShopPricePacket.buyPrice4;
+	String sellPrice4 = "" + AdminShopPricePacket.sellPrice4;
 	
 	private ItemStack slot0;
 	private ItemStack slot1;
@@ -68,8 +66,8 @@ public class GuiAdminShop extends GuiContainer {
 	}
 
 	private static final ResourceLocation texture = new ResourceLocation("flenixcities", "textures/gui/floatingshelves.png");
-	private static final ResourceLocation textureOwnerBuy = new ResourceLocation("flenixcities", "textures/gui/floatingshelvesownerbuy.png");
-	private static final ResourceLocation textureOwnerSell = new ResourceLocation("flenixcities", "textures/gui/floatingshelvesownersell.png");
+	//private static final ResourceLocation textureOwnerBuy = new ResourceLocation("flenixcities", "textures/gui/floatingshelvesownerbuy.png");
+	//private static final ResourceLocation textureOwnerSell = new ResourceLocation("flenixcities", "textures/gui/floatingshelvesownersell.png");
 	public GuiTextField buy1Text;
 	public GuiTextField buy2Text;
 	public GuiTextField buy3Text;
@@ -161,19 +159,19 @@ public class GuiAdminShop extends GuiContainer {
 		buttonList.add(new InvisibleButton(26, guiLeft + 146, guiTop + 95, 36, 14, ""));
 		buttonList.add(new InvisibleButton(27, guiLeft + 146, guiTop + 117, 36, 14, ""));
 		
-		buy1Text = new GuiTextField(this.fontRenderer, 34, 51, 38, 14);
-		buy2Text = new GuiTextField(this.fontRenderer, 34, 73, 38, 14);
-		buy3Text = new GuiTextField(this.fontRenderer, 34, 95, 38, 14);
-		buy4Text = new GuiTextField(this.fontRenderer, 34, 117, 38, 14);
-		sell1Text = new GuiTextField(this.fontRenderer, 90, 51, 38, 14);
-		sell2Text = new GuiTextField(this.fontRenderer, 90, 73, 38, 14);
-		sell3Text = new GuiTextField(this.fontRenderer, 90, 95, 38, 14);
-		sell4Text = new GuiTextField(this.fontRenderer, 90, 117, 38, 14);
+		buy1Text = new GuiTextField(this.fontRendererObj, 34, 51, 38, 14);
+		buy2Text = new GuiTextField(this.fontRendererObj, 34, 73, 38, 14);
+		buy3Text = new GuiTextField(this.fontRendererObj, 34, 95, 38, 14);
+		buy4Text = new GuiTextField(this.fontRendererObj, 34, 117, 38, 14);
+		sell1Text = new GuiTextField(this.fontRendererObj, 90, 51, 38, 14);
+		sell2Text = new GuiTextField(this.fontRendererObj, 90, 73, 38, 14);
+		sell3Text = new GuiTextField(this.fontRendererObj, 90, 95, 38, 14);
+		sell4Text = new GuiTextField(this.fontRendererObj, 90, 117, 38, 14);
 		
-		slot1QtyText = new GuiTextField(this.fontRenderer, 146, 51, 36, 14);
-		slot2QtyText = new GuiTextField(this.fontRenderer, 146, 73, 36, 14);
-		slot3QtyText = new GuiTextField(this.fontRenderer, 146, 95, 36, 14);
-		slot4QtyText = new GuiTextField(this.fontRenderer, 146, 117, 36, 14);
+		slot1QtyText = new GuiTextField(this.fontRendererObj, 146, 51, 36, 14);
+		slot2QtyText = new GuiTextField(this.fontRendererObj, 146, 73, 36, 14);
+		slot3QtyText = new GuiTextField(this.fontRendererObj, 146, 95, 36, 14);
+		slot4QtyText = new GuiTextField(this.fontRendererObj, 146, 117, 36, 14);
 		
 		buy1Text.setFocused(true);
 		buy1Text.setText("" + buyPrice1);
@@ -331,8 +329,8 @@ public class GuiAdminShop extends GuiContainer {
 			mode = " - Seller's Overview";
 		}
 		
-    	fontRenderer.drawString("Buy", 44, 39, 0x00A012);
-    	fontRenderer.drawString("Sell", 101, 39, 0xA80000);
+    	fontRendererObj.drawString("Buy", 44, 39, 0x00A012);
+    	fontRendererObj.drawString("Sell", 101, 39, 0xA80000);
     	
 		if (sellMode == 1) {
 			buy1Text.drawTextBox();
@@ -360,15 +358,15 @@ public class GuiAdminShop extends GuiContainer {
 			String sell4 = nf.format(EconUtils.parseDouble("" + sellPrice4));
 			
 			
-			fontRenderer.drawString("$" + buy1, 51 - fontRenderer.getStringWidth(buy1) / 2, 54, 4210752);
-			fontRenderer.drawString("$" + buy2, 51 - fontRenderer.getStringWidth(buy2) / 2, 77, 4210752);
-			fontRenderer.drawString("$" + buy3, 51 - fontRenderer.getStringWidth(buy3) / 2, 99, 4210752);
-			fontRenderer.drawString("$" + buy4, 51 - fontRenderer.getStringWidth(buy4) / 2, 121, 4210752);
+			fontRendererObj.drawString("$" + buy1, 51 - fontRendererObj.getStringWidth(buy1) / 2, 54, 4210752);
+			fontRendererObj.drawString("$" + buy2, 51 - fontRendererObj.getStringWidth(buy2) / 2, 77, 4210752);
+			fontRendererObj.drawString("$" + buy3, 51 - fontRendererObj.getStringWidth(buy3) / 2, 99, 4210752);
+			fontRendererObj.drawString("$" + buy4, 51 - fontRendererObj.getStringWidth(buy4) / 2, 121, 4210752);
 			
-			fontRenderer.drawString("$" + sell1, 107 - fontRenderer.getStringWidth(sell1) / 2, 54, 4210752);
-			fontRenderer.drawString("$" + sell2, 107 - fontRenderer.getStringWidth(sell2) / 2, 77, 4210752);
-			fontRenderer.drawString("$" + sell3, 107 - fontRenderer.getStringWidth(sell3) / 2, 99, 4210752);
-			fontRenderer.drawString("$" + sell4, 107 - fontRenderer.getStringWidth(sell4) / 2, 121, 4210752);
+			fontRendererObj.drawString("$" + sell1, 107 - fontRendererObj.getStringWidth(sell1) / 2, 54, 4210752);
+			fontRendererObj.drawString("$" + sell2, 107 - fontRendererObj.getStringWidth(sell2) / 2, 77, 4210752);
+			fontRendererObj.drawString("$" + sell3, 107 - fontRendererObj.getStringWidth(sell3) / 2, 99, 4210752);
+			fontRendererObj.drawString("$" + sell4, 107 - fontRendererObj.getStringWidth(sell4) / 2, 121, 4210752);
 
 		}
 
@@ -377,9 +375,9 @@ public class GuiAdminShop extends GuiContainer {
 	    slot3QtyText.drawTextBox();
 	    slot4QtyText.drawTextBox();
 	    
-		fontRenderer.drawString("Floating Shelves" + mode, 5, 19, 4210752);
-		fontRenderer.drawString("Server Shop", 34, 5, 4210752);
-    	//fontRenderer.drawString("You have: " + EconUtils.reqClientInventoryBalance(), 100, 5, 4210752);
+		fontRendererObj.drawString("Floating Shelves" + mode, 5, 19, 4210752);
+		fontRendererObj.drawString("Server Shop", 34, 5, 4210752);
+    	//fontRendererObj.drawString("You have: " + EconUtils.reqClientInventoryBalance(), 100, 5, 4210752);
 	}
 	
 	public int focus() {
@@ -531,7 +529,7 @@ public class GuiAdminShop extends GuiContainer {
         ByteArrayOutputStream bt = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(bt);
         if (isShopOwner()) {
-			try {
+			/*try {
 	        	if (CityConfig.debugMode == true) {
 	        		System.out.println("Sending shop values to server");
 	        	}
@@ -556,14 +554,15 @@ public class GuiAdminShop extends GuiContainer {
 			}
 			catch (IOException ex) {
 				System.out.println("Packet Failed!");
-			}
+			}*/
         }
 	}
 	
 	public void sendSalePacket(String id, int itemId, int itemQty) {
+		
         ByteArrayOutputStream bt = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(bt);
-		try {
+		/*try {
 	       	if (CityConfig.debugMode == true) {
 	       		System.out.println("Sending sale packet to server");
 	       	}
@@ -583,7 +582,7 @@ public class GuiAdminShop extends GuiContainer {
 		}
 		catch (IOException ex) {
 			System.out.println("Packet Failed!");
-		}
+		}*/
 	}
 	
 	@Override
@@ -618,11 +617,11 @@ public class GuiAdminShop extends GuiContainer {
 	
 	public boolean canPlayerAfford(int qty, double price) {
 		double salePrice = qty * price;
-		double invCash = ClientPacketHandler.invBalance;
+		double invCash = 0;//ClientPacketHandler.invBalance;
     	
 		if (invCash >= salePrice) {
 			return true;
 		}
 		return false;
 	}
-}*/
+}
