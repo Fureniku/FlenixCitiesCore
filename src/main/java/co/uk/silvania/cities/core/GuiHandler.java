@@ -8,6 +8,7 @@ import co.uk.silvania.cities.econ.atm.GuiATM;
 import co.uk.silvania.cities.econ.atm.GuiATMNoCard;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.container.ContainerAdminShop;
+import co.uk.silvania.cities.econ.store.container.GuiAdminShop;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import cpw.mods.fml.common.network.IGuiHandler;
 
