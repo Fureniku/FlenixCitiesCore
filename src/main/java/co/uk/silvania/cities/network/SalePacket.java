@@ -62,17 +62,18 @@ public class SalePacket implements IMessage {
 			int z = message.z;
 			World world = ctx.getServerHandler().playerEntity.worldObj;
 			EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
-			
-			TileEntity tileEntity = (TileEntity) world.getTileEntity(x, y, z);
-			if (CityConfig.debugMode) {
-				System.out.println("Pkt ID: " + pktId);
-				System.out.println("Data: Slot ID:" + slotId + ", X: " + x + ", Y: " + y + ", Z: " + z);
-			}
-			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
-			if (pktId.equalsIgnoreCase("salePacket")) {
-				tileAdmin.sellItem2(slotId, 1, entityPlayer);
-			} else if (pktId.equalsIgnoreCase("buyPacket")) {
-				tileAdmin.buyItem(slotId, 1, entityPlayer);
+			if (!world.isRemote) {
+				TileEntity tileEntity = (TileEntity) world.getTileEntity(x, y, z);
+				if (CityConfig.debugMode) {
+					System.out.println("Pkt ID: " + pktId);
+					System.out.println("Data: Slot ID:" + slotId + ", X: " + x + ", Y: " + y + ", Z: " + z);
+				}
+				TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
+				if (pktId.equalsIgnoreCase("salePacket")) {
+					tileAdmin.sellItem2(slotId, 1, entityPlayer);
+				} else if (pktId.equalsIgnoreCase("buyPacket")) {
+					tileAdmin.buyItem(slotId, 1, entityPlayer);
+				}
 			}
 			return null;
 		}
