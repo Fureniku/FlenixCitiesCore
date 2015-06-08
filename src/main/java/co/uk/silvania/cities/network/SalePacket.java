@@ -51,7 +51,17 @@ public class SalePacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(SalePacket message, MessageContext ctx) {
-			String pktId = message.packetId;
+			World world = ctx.getServerHandler().playerEntity.worldObj;
+			EntityPlayer player = ctx.getServerHandler().playerEntity;
+			
+			String str1 = message.packetId;
+			int x = message.x;
+			int y = message.y;
+			int z = message.z;
+			
+			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
+			tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
+			/*String pktId = message.packetId;
 			int slotId = message.slotId;
 			int x = message.x;
 			int y = message.y;
@@ -75,7 +85,7 @@ public class SalePacket implements IMessage {
 				//sellItem(slotId, entityPlayer, x, y, z);
 			} else if (pktId.equalsIgnoreCase("buyPacket")) {
 				//tileAdmin.buyItem(slotId, 1, entityPlayer);
-			}
+			}*/
 			return null;
 		}
 		
