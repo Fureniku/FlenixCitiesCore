@@ -216,7 +216,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 						entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not have enough money to do that! Next time, why not pay by card?"));
 					}
 				}
-			} //TODO
+			}
 		if (!hasSpace) {
 			entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not have enough free inventory space to buy that!"));
 		}

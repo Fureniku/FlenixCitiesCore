@@ -65,16 +65,23 @@ public class SalePacket implements IMessage {
 			int z = message.z;
 			World world = ctx.getServerHandler().playerEntity.worldObj;
 			EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
-			TileEntity tileEntity = (TileEntity) world.getTileEntity(x, y, z);
+
 			if (CityConfig.debugMode) {
 				System.out.println("Pkt ID: " + pktId);
 				System.out.println("Data: Slot ID:" + slotId + ", X: " + x + ", Y: " + y + ", Z: " + z);
 			}
+			
 			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
 			if (pktId.equalsIgnoreCase("salePacket")) {
-				sellItem(slotId, entityPlayer, x, y, z);
+				System.out.println("Attempt sell item");
+				tileAdmin.ownerName = "Fucktard";
+				System.out.println("Set owner name to fucktard.");
+				System.out.println("Lets check that shall we? What's his name again? " + tileAdmin.ownerName);
+				System.out.println("Alright now, wasn't that fun? Let's try something else. " + tileAdmin.buyPrice1);
+				System.out.println("The itch has(n't) been cured!");
+				//sellItem(slotId, entityPlayer, x, y, z);
 			} else if (pktId.equalsIgnoreCase("buyPacket")) {
-				tileAdmin.buyItem(slotId, 1, entityPlayer);
+				//tileAdmin.buyItem(slotId, 1, entityPlayer);
 			}
 			return null;
 		}
