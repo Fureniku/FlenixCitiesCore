@@ -89,8 +89,9 @@ public class AdminShopBlock extends BlockContainer {
         	
         	FlenixCities_Core.network.sendToServer(new AdminShopPricePacket(tileEntity.ownerName, tileEntity.buyPrice1, tileEntity.sellPrice1, tileEntity.buyPrice2, tileEntity.sellPrice2,
         			tileEntity.buyPrice3, tileEntity.sellPrice3, tileEntity.buyPrice4, tileEntity.sellPrice4));
-        	
-        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
+        	if (!world.isRemote) {
+        		FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
+        	}
         }
         return true;
     }
