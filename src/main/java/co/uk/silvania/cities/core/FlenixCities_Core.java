@@ -63,7 +63,7 @@ public class FlenixCities_Core {
     	network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);
     	network.registerMessage(SoundPacket.Handler.class, SoundPacket.class, 1, Side.SERVER);
     	network.registerMessage(ServerBalancePacket.Handler.class, ServerBalancePacket.class, 2, Side.CLIENT);
-    	network.registerMessage(AdminShopPricePacket.Handler.class, AdminShopPricePacket.class, 3, Side.SERVER);
+    	network.registerMessage(AdminShopPricePacket.Handler.class, AdminShopPricePacket.class, 3, Side.CLIENT);
     	
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
