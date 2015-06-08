@@ -93,6 +93,7 @@ public class AdminShopBlock extends BlockContainer {
         		FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
         	}
         }
+        player.openGui(FlenixCities_Core.instance, 3, world, x, y, z);
         return true;
     }
 	
