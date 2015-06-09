@@ -32,7 +32,7 @@ public class DebitCardItem extends Item {
 		Random rand = new Random();
 		String gold = EnumChatFormatting.GOLD + "";
 		String green = EnumChatFormatting.DARK_GREEN + "";
-		if (item.stackTagCompound.getString("playerUUID") == null) {
+		if (item.stackTagCompound.getString("playerUUID").isEmpty()) {
 			System.out.println("Updating " + player.getDisplayName() + "'s debit card to include the UUID.");
 			item.stackTagCompound.setString("playerUUID", player.getUniqueID().toString());
 		}
