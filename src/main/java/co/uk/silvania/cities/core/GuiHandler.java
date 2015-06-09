@@ -31,12 +31,12 @@ public class GuiHandler implements IGuiHandler {
 					//return new ContainerFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
 				//}	
 			}
-			/*case 2: {
+			case 2: {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
 				if(tileEntity instanceof TileEntityATMEntity) {
 					return new ContainerATM(player.inventory, (TileEntityATMEntity) tileEntity);
 				}	
-			}*/
+			}
 			case 3: {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
 				if(tileEntity instanceof TileEntityAdminShop) {
