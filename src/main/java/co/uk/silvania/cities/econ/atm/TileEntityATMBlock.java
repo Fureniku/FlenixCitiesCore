@@ -120,6 +120,8 @@ public class TileEntityATMBlock extends BlockContainer {
         				player.openGui(FlenixCities_Core.instance, 2, world, x, y, z);
         			}
         		}
+        	} else {
+        		player.openGui(FlenixCities_Core.instance, 2, world, x, y, z);
         	}
         
         	EntityPlayerMP playerMP = (EntityPlayerMP) player;

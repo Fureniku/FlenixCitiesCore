@@ -321,11 +321,11 @@ public class GuiATM extends GuiContainer {
 	            withdrawAmount = customWithdrawFinal;
 	            withdrawFunds(withdrawAmount);
 	            
-	    		//if (ClientPacketHandler.initBal >= withdrawAmount) {
-	    		//	guiStage = "5";
-	    		//} else {
+	    		if (initBalance >= withdrawAmount) {
+	    			guiStage = "5";
+	    		} else {
 	    			guiStage = "6";
-	    		//}
+	    		}
 	            withdrawCustom = "";
 	    		break;
 	    	case 4: //Cancel
@@ -344,7 +344,7 @@ public class GuiATM extends GuiContainer {
 	    	case 4: //Cancel
 	    		guiStage = "1";
 	    		break;
-    		case 14:
+    		case 16:
     			guiStage = "2";
     			break;
 			}
@@ -454,28 +454,6 @@ public class GuiATM extends GuiContainer {
     		pinAttempt = "4";
     		
             this.mc.displayGuiScreen(null);
-            /*ByteArrayOutputStream bt = new ByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream(bt);
-    		
-            try {
-            	Thread.sleep(3000);
-            } catch (InterruptedException ex) {
-            	Thread.currentThread().interrupt();
-            }
-            System.out.println("after that little nap we'll send the packet");
-            
-            try {
-            	out.writeUTF("failedPin");
-            	out.writeDouble(0);
-            	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-            	PacketDispatcher.sendPacketToServer(packet);
-	    		if (CityConfig.debugMode == true) {
-	    			System.out.println("Packet sent! Failed Pin");
-	    		}
-            }
-            catch (IOException ex) {
-            	System.out.println("Packet Failed!");
-            }*/
     	}
     }
     private int tick = 0;
@@ -485,7 +463,6 @@ public class GuiATM extends GuiContainer {
     	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     	String bal = EconUtils.formatBalance(initBalance);
     	String shortAmt = "" + (withdrawAmount - EconUtils.parseDouble(bal));
-    	//double initBal = ClientPacketHandler.initBal;
     	String underScore = "";
     	if (tick < 80) {
     		tick++;
