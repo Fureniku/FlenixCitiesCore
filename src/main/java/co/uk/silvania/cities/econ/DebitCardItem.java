@@ -44,11 +44,6 @@ public class DebitCardItem extends Item {
 				System.out.println(player.getDisplayName() + "'s PIN has been set to " + item.stackTagCompound.getInteger("PIN"));
 			}
 		}
-		
-		if (item.stackTagCompound.getString("playerUUID").isEmpty()) {
-			System.out.println("Updating " + player.getDisplayName() + "'s debit card to include the UUID.");
-			item.stackTagCompound.setString("playerUUID", player.getUniqueID().toString());
-		}
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
