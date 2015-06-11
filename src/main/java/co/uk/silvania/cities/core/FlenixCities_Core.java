@@ -25,7 +25,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.11.0")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.11.1")
 public class FlenixCities_Core { 
 	
 	public static final String modid = "flenixcities";
@@ -45,13 +45,9 @@ public class FlenixCities_Core {
 	};
 	
 	public static CreativeTabs tabEcon = new CreativeTabs("tabEcon") {
-		public ItemStack getIconItemStack() {
-			return new ItemStack(CoreBlocks.atmBlock, 1, 0);
-		}
-
 		@Override
 		public Item getTabIconItem() {
-			return new ItemStack(CoreBlocks.atmBlock, 1, 0).getItem();
+			return new ItemStack(CoreItems.note10000, 1, 0).getItem();
 		}
 	};
 	
