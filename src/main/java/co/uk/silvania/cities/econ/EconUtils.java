@@ -50,7 +50,7 @@ public class EconUtils {
 	//VERY useful for example in the ATM, keying in values from the buttons.
 	public static double parseDouble(String s) {
 		try { 
-			return Double.parseDouble(s);
+			return Double.parseDouble("" + s);
 		} catch (NumberFormatException ex) {
 			return 0;
 		}
@@ -59,7 +59,7 @@ public class EconUtils {
 	//This one is used to turn the PIN from a string to an int when changing it in the ATM.
 	public static int parseInt(String s) {
 		try {
-			return Integer.parseInt(s);
+			return Integer.parseInt("" + s);
 		} catch (NumberFormatException ex) {
 			return 0;
 		}
