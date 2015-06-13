@@ -155,7 +155,7 @@ public class TileEntityATMBlock extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		icons = new IIcon[4];
+		icons = new IIcon[16];
 
 		for(int i = 0; i < 4; i++) {
 			icons[i] = iconRegister.registerIcon("FlenixCities:" + (this.getUnlocalizedName().toLowerCase().substring(5)) + i);
