@@ -10,7 +10,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class ServerBalancePacket implements IMessage {
 	
-	public static String balanceAmount;
+	public static String balanceAmount = "";
 	
 	public ServerBalancePacket() {}
 	
