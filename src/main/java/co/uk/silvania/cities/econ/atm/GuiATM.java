@@ -53,8 +53,6 @@ public class GuiATM extends GuiContainer {
     @Override
     public void initGui() {
     	super.initGui();
-    	initBalance = EconUtils.parseDouble(ServerBalancePacket.balanceAmount);
-    	System.out.println("Balance available in GUI! Balance: $" + initBalance);
     	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:cardInsert"));
     	buttonList.add(new ATMButton(1, guiLeft + 21, guiTop + 109, 24, 15, "7")); // 7
     	buttonList.add(new ATMButton(2, guiLeft + 53, guiTop + 109, 24, 15, "8")); // 8
@@ -82,6 +80,13 @@ public class GuiATM extends GuiContainer {
     }
     
     public void actionPerformed(GuiButton guibutton) {
+    	initBalance = EconUtils.parseDouble(ServerBalancePacket.balanceAmount);
+    	if (CityConfig.debugMode) {
+    		System.out.println("Balance available in GUI! Balance: $" + initBalance);
+    	}
+    	//Plays the sound, and while it's at it also updates client balance.
+    	//Updating the balance on every button press means withdrawls etc will update the balance, and makes it effectively bulletproof
+    	//against latency issues.
     	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
     	//TODO Asks for PIN
     	if (guiStage.equals("1")) {

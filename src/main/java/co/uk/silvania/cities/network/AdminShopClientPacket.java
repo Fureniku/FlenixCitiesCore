@@ -3,6 +3,7 @@ package co.uk.silvania.cities.network;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -69,17 +70,28 @@ public class AdminShopClientPacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(AdminShopClientPacket message, MessageContext ctx) {
+			if (CityConfig.debugMode) {
+				System.out.println("Packet recieved from client regarding prices in shops!");
+				System.out.println("String 1: " + message.buyPrice1); 
+				System.out.println("String 2: " + message.sellPrice1); 
+				System.out.println("String 3: " + message.buyPrice2); 
+				System.out.println("String 4: " + message.sellPrice2); 
+				System.out.println("String 5: " + message.buyPrice3); 
+				System.out.println("String 6: " + message.sellPrice3); 
+				System.out.println("String 7: " + message.buyPrice4); 
+				System.out.println("String 8: " + message.sellPrice4); 
+			}
 			World world = ctx.getServerHandler().playerEntity.worldObj;
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
 			
-			String str1 = message.buyPrice1;
-			String str2 = message.sellPrice1;
-			String str3 = message.buyPrice2;
-			String str4 = message.sellPrice2;
-			String str5 = message.buyPrice3;
-			String str6 = message.sellPrice3;
-			String str7 = message.buyPrice4;
-			String str8 = message.sellPrice4;
+			String str1 = "" + message.buyPrice1;
+			String str2 = "" + message.sellPrice1;
+			String str3 = "" + message.buyPrice2;
+			String str4 = "" + message.sellPrice2;
+			String str5 = "" + message.buyPrice3;
+			String str6 = "" + message.sellPrice3;
+			String str7 = "" + message.buyPrice4;
+			String str8 = "" + message.sellPrice4;
 			int x = message.x;
 			int y = message.y;
 			int z = message.z;

@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class EconUtils {
@@ -145,7 +146,7 @@ public class EconUtils {
             nbt.setTag(uuid, playernbt);
         }
         NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-        player.addChatComponentMessage(new ChatComponentText("$" + EconUtils.formatBalance(cash) + " " + CityConfig.currencyLargePlural + " Deposited! Your balance is now $" + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural));
+        player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(cash) + " " + CityConfig.currencyLargePlural + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural));
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         EconUtils.removeAllPlayerCash(player);
 	}
