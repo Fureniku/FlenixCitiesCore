@@ -15,7 +15,7 @@ import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 
 public class ContainerAdminShop extends Container {
 	
-	private TileEntityAdminShop te;
+	public TileEntityAdminShop te;
 	private IInventory adminShopInventory;
 	public static int tabButton;
 	
@@ -92,7 +92,7 @@ public class ContainerAdminShop extends Container {
         this.getSlot(slot).putStack(item);
     }
 	
-	public IInventory getFloatingShelvesInveotry() {
+	public IInventory getFloatingShelvesInventory() {
 		return this.adminShopInventory;
 	}
 	

@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.econ.EconUtils;
+import co.uk.silvania.cities.econ.store.container.ContainerAdminShop;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -95,17 +96,27 @@ public class AdminShopClientPacket implements IMessage {
 			int x = message.x;
 			int y = message.y;
 			int z = message.z;
-			
-			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
-			if (tileAdmin != null) {
-				tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
-				tileAdmin.sellPrice1 = EconUtils.parseDouble(str2);
-				tileAdmin.buyPrice2 = EconUtils.parseDouble(str3);
-				tileAdmin.sellPrice2 = EconUtils.parseDouble(str4);
-				tileAdmin.buyPrice3 = EconUtils.parseDouble(str5);
-				tileAdmin.sellPrice3 = EconUtils.parseDouble(str6);
-				tileAdmin.buyPrice4 = EconUtils.parseDouble(str7);
-				tileAdmin.sellPrice4 = EconUtils.parseDouble(str8);
+			System.out.println("Test to see if container");
+			if (player.openContainer instanceof ContainerAdminShop) {
+				System.out.println("It is!");
+				ContainerAdminShop container = (ContainerAdminShop) player.openContainer;
+				//container.te.xCoord
+
+				TileEntityAdminShop tileAdmin = container.te;//(TileEntityAdminShop) world.getTileEntity(x, y, z);
+				System.out.println("Packet received X Y Z:" + x + " " + y + " " + z);
+				if (tileAdmin != null) {
+					System.out.println("TE is not null.");
+					tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
+					tileAdmin.sellPrice1 = EconUtils.parseDouble(str2);
+					tileAdmin.buyPrice2 = EconUtils.parseDouble(str3);
+					tileAdmin.sellPrice2 = EconUtils.parseDouble(str4);
+					tileAdmin.buyPrice3 = EconUtils.parseDouble(str5);
+					tileAdmin.sellPrice3 = EconUtils.parseDouble(str6);
+					tileAdmin.buyPrice4 = EconUtils.parseDouble(str7);
+					tileAdmin.sellPrice4 = EconUtils.parseDouble(str8);
+				} else {
+					System.out.println("TE is null. Sadface :(");
+				}
 			}
 			return null;
 		}
