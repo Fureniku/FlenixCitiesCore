@@ -97,14 +97,16 @@ public class AdminShopClientPacket implements IMessage {
 			int z = message.z;
 			
 			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
-			tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
-			tileAdmin.sellPrice1 = EconUtils.parseDouble(str2);
-			tileAdmin.buyPrice2 = EconUtils.parseDouble(str3);
-			tileAdmin.sellPrice2 = EconUtils.parseDouble(str4);
-			tileAdmin.buyPrice3 = EconUtils.parseDouble(str5);
-			tileAdmin.sellPrice3 = EconUtils.parseDouble(str6);
-			tileAdmin.buyPrice4 = EconUtils.parseDouble(str7);
-			tileAdmin.sellPrice4 = EconUtils.parseDouble(str8);
+			if (tileAdmin != null) {
+				tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
+				tileAdmin.sellPrice1 = EconUtils.parseDouble(str2);
+				tileAdmin.buyPrice2 = EconUtils.parseDouble(str3);
+				tileAdmin.sellPrice2 = EconUtils.parseDouble(str4);
+				tileAdmin.buyPrice3 = EconUtils.parseDouble(str5);
+				tileAdmin.sellPrice3 = EconUtils.parseDouble(str6);
+				tileAdmin.buyPrice4 = EconUtils.parseDouble(str7);
+				tileAdmin.sellPrice4 = EconUtils.parseDouble(str8);
+			}
 			return null;
 		}
 	}
