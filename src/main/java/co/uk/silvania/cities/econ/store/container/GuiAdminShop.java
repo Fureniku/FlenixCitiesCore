@@ -437,7 +437,7 @@ public class GuiAdminShop extends GuiContainer {
 	
 	public void updateTileEntity() {
         if (isShopOwner()) {
-        	System.out.println("Sending AdminShopClientPacket");
+        	System.out.println("Sending AdminShopClientPacket. Buy1, Sell1, x y z:" + buy1Text.getText() + " " + sell1Text.getText() + " " + x + " " + y + " " + z);
         	FlenixCities_Core.network.sendToServer(new AdminShopClientPacket(
         			buy1Text.getText(), 
         			sell1Text.getText(), 
