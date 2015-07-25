@@ -96,16 +96,11 @@ public class AdminShopClientPacket implements IMessage {
 			int x = message.x;
 			int y = message.y;
 			int z = message.z;
-			System.out.println("Test to see if container");
 			if (player.openContainer instanceof ContainerAdminShop) {
-				System.out.println("It is!");
 				ContainerAdminShop container = (ContainerAdminShop) player.openContainer;
-				//container.te.xCoord
-
-				TileEntityAdminShop tileAdmin = container.te;//(TileEntityAdminShop) world.getTileEntity(x, y, z);
-				System.out.println("Packet received X Y Z:" + x + " " + y + " " + z);
+				TileEntityAdminShop tileAdmin = container.te;
+				
 				if (tileAdmin != null) {
-					System.out.println("TE is not null.");
 					tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
 					tileAdmin.sellPrice1 = EconUtils.parseDouble(str2);
 					tileAdmin.buyPrice2 = EconUtils.parseDouble(str3);

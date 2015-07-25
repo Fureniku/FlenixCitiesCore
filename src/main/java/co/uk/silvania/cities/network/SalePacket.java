@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
+import co.uk.silvania.cities.econ.store.container.ContainerAdminShop;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -57,18 +58,24 @@ public class SalePacket implements IMessage {
 			int y = message.y;
 			int z = message.z;
 			World world = ctx.getServerHandler().playerEntity.worldObj;
-			EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
+			EntityPlayer player = ctx.getServerHandler().playerEntity;
 
 			if (CityConfig.debugMode) {
 				System.out.println("Pkt ID: " + pktId);
 				System.out.println("Data: Slot ID:" + slotId + ", X: " + x + ", Y: " + y + ", Z: " + z);
 			}
-			
-			TileEntityAdminShop tileAdmin = (TileEntityAdminShop) world.getTileEntity(x, y, z);
-			if (pktId.equalsIgnoreCase("salePacket")) {
-				tileAdmin.sellItem(slotId, entityPlayer);
-			} else if (pktId.equalsIgnoreCase("buyPacket")) {
-				tileAdmin.buyItem(slotId, entityPlayer);
+			if (player.openContainer instanceof ContainerAdminShop) {
+				ContainerAdminShop container = (ContainerAdminShop) player.openContainer;
+				//container.te.xCoord
+
+				TileEntityAdminShop tileAdmin = container.te;//(TileEntityAdminShop) world.getTileEntity(x, y, z);
+				if (tileAdmin != null) {
+					if (pktId.equalsIgnoreCase("salePacket")) {
+						tileAdmin.sellItem(slotId, player);
+					} else if (pktId.equalsIgnoreCase("buyPacket")) {
+						tileAdmin.buyItem(slotId, player);
+					}
+				}
 			}
 			return null;
 		}
