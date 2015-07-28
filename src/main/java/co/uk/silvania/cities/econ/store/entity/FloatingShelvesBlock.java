@@ -1,7 +1,5 @@
 package co.uk.silvania.cities.econ.store.entity;
 
-import ibxm.Player;
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,7 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
-import co.uk.silvania.cities.network.AdminShopPricePacket;
+import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
 import co.uk.silvania.cities.network.ServerBalancePacket;
 
 public class FloatingShelvesBlock extends BlockContainer {
@@ -88,7 +86,7 @@ public class FloatingShelvesBlock extends BlockContainer {
         	//String userName = player.getDisplayName()
         	
         	if (!world.isRemote) {
-        		FlenixCities_Core.network.sendTo(new AdminShopPricePacket(tileEntity.ownerName, tileEntity.buyPrice1, tileEntity.sellPrice1, tileEntity.buyPrice2, tileEntity.sellPrice2,
+        		FlenixCities_Core.network.sendTo(new FloatingShelvesPricePacket(tileEntity.ownerName, tileEntity.buyPrice1, tileEntity.sellPrice1, tileEntity.buyPrice2, tileEntity.sellPrice2,
         			tileEntity.buyPrice3, tileEntity.sellPrice3, tileEntity.buyPrice4, tileEntity.sellPrice4), (EntityPlayerMP) player);
         		FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
         	}

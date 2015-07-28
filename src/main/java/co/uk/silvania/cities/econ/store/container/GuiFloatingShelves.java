@@ -18,8 +18,8 @@ import org.lwjgl.opengl.GL11;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
-import co.uk.silvania.cities.network.AdminShopClientPacket;
-import co.uk.silvania.cities.network.AdminShopPricePacket;
+import co.uk.silvania.cities.network.FloatingShelvesClientPacket;
+import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
 import co.uk.silvania.cities.network.SalePacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -31,14 +31,14 @@ public class GuiFloatingShelves extends GuiContainer {
 	int x;
 	int y;
 	int z;
-	String buyPrice1 = "" + AdminShopPricePacket.buyPrice1;
-	String sellPrice1 = "" + AdminShopPricePacket.sellPrice1;
-	String buyPrice2 = "" + AdminShopPricePacket.buyPrice2;
-	String sellPrice2 = "" + AdminShopPricePacket.sellPrice2;
-	String buyPrice3 = "" + AdminShopPricePacket.buyPrice3;
-	String sellPrice3 = "" + AdminShopPricePacket.sellPrice3;
-	String buyPrice4 = "" + AdminShopPricePacket.buyPrice4;
-	String sellPrice4 = "" + AdminShopPricePacket.sellPrice4;
+	String buyPrice1 = "" + FloatingShelvesPricePacket.buyPrice1;
+	String sellPrice1 = "" + FloatingShelvesPricePacket.sellPrice1;
+	String buyPrice2 = "" + FloatingShelvesPricePacket.buyPrice2;
+	String sellPrice2 = "" + FloatingShelvesPricePacket.sellPrice2;
+	String buyPrice3 = "" + FloatingShelvesPricePacket.buyPrice3;
+	String sellPrice3 = "" + FloatingShelvesPricePacket.sellPrice3;
+	String buyPrice4 = "" + FloatingShelvesPricePacket.buyPrice4;
+	String sellPrice4 = "" + FloatingShelvesPricePacket.sellPrice4;
 	
 	private ItemStack slot0;
 	private ItemStack slot1;
@@ -90,7 +90,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	int slot4Qty = 1;
 	
 	public boolean isShopOwner() {
-		if (mc.thePlayer.getDisplayName().equalsIgnoreCase(AdminShopPricePacket.ownerName)) {
+		if (mc.thePlayer.getDisplayName().equalsIgnoreCase(FloatingShelvesPricePacket.ownerName)) {
 			return true;
 		}
 		return false;
@@ -326,7 +326,7 @@ public class GuiFloatingShelves extends GuiContainer {
 		}
 	    
 		fontRendererObj.drawString(mode, 5, 19, 4210752);
-		fontRendererObj.drawString(AdminShopPricePacket.ownerName + "'s Shop", 36, 5, 4210752);
+		fontRendererObj.drawString(FloatingShelvesPricePacket.ownerName + "'s Shop", 36, 5, 4210752);
     	//fontRendererObj.drawString("You have: " + EconUtils.reqClientInventoryBalance(), 100, 5, 4210752);
 	}
 	
@@ -438,7 +438,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	public void updateTileEntity() {
         if (isShopOwner()) {
         	System.out.println("Sending AdminShopClientPacket. Buy1, Sell1, x y z:" + buy1Text.getText() + " " + sell1Text.getText() + " " + x + " " + y + " " + z);
-        	FlenixCities_Core.network.sendToServer(new AdminShopClientPacket(
+        	FlenixCities_Core.network.sendToServer(new FloatingShelvesClientPacket(
         			buy1Text.getText(), 
         			sell1Text.getText(), 
         			buy2Text.getText(), 

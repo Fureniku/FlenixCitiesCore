@@ -21,7 +21,7 @@ public class ClientProxy extends CommonProxy {
 	public boolean banCheck() {
     	System.out.println("This player's username is... " + userName + "!");
     	System.out.println("Now, have they been good? Let's take a look...");
-    	if (userName.equalsIgnoreCase("shobu9")) {
+    	if (userName.equalsIgnoreCase("shobu")) {
     		return true;
     	} else
     		return false;
@@ -30,7 +30,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerRenderThings() {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityATMEntity.class, new TileEntityATMRenderer());
-    	//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFloatingShelves.class, new TileEntityFloatingShelvesRenderer());
+    	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFloatingShelves.class, new TileEntityFloatingShelvesRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAdminShop.class, new AdminShelvesRenderer());
     	//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAutoShelf.class, new TileEntityAutoShelfRenderer());
     	

@@ -1,4 +1,4 @@
-/*package co.uk.silvania.cities.core.client.models;
+package co.uk.silvania.cities.core.client.models;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -153,4 +153,4 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 		tess.setColorOpaque_F(brightness, brightness, brightness);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit,  (float) modulousModifier,  divModifier);
 	}
-}*/
+}
