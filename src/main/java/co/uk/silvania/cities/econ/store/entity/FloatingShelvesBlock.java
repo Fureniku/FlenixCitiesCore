@@ -135,8 +135,12 @@ public class FloatingShelvesBlock extends BlockContainer {
 			String name = player.getDisplayName();
 			String uuid = player.getUniqueID().toString();
 			TileEntityFloatingShelves tileEntity = (TileEntityFloatingShelves) world.getTileEntity(x, y, z);
-			tileEntity.ownerName = name;
-			tileEntity.ownerUuid = uuid;
+			if (tileEntity.ownerName.isEmpty()) {
+				tileEntity.ownerName = name;
+			}
+			if (tileEntity.ownerUuid.isEmpty()) {
+				tileEntity.ownerUuid = uuid;
+			}
 		}
 	}	
 

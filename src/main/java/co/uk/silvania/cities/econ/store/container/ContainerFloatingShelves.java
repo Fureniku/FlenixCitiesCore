@@ -103,6 +103,7 @@ public class ContainerFloatingShelves extends Container {
 			System.out.println("Slot clicked! Checking UUID vs stored one.");
 			System.out.println(entityPlayer.getUniqueID().toString() + " = Current user UUID");
 			System.out.println(te.ownerUuid + " = Stored UUID");
+			System.out.println(te.ownerName + " = Stored Username");
 		}
 		if (entityPlayer.getUniqueID().toString().equalsIgnoreCase(te.ownerUuid)) {
 			super.slotClick(par1, par2, par3, entityPlayer);

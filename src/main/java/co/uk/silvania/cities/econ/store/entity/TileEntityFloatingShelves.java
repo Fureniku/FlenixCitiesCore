@@ -54,12 +54,9 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
         }
 
         nbt.setTag("Items", nbttaglist);
-        if (ownerName.length() > 2) {
-        	nbt.setString("ownerName", ownerName + "");
-        }
-        if (ownerUuid.length() > 5) {
-        	nbt.setString("onwerUuid", ownerUuid + "");
-        }
+        
+		nbt.setString("ownerName", ownerName + "");
+		nbt.setString("onwerUuid", ownerUuid + "");
 		nbt.setDouble("buyPrice1", buyPrice1);
 		nbt.setDouble("sellPrice1", sellPrice1);
 		nbt.setDouble("buyPrice2", buyPrice2);
