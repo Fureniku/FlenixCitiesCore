@@ -54,9 +54,12 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
         }
 
         nbt.setTag("Items", nbttaglist);
-        
-		nbt.setString("ownerName", ownerName + "");
-		nbt.setString("onwerUuid", ownerUuid + "");
+        if (ownerName.length() > 2) {
+        	nbt.setString("ownerName", ownerName + "");
+        }
+        if (ownerUuid.length() > 5) {
+        	nbt.setString("onwerUuid", ownerUuid + "");
+        }
 		nbt.setDouble("buyPrice1", buyPrice1);
 		nbt.setDouble("sellPrice1", sellPrice1);
 		nbt.setDouble("buyPrice2", buyPrice2);
@@ -192,14 +195,11 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 					giveAmount--;
 				}
 				
-				item = item.splitStack(item.stackSize);
-                if (item.stackSize == 0) {
-                        setInventorySlotContents(slotId - 1, null);
-                }
+               	setInventorySlotContents(slotId - 1, null);
 				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from "/*TODO seller name*/ + ", for $" + EconUtils.formatBalance(itemCost));
 
 				if (storeOwner != null) {
-					storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought" + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+					storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 					EconUtils.depositToAccount(storeOwner, worldObj, itemCost);
 				}
 				
@@ -217,13 +217,10 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 								giveAmount--;
 							}
 							
-							item = item.splitStack(item.stackSize);
-			                if (item.stackSize == 0) {
-			                        setInventorySlotContents(slotId - 1, null);
-			                }
+							setInventorySlotContents(slotId - 1, null);
 							
 							if (storeOwner != null) {
-								storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought" + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+								storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 								EconUtils.depositToAccount(storeOwner, worldObj, itemCost);
 							}
 							entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + storeOwner.getDisplayName() + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
