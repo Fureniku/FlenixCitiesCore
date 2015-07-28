@@ -56,7 +56,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
         nbt.setTag("Items", nbttaglist);
         
 		nbt.setString("ownerName", ownerName + "");
-		nbt.setString("onwerUuid", ownerUuid + "");
+		nbt.setString("ownerUuid", ownerUuid + "");
 		nbt.setDouble("buyPrice1", buyPrice1);
 		nbt.setDouble("sellPrice1", sellPrice1);
 		nbt.setDouble("buyPrice2", buyPrice2);
