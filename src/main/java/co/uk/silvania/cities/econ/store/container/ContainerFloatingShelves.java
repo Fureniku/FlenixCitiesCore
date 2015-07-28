@@ -105,8 +105,15 @@ public class ContainerFloatingShelves extends Container {
 			System.out.println(te.ownerUuid + " = Stored UUID");
 			System.out.println(te.ownerName + " = Stored Username");
 		}
-		if (entityPlayer.getUniqueID().toString().equalsIgnoreCase(te.ownerUuid)) {
+		if (te.ownerUuid.contains(entityPlayer.getUniqueID().toString())) {
+			if (CityConfig.debugMode) {
+				System.out.println("Owner is clicking the slot");
+			}
 			super.slotClick(par1, par2, par3, entityPlayer);
+		} else {
+			if (CityConfig.debugMode) {
+				System.out.println("You are not the owner! Bad " + entityPlayer.getDisplayName() + "!");
+			}
 		}
 		return null;
 	}
