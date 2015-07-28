@@ -20,6 +20,7 @@ import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.network.FloatingShelvesClientPacket;
 import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
+import co.uk.silvania.cities.network.FloatingShelvesSalePacket;
 import co.uk.silvania.cities.network.SalePacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -437,7 +438,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	
 	public void updateTileEntity() {
         if (isShopOwner()) {
-        	System.out.println("Sending AdminShopClientPacket. Buy1, Sell1, x y z:" + buy1Text.getText() + " " + sell1Text.getText() + " " + x + " " + y + " " + z);
+        	System.out.println("Sending FloatingShelvesClientPacket. Buy1, Sell1, x y z:" + buy1Text.getText() + " " + sell1Text.getText() + " " + x + " " + y + " " + z);
         	FlenixCities_Core.network.sendToServer(new FloatingShelvesClientPacket(
         			buy1Text.getText(), 
         			sell1Text.getText(), 
@@ -453,7 +454,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	
 	public void sendSalePacket(String pktId, int slotId) {
 		System.out.println("sending sale packet: " + pktId + ", slot: " + slotId);
-		FlenixCities_Core.network.sendToServer(new SalePacket(
+		FlenixCities_Core.network.sendToServer(new FloatingShelvesSalePacket(
 				pktId, 
 				slotId, 
 				x, y, z));
