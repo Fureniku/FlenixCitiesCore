@@ -180,6 +180,9 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		int giveAmount = 1;
 		boolean hasSpace = EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1));
 		ItemStack item = getStackInSlot(slotId - 1);
+		if (item == null) {
+			return;
+		}
 		
 		if (invCash >= itemCost && hasSpace) {
 			//Two birds, one stone. Charges the player for us, then tells us how much they paid so we can calculate change.
