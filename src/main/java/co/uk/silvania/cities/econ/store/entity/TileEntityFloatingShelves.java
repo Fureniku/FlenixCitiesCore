@@ -191,7 +191,11 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 					entityPlayer.inventory.addItemStackToInventory(item.copy());
 					giveAmount--;
 				}
-				this.setInventorySlotContents(slotId - 1, null);
+				
+				item = item.splitStack(item.stackSize);
+                if (item.stackSize == 0) {
+                        setInventorySlotContents(slotId - 1, null);
+                }
 				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from "/*TODO seller name*/ + ", for $" + EconUtils.formatBalance(itemCost));
 
 				if (storeOwner != null) {
@@ -212,7 +216,12 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 								entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 								giveAmount--;
 							}
-							this.setInventorySlotContents(slotId - 1, null);
+							
+							item = item.splitStack(item.stackSize);
+			                if (item.stackSize == 0) {
+			                        setInventorySlotContents(slotId - 1, null);
+			                }
+							
 							if (storeOwner != null) {
 								storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought" + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 								EconUtils.depositToAccount(storeOwner, worldObj, itemCost);
