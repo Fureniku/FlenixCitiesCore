@@ -751,4 +751,32 @@ public class EconUtils {
         	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
         }
 	}
+	
+	public static void depositToAccountViaUUID(String uuid, World world, double deposit) {
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+		double currentBalance = 0;
+		String playerUUID = uuid;
+        if (nbt.hasKey(playerUUID)) {
+            NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
+            if (playernbt.hasKey("Balance")) {
+                currentBalance = playernbt.getDouble("Balance");
+            }
+            double modifiedBalance = currentBalance + deposit;
+            playernbt.setDouble("Balance", modifiedBalance);
+            nbt.setTag(playerUUID, playernbt);
+        } else {
+            NBTTagCompound playernbt = new NBTTagCompound();
+            if (playernbt.hasKey("Balance")) {
+                currentBalance = playernbt.getDouble("Balance");
+            }
+            double modifiedBalance = currentBalance + deposit;
+            playernbt.setDouble("Balance", modifiedBalance);
+            nbt.setTag(playerUUID, playernbt);
+        }
+        NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
+        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+        if (deposit >= 0.1) {
+        	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
+        }
+	}
 }

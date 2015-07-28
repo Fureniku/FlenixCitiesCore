@@ -197,10 +197,11 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 
 				if (storeOwner != null) {
 					storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
-					EconUtils.depositToAccount(storeOwner, worldObj, itemCost);
 				}
 				
-				entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + storeOwner.getDisplayName() + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+				EconUtils.depositToAccountViaUUID(ownerUuid, worldObj, itemCost);
+				
+				entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 			}
 			//Disabled due to money dupe glitch, will be fixed when I come back to FC in a week or so.
 		}// else {
@@ -218,9 +219,11 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 							
 							if (storeOwner != null) {
 								storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
-								EconUtils.depositToAccount(storeOwner, worldObj, itemCost);
 							}
-							entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + storeOwner.getDisplayName() + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+							
+							EconUtils.depositToAccountViaUUID(ownerUuid, worldObj, itemCost);
+							
+							entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 							entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You didn't have enough money with you, so the cost was split between your cash, and your bank balance. Your remaining bank balance is " + gold  + "$" + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
 						}
 					}

@@ -13,6 +13,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
+import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
 
 public class ContainerFloatingShelves extends Container {
 	
@@ -99,21 +100,28 @@ public class ContainerFloatingShelves extends Container {
 	
 	@Override
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer entityPlayer) {
-		if (CityConfig.debugMode) {
-			System.out.println("Slot clicked! Checking UUID vs stored one.");
-			System.out.println(entityPlayer.getUniqueID().toString() + " = Current user UUID");
-			System.out.println(te.ownerUuid + " = Stored UUID");
-			System.out.println(te.ownerName + " = Stored Username");
-		}
-		if (te.ownerUuid.contains(entityPlayer.getUniqueID().toString())) {
+		boolean test = false;
+		if (!entityPlayer.worldObj.isRemote) {
 			if (CityConfig.debugMode) {
-				System.out.println("Owner is clicking the slot");
+				System.out.println("Slot clicked! Checking UUID vs stored one.");
+				System.out.println(entityPlayer.getUniqueID().toString() + " = Current user UUID");
+				System.out.println(te.ownerUuid + " = Stored UUID");
+				System.out.println(te.ownerName + " = Stored Username");
 			}
-			super.slotClick(par1, par2, par3, entityPlayer);
+			if (te.ownerUuid.contains(entityPlayer.getUniqueID().toString())) {
+				if (CityConfig.debugMode) {
+					System.out.println("Owner is clicking the slot  (server)");
+				}
+				test = true;
+				super.slotClick(par1, par2, par3, entityPlayer);
+			} else {
+				if (CityConfig.debugMode) {
+					System.out.println("[server] You are not the owner! Bad " + entityPlayer.getDisplayName() + "!");
+				}
+			}
 		} else {
-			if (CityConfig.debugMode) {
-				System.out.println("You are not the owner! Bad " + entityPlayer.getDisplayName() + "!");
-			}
+			super.slotClick(par1, par2, par3, entityPlayer);
+			System.out.println("Test: " + test);
 		}
 		return null;
 	}
