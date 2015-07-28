@@ -8,8 +8,11 @@ import co.uk.silvania.cities.econ.atm.GuiATM;
 import co.uk.silvania.cities.econ.atm.GuiATMNoCard;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.container.ContainerAdminShop;
+import co.uk.silvania.cities.econ.store.container.ContainerFloatingShelves;
 import co.uk.silvania.cities.econ.store.container.GuiAdminShop;
+import co.uk.silvania.cities.econ.store.container.GuiFloatingShelves;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
@@ -27,9 +30,9 @@ public class GuiHandler implements IGuiHandler {
 			}
 			case 1: {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
-				//if(tileEntity instanceof TileEntityFloatingShelves) {
-					//return new ContainerFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
-				//}	
+				if(tileEntity instanceof TileEntityFloatingShelves) {
+					return new ContainerFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
+				}	
 			}
 			case 2: {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
@@ -58,9 +61,9 @@ public class GuiHandler implements IGuiHandler {
     		}        	
     		case 1: {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);
-    			//if (tileEntity instanceof TileEntityFloatingShelves) {
-    				//return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
-    			//}	
+    			if (tileEntity instanceof TileEntityFloatingShelves) {
+    				return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
+    			}	
     		}
     		case 2: {
     			TileEntity tileEntity = world.getTileEntity(x, y, z);

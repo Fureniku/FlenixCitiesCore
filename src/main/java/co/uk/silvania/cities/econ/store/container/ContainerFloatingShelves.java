@@ -1,21 +1,28 @@
-/*package co.uk.silvania.cities.econ.store.container;
+package co.uk.silvania.cities.econ.store.container;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 
 public class ContainerFloatingShelves extends Container {
 	
-	private TileEntityFloatingShelves te;
-	private IInventory floatingShelvesInventory;
+	public TileEntityFloatingShelves te;
+	private IInventory adminShopInventory;
 	public static int tabButton;
+	
+	private int field_94536_g;
+	private int field_94535_f = -1;
+	private final Set field_94537_h = new HashSet();
 	
 	public ContainerFloatingShelves(InventoryPlayer invPlayer, TileEntityFloatingShelves te) {
 		this.te = te;
@@ -24,46 +31,9 @@ public class ContainerFloatingShelves extends Container {
 		addSlotToContainer(new Slot(te, 2, 8, 94));
 		addSlotToContainer(new Slot(te, 3, 8, 116));
 		bindPlayerInventory(invPlayer);
-		int x = 8;
-		int y = 0;
-		
-		if (tabButton == 2) {
-			for (int c = 0; c < 4; c++) {
-				for (int r = 0; r < 9; r++) {
-					addSlotToContainer(new Slot(te, r + c*9 + 9 + 4, x + r * 18, y + c * 18));
-				}
-			}
-		}
-		if (tabButton == 3) {
-			for (int c = 0; c < 4; c++) {
-				for (int r = 0; r < 9; r++) {
-					addSlotToContainer(new Slot(te, r + c*9 + 9 + 40, x + r * 18, y + c * 18));
-				}
-			}
-		}
-		if (tabButton == 4) {
-			for (int c = 0; c < 4; c++) {
-				for (int r = 0; r < 9; r++) {
-					addSlotToContainer(new Slot(te, r + c*9 + 9 + 76, x + r * 18, y + c * 18));
-				}
-			}
-		}
-		if (tabButton == 5) {
-			for (int c = 0; c < 4; c++) {
-				for (int r = 0; r < 9; r++) {
-					addSlotToContainer(new Slot(te, r + c*9 + 9 + 112, x + r * 18, y + c * 18));
-				}
-			}
-		}
-
-		for (int c = 0; c < 4; c++) {
-			for (int r = 0; r < 9; r++) {
-				addSlotToContainer(new Slot(te, r + c*9 + 9 + 148, x + r * 18, y + c * 18));
-				System.out.println("Highest Slot: " + (r + c*9 + 148));
-			}
-		}
 	}
 
+	
 	protected void bindPlayerInventory(InventoryPlayer invPlayer) {
 		//C = vertical inventory slots, "columns"
 		//R = horizontal inventory slots, "rows"
@@ -80,7 +50,7 @@ public class ContainerFloatingShelves extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityPlayer) {
-		return te.isUseableByPlayer(entityPlayer);
+		return true;
 	}
 	
 	@Override
@@ -88,30 +58,32 @@ public class ContainerFloatingShelves extends Container {
 		ItemStack stack = null;
         Slot slotObject = (Slot) inventorySlots.get(slot);
 
+        //null checks and checks if the item can be stacked (maxStackSize > 1)
         if (slotObject != null && slotObject.getHasStack()) {
-        	ItemStack stackInSlot = slotObject.getStack();
-        	stack = stackInSlot.copy();
+                ItemStack stackInSlot = slotObject.getStack();
+                stack = stackInSlot.copy();
 
-        	if (slot < 9) {
-        		if (!this.mergeItemStack(stackInSlot, 9, 45, true)) {
-        			return null;
-        		}
-        	}
+                //merges the item into player inventory since its in the tileEntity
+                if (slot < 9) {
+                        if (!this.mergeItemStack(stackInSlot, 0, 35, true)) {
+                                return null;
+                        }
+                }
+                //places it into the tileEntity is possible since its in the player inventory
+                else if (!this.mergeItemStack(stackInSlot, 0, 4, false)) {
+                        return null;
+                }
 
-        	else if (!this.mergeItemStack(stackInSlot, 0, 9, false)) {
-        		return null;
-        	}
+                if (stackInSlot.stackSize == 0) {
+                        slotObject.putStack(null);
+                } else {
+                        slotObject.onSlotChanged();
+                }
 
-        	if (stackInSlot.stackSize == 10) {
-        		slotObject.putStack(null);
-        	} else {
-        		slotObject.onSlotChanged();
-        	}
-
-        	if (stackInSlot.stackSize == stack.stackSize) {
-        		return null;
-        	}
-        	slotObject.onPickupFromSlot(player, stackInSlot);
+                if (stackInSlot.stackSize == stack.stackSize) {
+                        return null;
+                }
+                slotObject.onPickupFromSlot(player, stackInSlot);
         }
         return stack;
 	}
@@ -121,7 +93,20 @@ public class ContainerFloatingShelves extends Container {
         this.getSlot(slot).putStack(item);
     }
 	
-	public IInventory getFloatingShelvesInveotry() {
-		return this.floatingShelvesInventory;
+	public IInventory getFloatingShelvesInventory() {
+		return this.adminShopInventory;
 	}
-}*/
+	
+	@Override
+	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer entityPlayer) {
+		if (CityConfig.debugMode) {
+			System.out.println("Slot clicked! Checking UUID vs stored one.");
+			System.out.println(entityPlayer.getUniqueID().toString() + " = Current user UUID");
+			System.out.println(te.ownerUuid + " = Stored UUID");
+		}
+		if (entityPlayer.getUniqueID().toString().equalsIgnoreCase(te.ownerUuid)) {
+			super.slotClick(par1, par2, par3, entityPlayer);
+		}
+		return null;
+	}
+}

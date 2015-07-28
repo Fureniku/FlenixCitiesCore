@@ -30,7 +30,7 @@ public class CommonProxy {
     
     public void registerBlocks() {
         GameRegistry.registerBlock(CoreBlocks.atmBlock, ItemATMBlock.class, "FlenixCities" + (CoreBlocks.atmBlock.getUnlocalizedName().substring(5)));
-        //GameRegistry.registerBlock(CoreBlocks.floatingShelvesBlock, "floatingShelvesBlock");
+        GameRegistry.registerBlock(CoreBlocks.floatingShelvesBlock, "floatingShelvesBlock");
         GameRegistry.registerBlock(CoreBlocks.npcSpawnerBlock, "npcSpawnerBlock");
         
         GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks.getUnlocalizedName().substring(5)));
@@ -105,7 +105,7 @@ public class CommonProxy {
     	LanguageRegistry.addName(CoreBlocks.styledGlassPane, "Styled Glass Pane");
     	LanguageRegistry.addName(CoreBlocks.styledGlassWhitePane, "Styled Glass Pane");
         
-        //LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
+        LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
         LanguageRegistry.addName(CoreBlocks.adminShopBlock, "Floating Shelves (Unlimited)");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 0), "ATM Stone");
         LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 4), "ATM Stone Brick");

@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.network.ATMWithdrawPacket;
 import co.uk.silvania.cities.network.AdminShopClientPacket;
 import co.uk.silvania.cities.network.AdminShopPricePacket;
@@ -82,7 +83,7 @@ public class FlenixCities_Core {
 	    MinecraftForge.EVENT_BUS.register(new EventDrops());
 	        
 	    GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
-	    //TODO GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
+	    GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
 	    GameRegistry.registerTileEntity(TileEntityAdminShop.class, "tileEntityAdminShop");
 	    GameRegistry.registerTileEntity(NPCSpawnerEntity.class, "npcSpawnerBlock");
     }
