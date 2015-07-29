@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraftforge.oredict.OreDictionary;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.econ.DebitCardItem;
@@ -230,6 +231,23 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		return false;
 	}
 	
+	public boolean compareStackForOreDict(ItemStack stack, ItemStack item) {
+		int[] stackOD = OreDictionary.getOreIDs(stack);
+		int[] itemOD = OreDictionary.getOreIDs(item);
+		
+		if (stackOD != null  && itemOD != null) {
+			for(int i = 0; i < stackOD.length; i++) {
+				for (int j = 0; j < itemOD.length; j++) {
+					if (stackOD[i] == itemOD[j]) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	//Buying items FROM the player
 	public void buyItem(int slotId, EntityPlayer player) {
 		ItemStack item = getStackInSlot(slotId - 1);
@@ -253,7 +271,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
 			ItemStack stack = player.inventory.getStackInSlot(x);
 			if (stack != null) {
-				if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
+				if ((stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) || compareStackForOreDict(item, stack)) {
 					invQty = invQty + stack.stackSize;
 					if (invQty >= ss) {
 						invQty = ss;
@@ -267,7 +285,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				ItemStack stack = player.inventory.getStackInSlot(x);
 				if (stack != null) {
 					if (remain > 0) {
-						if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
+						if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage() || compareStackForOreDict(item, stack)) {
 							if (stack.stackSize >= remain) {
 								player.inventory.decrStackSize(x, remain);
 								EconUtils.giveChange(itemCost, 0, player);
