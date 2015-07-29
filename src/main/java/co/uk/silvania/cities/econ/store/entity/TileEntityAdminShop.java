@@ -191,7 +191,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 					if (EconUtils.hasOwnCard(entityPlayer)) {
 						if (EconUtils.chargePlayerAnywhere(entityPlayer, itemCost)) {
 							while (giveAmount >= 1) {
-								entityPlayer.inventory.addItemStackToInventory(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+								entityPlayer.inventory.addItemStackToInventory(item.copy());
 								giveAmount--;
 							}
 							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
@@ -253,7 +253,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 		for (int x = player.inventory.getSizeInventory() - 1; x >= 0; -- x) {
 			ItemStack stack = player.inventory.getStackInSlot(x);
 			if (stack != null) {
-				if (stack.getItem() == item.getItem()) {
+				if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
 					invQty = invQty + stack.stackSize;
 					if (invQty >= ss) {
 						invQty = ss;
@@ -267,7 +267,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				ItemStack stack = player.inventory.getStackInSlot(x);
 				if (stack != null) {
 					if (remain > 0) {
-						if (stack.getItem() == item.getItem()) {
+						if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
 							if (stack.stackSize >= remain) {
 								player.inventory.decrStackSize(x, remain);
 								EconUtils.giveChange(itemCost, 0, player);
