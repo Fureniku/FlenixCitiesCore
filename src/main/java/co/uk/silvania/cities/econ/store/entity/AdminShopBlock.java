@@ -52,12 +52,12 @@ public class AdminShopBlock extends BlockContainer implements IStoreBlock {
 			minZ = 0.0F;
 			minX = 0.5F;
 			maxZ = 1.0F;
-			maxY = 1.0F;
+			maxX = 1.0F;
 		} else if (meta == 2) {
 			minZ = 0.5F;
 			minX = 0.0F;
 			maxZ = 1.0F;
-			maxY = 1.0F;
+			maxX = 1.0F;
 		} else {
 			minX = 0.0F;
 			minZ = 0.0F;
