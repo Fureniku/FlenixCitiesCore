@@ -59,6 +59,10 @@ public class StoreStockInfoRender extends Gui {
 					 
 					ItemStack item = adminShop.getStackInSlot(0);
 					
+					System.out.println("Subhit: " + mop.subHit);
+					System.out.println("Side hit: " + mop.sideHit);
+					//System.out.println("Hit Vector" + mop.hitVec);
+					
 					if (item != null) {
 						GL11.glPushMatrix();
 						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

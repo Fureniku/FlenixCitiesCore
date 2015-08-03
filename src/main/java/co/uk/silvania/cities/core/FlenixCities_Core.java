@@ -1,9 +1,11 @@
 package co.uk.silvania.cities.core;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import co.uk.silvania.cities.core.client.StoreStockInfoRender;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
 import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
@@ -17,6 +19,7 @@ import co.uk.silvania.cities.network.FloatingShelvesSalePacket;
 import co.uk.silvania.cities.network.SalePacket;
 import co.uk.silvania.cities.network.ServerBalancePacket;
 import co.uk.silvania.cities.network.SoundPacket;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -87,6 +90,9 @@ public class FlenixCities_Core {
 	    proxy.entityStuff();
 	        
 	    MinecraftForge.EVENT_BUS.register(new EventDrops());
+	    if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+	    	MinecraftForge.EVENT_BUS.register(new StoreStockInfoRender(Minecraft.getMinecraft()));
+	    }
 	        
 	    GameRegistry.registerTileEntity(TileEntityATMEntity.class, "tileEntityATM");
 	    GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
