@@ -24,7 +24,7 @@ import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.network.AdminShopPricePacket;
 import co.uk.silvania.cities.network.ServerBalancePacket;
 
-public class AdminShopBlock extends BlockContainer {
+public class AdminShopBlock extends BlockContainer implements IStoreBlock {
 
 	float minX = 0.0F;
 	float minY = 0.0F;
@@ -32,6 +32,8 @@ public class AdminShopBlock extends BlockContainer {
 	float maxX = 1.0F;
 	float maxY = 1.0F;
 	float maxZ = 1.0F;
+	
+	public TileEntityAdminShop te;
 	
 	public AdminShopBlock() {
 		super(Material.iron);

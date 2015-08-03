@@ -22,7 +22,7 @@ import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
 import co.uk.silvania.cities.network.ServerBalancePacket;
 
-public class FloatingShelvesBlock extends BlockContainer {
+public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock {
 
 	float minX = 0.0F;
 	float minY = 0.0F;

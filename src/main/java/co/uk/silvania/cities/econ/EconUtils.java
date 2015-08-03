@@ -303,9 +303,7 @@ public class EconUtils {
 		while (change > 0) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin1))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin1));
-				System.out.println("0.01 to inventory :)");
 			} else {
-				System.out.println("0.01 to bank.");
 				toBank = toBank + 0.01;
 			}
 			change = change - 0.01;
@@ -748,7 +746,7 @@ public class EconUtils {
         NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         if (deposit >= 0.1) {
-        	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
+        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj))));
         }
 	}
 	

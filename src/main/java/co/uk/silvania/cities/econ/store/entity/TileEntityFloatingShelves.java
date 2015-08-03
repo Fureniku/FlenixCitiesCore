@@ -206,8 +206,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				
 				entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 			}
-			//Disabled due to money dupe glitch, will be fixed when I come back to FC in a week or so.
-		}// else {
+		}
 			if (invCash < itemCost) {
 				double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
 				if (bankBalance >= itemCost && hasSpace) {
