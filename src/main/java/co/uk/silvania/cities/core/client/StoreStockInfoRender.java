@@ -22,7 +22,6 @@ import org.lwjgl.opengl.GL11;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.IStoreBlock;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
-import co.uk.silvania.cities.network.AdminShopPricePacket;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -71,10 +70,10 @@ public class StoreStockInfoRender extends Gui {
 					nf.setMaximumFractionDigits(2);
 					nf.setRoundingMode(RoundingMode.HALF_UP);
 					
-					String buy1 = nf.format(EconUtils.parseDouble("" + AdminShopPricePacket.buyPrice1));
-					String buy2 = nf.format(EconUtils.parseDouble("" + AdminShopPricePacket.buyPrice2));
-					String buy3 = nf.format(EconUtils.parseDouble("" + AdminShopPricePacket.buyPrice3));
-					String buy4 = nf.format(EconUtils.parseDouble("" + AdminShopPricePacket.buyPrice4));
+					String buy1 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice1));
+					String buy2 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice2));
+					String buy3 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice3));
+					String buy4 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice4));
 					
 					String cost = "";
 					

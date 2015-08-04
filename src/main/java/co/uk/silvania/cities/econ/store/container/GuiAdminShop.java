@@ -19,7 +19,6 @@ import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import co.uk.silvania.cities.network.AdminShopClientPacket;
-import co.uk.silvania.cities.network.AdminShopPricePacket;
 import co.uk.silvania.cities.network.SalePacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -31,14 +30,6 @@ public class GuiAdminShop extends GuiContainer {
 	int x;
 	int y;
 	int z;
-	String buyPrice1 = "" + AdminShopPricePacket.buyPrice1;
-	String sellPrice1 = "" + AdminShopPricePacket.sellPrice1;
-	String buyPrice2 = "" + AdminShopPricePacket.buyPrice2;
-	String sellPrice2 = "" + AdminShopPricePacket.sellPrice2;
-	String buyPrice3 = "" + AdminShopPricePacket.buyPrice3;
-	String sellPrice3 = "" + AdminShopPricePacket.sellPrice3;
-	String buyPrice4 = "" + AdminShopPricePacket.buyPrice4;
-	String sellPrice4 = "" + AdminShopPricePacket.sellPrice4;
 	
 	private ItemStack slot0;
 	private ItemStack slot1;
@@ -46,6 +37,15 @@ public class GuiAdminShop extends GuiContainer {
 	private ItemStack slot3;
 	
 	private TileEntityAdminShop shelvesEntity;
+	
+	String buyPrice1 = "";
+	String sellPrice1 = "";
+	String buyPrice2 = "";
+	String sellPrice2 = "";
+	String buyPrice3 = "";
+	String sellPrice3 = "";
+	String buyPrice4 = "";
+	String sellPrice4 = "";
 
 	public GuiAdminShop(InventoryPlayer invPlayer, TileEntityAdminShop shelvesEntity) {
 		super(new ContainerAdminShop(invPlayer, shelvesEntity));
@@ -54,6 +54,15 @@ public class GuiAdminShop extends GuiContainer {
 		x = shelvesEntity.xCoord;
 		y = shelvesEntity.yCoord;
 		z = shelvesEntity.zCoord;
+		
+		buyPrice1 = "" + shelvesEntity.buyPrice1;
+		buyPrice2 = "" + shelvesEntity.buyPrice2;
+		buyPrice3 = "" + shelvesEntity.buyPrice3;
+		buyPrice4 = "" + shelvesEntity.buyPrice4;
+		sellPrice1 = "" + shelvesEntity.sellPrice1;
+		sellPrice2 = "" + shelvesEntity.sellPrice2;
+		sellPrice3 = "" + shelvesEntity.sellPrice3;
+		sellPrice4 = "" + shelvesEntity.sellPrice4;
 		
 		this.slot0 = this.shelvesEntity.getStackInSlot(0);
 		this.slot1 = this.shelvesEntity.getStackInSlot(1);
