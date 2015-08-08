@@ -101,44 +101,48 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 		
 		if (slot0 != null) {
 			GL11.glPushMatrix();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot0);
+			ItemStack slot0Render = new ItemStack(slot0.getItem(), 1, slot0.getItemDamage());
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot0Render);
 			entity.hoverStart = 0.0F;
 			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.585F, (float) z + S1zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot0);
+			entity.setEntityItemStack(slot0Render);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
 		if (slot1 != null) {
 			GL11.glPushMatrix();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot1);
+			ItemStack slot1Render = new ItemStack(slot1.getItem(), 1, slot1.getItemDamage());
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot1Render);
 			entity.hoverStart = 0.0F;
 			GL11.glTranslated((float) x + S2xOffset, (float) y + 0.585F, (float) z + S2zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot1);
+			entity.setEntityItemStack(slot1Render);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
 		if (slot2 != null) {
 			GL11.glPushMatrix();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot2);
+			ItemStack slot2Render = new ItemStack(slot2.getItem(), 1, slot2.getItemDamage());
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot2Render);
 			entity.hoverStart = 0.0F;
-			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.064F, (float) z + S1zOffset);
+			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.075F, (float) z + S1zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot2);
+			entity.setEntityItemStack(slot2Render);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
 		if (slot3 != null) {
 			GL11.glPushMatrix();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot3);
+			ItemStack slot3Render = new ItemStack(slot3.getItem(), 1, slot3.getItemDamage());
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot3Render);
 			entity.hoverStart = 0.0F;
-			GL11.glTranslated((float) x + S2xOffset, (float) y + 0.064F, (float) z + S2zOffset);
+			GL11.glTranslated((float) x + S2xOffset, (float) y + 0.075F, (float) z + S2zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot3);
+			entity.setEntityItemStack(slot3Render);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}

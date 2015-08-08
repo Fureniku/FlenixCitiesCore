@@ -12,6 +12,7 @@ import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.network.ATMWithdrawPacket;
 import co.uk.silvania.cities.network.AdminShopClientPacket;
+import co.uk.silvania.cities.network.AdminShopPricePacket;
 import co.uk.silvania.cities.network.FloatingShelvesClientPacket;
 import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
 import co.uk.silvania.cities.network.FloatingShelvesSalePacket;
@@ -67,7 +68,7 @@ public class FlenixCities_Core {
     	network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);
     	network.registerMessage(SoundPacket.Handler.class, SoundPacket.class, 1, Side.SERVER);
     	network.registerMessage(ServerBalancePacket.Handler.class, ServerBalancePacket.class, 2, Side.CLIENT);
-    	//network.registerMessage(AdminShopPricePacket.Handler.class, AdminShopPricePacket.class, 3, Side.CLIENT);
+    	network.registerMessage(AdminShopPricePacket.Handler.class, AdminShopPricePacket.class, 3, Side.CLIENT);
     	network.registerMessage(SalePacket.Handler.class, SalePacket.class, 4, Side.SERVER);
     	network.registerMessage(AdminShopClientPacket.Handler.class, AdminShopClientPacket.class, 5, Side.SERVER);
     	network.registerMessage(FloatingShelvesPricePacket.Handler.class, FloatingShelvesPricePacket.class, 6, Side.CLIENT);

@@ -98,17 +98,22 @@ public class FloatingShelvesClientPacket implements IMessage {
 			int z = message.z;
 			if (player.openContainer instanceof ContainerFloatingShelves) {
 				ContainerFloatingShelves container = (ContainerFloatingShelves) player.openContainer;
-				TileEntityFloatingShelves tileAdmin = container.te;
+				TileEntityFloatingShelves tileShop = container.te;
 				
-				if (tileAdmin != null) {
-					tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
-					tileAdmin.sellPrice1 = EconUtils.parseDouble(str2);
-					tileAdmin.buyPrice2 = EconUtils.parseDouble(str3);
-					tileAdmin.sellPrice2 = EconUtils.parseDouble(str4);
-					tileAdmin.buyPrice3 = EconUtils.parseDouble(str5);
-					tileAdmin.sellPrice3 = EconUtils.parseDouble(str6);
-					tileAdmin.buyPrice4 = EconUtils.parseDouble(str7);
-					tileAdmin.sellPrice4 = EconUtils.parseDouble(str8);
+				if (tileShop != null) {
+					tileShop.buyPrice1 = EconUtils.parseDouble(str1);
+					tileShop.sellPrice1 = EconUtils.parseDouble(str2);
+					tileShop.buyPrice2 = EconUtils.parseDouble(str3);
+					tileShop.sellPrice2 = EconUtils.parseDouble(str4);
+					tileShop.buyPrice3 = EconUtils.parseDouble(str5);
+					tileShop.sellPrice3 = EconUtils.parseDouble(str6);
+					tileShop.buyPrice4 = EconUtils.parseDouble(str7);
+					tileShop.sellPrice4 = EconUtils.parseDouble(str8);
+					
+					tileShop.getDescriptionPacket();
+					if (CityConfig.debugMode) {
+						System.out.println("Prices have been set, and description packet triggered.");
+					}
 				} else {
 					System.out.println("TE is null. Sadface :(");
 				}

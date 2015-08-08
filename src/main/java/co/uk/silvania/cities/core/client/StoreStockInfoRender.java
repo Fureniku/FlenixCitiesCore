@@ -2,6 +2,8 @@ package co.uk.silvania.cities.core.client;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import net.minecraft.block.Block;
@@ -11,17 +13,22 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.IStoreBlock;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -75,30 +82,90 @@ public class StoreStockInfoRender extends Gui {
 					String buy3 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice3));
 					String buy4 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice4));
 					
-					String cost = "";
+					String sell1 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice1));
+					String sell2 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice2));
+					String sell3 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice3));
+					String sell4 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice4));
+					
+					String costBuy = "";
+					String costSell = "";
 					
 					if (lookingAtSlot == 0) {
-						cost = buy1;
+						costBuy = buy1;
+						costSell = sell1;
 					} else if (lookingAtSlot == 1) {
-						cost = buy2;
+						costBuy = buy2;
+						costSell = sell2;
 					} else if (lookingAtSlot == 2) {
-						cost = buy3;
+						costBuy = buy3;
+						costSell = sell3;
 					} else if (lookingAtSlot == 3) {
-						cost = buy4;
+						costBuy = buy4;
+						costSell = sell4;
 					}
 					
 					
 					if (shopFront(mop.sideHit, meta)) {
 						//System.out.println("Side hit: " + mop.sideHit);
 						//System.out.println("Hit Vector: " + mop.hitVec);
-						System.out.println("Render gets buy price 1 as " + buy1 + " and cost as " + cost);
 						
 						if (item != null) {
 							GL11.glPushMatrix();
 							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 							GL11.glDisable(GL11.GL_LIGHTING);
 							GL11.glScalef(0.5F, 0.5F, 0.5F);
-							font.drawString(item.getDisplayName() + ", $" + cost, res.getScaledWidth() + 10, res.getScaledHeight() + 10, 0xFFFFFF);
+							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, (", " + EnumChatFormatting.GREEN + "Buy: " + EnumChatFormatting.GOLD + "$" + costBuy + ", " + EnumChatFormatting.YELLOW + "Sell: " + EnumChatFormatting.GOLD + "$" + costSell), player, font);
+							GL11.glPopMatrix();
+						}
+					}
+				} else if (te instanceof TileEntityFloatingShelves) {
+					TileEntityFloatingShelves playerShop = (TileEntityFloatingShelves) te;
+					
+					int lookingAtSlot = quadrantHit(mop.hitVec, x, y, z, mop.sideHit);
+					 
+					ItemStack item = playerShop.getStackInSlot(lookingAtSlot);
+					int meta = world.getBlockMetadata(x, y, z);
+					
+					NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+					nf.setMinimumFractionDigits(2);
+					nf.setMaximumFractionDigits(2);
+					nf.setRoundingMode(RoundingMode.HALF_UP);
+					
+					String buy1 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice1));
+					String buy2 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice2));
+					String buy3 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice3));
+					String buy4 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice4));
+					
+					String sell1 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice1));
+					String sell2 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice2));
+					String sell3 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice3));
+					String sell4 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice4));
+					
+					String costBuy = "";
+					String costSell = "";
+					
+					if (lookingAtSlot == 0) {
+						costBuy = buy1;
+						costSell = sell1;
+					} else if (lookingAtSlot == 1) {
+						costBuy = buy2;
+						costSell = sell2;
+					} else if (lookingAtSlot == 2) {
+						costBuy = buy3;
+						costSell = sell3;
+					} else if (lookingAtSlot == 3) {
+						costBuy = buy4;
+						costSell = sell4;
+					}
+					
+					
+					if (shopFront(mop.sideHit, meta)) {
+						if (item != null) {
+							GL11.glPushMatrix();
+							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+							GL11.glDisable(GL11.GL_LIGHTING);
+							GL11.glScalef(0.5F, 0.5F, 0.5F);
+							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, (", " + EnumChatFormatting.GREEN + "Buy: " + EnumChatFormatting.GOLD + "$" + costBuy + ", " + EnumChatFormatting.YELLOW + "Sell: " + EnumChatFormatting.GOLD + "$" + costSell), player, font);
 							GL11.glPopMatrix();
 						}
 					}
@@ -198,4 +265,88 @@ public class StoreStockInfoRender extends Gui {
 		return 0;
 		
 	}
+	
+    public void renderToolTip(ItemStack item, int posX, int posZ, String str, EntityClientPlayerMP player, FontRenderer fnt) {
+    	int tooltipX = posX;
+    	int tooltipY = posZ;
+    	
+    	List list = item.getTooltip(player, false);
+    	
+    	for (int k = 0; k < list.size(); ++k)
+        {
+            if (k == 0)
+            {
+                list.set(k, item.getRarity().rarityColor + (String)list.get(k));
+            }
+            else
+            {
+                list.set(k, EnumChatFormatting.GRAY + (String)list.get(k));
+            }
+        }
+
+        drawHoveringText(list, posX, posZ, fnt, str);
+    }
+    
+    public static RenderItem itemRender = new RenderItem();
+    
+    public void drawHoveringText(List list, int x, int z, FontRenderer fnt, String str) {
+        if (!list.isEmpty()) {
+            int k = 0;
+            list.set(0, list.get(0) + str);
+            
+            Iterator iterator = list.iterator();
+
+            while (iterator.hasNext()) {
+                String s = (String)iterator.next();
+                int l = fnt.getStringWidth(s);
+
+                if (l > k) {
+                    k = l;
+                }
+            }
+
+            int j2 = x + 12;
+            int k2 = z - 12;
+            int i1 = 8;
+
+            if (list.size() > 1) {
+                i1 += 2 + (list.size() - 1) * 10;
+            }
+
+            int width = this.mc.displayWidth;
+            int height = this.mc.displayHeight;
+            
+            if (j2 + k > width) {
+                j2 -= 28 + k;
+            }
+
+            if (k2 + i1 + 6 > height) {
+                k2 = height - i1 - 6;
+            }
+
+            int j1 = -267386864;
+            this.drawGradientRect(j2 - 3, k2 - 4, j2 + k + 3, k2 - 3, j1, j1);
+            this.drawGradientRect(j2 - 3, k2 + i1 + 3, j2 + k + 3, k2 + i1 + 4, j1, j1);
+            this.drawGradientRect(j2 - 3, k2 - 3, j2 + k + 3, k2 + i1 + 3, j1, j1);
+            this.drawGradientRect(j2 - 4, k2 - 3, j2 - 3, k2 + i1 + 3, j1, j1);
+            this.drawGradientRect(j2 + k + 3, k2 - 3, j2 + k + 4, k2 + i1 + 3, j1, j1);
+            int k1 = 1347420415;
+            int l1 = (k1 & 16711422) >> 1 | k1 & -16777216;
+            this.drawGradientRect(j2 - 3, k2 - 3 + 1, j2 - 3 + 1, k2 + i1 + 3 - 1, k1, l1);
+            this.drawGradientRect(j2 + k + 2, k2 - 3 + 1, j2 + k + 3, k2 + i1 + 3 - 1, k1, l1);
+            this.drawGradientRect(j2 - 3, k2 - 3, j2 + k + 3, k2 - 3 + 1, k1, k1);
+            this.drawGradientRect(j2 - 3, k2 + i1 + 2, j2 + k + 3, k2 + i1 + 3, l1, l1);
+
+            for (int i2 = 0; i2 < list.size(); ++i2) {
+                String s1 = (String)list.get(i2);
+                fnt.drawStringWithShadow(s1, j2, k2, -1);
+
+                if (i2 == 0) {
+                    k2 += 2;
+                }
+
+                k2 += 10;
+            }
+        }
+    }
 }

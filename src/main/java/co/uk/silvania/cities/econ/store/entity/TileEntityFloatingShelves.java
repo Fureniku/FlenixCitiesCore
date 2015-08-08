@@ -42,10 +42,8 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
         super.writeToNBT(nbt);
         NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < this.items.length; ++i)
-        {
-            if (this.items[i] != null)
-            {
+        for (int i = 0; i < this.items.length; ++i) {
+            if (this.items[i] != null) {
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)i);
                 this.items[i].writeToNBT(nbttagcompound1);
@@ -113,10 +111,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		return 0;
 	}
 	
-	/*public boolean isShopOpen() {
-		
-		return true;
-	}*/
 	
 	@Override
 	public Packet getDescriptionPacket() {
@@ -131,7 +125,21 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				items.appendTag(tag);
 			}
 		}
+		nbt.setString("ownerName", ownerName + "");
+		nbt.setDouble("buyPrice1", buyPrice1);
+		nbt.setDouble("sellPrice1", sellPrice1);
+		nbt.setDouble("buyPrice2", buyPrice2);
+		nbt.setDouble("sellPrice2", sellPrice2);
+		nbt.setDouble("buyPrice3", buyPrice3);
+		nbt.setDouble("sellPrice3", sellPrice3);
+		nbt.setDouble("buyPrice4", buyPrice4);
+		nbt.setDouble("sellPrice4", sellPrice4);
+		
 		nbt.setTag("ClientAShelfInv", items);
+		
+		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
+		
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
 	}
 	
@@ -148,6 +156,16 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				this.items[slot] = ItemStack.loadItemStackFromNBT(tag);
 			}
 		}
+		this.ownerName = nbt.getString("ownerName");
+		this.buyPrice1 = nbt.getDouble("buyPrice1");
+		this.sellPrice1 = nbt.getDouble("sellPrice1");
+		this.buyPrice2 = nbt.getDouble("buyPrice2");
+		this.sellPrice2 = nbt.getDouble("sellPrice2");
+		this.buyPrice3 = nbt.getDouble("buyPrice3");
+		this.sellPrice3 = nbt.getDouble("sellPrice3");
+		this.buyPrice4 = nbt.getDouble("buyPrice4");
+		this.sellPrice4 = nbt.getDouble("sellPrice4");
+
 		this.worldObj.updateLightByType(EnumSkyBlock.Block, this.xCoord, this.yCoord, this.zCoord);
 	}
 	

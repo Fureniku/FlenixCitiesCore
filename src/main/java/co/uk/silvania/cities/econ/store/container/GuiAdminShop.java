@@ -19,6 +19,7 @@ import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import co.uk.silvania.cities.network.AdminShopClientPacket;
+import co.uk.silvania.cities.network.AdminShopPricePacket;
 import co.uk.silvania.cities.network.SalePacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -38,14 +39,23 @@ public class GuiAdminShop extends GuiContainer {
 	
 	private TileEntityAdminShop shelvesEntity;
 	
-	String buyPrice1 = "";
-	String sellPrice1 = "";
-	String buyPrice2 = "";
-	String sellPrice2 = "";
-	String buyPrice3 = "";
-	String sellPrice3 = "";
-	String buyPrice4 = "";
-	String sellPrice4 = "";
+	String buyPrice1 = "" + AdminShopPricePacket.buyPrice1;		
+	String sellPrice1 = "" + AdminShopPricePacket.sellPrice1;		
+	String buyPrice2 = "" + AdminShopPricePacket.buyPrice2;		
+	String sellPrice2 = "" + AdminShopPricePacket.sellPrice2;		
+	String buyPrice3 = "" + AdminShopPricePacket.buyPrice3;		
+	String sellPrice3 = "" + AdminShopPricePacket.sellPrice3;		
+	String buyPrice4 = "" + AdminShopPricePacket.buyPrice4;		
+	String sellPrice4 = "" + AdminShopPricePacket.sellPrice4;
+	
+	String displayBuy1 = "";
+	String displayBuy2 = "";
+	String displayBuy3 = "";
+	String displayBuy4 = "";
+	String displaySell1 = "";
+	String displaySell2 = "";
+	String displaySell3 = "";
+	String displaySell4 = "";
 
 	public GuiAdminShop(InventoryPlayer invPlayer, TileEntityAdminShop shelvesEntity) {
 		super(new ContainerAdminShop(invPlayer, shelvesEntity));
@@ -55,14 +65,14 @@ public class GuiAdminShop extends GuiContainer {
 		y = shelvesEntity.yCoord;
 		z = shelvesEntity.zCoord;
 		
-		buyPrice1 = "" + shelvesEntity.buyPrice1;
-		buyPrice2 = "" + shelvesEntity.buyPrice2;
-		buyPrice3 = "" + shelvesEntity.buyPrice3;
-		buyPrice4 = "" + shelvesEntity.buyPrice4;
-		sellPrice1 = "" + shelvesEntity.sellPrice1;
-		sellPrice2 = "" + shelvesEntity.sellPrice2;
-		sellPrice3 = "" + shelvesEntity.sellPrice3;
-		sellPrice4 = "" + shelvesEntity.sellPrice4;
+		displayBuy1 = "" + shelvesEntity.buyPrice1;
+		displayBuy2 = "" + shelvesEntity.buyPrice2;
+		displayBuy3 = "" + shelvesEntity.buyPrice3;
+		displayBuy4 = "" + shelvesEntity.buyPrice4;
+		displaySell1 = "" + shelvesEntity.sellPrice1;
+		displaySell2 = "" + shelvesEntity.sellPrice2;
+		displaySell3 = "" + shelvesEntity.sellPrice3;
+		displaySell4 = "" + shelvesEntity.sellPrice4;
 		
 		this.slot0 = this.shelvesEntity.getStackInSlot(0);
 		this.slot1 = this.shelvesEntity.getStackInSlot(1);
@@ -311,15 +321,15 @@ public class GuiAdminShop extends GuiContainer {
 			nf.setMaximumFractionDigits(2);
 			nf.setRoundingMode(RoundingMode.HALF_UP);
 			
-			String buy1 = nf.format(EconUtils.parseDouble("" + buyPrice1));
-			String buy2 = nf.format(EconUtils.parseDouble("" + buyPrice2));
-			String buy3 = nf.format(EconUtils.parseDouble("" + buyPrice3));
-			String buy4 = nf.format(EconUtils.parseDouble("" + buyPrice4));
+			String buy1 = nf.format(EconUtils.parseDouble("" + displayBuy1));
+			String buy2 = nf.format(EconUtils.parseDouble("" + displayBuy2));
+			String buy3 = nf.format(EconUtils.parseDouble("" + displayBuy3));
+			String buy4 = nf.format(EconUtils.parseDouble("" + displayBuy4));
 			
-			String sell1 = nf.format(EconUtils.parseDouble("" + sellPrice1));
-			String sell2 = nf.format(EconUtils.parseDouble("" + sellPrice2));
-			String sell3 = nf.format(EconUtils.parseDouble("" + sellPrice3));
-			String sell4 = nf.format(EconUtils.parseDouble("" + sellPrice4));
+			String sell1 = nf.format(EconUtils.parseDouble("" + displaySell1));
+			String sell2 = nf.format(EconUtils.parseDouble("" + displaySell2));
+			String sell3 = nf.format(EconUtils.parseDouble("" + displaySell3));
+			String sell4 = nf.format(EconUtils.parseDouble("" + displaySell4));
 			
 			
 			fontRendererObj.drawString("$" + buy1, 51 - fontRendererObj.getStringWidth(buy1) / 2, 54, 4210752);

@@ -32,6 +32,15 @@ public class GuiFloatingShelves extends GuiContainer {
 	int x;
 	int y;
 	int z;
+	/*String buyPrice1 = "" + FloatingShelvesPricePacket.buyPrice1;
+	String sellPrice1 = "" + FloatingShelvesPricePacket.sellPrice1;
+	String buyPrice2 = "" + FloatingShelvesPricePacket.buyPrice2;
+	String sellPrice2 = "" + FloatingShelvesPricePacket.sellPrice2;
+	String buyPrice3 = "" + FloatingShelvesPricePacket.buyPrice3;
+	String sellPrice3 = "" + FloatingShelvesPricePacket.sellPrice3;
+	String buyPrice4 = "" + FloatingShelvesPricePacket.buyPrice4;
+	String sellPrice4 = "" + FloatingShelvesPricePacket.sellPrice4;*/
+	
 	String buyPrice1 = "" + FloatingShelvesPricePacket.buyPrice1;
 	String sellPrice1 = "" + FloatingShelvesPricePacket.sellPrice1;
 	String buyPrice2 = "" + FloatingShelvesPricePacket.buyPrice2;
@@ -40,6 +49,15 @@ public class GuiFloatingShelves extends GuiContainer {
 	String sellPrice3 = "" + FloatingShelvesPricePacket.sellPrice3;
 	String buyPrice4 = "" + FloatingShelvesPricePacket.buyPrice4;
 	String sellPrice4 = "" + FloatingShelvesPricePacket.sellPrice4;
+	
+	String displayBuy1 = "";
+	String displayBuy2 = "";
+	String displayBuy3 = "";
+	String displayBuy4 = "";
+	String displaySell1 = "";
+	String displaySell2 = "";
+	String displaySell3 = "";
+	String displaySell4 = "";
 	
 	private ItemStack slot0;
 	private ItemStack slot1;
@@ -55,6 +73,15 @@ public class GuiFloatingShelves extends GuiContainer {
 		x = shelvesEntity.xCoord;
 		y = shelvesEntity.yCoord;
 		z = shelvesEntity.zCoord;
+		
+		displayBuy1 = "" + shelvesEntity.buyPrice1;
+		displayBuy2 = "" + shelvesEntity.buyPrice2;
+		displayBuy3 = "" + shelvesEntity.buyPrice3;
+		displayBuy4 = "" + shelvesEntity.buyPrice4;
+		displaySell1 = "" + shelvesEntity.sellPrice1;
+		displaySell2 = "" + shelvesEntity.sellPrice2;
+		displaySell3 = "" + shelvesEntity.sellPrice3;
+		displaySell4 = "" + shelvesEntity.sellPrice4;
 		
 		this.slot0 = this.shelvesEntity.getStackInSlot(0);
 		this.slot1 = this.shelvesEntity.getStackInSlot(1);
@@ -303,15 +330,15 @@ public class GuiFloatingShelves extends GuiContainer {
 			nf.setMaximumFractionDigits(2);
 			nf.setRoundingMode(RoundingMode.HALF_UP);
 			
-			String buy1 = nf.format(EconUtils.parseDouble("" + buyPrice1));
-			String buy2 = nf.format(EconUtils.parseDouble("" + buyPrice2));
-			String buy3 = nf.format(EconUtils.parseDouble("" + buyPrice3));
-			String buy4 = nf.format(EconUtils.parseDouble("" + buyPrice4));
+			String buy1 = nf.format(EconUtils.parseDouble("" + displayBuy1));
+			String buy2 = nf.format(EconUtils.parseDouble("" + displayBuy2));
+			String buy3 = nf.format(EconUtils.parseDouble("" + displayBuy3));
+			String buy4 = nf.format(EconUtils.parseDouble("" + displayBuy4));
 			
-			String sell1 = nf.format(EconUtils.parseDouble("" + sellPrice1));
-			String sell2 = nf.format(EconUtils.parseDouble("" + sellPrice2));
-			String sell3 = nf.format(EconUtils.parseDouble("" + sellPrice3));
-			String sell4 = nf.format(EconUtils.parseDouble("" + sellPrice4));
+			String sell1 = nf.format(EconUtils.parseDouble("" + displaySell1));
+			String sell2 = nf.format(EconUtils.parseDouble("" + displaySell2));
+			String sell3 = nf.format(EconUtils.parseDouble("" + displaySell3));
+			String sell4 = nf.format(EconUtils.parseDouble("" + displaySell4));
 			
 			
 			fontRendererObj.drawString("$" + buy1, 51 - fontRendererObj.getStringWidth(buy1) / 2, 54, 4210752);

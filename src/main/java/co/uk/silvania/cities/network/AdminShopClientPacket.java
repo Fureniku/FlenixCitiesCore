@@ -109,6 +109,12 @@ public class AdminShopClientPacket implements IMessage {
 					tileAdmin.sellPrice3 = EconUtils.parseDouble(str6);
 					tileAdmin.buyPrice4 = EconUtils.parseDouble(str7);
 					tileAdmin.sellPrice4 = EconUtils.parseDouble(str8);
+					
+					//Update all players nearby of shop changes (Avoids localized scamming by bumping the price after players come into range)
+					tileAdmin.getDescriptionPacket();
+					if (CityConfig.debugMode) {
+						System.out.println("Prices have been set, and description packet triggered.");
+					}
 				} else {
 					System.out.println("TE is null. Sadface :(");
 				}

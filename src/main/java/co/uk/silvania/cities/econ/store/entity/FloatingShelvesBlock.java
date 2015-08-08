@@ -1,8 +1,5 @@
 package co.uk.silvania.cities.econ.store.entity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import net.minecraft.block.BlockContainer;
@@ -87,7 +84,7 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
         	
         	if (!world.isRemote) {
         		FlenixCities_Core.network.sendTo(new FloatingShelvesPricePacket(tileEntity.ownerName, tileEntity.buyPrice1, tileEntity.sellPrice1, tileEntity.buyPrice2, tileEntity.sellPrice2,
-        			tileEntity.buyPrice3, tileEntity.sellPrice3, tileEntity.buyPrice4, tileEntity.sellPrice4), (EntityPlayerMP) player);
+            			tileEntity.buyPrice3, tileEntity.sellPrice3, tileEntity.buyPrice4, tileEntity.sellPrice4), (EntityPlayerMP) player);
         		FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
         	}
         }

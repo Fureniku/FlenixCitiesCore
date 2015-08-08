@@ -1,8 +1,6 @@
 package co.uk.silvania.cities.econ.store.container;
 
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +9,10 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
-import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
 
 public class ContainerFloatingShelves extends Container {
 	
@@ -100,28 +99,28 @@ public class ContainerFloatingShelves extends Container {
 	
 	@Override
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer entityPlayer) {
-		boolean test = false;
+		if (CityConfig.debugMode) {
+			System.out.println("Slot clicked! Checking UUID vs stored one.");
+			System.out.println(entityPlayer.getUniqueID().toString() + " = Current user UUID");
+			System.out.println(te.ownerUuid + " = Stored UUID");
+			System.out.println(te.ownerName + " = Stored Username");
+		}
 		if (!entityPlayer.worldObj.isRemote) {
-			if (CityConfig.debugMode) {
-				System.out.println("Slot clicked! Checking UUID vs stored one.");
-				System.out.println(entityPlayer.getUniqueID().toString() + " = Current user UUID");
-				System.out.println(te.ownerUuid + " = Stored UUID");
-				System.out.println(te.ownerName + " = Stored Username");
-			}
-			if (te.ownerUuid.contains(entityPlayer.getUniqueID().toString())) {
+			if (te.ownerUuid != null && te.ownerUuid.contains(entityPlayer.getUniqueID().toString())) {
 				if (CityConfig.debugMode) {
 					System.out.println("Owner is clicking the slot  (server)");
 				}
-				test = true;
 				super.slotClick(par1, par2, par3, entityPlayer);
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("[server] You are not the owner! Bad " + entityPlayer.getDisplayName() + "!");
+				entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You are not the owner of this shop."));
+				if (te.ownerName == null) {
+					entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "This is a bug. Please tell an admin."));
 				}
 			}
 		} else {
-			super.slotClick(par1, par2, par3, entityPlayer);
-			System.out.println("Test: " + test);
+			if (te.ownerName != null && te.ownerName.contains(entityPlayer.getDisplayName())) {
+				super.slotClick(par1, par2, par3, entityPlayer);
+			}
 		}
 		return null;
 	}

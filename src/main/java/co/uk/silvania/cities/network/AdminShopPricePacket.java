@@ -10,7 +10,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class FloatingShelvesPricePacket implements IMessage {
+public class AdminShopPricePacket implements IMessage {
 	
 	public static String ownerName;
 	public static double buyPrice1;
@@ -22,9 +22,9 @@ public class FloatingShelvesPricePacket implements IMessage {
 	public static double buyPrice4;
 	public static double sellPrice4;
 	
-	public FloatingShelvesPricePacket() {}
+	public AdminShopPricePacket() {}
 	
-	public FloatingShelvesPricePacket(String owner, double b1, double s1, double b2, double s2, double b3, double s3, double b4, double s4) {
+	public AdminShopPricePacket(String owner, double b1, double s1, double b2, double s2, double b3, double s3, double b4, double s4) {
 		ownerName = owner;
 		buyPrice1 = b1;
 		sellPrice1 = s1;
@@ -63,10 +63,10 @@ public class FloatingShelvesPricePacket implements IMessage {
 		ByteBufUtils.writeUTF8String(buf, "" + sellPrice4);
 	}
 	
-	public static class Handler implements IMessageHandler<FloatingShelvesPricePacket, IMessage> {
+	public static class Handler implements IMessageHandler<AdminShopPricePacket, IMessage> {
 
 		@Override
-		public IMessage onMessage(FloatingShelvesPricePacket message, MessageContext ctx) {
+		public IMessage onMessage(AdminShopPricePacket message, MessageContext ctx) {
 			System.out.println(String.format("Packet recieved! 9 bits of data? %s %s %s %s %s etc", message.ownerName, message.buyPrice1, message.sellPrice1, message.buyPrice2, message.sellPrice2));
 			return null;
 		}
