@@ -15,20 +15,18 @@ public class TileEntityStockChest extends TileEntity implements IInventory {
 	public double buyFundLimit;
 	private ItemStack[] inv;
 	
+	public int invSize = 108;
+	
 	public String ownerName;
 	public String ownerUuid;
 	
 	public TileEntityStockChest() {
-		inv = new ItemStack[108];
-	}
-	
-	public ItemStack findStockInChest(ItemStack stack) {
-		return stack;
+		inv = new ItemStack[invSize];
 	}
 
 	@Override
 	public int getSizeInventory() {
-		return 0;
+		return invSize;
 	}
 
 	@Override

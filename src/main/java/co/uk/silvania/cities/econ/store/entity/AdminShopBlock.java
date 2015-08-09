@@ -28,8 +28,6 @@ public class AdminShopBlock extends BlockContainer implements IStoreBlock {
 	float maxY = 1.0F;
 	float maxZ = 1.0F;
 	
-	public TileEntityAdminShop te;
-	
 	public AdminShopBlock() {
 		super(Material.iron);
 		this.setCreativeTab(FlenixCities_Core.tabEcon);

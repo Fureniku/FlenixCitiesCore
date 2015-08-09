@@ -1,5 +1,6 @@
 package co.uk.silvania.cities.network;
 
+import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.econ.EconUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +34,9 @@ public class ServerBalancePacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(ServerBalancePacket message, MessageContext ctx) {
-			System.out.println(String.format("Received %s", message.balanceAmount));
+			if (CityConfig.debugMode) {
+				System.out.println(String.format("Received %s", message.balanceAmount));
+			}
 			return null;
 		}
 		

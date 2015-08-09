@@ -32,14 +32,6 @@ public class GuiFloatingShelves extends GuiContainer {
 	int x;
 	int y;
 	int z;
-	/*String buyPrice1 = "" + FloatingShelvesPricePacket.buyPrice1;
-	String sellPrice1 = "" + FloatingShelvesPricePacket.sellPrice1;
-	String buyPrice2 = "" + FloatingShelvesPricePacket.buyPrice2;
-	String sellPrice2 = "" + FloatingShelvesPricePacket.sellPrice2;
-	String buyPrice3 = "" + FloatingShelvesPricePacket.buyPrice3;
-	String sellPrice3 = "" + FloatingShelvesPricePacket.sellPrice3;
-	String buyPrice4 = "" + FloatingShelvesPricePacket.buyPrice4;
-	String sellPrice4 = "" + FloatingShelvesPricePacket.sellPrice4;*/
 	
 	String buyPrice1 = "" + FloatingShelvesPricePacket.buyPrice1;
 	String sellPrice1 = "" + FloatingShelvesPricePacket.sellPrice1;

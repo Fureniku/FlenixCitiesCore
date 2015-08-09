@@ -170,9 +170,13 @@ public class EconUtils {
 		while (change >= 100) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note10000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note10000));
-				System.out.println("100 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("100 to inventory :)");
+				}
 			} else {
-				System.out.println("Sending 100 to bank");
+				if (CityConfig.debugMode) {
+					System.out.println("Sending 100 to bank");
+				}
 				toBank = toBank + 100;
 			}
 			change = change - 100;
@@ -181,9 +185,13 @@ public class EconUtils {
 		while (change >= 50) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note5000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note5000));
-				System.out.println("50 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("50 to inventory :)");
+				}
 			} else {
-				System.out.println("50 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("50 to bank.");
+				}
 				toBank = toBank + 50;
 			}
 			change = change - 50;
@@ -192,9 +200,13 @@ public class EconUtils {
 		while (change >= 20) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note2000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note2000));
-				System.out.println("20 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("20 to inventory :)");
+				}
 			} else {
-				System.out.println("20 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("20 to bank.");
+				}
 				toBank = toBank + 20;
 			}
 			change = change - 20;
@@ -203,9 +215,13 @@ public class EconUtils {
 		while (change >= 10) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note1000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note1000));
-				System.out.println("10 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("10 to inventory :)");
+				}
 			} else {
-				System.out.println("10 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("10 to bank.");
+				}
 				toBank = toBank + 10;
 			}
 			change = change - 10;
@@ -214,9 +230,13 @@ public class EconUtils {
 		while (change >= 5) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note500))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note500));
-				System.out.println("5 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("5 to inventory :)");
+				}
 			} else {
-				System.out.println("5 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("5 to bank.");
+				}
 				toBank = toBank + 5;
 			}
 			change = change - 5;
@@ -225,9 +245,13 @@ public class EconUtils {
 		while (change >= 2) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note200))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note200));
-				System.out.println("2 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("2 to inventory :)");
+				}
 			} else {
-				System.out.println("2 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("2 to bank.");
+				}
 				toBank = toBank + 2;
 			}
 			change = change - 2;
@@ -236,9 +260,13 @@ public class EconUtils {
 		while (change >= 1) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note100))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note100));
-				System.out.println("1 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("1 to inventory :)");
+				}
 			} else {
-				System.out.println("1 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("1 to bank.");
+				}
 				toBank = toBank + 1;
 			}
 			change = change - 1;
@@ -248,9 +276,13 @@ public class EconUtils {
 		while (change >= 0.5) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin50))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin50));
-				System.out.println("0.50 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("0.50 to inventory :)");
+				}
 			} else {
-				System.out.println("0.50 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("0.50 to bank.");
+				}
 				toBank = toBank + 0.5;
 			}
 			change = change - 0.5;
@@ -259,9 +291,13 @@ public class EconUtils {
 		while (change >= 0.25) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin25))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin25));
-				System.out.println("0.25 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("0.25 to inventory :)");
+				}
 			} else {
-				System.out.println("0.25 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("0.25 to bank.");
+				}
 				toBank = toBank + 0.25;
 			}
 			change = change - 0.25;
@@ -270,9 +306,13 @@ public class EconUtils {
 		while (change >= 0.1) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin10))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin10));
-				System.out.println("0.10 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("0.10 to inventory :)");
+				}
 			} else {
-				System.out.println("0.10 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("0.10 to bank.");
+				}
 				toBank = toBank + 0.1;
 			}
 			change = change - 0.1;
@@ -281,9 +321,13 @@ public class EconUtils {
 		while (change >= 0.05) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin5))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin5));
-				System.out.println("0.05 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("0.05 to inventory :)");
+				}
 			} else {
-				System.out.println("0.05 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("0.05 to bank.");
+				}
 				toBank = toBank + 0.05;
 			}
 			change = change - 0.05;
@@ -292,9 +336,13 @@ public class EconUtils {
 		while (change >= 0.02) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin2))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin2));
-				System.out.println("0.02 to inventory :)");
+				if (CityConfig.debugMode) {
+					System.out.println("0.02 to inventory :)");
+				}
 			} else {
-				System.out.println("0.02 to bank.");
+				if (CityConfig.debugMode) {
+					System.out.println("0.02 to bank.");
+				}
 				toBank = toBank + 0.02;
 			}
 			change = change - 0.02;
@@ -308,8 +356,9 @@ public class EconUtils {
 			}
 			change = change - 0.01;
 		}
-		
-		System.out.println("Depositing " + toBank + " to players account.");
+		if (toBank >= 0.01) {
+			System.out.println("Depositing " + toBank + " to " + entityPlayer.getDisplayName() + "'s account.");
+		}
 		depositToAccount(entityPlayer, world, toBank);
 	}
 	
@@ -695,12 +744,16 @@ public class EconUtils {
 					int itemSize = item.stackSize;
 					
 					if ((itemSize + slotSize) <= max) {
-						System.out.println("Unfilled compatable stack found; adding to it.");
+						if (CityConfig.debugMode) {
+							System.out.println("Unfilled compatable stack found; adding to it.");
+						}
 						return true;
 					}	
 				}
 			} else {
-				System.out.println("Emtpy slot found. How useful! ID: " + x);
+				if (CityConfig.debugMode) {
+					System.out.println("Emtpy slot found. How useful! ID: " + x);
+				}
 				return true;
 			}
 		}
@@ -746,7 +799,7 @@ public class EconUtils {
         NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         if (deposit >= 0.1) {
-        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj))));
+        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is " + EnumChatFormatting.GOLD  + "$" + formatBalance(getBalance(player, player.worldObj))));
         }
 	}
 	

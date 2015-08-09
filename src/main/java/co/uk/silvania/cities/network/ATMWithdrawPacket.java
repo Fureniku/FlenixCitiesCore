@@ -1,5 +1,6 @@
 package co.uk.silvania.cities.network;
 
+import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
 import io.netty.buffer.ByteBuf;
@@ -38,7 +39,9 @@ public class ATMWithdrawPacket implements IMessage {
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
 			EconUtils.withdrawFunds(message.withdrawAmount, player, player.worldObj);
 			FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
-			System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
+			if (CityConfig.debugMode) {
+				System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
+			}
 			return null;
 		}
 	}

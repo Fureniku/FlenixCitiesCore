@@ -1,5 +1,6 @@
 package co.uk.silvania.cities.network;
 
+import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
 import io.netty.buffer.ByteBuf;
@@ -67,7 +68,9 @@ public class AdminShopPricePacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(AdminShopPricePacket message, MessageContext ctx) {
-			System.out.println(String.format("Packet recieved! 9 bits of data? %s %s %s %s %s etc", message.ownerName, message.buyPrice1, message.sellPrice1, message.buyPrice2, message.sellPrice2));
+			if (CityConfig.debugMode) {
+				System.out.println(String.format("Packet recieved! 9 bits of data? %s %s %s %s %s etc", message.ownerName, message.buyPrice1, message.sellPrice1, message.buyPrice2, message.sellPrice2));
+			}
 			return null;
 		}
 	}

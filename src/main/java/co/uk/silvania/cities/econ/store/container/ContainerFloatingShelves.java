@@ -62,15 +62,18 @@ public class ContainerFloatingShelves extends Container {
         if (slotObject != null && slotObject.getHasStack()) {
                 ItemStack stackInSlot = slotObject.getStack();
                 stack = stackInSlot.copy();
+                
+                //Container slots + 1. IMPORTANT!
+                int invStart = 4;
 
                 //merges the item into player inventory since its in the tileEntity
-                if (slot < 9) {
-                        if (!this.mergeItemStack(stackInSlot, 0, 35, true)) {
+                if (slot < invStart) {
+                        if (!this.mergeItemStack(stackInSlot, invStart, invStart + 36, true)) {
                                 return null;
                         }
                 }
                 //places it into the tileEntity is possible since its in the player inventory
-                else if (!this.mergeItemStack(stackInSlot, 0, 4, false)) {
+                else if (!this.mergeItemStack(stackInSlot, 0, invStart - 1, false)) {
                         return null;
                 }
 

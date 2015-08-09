@@ -1,9 +1,6 @@
 package co.uk.silvania.cities.econ.store.entity;
 
-import java.util.logging.Logger;
-
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.EnumSkyBlock;
-import co.uk.silvania.cities.core.CityConfig;
+import net.minecraft.world.World;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.EconUtils;
@@ -36,6 +33,10 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	public double sellPrice3;
 	public double buyPrice4;
 	public double sellPrice4;
+	
+	public int stockXPos;
+	public int stockYPos;
+	public int stockZPos;
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
@@ -63,6 +64,10 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		nbt.setDouble("sellPrice3", sellPrice3);
 		nbt.setDouble("buyPrice4", buyPrice4);
 		nbt.setDouble("sellPrice4", sellPrice4);
+		
+		nbt.setInteger("stockXPos", stockXPos);
+		nbt.setInteger("stockYPos", stockYPos);
+		nbt.setInteger("stockZPos", stockZPos);
 	}
 	
 	@Override
@@ -92,25 +97,11 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		this.sellPrice3 = nbt.getDouble("sellPrice3");
 		this.buyPrice4 = nbt.getDouble("buyPrice4");
 		this.sellPrice4 = nbt.getDouble("sellPrice4");
+		
+		this.stockXPos = nbt.getInteger("stockXPos");
+		this.stockYPos = nbt.getInteger("stockYPos");
+		this.stockZPos = nbt.getInteger("stockZPos");
 	}
-	
-	public int getQuantity(int i) {
-		int qty;
-		int startSlot;
-		int endSlot;
-		if (i == 0) {
-			
-		} else if (i == 1) {
-			
-		} else if (i == 2) {
-			
-		} else if (i == 3) {
-			
-		}
-		//For loop.
-		return 0;
-	}
-	
 	
 	@Override
 	public Packet getDescriptionPacket() {
@@ -169,8 +160,34 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		this.worldObj.updateLightByType(EnumSkyBlock.Block, this.xCoord, this.yCoord, this.zCoord);
 	}
 	
-	public void sellItem2(int i, int qty, EntityPlayer player) {
-		System.out.println("Trying to sell an item to the player! Slot: " + i + ", qty: " + qty + " (should be 1), player: " + player);
+	public ItemStack findStockItem(int x, int y, int z, ItemStack item, EntityPlayer player) {
+		World world = player.worldObj;
+		
+		TileEntity te = world.getTileEntity(x, y, z);
+		
+		if (te != null && te instanceof TileEntityStockChest) {
+			TileEntityStockChest stockChest = (TileEntityStockChest) te;
+			
+			for (int i = 0; i < stockChest.invSize; i++) {
+				ItemStack stock = stockChest.getStackInSlot(i);
+				if (compareItemStacks(item, stock)) {
+					if (stock.stackSize >= item.stackSize) {
+						return stock.splitStack(item.stackSize);
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public boolean compareItemStacks(ItemStack item1, ItemStack item2) {
+		item1.stackSize = 1;
+		item2.stackSize = 1;
+		
+		if (item1 == item2) {
+			return true;
+		}
+		return false;
 	}
 	
 	//Selling items TO the player
@@ -214,7 +231,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				}
 				
                	setInventorySlotContents(slotId - 1, null);
-				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from "/*TODO seller name*/ + ", for $" + EconUtils.formatBalance(itemCost));
+				System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from " + ownerName + " for $" + EconUtils.formatBalance(itemCost));
 
 				if (storeOwner != null) {
 					storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));

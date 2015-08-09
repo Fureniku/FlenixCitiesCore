@@ -22,10 +22,6 @@ public class EventDrops {
     public void onEntityDrop(LivingDropsEvent event) {
         if (event.source.getSourceOfDamage() instanceof FakePlayer) {
         } else if (event.source.getSourceOfDamage() instanceof EntityPlayerMP) {
-        	System.out.println("Source: " + event.source.getSourceOfDamage());
-        	System.out.println("Entity: " + event.source.getEntity());
-        	System.out.println("Damage Type" + event.source.getDamageType());
-        	System.out.println("Living status: " + event.source.getEntity().isEntityAlive());
     		Random rand = new Random();
             int chance = rand.nextInt(200);
             if (event.entityLiving instanceof EntityZombie) {
