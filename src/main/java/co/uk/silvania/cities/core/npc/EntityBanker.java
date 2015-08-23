@@ -112,7 +112,8 @@ public class EntityBanker extends EntityAnimal {
 	
 	@Override
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-		System.out.println("Overriding");
+		return false;
+		/*System.out.println("Overriding");
         if (this.isEntityInvulnerable()) {
             return false;
         }
@@ -132,7 +133,7 @@ public class EntityBanker extends EntityAnimal {
 
             this.entityToAttack = null;
             return super.attackEntityFrom(par1DamageSource, par2);
-        }
+        }*/
     }
 	
 	public boolean isAIEnabled() {

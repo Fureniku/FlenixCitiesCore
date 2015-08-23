@@ -29,7 +29,7 @@ public class StyledGlass extends BlockStainedGlass {
 	public void registerBlockIcons(IIconRegister iconRegister) {
 		icons = new IIcon[16];
 
-		for(int i = 0; i < 12; i++) {
+		for(int i = 0; i < 13; i++) {
 			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + i);
 		}
 	}

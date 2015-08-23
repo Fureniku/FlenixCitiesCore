@@ -63,9 +63,6 @@ public class TileEntityATMBlock extends BlockContainer {
         			// Coin 1
 
         			if (player.getHeldItem().getItem() instanceof ItemCoin) {
-        				if (player.isSneaking()) {
-                		EconUtils.depositAllCash(player, world);
-        				}
         				ItemCoin coin = (ItemCoin) player.getHeldItem().getItem();
         				double currentBalance = 0;
         				if (nbt.hasKey(uuid)) {
@@ -87,12 +84,10 @@ public class TileEntityATMBlock extends BlockContainer {
         				}
         				NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
         				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(coin.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
+        				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + EnumChatFormatting.ITALIC + "all your money!"));
         				NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
         				--item.stackSize;
         			} else if (player.getHeldItem().getItem() instanceof ItemNote) {
-        				if (player.isSneaking()) {
-        					EconUtils.depositAllCash(player, world);
-	                	}
 	                    ItemNote note = (ItemNote) player.getHeldItem().getItem();
 	                    double currentBalance = 0;
 	                    if (nbt.hasKey(uuid)) {
@@ -114,6 +109,7 @@ public class TileEntityATMBlock extends BlockContainer {
 	                    }
 	                    NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
 	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(note.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
+	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + EnumChatFormatting.ITALIC + "all your money!"));
 	                    NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
 	                    --item.stackSize;
         			} else {

@@ -112,7 +112,7 @@ public class FloatingShelvesClientPacket implements IMessage {
 					
 					tileShop.getDescriptionPacket();
 					if (CityConfig.debugMode) {
-						System.out.println("Prices have been set, and description packet triggered.");
+						System.out.println("Floating Shelves prices have been set, and description packet triggered.");
 					}
 				} else {
 					System.out.println("TE is null. Sadface :(");

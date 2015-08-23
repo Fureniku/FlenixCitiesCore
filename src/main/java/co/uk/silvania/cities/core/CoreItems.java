@@ -1,9 +1,11 @@
 package co.uk.silvania.cities.core;
 
-import net.minecraft.item.Item;
 import co.uk.silvania.cities.core.npc.spawner.BankerSpawnerItem;
 import co.uk.silvania.cities.econ.DebitCardItem;
-import co.uk.silvania.cities.econ.money.*;
+import co.uk.silvania.cities.econ.money.ItemCoin;
+import co.uk.silvania.cities.econ.money.ItemNote;
+import co.uk.silvania.cities.econ.store.StoreStockPairer;
+import net.minecraft.item.Item;
 
 public class CoreItems {
 	private static CityConfig config;
@@ -24,6 +26,7 @@ public class CoreItems {
 	public static Item note10000;
 
 	public static Item debitCardNew;
+	public static Item storeStockPairer;
 	
 	public static Item bankerSpawner;
 
@@ -57,6 +60,7 @@ public class CoreItems {
     	note10000 = new ItemNote(100).setUnlocalizedName("note10000");
     	
     	debitCardNew = new DebitCardItem().setUnlocalizedName("debitCardNew");
+    	storeStockPairer = new StoreStockPairer().setUnlocalizedName("storeStockPairer");
     	
     	bankerSpawner = new BankerSpawnerItem().setUnlocalizedName("bankerSpawnerItem");
 		//ringItem = new CraftingIngredientItems(config.ringItemID, 64).setUnlocalizedName("ringItem");

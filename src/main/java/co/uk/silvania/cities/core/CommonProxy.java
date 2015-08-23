@@ -17,15 +17,8 @@ public class CommonProxy {
 	@Instance
 	public static FlenixCities_Core instance;
 	
-    public void registerRenderThings() {}
-    public void registerRenderers() {}
-    public boolean banCheck() {
-		return false;
-	}
-    
     public void entityStuff() {
     	EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 1, FlenixCities_Core.instance, 32, 5, true);
-    	
     }
     
     public void registerBlocks() {
@@ -48,18 +41,11 @@ public class CommonProxy {
        	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
        	GameRegistry.registerBlock(CoreBlocks.lightingBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
        	GameRegistry.registerBlock(CoreBlocks.lightingRotateBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingRotateBlocks.getUnlocalizedName().substring(5)));
-       	
-       	GameRegistry.registerBlock(CoreBlocks.drywallWhite, "drywallWhite");
-       	GameRegistry.registerBlock(CoreBlocks.drywallRed, "drywallRed");
-       	GameRegistry.registerBlock(CoreBlocks.drywallBlue, "drywallBlue");
-       	GameRegistry.registerBlock(CoreBlocks.drywallGreen, "drywallGreen");
-       	GameRegistry.registerBlock(CoreBlocks.drywallGrey, "drywallGrey");
+
        	GameRegistry.registerBlock(CoreBlocks.styledGlassPane, "styledGlassPane"); //, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.styledGlassPane.getUnlocalizedName().substring(5)));
        	GameRegistry.registerBlock(CoreBlocks.styledGlassWhitePane, "styledGlassWhitePane");
        	
        	GameRegistry.registerBlock(CoreBlocks.quartzDecorBlocks, ItemFloorBlocks.class, "quartzDecorBlocks");
-
-       	
         GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
        	
        	
@@ -88,6 +74,7 @@ public class CommonProxy {
         GameRegistry.registerItem(CoreItems.note10000, "note10000");
         GameRegistry.registerItem(CoreItems.debitCardNew, "debitCardNew");
         GameRegistry.registerItem(CoreItems.bankerSpawner, "bankerSpawner");
+        GameRegistry.registerItem(CoreItems.storeStockPairer, "storeStockPairer");
 
     	/*GameRegistry.registerItem(CoreItems.ringItem, "ringItem");
     	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
@@ -95,248 +82,9 @@ public class CommonProxy {
     	GameRegistry.registerItem(CoreItems.rubyNecklace, "rubyNecklace");*/
     }
     
-    public void addNames() {
-    	LanguageRegistry.addName(CoreBlocks.rebarBlock, "Rebar");
-    	
-    	LanguageRegistry.addName(CoreBlocks.drywallWhite, "White Drywall");
-    	LanguageRegistry.addName(CoreBlocks.drywallRed, "Red Drywall");
-    	LanguageRegistry.addName(CoreBlocks.drywallBlue, "Blue Drywall");
-    	LanguageRegistry.addName(CoreBlocks.drywallGreen, "Green Drywall");
-    	LanguageRegistry.addName(CoreBlocks.drywallGrey, "Grey Drywall");
+    public void addNames() {    	
     	LanguageRegistry.addName(CoreBlocks.styledGlassPane, "Styled Glass Pane");
     	LanguageRegistry.addName(CoreBlocks.styledGlassWhitePane, "Styled Glass Pane");
-        
-        LanguageRegistry.addName(CoreBlocks.floatingShelvesBlock, "Floating Shelves");
-        LanguageRegistry.addName(CoreBlocks.adminShopBlock, "Floating Shelves (Unlimited)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 0), "ATM Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 4), "ATM Stone Brick");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 8), "ATM City White");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.atmBlock, 1, 12), "ATM City Grey");
-    	
-    	/*LanguageRegistry.addName(CoreItems.plasticItem, "Plastic");
-    	LanguageRegistry.addName(CoreItems.smallPCB, "Small PCB");
-    	LanguageRegistry.addName(CoreItems.largePCB, "Large PCB");
-    	
-    	LanguageRegistry.addName(CoreItems.ringItem, "Ring");
-    	LanguageRegistry.addName(CoreItems.diamondRing, "Diamond Ring");
-    	LanguageRegistry.addName(CoreItems.necklaceItem, "Necklace");
-    	LanguageRegistry.addName(CoreItems.rubyNecklace, "Ruby Necklace");*/
-
-        LanguageRegistry.addName(CoreItems.coin1, "1 " + CityConfig.currencySmall);
-        LanguageRegistry.addName(CoreItems.coin2, "2 " + CityConfig.currencySmallPlural);
-        LanguageRegistry.addName(CoreItems.coin5, "5 " + CityConfig.currencySmallPlural);
-        LanguageRegistry.addName(CoreItems.coin10, "10 " + CityConfig.currencySmallPlural);
-        LanguageRegistry.addName(CoreItems.coin25, "25 " + CityConfig.currencySmallPlural);
-        LanguageRegistry.addName(CoreItems.coin50, "50 " + CityConfig.currencySmallPlural);
-        LanguageRegistry.addName(CoreItems.coin100, "1 " + CityConfig.currencyLarge + " Coin");
-        LanguageRegistry.addName(CoreItems.note100, "1 " + CityConfig.currencyLarge);
-        LanguageRegistry.addName(CoreItems.note200, "2 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.note500, "5 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.note1000, "10 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.note2000, "20 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.note5000, "50 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.note10000, "100 " + CityConfig.currencyLargePlural);
-        LanguageRegistry.addName(CoreItems.debitCardNew, "Debit Card");
-        LanguageRegistry.addName(CoreItems.bankerSpawner, "Banker Spawner");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0), "White Skyscraper Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1), "Light Grey Skyscraper Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 2), "Dark Grey Skyscraper Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 3), "Black Skyscraper Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 4), "White Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 5), "Light Grey Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 6), "Dark Grey Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 7), "Black Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 8), "White Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 9), "Light Grey Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 10), "Dark Grey Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 11), "Black Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 12), "White Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 13), "Light Grey Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 14), "Dark Grey Skyscraper Block (Framed)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 15), "Black Skyscraper Block (Framed)");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 0), "White Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 1), "Orange Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 2), "Magenta Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 3), "Light Blue Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 4), "Yellow Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 5), "Lime Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 6), "Pink Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 7), "Grey Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 8), "Light Grey Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 9), "Cyan Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 10), "Purple Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 11), "Blue Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 12), "Brown Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 13), "Green Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 14), "Red Stained Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlass, 1, 15), "Black Stained Glass");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 0), "White Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 1), "Orange Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 2), "Magenta Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 3), "Light Blue Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 4), "Yellow Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 5), "Lime Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 6), "Pink Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 7), "Grey Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 8), "Light Grey Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 9), "Cyan Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 10), "Purple Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 11), "Blue Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 12), "Brown Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 13), "Green Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 14), "Red Stained Glass (Lit)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.stainedGlassLit, 1, 15), "Black Stained Glass (Lit)");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 0), "Blue White-framed Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 1), "Blue Horizontal Forked Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 2), "Blue Vertical Forked Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 3), "Blue Framed Aligned Cross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 4), "Blue Aligned Cross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 5), "Blue Framed Horizontal Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 6), "Blue Horizontal Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 7), "Blue Framed Vertical Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 8), "Blue Vertical Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 9), "Blue Small Squares");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 10), "Blue Cross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 11), "Blue Supercross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 12), "Suggest!");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 13), "Suggest!");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 14), "Suggest!");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlass, 1, 15), "Suggest!");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 0), "Clear White-framed Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 1), "Clear Horizontal Forked Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 2), "Clear Vertical Forked Glass");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 3), "Clear Framed Aligned Cross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 4), "Clear Aligned Cross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 5), "Clear Framed Horizontal Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 6), "Clear Horizontal Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 7), "Clear Framed Vertical Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 8), "Clear Vertical Line");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 9), "Clear Small Squares");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 10), "Clear Cross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 11), "Clear Supercross");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 12), "Suggest!");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 13), "Suggest!");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 14), "Suggest!");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.styledGlassWhite, 1, 15), "Suggest!");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 0), "White Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 1), "Orange Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 2), "Magenta Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 3), "Light Blue Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 4), "Yellow Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 5), "Lime Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 6), "Pink Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 7), "Grey Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 8), "Light Grey Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 9), "Cyan Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 10), "Purple Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 11), "Blue Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 12), "Brown Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 13), "Green Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 14), "Red Wool-Topped Ceiling Tile");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolCeilingTile, 1, 15), "Black Wool-Topped Ceiling Tile");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 0), "White Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 1), "Orange Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 2), "Magenta Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 3), "Light Blue Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 4), "Yellow Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 5), "Lime Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 6), "Pink Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 7), "Grey Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 8), "Light Grey Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 9), "Cyan Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 10), "Purple Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 11), "Blue Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 12), "Brown Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 13), "Green Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 14), "Red Wool-Topped Stone");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolStone, 1, 15), "Black Wool-Topped Stone");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 0), "White Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 1), "Orange Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 2), "Magenta Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 3), "Light Blue Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 4), "Yellow Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 5), "Lime Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 6), "Pink Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 7), "Grey Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 8), "Light Grey Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 9), "Cyan Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 10), "Purple Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 11), "Blue Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 12), "Brown Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 13), "Green Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 14), "Red Wool-Topped Wood");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.woolWood, 1, 15), "Black Wool-Topped Wood");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 0), "White Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 1), "Orange Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 2), "Magenta Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 3), "Light Blue Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 4), "Yellow Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 5), "Lime Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 6), "Pink Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 7), "Grey Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 8), "Light Grey Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 9), "Cyan Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 10), "Purple Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 11), "Blue Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 12), "Brown Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 13), "Green Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 14), "Red Plastic Block");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.plasticBlock, 1, 15), "Black Plastic Block");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 0), "Bathroom Tiles");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 1), "Kitchen Tiles");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 2), "Generic Tiles 1");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 3), "Generic Tiles 2");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 4), "Oak Wood Laminate");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 5), "Spruce Wood Laminate");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 6), "Birch Wood Laminate");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 7), "Jungle Wood Laminate");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 8), "");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 9), "");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 10), "");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 11), "");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 12), "");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 13), "");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 14), "");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.floorBlocks, 1, 15), "");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingBlocks, 1, 1), "Light Panel");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingBlocks, 1, 2), "Ceiling Light");
-        
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 0), "Vertical Light Strip");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 4), "Vertical Light Strip (Short)");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 8), "Vertical Light Panel");
-        LanguageRegistry.addName(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 12), "Vertical Light Panel (Small)");
-
-        
-        /*LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster1, 1, 0), "Silvania VA");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster1, 1, 4), "Remula");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster1, 1, 8), "9");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster1, 1, 12), "13");
-        
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster2, 1, 0), "17");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster2, 1, 4), "21");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster2, 1, 8), "25");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster2, 1, 12), "29");
-        
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster3, 1, 0), "DoanVPS Poster");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster3, 1, 4), "Ad Slot 2");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster3, 1, 8), "Ad Slot 3");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster3, 1, 12), "Ad Slot 4");
-        
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster4, 1, 0), "Ad Slot 5");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster4, 1, 4), "Ad Slot 6");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster4, 1, 8), "Ad Slot 7");
-        LanguageRegistry.addName(new ItemStack(FlenixCities.verticalPoster4, 1, 12), "Ad Slot 8");*/
     }
     
     public void addRecipes() {
@@ -465,4 +213,7 @@ public class CommonProxy {
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 15), woodBlock, blackWool);
     }
 
+    public void registerRenderThings() {}
+    public void registerRenderers() {}
+    
 }

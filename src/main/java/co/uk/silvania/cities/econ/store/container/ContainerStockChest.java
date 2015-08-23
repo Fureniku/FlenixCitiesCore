@@ -3,22 +3,28 @@ package co.uk.silvania.cities.econ.store.container;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import co.uk.silvania.cities.econ.store.entity.TileEntityStockChest;
 
 public class ContainerStockChest extends Container {
 	
-	protected TileEntityStockChest te;
+	public TileEntityStockChest te;
+	private IInventory stockChestInventory;
 	
 	public ContainerStockChest(InventoryPlayer invPlayer, TileEntityStockChest tileEntity) {
 		te = tileEntity;
 		
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 12; j++) {
-				addSlotToContainer(new Slot(te, j + i, 0 + j * 18, 0 + i * 18));
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 13; j++) {
+				addSlotToContainer(new Slot(te, j + i * 13, 12 + j * 18, 62 + i * 18));
 			}
 		}
+		addSlotToContainer(new Slot(te, 78, 12, 170));
+		addSlotToContainer(new Slot(te, 79, 30, 170));
+		addSlotToContainer(new Slot(te, 80, 48, 170));
+		addSlotToContainer(new Slot(te, 81, 228, 40));
 		bindPlayerInventory(invPlayer);
 	}
 	
@@ -30,12 +36,12 @@ public class ContainerStockChest extends Container {
 	protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
         for (int i = 0; i < 3; i++) {
         	for (int j = 0; j < 9; j++) {
-        		addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+        		addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 84 + j * 18, 174 + i * 18));
         	}
         }
 
         for (int i = 0; i < 9; i++) {
-        	addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
+        	addSlotToContainer(new Slot(inventoryPlayer, i, 84 + i * 18, 232));
         }
 	}
 	
@@ -46,31 +52,43 @@ public class ContainerStockChest extends Container {
 
 		//null checks and checks if the item can be stacked (maxStackSize > 1)
 		if (slotObject != null && slotObject.getHasStack()) {
-			ItemStack stackInSlot = slotObject.getStack();
-			stack = stackInSlot.copy();
+            ItemStack stackInSlot = slotObject.getStack();
+            stack = stackInSlot.copy();
+            
+            //Container slots + 1. IMPORTANT!
+            int invStart = 83;
 
-			//merges the item into player inventory since its in the tileEntity
-			if (slot < te.getSizeInventory()) {
-				if (!this.mergeItemStack(stackInSlot, te.getSizeInventory(), 36+te.getSizeInventory(), true)) {
-					return null;
-				}
-				//places it into the tileEntity is possible since its in the player inventory
-			} else if (!this.mergeItemStack(stackInSlot, 0, te.getSizeInventory(), false)) {
-				return null;
-			}
+            //merges the item into player inventory since its in the tileEntity
+            if (slot < invStart) {
+                    if (!this.mergeItemStack(stackInSlot, invStart, invStart + 36, true)) {
+                            return null;
+                    }
+            }
+            //places it into the tileEntity is possible since its in the player inventory
+            else if (!this.mergeItemStack(stackInSlot, 0, invStart - 1, false)) {
+                    return null;
+            }
 
-			if (stackInSlot.stackSize == 0) {
-				slotObject.putStack(null);
-			} else {
-				slotObject.onSlotChanged();
+            if (stackInSlot.stackSize == 0) {
+                slotObject.putStack(null);
+	        } else {
+	                slotObject.onSlotChanged();
+	        }
+	
+	        if (stackInSlot.stackSize == stack.stackSize) {
+	                return null;
+	        }
+	        slotObject.onPickupFromSlot(player, stackInSlot);
 			}
-
-			if (stackInSlot.stackSize == stack.stackSize) {
-				return null;
-			}
-			slotObject.onPickupFromSlot(player, stackInSlot);
-		}
 		return stack;
     }
-
+	
+	@Override
+    public void putStackInSlot(int slot, ItemStack item) {
+        this.getSlot(slot).putStack(item);
+    }
+	
+	public IInventory getFloatingShelvesInventory() {
+		return this.stockChestInventory;
+	}
 }

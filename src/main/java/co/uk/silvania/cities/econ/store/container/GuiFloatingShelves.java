@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
+import co.uk.silvania.cities.econ.store.entity.TileEntityStockChest;
 import co.uk.silvania.cities.network.FloatingShelvesClientPacket;
 import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
 import co.uk.silvania.cities.network.FloatingShelvesSalePacket;
@@ -56,7 +57,12 @@ public class GuiFloatingShelves extends GuiContainer {
 	private ItemStack slot2;
 	private ItemStack slot3;
 	
+	boolean buying;
+	boolean selling;
+	
 	private TileEntityFloatingShelves shelvesEntity;
+	
+	private TileEntityStockChest stockEntity;
 
 	public GuiFloatingShelves(InventoryPlayer invPlayer, TileEntityFloatingShelves shelvesEntity) {
 		super(new ContainerFloatingShelves(invPlayer, shelvesEntity));
@@ -74,6 +80,13 @@ public class GuiFloatingShelves extends GuiContainer {
 		displaySell2 = "" + shelvesEntity.sellPrice2;
 		displaySell3 = "" + shelvesEntity.sellPrice3;
 		displaySell4 = "" + shelvesEntity.sellPrice4;
+		
+		if (invPlayer.player.worldObj.getTileEntity(shelvesEntity.stockXPos, shelvesEntity.stockYPos, shelvesEntity.stockZPos) instanceof TileEntityStockChest) {
+			stockEntity = (TileEntityStockChest) invPlayer.player.worldObj.getTileEntity(shelvesEntity.stockXPos, shelvesEntity.stockYPos, shelvesEntity.stockZPos);
+			
+			buying = stockEntity.buying;
+			selling = stockEntity.selling;
+		}
 		
 		this.slot0 = this.shelvesEntity.getStackInSlot(0);
 		this.slot1 = this.shelvesEntity.getStackInSlot(1);
@@ -268,16 +281,16 @@ public class GuiFloatingShelves extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		if (sell1Text.getText().equals("0") || sell1Text.getText().equals("0.0") || (EconUtils.parseDouble(sell1Text.getText()) > EconUtils.parseDouble(buy1Text.getText()))) {
+		if (EconUtils.parseDouble(buy1Text.getText()) > 0 && EconUtils.parseDouble(sell1Text.getText()) > EconUtils.parseDouble(buy1Text.getText())) {
 			sellButton1.enabled = false;
 		}
-		if (sell2Text.getText().equals("0") || sell2Text.getText().equals("0.0") || (EconUtils.parseDouble(sell2Text.getText()) > EconUtils.parseDouble(buy2Text.getText()))) {
+		if (EconUtils.parseDouble(buy2Text.getText()) > 0 && EconUtils.parseDouble(sell2Text.getText()) > EconUtils.parseDouble(buy2Text.getText())) {
 			sellButton2.enabled = false;
 		}
-		if (sell3Text.getText().equals("0") || sell3Text.getText().equals("0.0") || (EconUtils.parseDouble(sell3Text.getText()) > EconUtils.parseDouble(buy3Text.getText()))) {
+		if (EconUtils.parseDouble(buy3Text.getText()) > 0 && EconUtils.parseDouble(sell3Text.getText()) > EconUtils.parseDouble(buy3Text.getText())) {
 			sellButton3.enabled = false;
 		}
-		if (sell4Text.getText().equals("0") || sell4Text.getText().equals("0.0") || (EconUtils.parseDouble(sell4Text.getText()) > EconUtils.parseDouble(buy4Text.getText()))) {
+		if (EconUtils.parseDouble(buy4Text.getText()) > 0 && EconUtils.parseDouble(sell4Text.getText()) > EconUtils.parseDouble(buy4Text.getText())) {
 			sellButton4.enabled = false;
 		}
 		if (slot0 == null) {

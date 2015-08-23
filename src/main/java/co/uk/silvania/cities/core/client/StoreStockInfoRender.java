@@ -6,6 +6,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.lwjgl.opengl.GL11;
+
+import co.uk.silvania.cities.econ.EconUtils;
+import co.uk.silvania.cities.econ.store.entity.IStoreBlock;
+import co.uk.silvania.cities.econ.store.entity.StockChestBlock;
+import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
+import co.uk.silvania.cities.econ.store.entity.TileEntityStockChest;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -13,7 +23,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -21,16 +30,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import co.uk.silvania.cities.econ.EconUtils;
-import co.uk.silvania.cities.econ.store.entity.IStoreBlock;
-import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
-import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class StoreStockInfoRender extends Gui {
 
@@ -49,7 +48,7 @@ public class StoreStockInfoRender extends Gui {
 		
 		Vec3 vec3 = player.getPosition(1.0F);
 		Vec3 lookVec = player.getLookVec();
-		MovingObjectPosition mop = mc.renderViewEntity.rayTrace(7, 1.0F);//world.rayTraceBlocks(vec3, lookVec);
+		MovingObjectPosition mop = mc.renderViewEntity.rayTrace(7, 1.0F);
 		
 		ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 		
@@ -166,6 +165,25 @@ public class StoreStockInfoRender extends Gui {
 							GL11.glDisable(GL11.GL_LIGHTING);
 							GL11.glScalef(0.5F, 0.5F, 0.5F);
 							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, (", " + EnumChatFormatting.GREEN + "Buy: " + EnumChatFormatting.GOLD + "$" + costBuy + ", " + EnumChatFormatting.YELLOW + "Sell: " + EnumChatFormatting.GOLD + "$" + costSell), player, font);
+							GL11.glPopMatrix();
+						}
+					}
+				}
+			} else if (block instanceof StockChestBlock) {
+				TileEntity te = world.getTileEntity(x, y, z);
+				
+				if (te instanceof TileEntityStockChest) {
+					TileEntityStockChest stockChest = (TileEntityStockChest) te;
+					
+					ItemStack item = stockChest.getStackInSlot(stockChest.invSize - 1);
+					
+					if (mop.sideHit == 1) {
+						if (item != null) {
+							GL11.glPushMatrix();
+							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+							GL11.glDisable(GL11.GL_LIGHTING);
+							GL11.glScalef(0.5F, 0.5F, 0.5F);
+							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, "", player, font);
 							GL11.glPopMatrix();
 						}
 					}

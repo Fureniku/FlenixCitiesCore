@@ -830,4 +830,45 @@ public class EconUtils {
         	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
         }
 	}
+	
+	public static boolean chargeAccountViaUUID(String uuid, World world, double amt) {
+		double cardBalance = getBalanceViaUUID(uuid, world);
+		if (amt <= cardBalance) {			
+	        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+			double currentBalance = 0;
+	        if (nbt.hasKey(uuid)) {
+	            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+	            if (playernbt.hasKey("Balance")) {
+	                currentBalance = playernbt.getDouble("Balance");
+	            }
+	            double modifiedBalance = currentBalance - amt;
+	            playernbt.setDouble("Balance", modifiedBalance);
+	            //TODO nbt.setCompoundTag(player.username, playernbt);
+	        } else {
+	            NBTTagCompound playernbt = new NBTTagCompound();
+	            if (playernbt.hasKey("Balance")) {
+	                currentBalance = playernbt.getDouble("Balance");
+	            }
+	            double modifiedBalance = currentBalance - amt;
+	            playernbt.setDouble("Balance", modifiedBalance);
+	            //TODO nbt.setCompoundTag(player.username, playernbt);
+	        }
+	        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+			return true;
+		}
+		return false;
+	}
+	
+	public static double getBalanceViaUUID(String uuid, World world) {
+        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+        double balance = 0;
+        if (nbt.hasKey(uuid)) {
+            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+            if (playernbt.hasKey("Balance")) {
+                balance = playernbt.getDouble("Balance");
+            }
+        }
+        return balance;
+	}
 }

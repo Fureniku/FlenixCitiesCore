@@ -1,14 +1,19 @@
 package co.uk.silvania.cities.econ.store.entity;
 
 import java.util.List;
+import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
@@ -31,6 +36,7 @@ public class AdminShopBlock extends BlockContainer implements IStoreBlock {
 	public AdminShopBlock() {
 		super(Material.iron);
 		this.setCreativeTab(FlenixCities_Core.tabEcon);
+		this.setHardness(2.0F);
 	}
 	
 	@Override
@@ -139,5 +145,44 @@ public class AdminShopBlock extends BlockContainer implements IStoreBlock {
 	public TileEntity createNewTileEntity(World world, int id) {
 		return new TileEntityAdminShop();
 	}
+	
+	@Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6) {
+		dropItems(world, x, y, z);
+		super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    private void dropItems(World world, int x, int y, int z){
+    	Random rand = new Random();
+
+    	TileEntity tileEntity = world.getTileEntity(x, y, z);
+    	if (!(tileEntity instanceof IInventory)) {
+    		return;
+    	}
+    	IInventory inventory = (IInventory) tileEntity;
+
+    	for (int i = 0; i < inventory.getSizeInventory(); i++) {
+    		ItemStack item = inventory.getStackInSlot(i);
+
+    		if (item != null && item.stackSize > 0) {
+    			float rx = rand.nextFloat() * 0.8F + 0.1F;
+    			float ry = rand.nextFloat() * 0.8F + 0.1F;
+    			float rz = rand.nextFloat() * 0.8F + 0.1F;
+    			
+    			EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+    			
+    			if (item.hasTagCompound()) {
+    				entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
+    			}
+
+    			float factor = 0.05F;
+    			entityItem.motionX = rand.nextGaussian() * factor;
+    			entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
+    			entityItem.motionZ = rand.nextGaussian() * factor;
+    			world.spawnEntityInWorld(entityItem);
+    			item.stackSize = 0;
+    		}
+    	}
+    }
 
 }

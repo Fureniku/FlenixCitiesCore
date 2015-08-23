@@ -1,7 +1,11 @@
 package co.uk.silvania.cities.core.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
 import co.uk.silvania.cities.core.CommonProxy;
+import co.uk.silvania.cities.core.CoreBlocks;
 import co.uk.silvania.cities.core.client.models.*;
 import co.uk.silvania.cities.core.client.npcspawner.NPCSpawnerRenderer;
 import co.uk.silvania.cities.core.npc.EntityBanker;
@@ -16,27 +20,17 @@ public class ClientProxy extends CommonProxy {
 	
 	public static int PosterRenderID;
 	String userName = Minecraft.getMinecraft().getSession().getUsername();
-	
-	@Override
-	public boolean banCheck() {
-    	System.out.println("This player's username is... " + userName + "!");
-    	System.out.println("Now, have they been good? Let's take a look...");
-    	if (userName.equalsIgnoreCase("shobu")) {
-    		return true;
-    	} else
-    		return false;
-	}
         
     @Override
     public void registerRenderThings() {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityATMEntity.class, new TileEntityATMRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFloatingShelves.class, new TileEntityFloatingShelvesRenderer());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAdminShop.class, new AdminShelvesRenderer());
-    	//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAutoShelf.class, new TileEntityAutoShelfRenderer());
+    	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStockChest.class, new StockChestRenderer());
     	
-    	//TODO MinecraftForgeClient.registerItemRenderer(CoreBlocks.adminShopBlock.blockID, new AdminShelvesItemRenderer());
-    	//MinecraftForgeClient.registerItemRenderer(CoreBlocks.floatingShelvesBlock.blockID, new AdminShelvesItemRenderer());
-    	//MinecraftForgeClient.registerItemRenderer(CoreBlocks.atmBlock.blockID, new ATMItemRenderer());
+    	MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(CoreBlocks.adminShopBlock), new AdminShelvesItemRenderer());
+    	MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(CoreBlocks.floatingShelvesBlock), new AdminShelvesItemRenderer());
+    	MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(CoreBlocks.atmBlock), (IItemRenderer) new ATMItemRenderer());
     	
     	ClientRegistry.bindTileEntitySpecialRenderer(NPCSpawnerEntity.class, new NPCSpawnerRenderer());
     	

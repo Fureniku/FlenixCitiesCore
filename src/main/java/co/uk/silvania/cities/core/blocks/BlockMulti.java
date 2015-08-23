@@ -36,17 +36,24 @@ public class BlockMulti extends Block {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public IIcon getIcon(int par1, int par2) {
+	public IIcon getIcon(int side, int meta) {
 		if (this.getUnlocalizedName().contains("quartzDecorBlocks")) {
-			if (par2 == 10) {
-				if (par1 == 0) {
+			if (meta == 2 || meta == 5 || meta == 10) {
+				if (side == 0) {
+					return icons[meta -1];
+				} else if (side == 1) {
+					return icons[15];
+				}
+			}
+			if (meta == 10) {
+				if (side == 0) {
 					return icons[9];
-				} else if (par1 == 1) {
+				} else if (side == 1) {
 					return icons[15];
 				}
 			}
 		}
-		return icons[par2];
+		return icons[meta];
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

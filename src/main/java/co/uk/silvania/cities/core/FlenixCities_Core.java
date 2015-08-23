@@ -11,15 +11,7 @@ import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import co.uk.silvania.cities.econ.store.entity.TileEntityStockChest;
-import co.uk.silvania.cities.network.ATMWithdrawPacket;
-import co.uk.silvania.cities.network.AdminShopClientPacket;
-import co.uk.silvania.cities.network.AdminShopPricePacket;
-import co.uk.silvania.cities.network.FloatingShelvesClientPacket;
-import co.uk.silvania.cities.network.FloatingShelvesPricePacket;
-import co.uk.silvania.cities.network.FloatingShelvesSalePacket;
-import co.uk.silvania.cities.network.SalePacket;
-import co.uk.silvania.cities.network.ServerBalancePacket;
-import co.uk.silvania.cities.network.SoundPacket;
+import co.uk.silvania.cities.network.*;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -33,7 +25,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.11.1")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.12.0")
 public class FlenixCities_Core { 
 	
 	public static final String modid = "flenixcities";
@@ -75,6 +67,7 @@ public class FlenixCities_Core {
     	network.registerMessage(FloatingShelvesPricePacket.Handler.class, FloatingShelvesPricePacket.class, 6, Side.CLIENT);
     	network.registerMessage(FloatingShelvesClientPacket.Handler.class, FloatingShelvesClientPacket.class, 7, Side.SERVER);
     	network.registerMessage(FloatingShelvesSalePacket.Handler.class, FloatingShelvesSalePacket.class, 8, Side.SERVER);
+    	network.registerMessage(StockChestUpdatePacket.Handler.class, StockChestUpdatePacket.class, 9, Side.SERVER);
     	
     	configPath = event.getModConfigurationDirectory() + "/FlenixCities/";
     	CityConfig.init(configPath);
@@ -83,12 +76,12 @@ public class FlenixCities_Core {
         CoreBlocks.init();
         CoreItems.init();
         
-        proxy.registerRenderThings();
-        proxy.registerRenderers();
-
 	    proxy.registerBlocks();
 	    proxy.addNames();
 	    proxy.entityStuff();
+	    
+        proxy.registerRenderThings();
+        proxy.registerRenderers();
 	        
 	    MinecraftForge.EVENT_BUS.register(new EventDrops());
 	    if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {

@@ -20,10 +20,6 @@ public class ContainerFloatingShelves extends Container {
 	private IInventory adminShopInventory;
 	public static int tabButton;
 	
-	private int field_94536_g;
-	private int field_94535_f = -1;
-	private final Set field_94537_h = new HashSet();
-	
 	public ContainerFloatingShelves(InventoryPlayer invPlayer, TileEntityFloatingShelves te) {
 		this.te = te;
 		addSlotToContainer(new Slot(te, 0, 8, 50));

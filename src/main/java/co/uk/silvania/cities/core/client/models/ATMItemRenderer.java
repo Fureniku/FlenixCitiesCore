@@ -30,19 +30,19 @@ public class ATMItemRenderer implements IItemRenderer {
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		switch (type) {
 			case ENTITY: {
-				renderShelves(180);
+				renderATM(180);
 				return;
 			}
         	case EQUIPPED: {
-        		renderShelvesHeld(270);
+        		renderATMHeld(270);
         		return;
         	}
 	        case EQUIPPED_FIRST_PERSON: {
-	            renderShelvesHeld(270);
+	            renderATMHeld(270);
 	            return;
 	        }
             case INVENTORY: {
-                renderShelves(0);
+                renderATM(0);
                 return;
             }
             default:
@@ -50,7 +50,7 @@ public class ATMItemRenderer implements IItemRenderer {
 		}
 	}
 	
-	private void renderShelves(int rot) {
+	private void renderATM(int rot) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(0.0F, 1.0F, 0.0F);
         GL11.glRotatef(rot, 0.0F, 1.0F, 0.0F);
@@ -61,7 +61,7 @@ public class ATMItemRenderer implements IItemRenderer {
         GL11.glPopMatrix();
 	}
 	
-	private void renderShelvesHeld(int rot) {
+	private void renderATMHeld(int rot) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(0.5F, 1.5F, 0.5F);
         GL11.glRotatef(rot, 0.0F, 1.0F, 0.0F);

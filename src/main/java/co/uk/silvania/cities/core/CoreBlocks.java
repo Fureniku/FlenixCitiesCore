@@ -29,11 +29,6 @@ public class CoreBlocks {
 	public static Block plasticBlock;
 	public static Block floorBlocks;
 	public static Block lightingBlocks;
-	public static Block drywallWhite;
-	public static Block drywallRed;
-	public static Block drywallBlue;
-	public static Block drywallGreen;
-	public static Block drywallGrey;
 	public static Block lightingRotateBlocks;
 	public static Block stainedGlassPane;
 	public static Block styledGlassPane;
@@ -80,11 +75,6 @@ public class CoreBlocks {
     	plasticBlock = new PlasticBlocks().setBlockName("plasticBlock");
     	floorBlocks = new FloorBlocks().setBlockName("floorBlocks");
     	lightingBlocks = new LightingBlocks().setBlockName("lightingBlocks");
-    	drywallWhite = new BlockDrywall(FlenixCities_Core.modid + ":drywallWhite", FlenixCities_Core.modid + ":drywallWhite", true);
-    	drywallRed = new BlockDrywall(FlenixCities_Core.modid + ":drywallRed", FlenixCities_Core.modid + ":drywallRed", true);
-    	drywallBlue = new BlockDrywall(FlenixCities_Core.modid + ":drywallBlue", FlenixCities_Core.modid + ":drywallBlue", true);
-    	drywallGreen = new BlockDrywall(FlenixCities_Core.modid + ":drywallGreen", FlenixCities_Core.modid + ":drywallGreen", true);
-    	drywallGrey = new BlockDrywall(FlenixCities_Core.modid + ":drywallGrey", FlenixCities_Core.modid + ":drywallGrey", true);
     	lightingRotateBlocks = new LightingRotateBlocks().setBlockName("lightingRotateBlocks");
     	styledGlassPane = new StainedGlassPane(FlenixCities_Core.modid + ":styledGlass0", FlenixCities_Core.modid + ":styledGlass0", false).setBlockName("styledGlassPane");
     	styledGlassWhitePane = new StainedGlassPane(FlenixCities_Core.modid + ":styledGlassWhite0", FlenixCities_Core.modid + ":styledGlassWhite0", false).setBlockName("styledGlassWhitePane");
