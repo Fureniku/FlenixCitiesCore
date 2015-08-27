@@ -161,22 +161,6 @@ public class EntityBanker extends EntityAnimal {
 		}
 	}
 	
-	protected String getLivingSound() {
-		return "mob.glog.say";
-	}
-	
-	protected String getHurtSound() {
-		return "mob.glog.say";
-	}
-	
-	protected String getDeathSound() {
-		return "mob.glog.death";
-	}
-	
-	protected void playStepSound(int par1, int par2, int par3, int par4) {
-		this.worldObj.playSoundAtEntity(this, "mob.glog.step", 0.15F,  1.0F);
-	}
-	
 	public EntityAgeable createChild(EntityAgeable var1) {
 		return null;
 	}
