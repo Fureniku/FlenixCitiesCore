@@ -6,6 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import co.uk.silvania.cities.econ.EconUtils;
 import co.uk.silvania.cities.econ.store.entity.TileEntityStockChest;
 
 public class ContainerStockChest extends Container {
@@ -47,6 +48,11 @@ public class ContainerStockChest extends Container {
 	
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+		if (slot > 117) {
+			EconUtils.debug("[BAD] Slot: " + slot);
+			return null;
+		}
+		EconUtils.debug("Slot: " + slot);
 		ItemStack stack = null;
 		Slot slotObject = (Slot) inventorySlots.get(slot);
 
@@ -60,7 +66,7 @@ public class ContainerStockChest extends Container {
 
             //merges the item into player inventory since its in the tileEntity
             if (slot < invStart) {
-                    if (!this.mergeItemStack(stackInSlot, invStart, invStart + 36, true)) {
+                    if (!this.mergeItemStack(stackInSlot, invStart, invStart + 35, true)) {
                             return null;
                     }
             }
