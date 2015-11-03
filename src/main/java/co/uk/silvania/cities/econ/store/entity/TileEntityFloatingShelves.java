@@ -1,5 +1,6 @@
 package co.uk.silvania.cities.econ.store.entity;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -35,6 +36,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	public double sellPrice3;
 	public double buyPrice4;
 	public double sellPrice4;
+	public boolean matchNBT;
 	
 	public int stockXPos;
 	public int stockYPos;
@@ -66,6 +68,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		nbt.setDouble("sellPrice3", sellPrice3);
 		nbt.setDouble("buyPrice4", buyPrice4);
 		nbt.setDouble("sellPrice4", sellPrice4);
+		nbt.setBoolean("matchNBT", matchNBT);
 		
 		nbt.setInteger("stockXPos", stockXPos);
 		nbt.setInteger("stockYPos", stockYPos);
@@ -99,6 +102,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		this.sellPrice3 = nbt.getDouble("sellPrice3");
 		this.buyPrice4 = nbt.getDouble("buyPrice4");
 		this.sellPrice4 = nbt.getDouble("sellPrice4");
+		this.matchNBT = nbt.getBoolean("matchNBT");
 		
 		this.stockXPos = nbt.getInteger("stockXPos");
 		this.stockYPos = nbt.getInteger("stockYPos");
@@ -127,6 +131,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		nbt.setDouble("sellPrice3", sellPrice3);
 		nbt.setDouble("buyPrice4", buyPrice4);
 		nbt.setDouble("sellPrice4", sellPrice4);
+		nbt.setBoolean("matchNBT", matchNBT);
 		
 		nbt.setTag("ClientAShelfInv", items);
 		
@@ -158,6 +163,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		this.sellPrice3 = nbt.getDouble("sellPrice3");
 		this.buyPrice4 = nbt.getDouble("buyPrice4");
 		this.sellPrice4 = nbt.getDouble("sellPrice4");
+		this.matchNBT = nbt.getBoolean("matchNBT");
 
 		this.worldObj.updateLightByType(EnumSkyBlock.Block, this.xCoord, this.yCoord, this.zCoord);
 	}
@@ -202,8 +208,17 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 			System.out.println("Stack 1 is " + item1.getItem());
 			System.out.println("Stack 2 is " + item2.getItem());
 		}
-		
+			
 		if (item1.getItem().equals(item2.getItem())) {
+			if (matchNBT) {
+				NBTTagCompound nbt1 = item1.getTagCompound();
+				NBTTagCompound nbt2 = item2.getTagCompound();
+				if (nbt1.equals(nbt2)) {
+					return true;
+				} else {
+					return false;
+				}
+			}
 			if (CityConfig.debugMode) {
 				System.out.println("Items match on ID, metadata and NBT");
 			}
@@ -222,6 +237,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		EnumChatFormatting green = EnumChatFormatting.GREEN;
 		EnumChatFormatting red = EnumChatFormatting.RED;
 		EnumChatFormatting darkGreen = EnumChatFormatting.DARK_GREEN;
+		boolean full = false;
 		
 		if (te != null && te instanceof TileEntityStockChest) {
 			if (CityConfig.debugMode) {
@@ -256,13 +272,28 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 					ItemStack stockItem = findStockItem(stockChest, item.copy(), ownerName);
 					if (stockItem != null) {
 					//Two birds, one stone. Charges the player for us, then tells us how much they paid so we can calculate change.
+						if (CityConfig.debugMode) {
+							System.out.println("Attempting to charge player");
+						}
 						double paidAmount = EconUtils.findCashInInventoryWithChange(entityPlayer, itemCost); //Complex code to charge the player's inventory
 						if (paidAmount < 0) {
+							if (CityConfig.debugMode) {
+								System.out.println("No monies.");
+							}
 							return;
 						} else {
-							entityPlayer.inventory.addItemStackToInventory(stockItem);
-			
-							//setInventorySlotContents(slotId - 1, null);
+							if (EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
+								if (CityConfig.debugMode) {
+									System.out.println("Player still has space");
+								}
+								entityPlayer.inventory.addItemStackToInventory(stockItem);
+							} else {
+								if (CityConfig.debugMode) {
+									System.out.println("Player DOESN'T have space, dropping item.");
+								}
+								full = true;
+								worldObj.spawnEntityInWorld(new EntityItem(worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, stockItem));
+							}
 							System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from " + ownerName + " for $" + EconUtils.formatBalance(itemCost));
 				
 							if (storeOwner != null) {
@@ -271,6 +302,9 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 							
 							EconUtils.depositToAccountViaUUID(ownerUuid, worldObj, itemCost);
 							entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+							if (full) {
+								entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You didn't have enough room in your inventory, so the item was dropped."));
+							}
 						}
 					} else {
 						entityPlayer.addChatComponentMessage(new ChatComponentText(red + item.getDisplayName() + " is currently out of stock."));
@@ -279,17 +313,26 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 							storeOwner.addChatComponentMessage(new ChatComponentText(red + "Your " + item.getDisplayName() + " at " + gold + xCoord + ", " + yCoord + ", " + zCoord + red + " is currently out of stock."));
 						}
 					}
-				}
-				if (invCash < itemCost) {
+				} else if (invCash < itemCost) {
+					double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
+					/*if (CityConfig.debugMode) {
+						System.out.println("Not enough money in player's inventory. Trying bank.");
+					}
 					double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
 					if (bankBalance >= itemCost && hasSpace) {
 						if (EconUtils.hasOwnCard(entityPlayer)) {
+							if (CityConfig.debugMode) {
+								System.out.println("Player has their card with them.");
+							}
 							ItemStack stockItem = findStockItem(stockChest, item.copy(), ownerName);
 							if (stockItem != null) {
 								if (EconUtils.chargePlayerAnywhere(entityPlayer, itemCost)) {
-									entityPlayer.inventory.addItemStackToInventory(stockItem);
-									
-									//setInventorySlotContents(slotId - 1, null);
+									if (EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
+										entityPlayer.inventory.addItemStackToInventory(stockItem);
+									} else {
+										worldObj.spawnEntityInWorld(new EntityItem(worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, stockItem));
+										full = true;
+									}
 									
 									if (storeOwner != null) {
 										storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
@@ -299,16 +342,23 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 									
 									entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 									entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You didn't have enough money with you, so the cost was split between your cash, and your bank balance. Your remaining bank balance is " + gold  + "$" + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
+									if (full) {
+										entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You didn't have enough room in your inventory, so the item was dropped."));
+									}
 								}
 							}
-						}
-					} else if (bankBalance >= itemCost && hasSpace) {
+						}*/
+					if (bankBalance >= itemCost && hasSpace) {
 						if (EconUtils.hasOwnCard(entityPlayer)) {
 							if (EconUtils.payBalanceByCard(entityPlayer, itemCost)) {
 								ItemStack stockItem = findStockItem(stockChest, item.copy(), ownerName);
 								if (stockItem != null) {
-									entityPlayer.inventory.addItemStackToInventory(stockItem);
-									
+									if (EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
+										entityPlayer.inventory.addItemStackToInventory(stockItem);
+									} else {
+										worldObj.spawnEntityInWorld(new EntityItem(worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, stockItem));
+										full = true;
+									}
 									if (storeOwner != null) {
 										storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 									}
@@ -316,7 +366,10 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 									EconUtils.depositToAccountViaUUID(ownerUuid, worldObj, itemCost);
 									
 									entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
-									entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
+									entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have paid by card. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
+									if (full) {
+										entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You didn't have enough room in your inventory, so the item was dropped."));
+									}
 								}
 							}
 						}
@@ -330,8 +383,15 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				entityPlayer.addChatComponentMessage(new ChatComponentText(red + "This shop is not currently selling stock."));
 			}
 		if (!hasSpace) {
-			entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not have enough free inventory space to buy that!"));
+			entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You do not have enough free inventory space to buy that!"));
 		}
+		if (stockChest == null) {
+			entityPlayer.addChatComponentMessage(new ChatComponentText(red + "This shop is currently closed."));
+			if (storeOwner != null) {
+				storeOwner.addChatComponentMessage(new ChatComponentText(red + "Your shop at " + gold + xCoord + ", " + yCoord + ", " + zCoord + red + " is not assigned to a stock chest."));
+			}
+		}
+		
 	}
 	
 	public boolean hasOwnCard(EntityPlayer player) {
@@ -410,7 +470,8 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 												if (stack.stackSize >= remain) {
 													if (stockChest.getStackInSlot(insertSlot) != null) {
 														int size = stockChest.getStackInSlot(insertSlot).stackSize;
-														ItemStack insertItem = item.copy();
+														ItemStack insertItem = stack.copy();
+														stack.stackSize = item.stackSize;
 														insertItem.stackSize = insertItem.stackSize + size;
 														if (insertItem.stackSize > insertItem.getMaxStackSize()) {
 															insertItem.stackSize = insertItem.getMaxStackSize();
