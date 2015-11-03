@@ -1,5 +1,10 @@
 package co.uk.silvania.cities.core.blocks;
 
+import static net.minecraftforge.common.util.ForgeDirection.EAST;
+import static net.minecraftforge.common.util.ForgeDirection.NORTH;
+import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
+import static net.minecraftforge.common.util.ForgeDirection.WEST;
+
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -16,6 +21,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import co.uk.silvania.cities.core.CoreBlocks;
 import co.uk.silvania.cities.core.FlenixCities_Core;
+import co.uk.silvania.cities.core.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -30,25 +36,24 @@ public class LightingRotateBlocks extends Block {
 	
 	
 	@SideOnly(Side.CLIENT)
-	private IIcon[] icons;
-	//@SideOnly(Side.CLIENT)
-	//private IIcon sideIcon;
+	private IIcon icons;
+	@SideOnly(Side.CLIENT)
+	private IIcon sideIcon;
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		icons = new IIcon[16];
-
-		for(int i = 0; i < icons.length; i++) {
-			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)) + "0");
-			//sideIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":ceilingTile");	
-		}
+		icons = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
+		sideIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":ceilingTile");	
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		return icons[meta];
+		if (side == 0) {
+			return icons;
+		}
+		return sideIcon;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -59,6 +64,11 @@ public class LightingRotateBlocks extends Block {
         list.add(new ItemStack(item, 1, 4));
         list.add(new ItemStack(item, 1, 8));
         list.add(new ItemStack(item, 1, 12));
+	}
+	
+	@Override
+	public int getRenderType() {
+		return ClientProxy.lightBlockRotateRenderID;
 	}
 	
 	@Override
@@ -79,15 +89,6 @@ public class LightingRotateBlocks extends Block {
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
         return null;
     }
-    
-	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityliving, ItemStack itemStack)
-	{
-	    int blockSet = world.getBlockMetadata(x, y, z) / 4;
-	    int direction = MathHelper.floor_double((entityliving.rotationYaw * 4F) / 360F + 0.5D) & 3;
-	    int newMeta = (blockSet * 4) + direction;
-	    world.setBlockMetadataWithNotify(x, y, z, newMeta, 0);
-	}
     
     @Override
 	public void setBlockBoundsBasedOnState(IBlockAccess block, int x, int y, int z) {
@@ -124,7 +125,52 @@ public class LightingRotateBlocks extends Block {
     		this.setBlockBounds(0.25F, 0.25F, 0.0F, 0.75F, 0.75F, 0.0625F);	
     	} else if (meta == 15) {
         	this.setBlockBounds(0.9375F, 0.25F, 0.25F, 1.0F, 0.75F, 0.75F);
-    	} else
-        	this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
-	}
+    	}
+    }
+
+    @Override
+    public void onBlockAdded(World world, int x, int y, int z) {
+    	int meta = world.getBlockMetadata(x, y, z);
+        if (meta >= 0 && meta <= 3) {
+            if (world.isSideSolid(x - 1, y, z, EAST, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+            } else if (world.isSideSolid(x + 1, y, z, WEST, true)) {
+            	world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+            } else if (world.isSideSolid(x, y, z - 1, SOUTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+            } else if (world.isSideSolid(x, y, z + 1, NORTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+            }
+        } else if (meta >= 4 && meta <= 7) {
+            if (world.isSideSolid(x - 1, y, z, EAST, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 5, 2);
+            } else if (world.isSideSolid(x + 1, y, z, WEST, true)) {
+            	world.setBlockMetadataWithNotify(x, y, z, 7, 2);
+            } else if (world.isSideSolid(x, y, z - 1, SOUTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 6, 2);
+            } else if (world.isSideSolid(x, y, z + 1, NORTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 4, 2);
+            }
+        } else if (meta >= 8 && meta <= 11) {
+            if (world.isSideSolid(x - 1, y, z, EAST, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 9, 2);
+            } else if (world.isSideSolid(x + 1, y, z, WEST, true)) {
+            	world.setBlockMetadataWithNotify(x, y, z, 11, 2);
+            } else if (world.isSideSolid(x, y, z - 1, SOUTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 10, 2);
+            } else if (world.isSideSolid(x, y, z + 1, NORTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 8, 2);
+            }
+        } else if (meta >= 12 && meta <= 15) {
+            if (world.isSideSolid(x - 1, y, z, EAST, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 13, 2);
+            } else if (world.isSideSolid(x + 1, y, z, WEST, true)) {
+            	world.setBlockMetadataWithNotify(x, y, z, 15, 2);
+            } else if (world.isSideSolid(x, y, z - 1, SOUTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 14, 2);
+            } else if (world.isSideSolid(x, y, z + 1, NORTH, true)) {
+                world.setBlockMetadataWithNotify(x, y, z, 12, 2);
+            }
+        }
+    }
 }
