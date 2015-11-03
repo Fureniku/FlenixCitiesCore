@@ -43,6 +43,13 @@ public class EconUtils {
 	 * TODO payBalanceViaCard(d cost, player, playerOwner, world) - Opens the GUI for a card transaction to send money from the player to the shop owner
 	 */
 		
+	public static void debug(String s) {
+		if (CityConfig.debugMode) {
+			System.out.println("[FCC EconUtils] " + s);
+		}
+	}
+	
+	
 	public static void createAccount(String s) {
 		
 	}
@@ -170,13 +177,9 @@ public class EconUtils {
 		while (change >= 100) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note10000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note10000));
-				if (CityConfig.debugMode) {
-					System.out.println("100 to inventory :)");
-				}
+				debug("100 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("Sending 100 to bank");
-				}
+				debug("Sending 100 to bank");
 				toBank = toBank + 100;
 			}
 			change = change - 100;
@@ -185,13 +188,9 @@ public class EconUtils {
 		while (change >= 50) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note5000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note5000));
-				if (CityConfig.debugMode) {
-					System.out.println("50 to inventory :)");
-				}
+				debug("50 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("50 to bank.");
-				}
+				debug("50 to bank.");
 				toBank = toBank + 50;
 			}
 			change = change - 50;
@@ -200,13 +199,9 @@ public class EconUtils {
 		while (change >= 20) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note2000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note2000));
-				if (CityConfig.debugMode) {
-					System.out.println("20 to inventory :)");
-				}
+				debug("20 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("20 to bank.");
-				}
+				debug("20 to bank.");
 				toBank = toBank + 20;
 			}
 			change = change - 20;
@@ -215,9 +210,7 @@ public class EconUtils {
 		while (change >= 10) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note1000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note1000));
-				if (CityConfig.debugMode) {
-					System.out.println("10 to inventory :)");
-				}
+				debug("10 to inventory :)");
 			} else {
 				if (CityConfig.debugMode) {
 					System.out.println("10 to bank.");
@@ -230,13 +223,9 @@ public class EconUtils {
 		while (change >= 5) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note500))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note500));
-				if (CityConfig.debugMode) {
-					System.out.println("5 to inventory :)");
-				}
+				debug("5 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("5 to bank.");
-				}
+				debug("5 to bank.");
 				toBank = toBank + 5;
 			}
 			change = change - 5;
@@ -245,13 +234,9 @@ public class EconUtils {
 		while (change >= 2) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note200))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note200));
-				if (CityConfig.debugMode) {
-					System.out.println("2 to inventory :)");
-				}
+				debug("2 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("2 to bank.");
-				}
+				debug("2 to bank.");
 				toBank = toBank + 2;
 			}
 			change = change - 2;
@@ -260,13 +245,9 @@ public class EconUtils {
 		while (change >= 1) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note100))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note100));
-				if (CityConfig.debugMode) {
-					System.out.println("1 to inventory :)");
-				}
+				debug("1 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("1 to bank.");
-				}
+				debug("1 to bank.");
 				toBank = toBank + 1;
 			}
 			change = change - 1;
@@ -276,13 +257,9 @@ public class EconUtils {
 		while (change >= 0.5) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin50))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin50));
-				if (CityConfig.debugMode) {
-					System.out.println("0.50 to inventory :)");
-				}
+				debug("0.50 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("0.50 to bank.");
-				}
+				debug("0.50 to bank.");
 				toBank = toBank + 0.5;
 			}
 			change = change - 0.5;
@@ -291,13 +268,9 @@ public class EconUtils {
 		while (change >= 0.25) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin25))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin25));
-				if (CityConfig.debugMode) {
-					System.out.println("0.25 to inventory :)");
-				}
+				debug("0.25 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("0.25 to bank.");
-				}
+				debug("0.25 to bank.");
 				toBank = toBank + 0.25;
 			}
 			change = change - 0.25;
@@ -306,13 +279,9 @@ public class EconUtils {
 		while (change >= 0.1) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin10))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin10));
-				if (CityConfig.debugMode) {
-					System.out.println("0.10 to inventory :)");
-				}
+				debug("0.10 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("0.10 to bank.");
-				}
+				debug("0.10 to bank.");
 				toBank = toBank + 0.1;
 			}
 			change = change - 0.1;
@@ -321,13 +290,9 @@ public class EconUtils {
 		while (change >= 0.05) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin5))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin5));
-				if (CityConfig.debugMode) {
-					System.out.println("0.05 to inventory :)");
-				}
+				debug("0.05 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("0.05 to bank.");
-				}
+				debug("0.05 to bank.");
 				toBank = toBank + 0.05;
 			}
 			change = change - 0.05;
@@ -336,13 +301,9 @@ public class EconUtils {
 		while (change >= 0.02) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin2))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin2));
-				if (CityConfig.debugMode) {
-					System.out.println("0.02 to inventory :)");
-				}
+				debug("0.02 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("0.02 to bank.");
-				}
+				debug("0.02 to bank.");
 				toBank = toBank + 0.02;
 			}
 			change = change - 0.02;
@@ -385,9 +346,7 @@ public class EconUtils {
 				int quantity = stack.stackSize;
 				double totalValue = moneyValue * quantity;
 				
-				if (CityConfig.debugMode == true) {
-					System.out.println("There is a money stack with value of " + moneyValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
-				}
+				debug("There is a money stack with value of " + moneyValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
 				balance = balance + totalValue;
 			}
 		}
@@ -395,16 +354,12 @@ public class EconUtils {
 	}
 	
 	public static void removeAllPlayerCash(EntityPlayer player) {
-		if (CityConfig.debugMode == true) {
-			System.out.println("Beginning loop to remove all player cash");
-		}
+		debug("Beginning loop to remove all player cash");
 		for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
 				if (stack.getItem() instanceof ItemNote || stack.getItem() instanceof ItemCoin) {
-					if (CityConfig.debugMode) {
-						System.out.println("Found note, Removing!");
-					}
+					debug("Found note, Removing!");
 					player.inventory.setInventorySlotContents(i, null);
 					((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 				}
@@ -463,17 +418,15 @@ public class EconUtils {
 						double currentlyPaid = 0;
 						//Second loop, basically checks if the stack's value is high enough one item at a time (as to not overpay)
 						for(int x = 1; x <= qty; x++) {
-							if (CityConfig.debugMode) {
-								System.out.println("Nested Loop! Current stack value is: " + (moneyValue * x) + " - The target is " + value);
-							}
+							debug("Nested Loop! Current stack value is: " + (moneyValue * x) + " - The target is " + value);
 							if (currentlyPaid + (moneyValue * x) >= value) {
-								System.out.println("This is fired if the moneyValue is higher than the value, allegedly");
+								debug("This is fired if the moneyValue is higher than the value, allegedly");
 								if (x == qty) {
 									player.inventory.setInventorySlotContents(i, null);
 								} else
 									player.inventory.decrStackSize(i, x);
 								double paidAmount = moneyValue * x;
-								System.out.println("Give change: " + (paidAmount - value));
+								debug("Give change: " + (paidAmount - value));
 								depositToAccount(player, player.worldObj, paidAmount-value);
 								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 								//If second loop pays enough, we return; we don't need to do anything else as the balance has been paid.
@@ -489,7 +442,6 @@ public class EconUtils {
 			}
 		}
 		//If they don't have enough cash, that's it - they can't buy it.
-		//Later, I'll add a secondary option for paying by card here.
 		return false;
 	}
 	
@@ -499,9 +451,7 @@ public class EconUtils {
 		double currentlyPaid = 0;
 		if (getInventoryCash(player) >= value) {
 			for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
-				if (CityConfig.debugMode) {
-					System.out.println("Currently paid: " + currentlyPaid + ", Value: " + value);
-				}
+				debug("Currently paid: " + currentlyPaid + ", Value: " + value);
 				ItemStack stack = player.inventory.getStackInSlot(i);
 				if (stack != null) {
 					if (stack.getItem() instanceof ItemNote || stack.getItem() instanceof ItemCoin) {
@@ -521,30 +471,11 @@ public class EconUtils {
 						currentlyPaid = currentlyPaid + stackValue;
 						player.inventory.setInventorySlotContents(i, null);
 						if (currentlyPaid >= value) {
-							if (CityConfig.debugMode) {
-								System.out.println("Giving change, SHOULD be " + (value - currentlyPaid));
-							}
+							debug("Giving change, SHOULD be " + (value - currentlyPaid));
 							giveChange(currentlyPaid, value, player);
 							((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 							return 0;
 						}
-							
-						/*for(int x = 1; x <= qty; x++) {
-							if (CityConfig.debugMode) {
-								System.out.println("Nested Loop! Current stack value is: " + (moneyValue * x) + " - The target is " + value);
-							}
-							currentlyPaid = currentlyPaid + (moneyValue * x);
-							if (currentlyPaid >= value) {
-								System.out.println("This is fired if the moneyValue is higher than the value, allegedly");
-								if (x == qty) {
-									player.inventory.setInventorySlotContents(i, null);
-								} else
-									player.inventory.decrStackSize(i, x);
-								System.out.println("Give change: " + (currentlyPaid - value));
-								giveChange(currentlyPaid, value, player);
-								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
-								return currentlyPaid;
-							}*/
 					}
 				}
 			}
@@ -560,6 +491,7 @@ public class EconUtils {
 	public static boolean chargePlayerAnywhere(EntityPlayer player, double value) {
 		World world = player.worldObj;
 		if (findCashInInventory(player, value) == false) {
+			
 			double invBalance = getInventoryCash(player);
 			double cardBalance = getBalance(player, world);
 			
@@ -591,17 +523,15 @@ public class EconUtils {
 						coinValue = coin.getMoneyValue();
 						double currentlyPaid = 0;
 						for(int x = 1; x <= qty; x++) {
-							if (CityConfig.debugMode) {
-								System.out.println("Nested Loop! Current stack value is: " + (coinValue * x) + " - The target is " + value);
-							}
+							debug("Nested Loop! Current stack value is: " + (coinValue * x) + " - The target is " + value);
 							if (currentlyPaid + (coinValue * x) >= value) {
-								System.out.println("This is fired if the moneyValue is higher than the value, allegedly");
+								debug("This is fired if the moneyValue is higher than the value, allegedly");
 								if (x == qty) {
 									player.inventory.setInventorySlotContents(i, null);
 								} else
 									player.inventory.decrStackSize(i, x);
 								double paidAmount = coinValue * x;
-								System.out.println("Give change: " + (paidAmount - value));
+								debug("Give change: " + (paidAmount - value));
 								depositToAccount(player, player.worldObj, (paidAmount-value));
 								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 								return true;
@@ -629,17 +559,15 @@ public class EconUtils {
 						noteValue = note.getMoneyValue();
 						double currentlyPaid = 0;
 						for(int x = 1; x <= qty; x++) {
-							if (CityConfig.debugMode) {
-								System.out.println("Nested Loop! Current stack value is: " + (noteValue * x) + " - The target is " + value);
-							}
+							debug("Nested Loop! Current stack value is: " + (noteValue * x) + " - The target is " + value);
 							if (currentlyPaid + (noteValue * x) >= value) {
-								System.out.println("This is fired if the moneyValue is higher than the value, allegedly");
+								debug("This is fired if the moneyValue is higher than the value, allegedly");
 								if (x == qty) {
 									player.inventory.setInventorySlotContents(i, null);
 								} else
 									player.inventory.decrStackSize(i, x);
 								double paidAmount = noteValue * x;
-								System.out.println("Give change: " + (paidAmount - value));
+								debug("Give change: " + (paidAmount - value));
 								depositToAccount(player, player.worldObj, (paidAmount-value));
 								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 								return true;
@@ -657,19 +585,21 @@ public class EconUtils {
 	
 	//Basically removes value from the players account
 	public static boolean payBalanceByCard(EntityPlayer player, double value) {
+		debug("Attempting to pay balance by card");
 		World world = player.worldObj;
 		double cardBalance = getBalance(player, world);
 		if (value <= cardBalance) {
 			//They can pay by card!
 			//Open GUI
 			//Check PIN
-			chargeBalance(player, value);
+			return chargeBalance(player, value);
 		}
 		return false;
 	}
 	
 	//Removes money from the players account- for withdrawl etc.
 	public static boolean chargeBalance(EntityPlayer player, double amt) {
+		debug("Charging balance!");
 		World world = player.worldObj;
 		double cardBalance = getBalance(player, world);
 		if (amt <= cardBalance) {			
@@ -697,6 +627,7 @@ public class EconUtils {
 	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
 			return true;
 		}
+		debug(player.getDisplayName() + " did not have enough to withdraw.");
 		return false;
 	}
 	
@@ -744,16 +675,12 @@ public class EconUtils {
 					int itemSize = item.stackSize;
 					
 					if ((itemSize + slotSize) <= max) {
-						if (CityConfig.debugMode) {
-							System.out.println("Unfilled compatable stack found; adding to it.");
-						}
+						debug("Unfilled compatable stack found; adding to it.");
 						return true;
 					}	
 				}
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("Emtpy slot found. How useful! ID: " + x);
-				}
+				debug("Emtpy slot found. How useful! ID: " + x);
 				return true;
 			}
 		}
