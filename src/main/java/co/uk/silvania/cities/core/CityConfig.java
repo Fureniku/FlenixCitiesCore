@@ -20,6 +20,7 @@ public class CityConfig {
 	public static String currencyLargePlural;
 	public static String currencySmallPlural;
 
+	public static boolean playerOwnedShops;
 	public static boolean debugMode;
 	
 	
@@ -36,6 +37,7 @@ public class CityConfig {
 			currencySmallPlural = config.get("Currency Small (Plural)", Configuration.CATEGORY_GENERAL, "Cents").getString();
 			currencyLargePlural = config.get("Currency Large (Plural)", Configuration.CATEGORY_GENERAL, "Dollars").getString();
 
+			playerOwnedShops = config.get(Configuration.CATEGORY_GENERAL, "Enable player-owned shops", true).getBoolean(true);
 			debugMode = config.get(Configuration.CATEGORY_GENERAL, "debug mode", false).getBoolean(false);
 		}
 		catch (Exception e) {
