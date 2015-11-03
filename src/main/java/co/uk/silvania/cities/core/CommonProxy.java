@@ -2,9 +2,11 @@ package co.uk.silvania.cities.core;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import co.uk.silvania.cities.core.items.*;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import cpw.mods.fml.common.Mod.Instance;
@@ -75,6 +77,15 @@ public class CommonProxy {
         GameRegistry.registerItem(CoreItems.debitCardNew, "debitCardNew");
         GameRegistry.registerItem(CoreItems.bankerSpawner, "bankerSpawner");
         GameRegistry.registerItem(CoreItems.storeStockPairer, "storeStockPairer");
+        
+        GameRegistry.registerItem(CoreItems.plasticItem, "plasticItem");
+        GameRegistry.registerItem(CoreItems.rawPlasticItem, "rawPlasticItem");
+        GameRegistry.registerItem(CoreItems.smallPCB, "smallPCB");
+        GameRegistry.registerItem(CoreItems.largePCB, "largePCB");
+        GameRegistry.registerItem(CoreItems.atmInternals, "atmInternals");
+        GameRegistry.registerItem(CoreItems.atmScreen, "atmScreen");
+        GameRegistry.registerItem(CoreItems.atmButtons, "atmButtons");
+        GameRegistry.registerItem(CoreItems.cpu, "cpu");
 
     	/*GameRegistry.registerItem(CoreItems.ringItem, "ringItem");
     	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
@@ -88,17 +99,37 @@ public class CommonProxy {
     }
     
     public void addRecipes() {
+    	OreDictionary.registerOre("ingotPlastic", CoreItems.plasticItem);
+    	OreDictionary.registerOre("sheetPlastic", CoreItems.plasticItem);
+    	OreDictionary.registerOre("rawPlastic", CoreItems.rawPlasticItem);
+    	OreDictionary.registerOre("dustPlastic", CoreItems.rawPlasticItem);
 
     	ItemStack ironIngot = new ItemStack(Items.iron_ingot);
+    	ItemStack glowstone = new ItemStack(Items.glowstone_dust);
+    	ItemStack redstone = new ItemStack(Items.redstone);
+    	ItemStack redstoneTorch = new ItemStack(Blocks.redstone_torch);
+    	ItemStack diamond = new ItemStack(Items.diamond);
+    	ItemStack goldIngot = new ItemStack(Items.gold_ingot);
+    	ItemStack ironBlock = new ItemStack(Blocks.iron_block);
+    	ItemStack glass = new ItemStack(Blocks.glass);
     	
     	ItemStack stoneBlock = new ItemStack(Blocks.stone);
     	ItemStack quartzItem = new ItemStack(Items.quartz);
+    	ItemStack plasticBlockAny = new ItemStack(CoreBlocks.plasticBlock);
     	ItemStack skyscraperAny = new ItemStack(CoreBlocks.skyscraperBlocks);
     	ItemStack skyscraperWhite = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0);
     	ItemStack skyscraperLightGrey = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 1);
     	ItemStack skyscraperDarkGrey = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 2);
     	ItemStack skyscraperBlack = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 3);
     	ItemStack rebarBlock = new ItemStack(CoreBlocks.rebarBlock);
+    	ItemStack plastic = new ItemStack(CoreItems.plasticItem);
+    	
+    	ItemStack smallPCB = new ItemStack(CoreItems.smallPCB);
+    	ItemStack largePCB = new ItemStack(CoreItems.largePCB);
+    	ItemStack atmInternals = new ItemStack(CoreItems.atmInternals);
+    	ItemStack atmScreen = new ItemStack(CoreItems.atmScreen);
+    	ItemStack atmButtons = new ItemStack(CoreItems.atmButtons);
+    	ItemStack cpu = new ItemStack(CoreItems.cpu);
     	
     	ItemStack blackDye = new ItemStack(Items.dye, 1, 0);
     	ItemStack redDye = new ItemStack(Items.dye, 1, 1);
@@ -150,10 +181,133 @@ public class CommonProxy {
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 10), " d ", "sss", " d ", 's', skyscraperDarkGrey, 'd', blackDye);
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 3, 11), " d ", "sss", " d ", 's', skyscraperBlack, 'd', blackDye);
     	
-    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 12), " d ", "dsd", " d ", 's', skyscraperWhite, 'd', blackDye);
-    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 13), " d ", "dsd", " d ", 's', skyscraperLightGrey, 'd', blackDye);
-    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 14), " d ", "dsd", " d ", 's', skyscraperDarkGrey, 'd', blackDye);
-    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 15), " d ", "dsd", " d ", 's', skyscraperBlack, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 5, 12), "dsd", "sss", "dsd", 's', skyscraperWhite, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 5, 13), "dsd", "sss", "dsd", 's', skyscraperLightGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 5, 14), "dsd", "sss", "dsd", 's', skyscraperDarkGrey, 'd', blackDye);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 5, 15), "dsd", "sss", "dsd", 's', skyscraperBlack, 'd', blackDye);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 0), new ItemStack(Blocks.stained_glass, 1, 0), new ItemStack(Blocks.stained_glass, 1, 0), new ItemStack(Blocks.stained_glass, 1, 0));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 1), new ItemStack(Blocks.stained_glass, 1, 1), new ItemStack(Blocks.stained_glass, 1, 1), new ItemStack(Blocks.stained_glass, 1, 1));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 2), new ItemStack(Blocks.stained_glass, 1, 2), new ItemStack(Blocks.stained_glass, 1, 2), new ItemStack(Blocks.stained_glass, 1, 2));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 3), new ItemStack(Blocks.stained_glass, 1, 3), new ItemStack(Blocks.stained_glass, 1, 3), new ItemStack(Blocks.stained_glass, 1, 3));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 4), new ItemStack(Blocks.stained_glass, 1, 4), new ItemStack(Blocks.stained_glass, 1, 4), new ItemStack(Blocks.stained_glass, 1, 4));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 5), new ItemStack(Blocks.stained_glass, 1, 5), new ItemStack(Blocks.stained_glass, 1, 5), new ItemStack(Blocks.stained_glass, 1, 5));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 6), new ItemStack(Blocks.stained_glass, 1, 6), new ItemStack(Blocks.stained_glass, 1, 6), new ItemStack(Blocks.stained_glass, 1, 6));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 7), new ItemStack(Blocks.stained_glass, 1, 7), new ItemStack(Blocks.stained_glass, 1, 7), new ItemStack(Blocks.stained_glass, 1, 7));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 8), new ItemStack(Blocks.stained_glass, 1, 8), new ItemStack(Blocks.stained_glass, 1, 8), new ItemStack(Blocks.stained_glass, 1, 8));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 9), new ItemStack(Blocks.stained_glass, 1, 9), new ItemStack(Blocks.stained_glass, 1, 9), new ItemStack(Blocks.stained_glass, 1, 9));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 10), new ItemStack(Blocks.stained_glass, 1, 10), new ItemStack(Blocks.stained_glass, 1, 10), new ItemStack(Blocks.stained_glass, 1, 10));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 11), new ItemStack(Blocks.stained_glass, 1, 11), new ItemStack(Blocks.stained_glass, 1, 11), new ItemStack(Blocks.stained_glass, 1, 11));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 12), new ItemStack(Blocks.stained_glass, 1, 12), new ItemStack(Blocks.stained_glass, 1, 12), new ItemStack(Blocks.stained_glass, 1, 12));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 13), new ItemStack(Blocks.stained_glass, 1, 13), new ItemStack(Blocks.stained_glass, 1, 13), new ItemStack(Blocks.stained_glass, 1, 13));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 14), new ItemStack(Blocks.stained_glass, 1, 14), new ItemStack(Blocks.stained_glass, 1, 14), new ItemStack(Blocks.stained_glass, 1, 14));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 3, 15), new ItemStack(Blocks.stained_glass, 1, 15), new ItemStack(Blocks.stained_glass, 1, 15), new ItemStack(Blocks.stained_glass, 1, 15));
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 0), new ItemStack(CoreBlocks.stainedGlass, 1, 0), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 1), new ItemStack(CoreBlocks.stainedGlass, 1, 1), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 2), new ItemStack(CoreBlocks.stainedGlass, 1, 2), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 3), new ItemStack(CoreBlocks.stainedGlass, 1, 3), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 4), new ItemStack(CoreBlocks.stainedGlass, 1, 4), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 5), new ItemStack(CoreBlocks.stainedGlass, 1, 5), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 6), new ItemStack(CoreBlocks.stainedGlass, 1, 6), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 7), new ItemStack(CoreBlocks.stainedGlass, 1, 7), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 8), new ItemStack(CoreBlocks.stainedGlass, 1, 8), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 9), new ItemStack(CoreBlocks.stainedGlass, 1, 9), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 10), new ItemStack(CoreBlocks.stainedGlass, 1, 10), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 11), new ItemStack(CoreBlocks.stainedGlass, 1, 11), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 12), new ItemStack(CoreBlocks.stainedGlass, 1, 12), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 13), new ItemStack(CoreBlocks.stainedGlass, 1, 13), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 14), new ItemStack(CoreBlocks.stainedGlass, 1, 14), glowstone);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.stainedGlass, 1, 15), new ItemStack(CoreBlocks.stainedGlass, 1, 15), glowstone);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 0), plastic, plastic, plastic, plastic, plastic, plastic, plastic, plastic, plastic);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 0), plasticBlockAny, whiteDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 1), plasticBlockAny, orangeDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 2), plasticBlockAny, magentaDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 3), plasticBlockAny, lightBlueDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 4), plasticBlockAny, yellowDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 5), plasticBlockAny, limeGreenDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 6), plasticBlockAny, pinkDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 7), plasticBlockAny, lightGreyDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 8), plasticBlockAny, darkGreyDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 9), plasticBlockAny, tealDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 10), plasticBlockAny, purpleDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 11), plasticBlockAny, blueDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 12), plasticBlockAny, brownDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 13), plasticBlockAny, greenDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 14), plasticBlockAny, redDye);
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.plasticBlock, 1, 15), plasticBlockAny, blackDye);
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreItems.plasticItem, 9), plasticBlockAny);
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.styledGlass, 5, 0), "dgd", "ggg", "dgd", 'd', whiteDye, 'g', new ItemStack(Blocks.stained_glass, 1, 9));
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 5, 0), "dgd", "ggg", "dgd", 'd', whiteDye, 'g', new ItemStack(Blocks.stained_glass, 1, 0));
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 0), new ItemStack(CoreBlocks.styledGlass, 1, 12));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 1), new ItemStack(CoreBlocks.styledGlass, 1, 0));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 2), new ItemStack(CoreBlocks.styledGlass, 1, 1));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 3), new ItemStack(CoreBlocks.styledGlass, 1, 2));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 4), new ItemStack(CoreBlocks.styledGlass, 1, 3));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 5), new ItemStack(CoreBlocks.styledGlass, 1, 4));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 6), new ItemStack(CoreBlocks.styledGlass, 1, 5));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 7), new ItemStack(CoreBlocks.styledGlass, 1, 6));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 8), new ItemStack(CoreBlocks.styledGlass, 1, 7));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 9), new ItemStack(CoreBlocks.styledGlass, 1, 8));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 10), new ItemStack(CoreBlocks.styledGlass, 1, 9));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 11), new ItemStack(CoreBlocks.styledGlass, 1, 10));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlass, 1, 12), new ItemStack(CoreBlocks.styledGlass, 1, 11));
+    	
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 0), new ItemStack(CoreBlocks.styledGlassWhite, 1, 12));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 1), new ItemStack(CoreBlocks.styledGlassWhite, 1, 0));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 2), new ItemStack(CoreBlocks.styledGlassWhite, 1, 1));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 3), new ItemStack(CoreBlocks.styledGlassWhite, 1, 2));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 4), new ItemStack(CoreBlocks.styledGlassWhite, 1, 3));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 5), new ItemStack(CoreBlocks.styledGlassWhite, 1, 4));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 6), new ItemStack(CoreBlocks.styledGlassWhite, 1, 5));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 7), new ItemStack(CoreBlocks.styledGlassWhite, 1, 6));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 8), new ItemStack(CoreBlocks.styledGlassWhite, 1, 7));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 9), new ItemStack(CoreBlocks.styledGlassWhite, 1, 8));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 10), new ItemStack(CoreBlocks.styledGlassWhite, 1, 9));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 11), new ItemStack(CoreBlocks.styledGlassWhite, 1, 10));
+    	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.styledGlassWhite, 1, 12), new ItemStack(CoreBlocks.styledGlassWhite, 1, 11));
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreItems.rawPlasticItem, 5), " c ", "ccc", " c ", 'c', new ItemStack(Items.coal, 1));
+    	GameRegistry.addSmelting(CoreItems.rawPlasticItem, new ItemStack(CoreItems.plasticItem, 4), 0.1F);
+    	
+    	GameRegistry.addRecipe(smallPCB, "rtr", "rir", "pgp", 'r', redstone, 't', redstoneTorch, 'p', plastic, 'g', greenDye, 'i', goldIngot);
+    	GameRegistry.addRecipe(largePCB, "rtr", "ppp", 'r', redstone, 't', redstoneTorch, 'p', smallPCB);
+    	GameRegistry.addRecipe(cpu, "pdp", "dgd", "pdp", 'p', smallPCB, 'g', goldIngot, 'd', diamond);
+    	GameRegistry.addRecipe(atmInternals, "iii", "lcl", "iii", 'i', ironIngot, 'l', largePCB, 'c', cpu);
+    	GameRegistry.addRecipe(atmScreen, "jij", "gag", "l l", 'i', ironBlock, 'j', glowstone, 'g', glass, 'l', largePCB, 'a', atmInternals);
+    	GameRegistry.addRecipe(atmButtons, "bbb", "bsb", "bbb", 'b', new ItemStack(Blocks.stone_button), 's', smallPCB);
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.atmBlock, 1, 0), "bbb", "bsb", "bkb", 'b', new ItemStack(Blocks.stone), 's', atmScreen, 'k', atmButtons);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.atmBlock, 1, 4), "bbb", "bsb", "bkb", 'b', new ItemStack(Blocks.stonebrick), 's', atmScreen, 'k', atmButtons);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.atmBlock, 1, 8), "bbb", "bsb", "bkb", 'b', skyscraperWhite, 's', atmScreen, 'k', atmButtons);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.atmBlock, 1, 12), "bbb", "bsb", "bkb", 'b', skyscraperDarkGrey, 's', atmScreen, 'k', atmButtons);
+    	
+    	if (CityConfig.playerOwnedShops) {
+	    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.floatingShelvesBlock, 1, 0), "  w", "pww", "cww", 'w', skyscraperWhite, 'p', smallPCB, 'c', new ItemStack(Blocks.chest));
+	    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.stockChest, 1, 0), "scs", "cpc", "iii", 's', skyscraperLightGrey, 'c', new ItemStack(Blocks.chest), 'p', largePCB, 'i', ironIngot);
+	    	GameRegistry.addRecipe(new ItemStack(CoreItems.storeStockPairer), "pgp", "pkp", "pkp", 'p', plastic, 'g', glowstone, 'k', largePCB);
+    	}
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.floorBlocks, 8, 5), "www", "wpw", "www", 'p', plastic, 'w', new ItemStack(Blocks.planks, 1, 0));
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.floorBlocks, 8, 6), "www", "wpw", "www", 'p', plastic, 'w', new ItemStack(Blocks.planks, 1, 1));
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.floorBlocks, 8, 7), "www", "wpw", "www", 'p', plastic, 'w', new ItemStack(Blocks.planks, 1, 2));
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.floorBlocks, 8, 8), "www", "wpw", "www", 'p', plastic, 'w', new ItemStack(Blocks.planks, 1, 3));
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingBlocks, 1, 0), "pgp", "ppp", 'p', plastic, 'g', glowstone);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingBlocks, 1, 0), "pgp", " p ", 'p', plastic, 'g', glowstone);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingBlocks, 1, 0), "pgp", "pgp", "pgp", 'p', plastic, 'g', glowstone);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingBlocks, 1, 0), "pgp", 'p', plastic, 'g', glowstone);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingBlocks, 1, 0), "pgp", "pgp", 'p', plastic, 'g', glowstone);
+    	
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 0), "pg", "pg", 'p', plastic, 'g', glowstone);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 4), "pg", 'p', plastic, 'g', glowstone);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 8), "ppg", "ppg", 'p', plastic, 'g', glowstone);
+    	GameRegistry.addRecipe(new ItemStack(CoreBlocks.lightingRotateBlocks, 1, 12), "ppg", 'p', plastic, 'g', glowstone);
+    	
     	
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 8, 0), stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, stoneBlock, rebarBlock);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0), skyscraperAny, whiteDye);

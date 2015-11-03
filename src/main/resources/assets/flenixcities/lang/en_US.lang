@@ -19,6 +19,15 @@ item.note2000.name=20 Dollars
 item.note5000.name=50 Dollars
 item.note10000.name=100 Dollars
 
+item.plasticItem.name=Plastic
+item.rawPlastic.name=Raw Plastic
+item.smallPCB.name=Small PCB
+item.largePCB.name=Large PCB
+item.atmInternals.name=ATM Internals
+item.atmScreen.name=ATM Screen
+item.atmButtons.name=ATM Buttons
+item.cpu.name=CPU
+
 tile.atmBlock.0.name=ATM Stone
 tile.atmBlock.1.name=ATM Stone
 tile.atmBlock.2.name=ATM Stone
@@ -198,7 +207,7 @@ tile.floorBlocks.4.name=Oak Wood Laminate
 tile.floorBlocks.5.name=Spruce Wood Laminate
 tile.floorBlocks.6.name=Birch Wood Laminate
 tile.floorBlocks.7.name=Jungle Wood Laminate
-tile.floorBlocks.8.name=-
+tile.floorBlocks.8.name=Ceiling Panel
 tile.floorBlocks.9.name=-
 tile.floorBlocks.10.name=-
 tile.floorBlocks.11.name=-
@@ -223,14 +232,29 @@ tile.quartzDecorBlocks.12.name=Quartz Pillar (Inked)
 tile.quartzDecorBlocks.13.name=Quartz Decorative (Inked)
 tile.quartzDecorBlocks.14.name=Quartz Tile (Inked)
 tile.quartzDecorBlocks.15.name=Beam
-        
-tile.lightingBlocks.1.name=Light Panel
-tile.lightingBlocks.2.name=Ceiling Light
+
+tile.lightingBlocks.0.name=Ceiling Light
+tile.lightingBlocks.1.name=Ceiling Light (Small)
+tile.lightingBlocks.2.name=Light Pillar
+tile.lightingBlocks.3.name=Ceiling Light (Tiny)
+tile.lightingBlocks.4.name=Light Pillar (Small)
         
 tile.lightingRotateBlocks.0.name=Vertical Light Strip
+tile.lightingRotateBlocks.1.name=Vertical Light Strip
+tile.lightingRotateBlocks.2.name=Vertical Light Strip
+tile.lightingRotateBlocks.3.name=Vertical Light Strip
 tile.lightingRotateBlocks.4.name=Vertical Light Strip (Short)
+tile.lightingRotateBlocks.5.name=Vertical Light Strip (Short)
+tile.lightingRotateBlocks.6.name=Vertical Light Strip (Short)
+tile.lightingRotateBlocks.7.name=Vertical Light Strip (Short)
 tile.lightingRotateBlocks.8.name=Vertical Light Panel
+tile.lightingRotateBlocks.9.name=Vertical Light Panel
+tile.lightingRotateBlocks.10.name=Vertical Light Panel
+tile.lightingRotateBlocks.11.name=Vertical Light Panel
 tile.lightingRotateBlocks.12.name=Vertical Light Panel (Small)
+tile.lightingRotateBlocks.13.name=Vertical Light Panel (Small)
+tile.lightingRotateBlocks.14.name=Vertical Light Panel (Small)
+tile.lightingRotateBlocks.15.name=Vertical Light Panel (Small)
 
 tile.floatingShelvesBlock.name=Floating Shelves Shop
 tile.adminShopBlock.name=Admin Shop

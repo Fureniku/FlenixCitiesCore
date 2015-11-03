@@ -8,6 +8,8 @@ import co.uk.silvania.cities.core.CommonProxy;
 import co.uk.silvania.cities.core.CoreBlocks;
 import co.uk.silvania.cities.core.client.models.*;
 import co.uk.silvania.cities.core.client.npcspawner.NPCSpawnerRenderer;
+import co.uk.silvania.cities.core.client.renders.LightBlockRenderer;
+import co.uk.silvania.cities.core.client.renders.LightBlockRotateRenderer;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.RenderBanker;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
@@ -18,8 +20,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
 	
-	public static int PosterRenderID;
-	String userName = Minecraft.getMinecraft().getSession().getUsername();
+	public static int lightBlockRenderID;
+	public static int lightBlockRotateRenderID;
         
     @Override
     public void registerRenderThings() {
@@ -35,5 +37,10 @@ public class ClientProxy extends CommonProxy {
     	ClientRegistry.bindTileEntitySpecialRenderer(NPCSpawnerEntity.class, new NPCSpawnerRenderer());
     	
         RenderingRegistry.registerEntityRenderingHandler(EntityBanker.class, new RenderBanker(new BankerModel(), 0.5F));
+        
+        lightBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
+        lightBlockRotateRenderID = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(CoreBlocks.lightingBlocks.getRenderType(), new LightBlockRenderer());
+        RenderingRegistry.registerBlockHandler(CoreBlocks.lightingRotateBlocks.getRenderType(), new LightBlockRotateRenderer());
     }        
 }

@@ -1,10 +1,12 @@
 package co.uk.silvania.cities.core;
 
+import co.uk.silvania.cities.core.items.CraftingIngredientItems;
 import co.uk.silvania.cities.core.npc.spawner.BankerSpawnerItem;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.money.ItemCoin;
 import co.uk.silvania.cities.econ.money.ItemNote;
 import co.uk.silvania.cities.econ.store.StoreStockPairer;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 public class CoreItems {
@@ -29,6 +31,17 @@ public class CoreItems {
 	public static Item storeStockPairer;
 	
 	public static Item bankerSpawner;
+	
+	public static Item plasticItem;
+	public static Item rawPlasticItem;
+	public static Item smallPCB;
+	public static Item largePCB;
+	public static Item atmInternals;
+	public static Item atmScreen;
+	public static Item atmButtons;
+	public static Item cpu;
+	
+	static CreativeTabs tabCity = FlenixCities_Core.tabCity;
 
 	
 	public static void init() {
@@ -38,9 +51,14 @@ public class CoreItems {
 	
 	
 	public static void initCrafting() {
-		//plasticItem = new CraftingIngredientItems(config.plasticItemID, 64).setUnlocalizedName("plasticItem");
-		//smallPCB = new CraftingIngredientItems(config.smallPCBID, 64).setUnlocalizedName("smallPCB");
-		//largePCB = new CraftingIngredientItems(config.largePCBID, 64).setUnlocalizedName("largePCB");
+		rawPlasticItem = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("rawPlastic");
+		plasticItem = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("plasticItem");
+		smallPCB = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("smallPCB");
+		largePCB = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("largePCB");
+		atmInternals = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("atmInternals");
+		atmScreen = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("atmScreen");
+		atmButtons = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("atmButtons");
+		cpu = new CraftingIngredientItems(64, tabCity).setUnlocalizedName("cpu");
 	}
 	
 	public static void initEconItems() {
