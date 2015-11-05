@@ -17,12 +17,15 @@ import co.uk.silvania.cities.econ.atm.TileEntityATMEntity;
 import co.uk.silvania.cities.econ.store.entity.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 	
 	public static int lightBlockRenderID;
 	public static int lightBlockRotateRenderID;
-        
+
+	@SideOnly(Side.CLIENT)
     @Override
     public void registerRenderThings() {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityATMEntity.class, new TileEntityATMRenderer());
