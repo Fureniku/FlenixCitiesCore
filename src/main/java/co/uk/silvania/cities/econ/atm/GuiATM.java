@@ -513,7 +513,6 @@ public class GuiATM extends GuiContainer {
         	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
         	fontRendererObj.drawString("Withdraw", 12, -3, 0x007F0E);
         	fontRendererObj.drawString("Balance", 126, -3, 0x007F0E);
-        	fontRendererObj.drawString("Change PIN", 109, 24, 0x007F0E);
         	fontRendererObj.drawString("Eject Card", 109, 78, 0x007F0E);
     	}
     	if (guiStage.equals("3")) {
