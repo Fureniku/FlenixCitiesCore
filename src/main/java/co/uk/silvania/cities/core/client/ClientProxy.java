@@ -10,6 +10,7 @@ import co.uk.silvania.cities.core.client.models.*;
 import co.uk.silvania.cities.core.client.npcspawner.NPCSpawnerRenderer;
 import co.uk.silvania.cities.core.client.renders.LightBlockRenderer;
 import co.uk.silvania.cities.core.client.renders.LightBlockRotateRenderer;
+import co.uk.silvania.cities.core.client.renders.WalkwayRenderer;
 import co.uk.silvania.cities.core.npc.EntityBanker;
 import co.uk.silvania.cities.core.npc.RenderBanker;
 import co.uk.silvania.cities.core.npc.spawner.NPCSpawnerEntity;
@@ -44,7 +45,10 @@ public class ClientProxy extends CommonProxy {
         
         lightBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
         lightBlockRotateRenderID = RenderingRegistry.getNextAvailableRenderId();
+        walkwayRenderID = RenderingRegistry.getNextAvailableRenderId();
+        
         RenderingRegistry.registerBlockHandler(CoreBlocks.lightingBlocks.getRenderType(), new LightBlockRenderer());
         RenderingRegistry.registerBlockHandler(CoreBlocks.lightingRotateBlocks.getRenderType(), new LightBlockRotateRenderer());
+        RenderingRegistry.registerBlockHandler(CoreBlocks.oakWalkway.getRenderType(), new WalkwayRenderer());
     }        
 }

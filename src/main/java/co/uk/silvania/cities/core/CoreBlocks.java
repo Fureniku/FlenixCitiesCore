@@ -7,6 +7,7 @@ import co.uk.silvania.cities.econ.store.entity.AdminShopBlock;
 import co.uk.silvania.cities.econ.store.entity.FloatingShelvesBlock;
 import co.uk.silvania.cities.econ.store.entity.StockChestBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.material.Material;
 
 public class CoreBlocks {
@@ -50,6 +51,63 @@ public class CoreBlocks {
 	
 	public static Block rebarBlock;
 	
+	public static Block oakWalkway;
+	public static Block birchWalkway;
+	public static Block spruceWalkway;
+	public static Block jungleWalkway;
+	public static Block acaciaWalkway;
+	public static Block darkOakWalkway;
+	
+	public static Block whiteWalkway;
+	public static Block lightGreyWalkway;
+	public static Block darkGreyWalkway;
+	public static Block blackWalkway;
+	
+	public static Block oakLaminateWalkway;
+	public static Block birchLaminateWalkway;
+	public static Block spruceLaminateWalkway;
+	public static Block jungleLaminateWalkway;
+	public static Block acaciaLaminateWalkway;
+	public static Block darkLaminateOakWalkway;
+	
+	public static Block oakWalkwayFence;
+	public static Block birchWalkwayFence;
+	public static Block spruceWalkwayFence;
+	public static Block jungleWalkwayFence;
+	public static Block acaciaWalkwayFence;
+	public static Block darkOakWalkwayFence;
+	
+	public static Block whiteWalkwayFence;
+	public static Block lightGreyWalkwayFence;
+	public static Block darkGreyWalkwayFence;
+	public static Block blackWalkwayFence;
+	
+	public static Block oakLaminateWalkwayFence;
+	public static Block birchLaminateWalkwayFence;
+	public static Block spruceLaminateWalkwayFence;
+	public static Block jungleLaminateWalkwayFence;
+	public static Block acaciaLaminateWalkwayFence;
+	public static Block darkLaminateOakWalkwayFence;
+	
+	public static Block oakWalkwayOpenFence;
+	public static Block birchWalkwayOpenFence;
+	public static Block spruceWalkwayOpenFence;
+	public static Block jungleWalkwayOpenFence;
+	public static Block acaciaWalkwayOpenFence;
+	public static Block darkOakWalkwayOpenFence;
+	
+	public static Block whiteWalkwayOpenFence;
+	public static Block lightGreyWalkwayOpenFence;
+	public static Block darkGreyWalkwayOpenFence;
+	public static Block blackWalkwayOpenFence;
+	
+	public static Block oakLaminateWalkwayOpenFence;
+	public static Block birchLaminateWalkwayOpenFence;
+	public static Block spruceLaminateWalkwayOpenFence;
+	public static Block jungleLaminateWalkwayOpenFence;
+	public static Block acaciaLaminateWalkwayOpenFence;
+	public static Block darkLaminateOakWalkwayOpenFence;
+	
 	public static void init() {
 		initBlocks();
 		initEconBlocks();
@@ -82,6 +140,8 @@ public class CoreBlocks {
     	
     	
     	rebarBlock = new RebarBlock().setBlockName("rebarBlock");
+    	
+    	oakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood).setBlockName("oakWalkway");
     	
     	/*ironPanel = new BlockDrywall(config.ironPanelID, Block.blockIron.getItemIconName(), Block.blockIron.getItemIconName(), false).setBlockName("ironPanel");
     	blockSilk = new BlockMulti(config.blockSilkID, Material.cloth).setBlockName("blockSilk");
