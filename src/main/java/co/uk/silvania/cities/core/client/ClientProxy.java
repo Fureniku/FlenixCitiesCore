@@ -24,6 +24,7 @@ public class ClientProxy extends CommonProxy {
 	
 	public static int lightBlockRenderID;
 	public static int lightBlockRotateRenderID;
+	public static int walkwayRenderID;
 
 	@SideOnly(Side.CLIENT)
     @Override
