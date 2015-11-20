@@ -2,6 +2,7 @@ package co.uk.silvania.cities.core.client.renders;
 
 import org.lwjgl.opengl.GL11;
 
+import co.uk.silvania.cities.core.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -32,20 +33,17 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
 			RenderBlocks renderer) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean shouldRender3DInInventory(int modelId) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getRenderId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ClientProxy.walkwayRenderID;
 	}
 	
 	public void renderBlock(double par1, double par2, double par3, double par4, double par5, double par6, RenderBlocks renderer, Block block) {
