@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class FloorBlocks extends Block {
+	
+	int qty = 11;
 
 	public FloorBlocks() {
 		super(Material.rock);
@@ -29,7 +31,7 @@ public class FloorBlocks extends Block {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		icons = new IIcon[9];
+		icons = new IIcon[qty];
 
 		for(int i = 0; i < icons.length; i++) {
 			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + i);
@@ -50,7 +52,7 @@ public class FloorBlocks extends Block {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
-		for (int var4 = 0; var4 < 9; ++var4) {
+		for (int var4 = 0; var4 < qty; ++var4) {
 			list.add(new ItemStack(item, 1, var4));
 		}
 	}

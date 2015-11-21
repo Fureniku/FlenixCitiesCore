@@ -208,8 +208,8 @@ tile.floorBlocks.5.name=Spruce Wood Laminate
 tile.floorBlocks.6.name=Birch Wood Laminate
 tile.floorBlocks.7.name=Jungle Wood Laminate
 tile.floorBlocks.8.name=Ceiling Panel
-tile.floorBlocks.9.name=-
-tile.floorBlocks.10.name=-
+tile.floorBlocks.9.name=Acacia Wood Laminate
+tile.floorBlocks.10.name=Dark Oak Wood Laminate
 tile.floorBlocks.11.name=-
 tile.floorBlocks.12.name=-
 tile.floorBlocks.13.name=-
@@ -260,6 +260,25 @@ tile.floatingShelvesBlock.name=Floating Shelves Shop
 tile.adminShopBlock.name=Admin Shop
 
 tile.rebarBlock.name=Rebar
+
+tile.oakWalkway.name=Oak Walkway
+tile.spruceWalkway.name=Spruce Walkway
+tile.birchWalkway.name=Birch Walkway
+tile.jungleWalkway.name=Jungle Walkway
+tile.acaciaWalkway.name=Acacia Walkway
+tile.darkOakWalkway.name=Dark Oak Walkway
+
+tile.whiteWalkway.name=White Skyscraper Walkway
+tile.lightGreyWalkway.name=Light Grey Skyscraper Walkway
+tile.darkGreyWalkway.name=Dark Grey Skyscraper Walkway
+tile.blackWalkway.name=Black Skyscraper Walkway
+
+tile.oakLaminateWalkway.name=Oak Laminate Walkway
+tile.spruceLaminateWalkway.name=Spruce Laminate Walkway
+tile.birchLaminateWalkway.name=Birch Laminate Walkway
+tile.jungleLaminateWalkway.name=Jungle Laminate Walkway
+tile.acaciaLaminateWalkway.name=Acacia Laminate Walkway
+tile.darkOakLaminateWalkway.name=Dark Oak Laminate Walkway
 
 itemGroup.tabCity=FlenixCities Core
 itemGroup.tabEcon=FlenixCities Economy

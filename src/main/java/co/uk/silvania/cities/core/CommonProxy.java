@@ -41,6 +41,23 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.floorBlocks, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.floorBlocks.getUnlocalizedName().substring(5)));
        	
         GameRegistry.registerBlock(CoreBlocks.oakWalkway, "oakWalkway");
+        GameRegistry.registerBlock(CoreBlocks.spruceWalkway, "spruceWalkway");
+        GameRegistry.registerBlock(CoreBlocks.birchWalkway, "birchWalkway");
+        GameRegistry.registerBlock(CoreBlocks.jungleWalkway, "jungleWalkway");
+        GameRegistry.registerBlock(CoreBlocks.acaciaWalkway, "acaciaWalkway");
+        GameRegistry.registerBlock(CoreBlocks.darkOakWalkway, "darkOakWalkway");
+        
+        GameRegistry.registerBlock(CoreBlocks.whiteWalkway, "whiteWalkway");
+        GameRegistry.registerBlock(CoreBlocks.lightGreyWalkway, "lightGreyWalkway");
+        GameRegistry.registerBlock(CoreBlocks.darkGreyWalkway, "darkGreyWalkway");
+        GameRegistry.registerBlock(CoreBlocks.blackWalkway, "blackWalkway");
+        
+        GameRegistry.registerBlock(CoreBlocks.oakLaminateWalkway, "oakLaminateWalkway");
+        GameRegistry.registerBlock(CoreBlocks.spruceLaminateWalkway, "spruceLaminateWalkway");
+        GameRegistry.registerBlock(CoreBlocks.birchLaminateWalkway, "birchLaminateWalkway");
+        GameRegistry.registerBlock(CoreBlocks.jungleLaminateWalkway, "jungleLaminateWalkway");
+        GameRegistry.registerBlock(CoreBlocks.acaciaLaminateWalkway, "acaciaLaminateWalkway");
+        GameRegistry.registerBlock(CoreBlocks.darkOakLaminateWalkway, "darkOakLaminateWalkway");
         
        	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
        	GameRegistry.registerBlock(CoreBlocks.lightingBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
