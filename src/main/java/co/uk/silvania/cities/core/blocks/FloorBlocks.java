@@ -15,7 +15,7 @@ import net.minecraft.util.IIcon;
 
 public class FloorBlocks extends Block {
 	
-	int qty = 11;
+	int qty = 16;
 
 	public FloorBlocks() {
 		super(Material.rock);

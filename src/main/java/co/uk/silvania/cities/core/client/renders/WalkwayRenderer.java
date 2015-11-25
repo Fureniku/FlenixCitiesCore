@@ -3,6 +3,7 @@ package co.uk.silvania.cities.core.client.renders;
 import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.cities.core.blocks.BlockWalkway;
+import co.uk.silvania.cities.core.blocks.BlockWalkwayStairs;
 import co.uk.silvania.cities.core.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -14,20 +15,20 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-		renderBlock(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D, renderer, block);
+		renderBlock(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D, false, renderer, block, 0, 0, 0, 0);
 		
-		renderBlock(0.9375D, 0.9375D, -0.0625D, 1.0625D, 1.0625D, 1.0625D, renderer, block);
-		renderBlock(-0.0625D, 0.9375D, -0.0625D, 0.0625D, 1.0625D, 1.0625D, renderer, block);
+		renderBlock(0.9375D, 0.9375D, -0.0625D, 1.0625D, 1.0625D, 1.0625D, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(-0.0625D, 0.9375D, -0.0625D, 0.0625D, 1.0625D, 1.0625D, false, renderer, block, 0, 0, 0, 0);
 		
-		renderBlock(0.96875D, 0.0D, 0.09375D, 1.03125D, 1.0D, 0.15625D, renderer, block);
-		renderBlock(0.96875D, 0.0D, 0.34375D, 1.03125D, 1.0D, 0.40625D, renderer, block);
-		renderBlock(0.96875D, 0.0D, 0.59375D, 1.03125D, 1.0D, 0.65625D, renderer, block);
-		renderBlock(0.96875D, 0.0D, 0.84375D, 1.03125D, 1.0D, 0.90625D, renderer, block);
+		renderBlock(0.96875D, 0.0D, 0.09375D, 1.03125D, 1.0D, 0.15625D, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(0.96875D, 0.0D, 0.34375D, 1.03125D, 1.0D, 0.40625D, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(0.96875D, 0.0D, 0.59375D, 1.03125D, 1.0D, 0.65625D, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(0.96875D, 0.0D, 0.84375D, 1.03125D, 1.0D, 0.90625D, false, renderer, block, 0, 0, 0, 0);
 		
-		renderBlock(-0.03125D, 0.0D, 0.09375D, 0.03125D, 1.0D, 0.15625D, renderer, block);
-		renderBlock(-0.03125D, 0.0D, 0.34375D, 0.03125D, 1.0D, 0.40625D, renderer, block);
-		renderBlock(-0.03125D, 0.0D, 0.59375D, 0.03125D, 1.0D, 0.65625D, renderer, block);
-		renderBlock(-0.03125D, 0.0D, 0.84375D, 0.03125D, 1.0D, 0.90625D, renderer, block);
+		renderBlock(-0.03125D, 0.0D, 0.09375D, 0.03125D, 1.0D, 0.15625D, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(-0.03125D, 0.0D, 0.34375D, 0.03125D, 1.0D, 0.40625D, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(-0.03125D, 0.0D, 0.59375D, 0.03125D, 1.0D, 0.65625D, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(-0.03125D, 0.0D, 0.84375D, 0.03125D, 1.0D, 0.90625D, false, renderer, block, 0, 0, 0, 0);
 		
 	}
 
@@ -35,34 +36,34 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
 		
-		boolean connectNorth = checkConnections(world, x, y, z-1);
-		boolean connectEast =  checkConnections(world, x+1, y, z);
-		boolean connectSouth = checkConnections(world, x, y, z+1);
-		boolean connectWest =  checkConnections(world, x-1, y, z);
+		boolean connectNorth = checkConnections(world, x, y, z-1, 0);
+		boolean connectEast =  checkConnections(world, x+1, y, z, 1);
+		boolean connectSouth = checkConnections(world, x, y, z+1, 0);
+		boolean connectWest =  checkConnections(world, x-1, y, z, 1);
+		
+		boolean connectNorthEast = checkConnections(world, x+1, y, z-1, -1);
+		boolean connectNorthWest = checkConnections(world, x-1, y, z-1, -1);
+		boolean connectSouthEast = checkConnections(world, x+1, y, z+1, -1);
+		boolean connectSouthWest = checkConnections(world, x-1, y, z+1, -1);
+		
 		boolean walkwayBelow = world.getBlock(x, y-1, z) instanceof BlockWalkway;
 		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof BlockWalkway;
 		
 		if (!(world.getBlock(x, y-1, z).isOpaqueCube()) && !walkwayBelow) {
 			
 			//Baseplate
-			renderBlock(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
-			
-			//Support beams
-			if (meta == 0) { //East-west
-				renderBlock(0.0D, -0.25D, 0.25D, 1.0D, 0.0D, 0.75D, true, renderer, block, x, y, z, meta);
-				if (connectNorth) { renderBlock(0.25D, -0.25D, 0.0D, 0.75D, 0.0D, 0.25D, true, renderer, block, x, y, z, meta); }
-				if (connectSouth) { renderBlock(0.25D, -0.25D, 0.75D, 0.75D, 0.0D, 1.0D, true, renderer, block, x, y, z, meta); }
-			} else if (meta == 1 || connectNorth || connectSouth) {
-				renderBlock(0.25D, -0.25D, 0.0D, 0.75D, 0.0D, 1.0D, true, renderer, block, x, y, z, meta);
-				if (connectEast) { renderBlock(0.75D, -0.25, 0.25D, 1.0D, 0.0D, 0.75D, true, renderer, block, x, y, z, meta); }
-				if (connectWest) { renderBlock(0.0D, -0.25, 0.25D, 0.25D, 0.0D, 0.75D, true, renderer, block, x, y, z, meta); }
-			}
+			renderBlock(0.0D, -0.0625D, 0.0D, 1.0D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
 		}
 		
-		boolean renderNorth = false;
-		boolean renderEast  = false;
-		boolean renderSouth = false;
-		boolean renderWest  = false;
+		boolean renderNorth = false; //X 0-1,  Z 0
+		boolean renderEast  = false; //X 1,    Z 0-1
+		boolean renderSouth = false; //X 0-1,  Z 1
+		boolean renderWest  = false; //X 0,    Z 0-1
+		
+		boolean renderNorthEast = false;
+		boolean renderNorthWest = false;
+		boolean renderSouthEast = false;
+		boolean renderSouthWest = false;
 		
 		if (meta == 0) {
 			if (!connectNorth) { renderNorth = true; }
@@ -85,45 +86,84 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 		
 		if (renderNorth) {
 			if (!walkwayAbove) {
-				renderBlock(-0.0625D, 0.9375D, -0.0625D, 1.0625D, 1.0625D, 0.0625D, true, renderer, block, x, y, z, meta);
+				//Alter sizes based on connections.
+				double cnct1 = 0;
+				double cnct2 = 0;
+				if (renderEast) { cnct1 = 0.0625D; }
+				if (renderWest) { cnct2 = 0.0625D; }
+				
+				renderOversizeBlock(0.0D + cnct2, 0.9375D, -0.0625D, 1.0D - cnct1, 1.0625D, 0.0625D, true, renderer, block, x, y, z, meta);
 			}
-			renderBlock(0.09375D, 0.0D, -0.03125D, 0.15625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.34375D, 0.0D, -0.03125D, 0.40625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.59375D, 0.0D, -0.03125D, 0.65625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.84375D, 0.0D, -0.03125D, 0.90625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
+			
+			renderOversizeBlock(0.09375D, 0.0D, -0.03125D, 0.15625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.34375D, 0.0D, -0.03125D, 0.40625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.59375D, 0.0D, -0.03125D, 0.65625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.84375D, 0.0D, -0.03125D, 0.90625D, 1.0D, 0.03125D, true, renderer, block, x, y, z, meta);
 		}
 		
 		if (renderSouth) {
 			if (!walkwayAbove) {
-				renderBlock(-0.0625D, 0.9375D, 0.9375D, 1.0625D, 1.0625D, 1.0625D, true, renderer, block, x, y, z, meta);
+				double cnct1 = 0;
+				double cnct2 = 0;
+				if (renderEast) { cnct1 = 0.0625D; }
+				if (renderWest) { cnct2 = 0.0625D; }
+				
+				renderOversizeBlock(0.0D + cnct2, 0.9375D, 0.9375D, 1.0D - cnct1, 1.0625D, 1.0625D, true, renderer, block, x, y, z, meta);
 			}
-			renderBlock(0.09375D, 0.0D, 0.96875D, 0.15625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.34375D, 0.0D, 0.96875D, 0.40625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.59375D, 0.0D, 0.96875D, 0.65625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.84375D, 0.0D, 0.96875D, 0.90625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.09375D, 0.0D, 0.96875D, 0.15625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.34375D, 0.0D, 0.96875D, 0.40625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.59375D, 0.0D, 0.96875D, 0.65625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.84375D, 0.0D, 0.96875D, 0.90625D, 1.0D, 1.03125D, true, renderer, block, x, y, z, meta);
 		}
 		
 		if (renderEast) {
 			if (!walkwayAbove) {
-				renderBlock(0.9375D, 0.9375D, -0.0625D, 1.0625D, 1.0625D, 1.0625D, true, renderer, block, x, y, z, meta);
+				double cnct1 = 0;
+				double cnct2 = 0;
+				if (renderNorth) { cnct1 = 0.0625D; }
+				if (renderSouth) { cnct2 = 0.0625D; }
+				
+				renderOversizeBlock(0.9375D, 0.9375D, 0.0D + cnct1, 1.0625D, 1.0625D, 1.0D - cnct2, true, renderer, block, x, y, z, meta);
 			}
-			renderBlock(0.96875D, 0.0D, 0.09375D, 1.03125D, 1.0D, 0.15625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.96875D, 0.0D, 0.34375D, 1.03125D, 1.0D, 0.40625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.96875D, 0.0D, 0.59375D, 1.03125D, 1.0D, 0.65625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.96875D, 0.0D, 0.84375D, 1.03125D, 1.0D, 0.90625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.96875D, 0.0D, 0.09375D, 1.03125D, 1.0D, 0.15625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.96875D, 0.0D, 0.34375D, 1.03125D, 1.0D, 0.40625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.96875D, 0.0D, 0.59375D, 1.03125D, 1.0D, 0.65625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(0.96875D, 0.0D, 0.84375D, 1.03125D, 1.0D, 0.90625D, true, renderer, block, x, y, z, meta);
 		}
 		
-		if (renderWest) {
+		if (renderWest) { //-0.625D 1.0625D
 			if (!walkwayAbove) {
-				renderBlock(-0.0625D, 0.9375D, -0.0625D, 0.0625D, 1.0625D, 1.0625D, true, renderer, block, x, y, z, meta);
+				double cnct1 = 0;
+				double cnct2 = 0;
+				if (renderNorth) { cnct1 = 0.0625D; }
+				if (renderSouth) { cnct2 = 0.0625D; }
+				
+				renderOversizeBlock(-0.0625D, 0.9375D, 0.0D + cnct1, 0.0625D, 1.0625D, 1.0D - cnct2, true, renderer, block, x, y, z, meta);
 			}
-			renderBlock(-0.03125D, 0.0D, 0.09375D, 0.03125D, 1.0D, 0.15625D, true, renderer, block, x, y, z, meta);
-			renderBlock(-0.03125D, 0.0D, 0.34375D, 0.03125D, 1.0D, 0.40625D, true, renderer, block, x, y, z, meta);
-			renderBlock(-0.03125D, 0.0D, 0.59375D, 0.03125D, 1.0D, 0.65625D, true, renderer, block, x, y, z, meta);
-			renderBlock(-0.03125D, 0.0D, 0.84375D, 0.03125D, 1.0D, 0.90625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(-0.03125D, 0.0D, 0.09375D, 0.03125D, 1.0D, 0.15625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(-0.03125D, 0.0D, 0.34375D, 0.03125D, 1.0D, 0.40625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(-0.03125D, 0.0D, 0.59375D, 0.03125D, 1.0D, 0.65625D, true, renderer, block, x, y, z, meta);
+			renderOversizeBlock(-0.03125D, 0.0D, 0.84375D, 0.03125D, 1.0D, 0.90625D, true, renderer, block, x, y, z, meta);
 		}
 		
-		
+		//Notches in the corners.
+		if (!walkwayAbove) {
+			if (renderNorth && renderEast) {
+				renderOversizeBlock(0.9375D, 0.9375D, -0.0625D, 1.0625D, 1.0625D, 0.0625D, true, renderer, block, x, y, z, meta);
+			}
+			
+			if (renderNorth && renderWest) {
+				renderOversizeBlock(-0.0625D, 0.9375D, -0.0625D, 0.0625D, 1.0625D, 0.0625D, true, renderer, block, x, y, z, meta);
+			}
+			
+			if (renderSouth && renderEast) {
+				renderOversizeBlock(0.9375D, 0.9375D, 0.9375D, 1.0625D, 1.0625D, 1.0625D, true, renderer, block, x, y, z, meta);
+			}
+			
+			if (renderSouth && renderWest) {
+				renderOversizeBlock(-0.0625D, 0.9375D, 0.9375D, 0.0625D, 1.0625D, 1.0625D, true, renderer, block, x, y, z, meta);
+			}
+		}
 		return true;
 	}
 
@@ -137,25 +177,77 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 		return ClientProxy.walkwayRenderID;
 	}
 	
-	public boolean checkConnections(IBlockAccess world, int x, int y, int z) {
+	//North: Z1 - Z0, East: X0 - X1, South: Z0 - Z1, West = X1 - X0
+	public boolean checkConnections(IBlockAccess world, int x, int y, int z, int targetMeta) {	
 		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z) || world.getBlock(x, y-1, z).isNormalCube(world, x, y, z)) {
 			return true;
 		}
 		if (world.getBlock(x, y, z) instanceof BlockWalkway) {
 			return true;
 		}
+		
+		if (targetMeta >= 0) {
+			if (world.getBlock(x, y - 1, z) instanceof BlockWalkwayStairs) {
+				int meta = world.getBlockMetadata(x, y - 1, z);
+				if (meta == targetMeta || meta == (targetMeta + 2)) {
+					return true;
+				}
+			}
+		}
+		
+		
 		return false;
 	}
 	
-	public void renderBlock(double par1, double par2, double par3, double par4, double par5, double par6, RenderBlocks renderer, Block block) {
-		renderBlock(par1, par2, par3, par4, par5, par6, false, renderer, block, 0, 0, 0, 0);
+	public void renderBlock(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, boolean existsInWorld, RenderBlocks renderer, Block block, int x, int y, int z, int meta) {
+		renderer.setRenderBounds(minX, minY, minZ, maxX, maxY, maxZ);
+		if (existsInWorld) {
+			renderer.renderStandardBlock(block, x, y, z);
+		} else {
+			Tessellator tess = Tessellator.instance;
+			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+			
+			tess.startDrawingQuads();
+			tess.setNormal(0.0F, -1.0F, 0.0F);
+			renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(0, 0));
+			tess.draw();
+			
+			tess.startDrawingQuads();
+			tess.setNormal(0.0F, 1.0F, 0.0F);
+			renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, 0));
+			tess.draw();
+			
+			tess.startDrawingQuads();
+			tess.setNormal(0.0F, 0.0F, -1.0F);
+			renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(2, 0));
+			tess.draw();
+			
+			tess.startDrawingQuads();
+			tess.setNormal(0.0F, 0.0F, 1.0F);
+			renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(3, 0));
+			tess.draw();
+			
+			tess.startDrawingQuads();
+			tess.setNormal(-1.0F, 0.0F, 0.0F);
+			renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(4, 0));
+			tess.draw();
+			
+			tess.startDrawingQuads();
+			tess.setNormal(1.0F, 0.0F, 0.0F);
+			renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, 0));
+			tess.draw();
+			
+			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+		}
 	}
 	
-	public void renderBlock(double par1, double par2, double par3, double par4, double par5, double par6, boolean inWorld, RenderBlocks renderer, Block block, int x, int y, int z, int meta) {
-		renderer.setRenderBounds(par1, par2, par3, par4, par5, par6);
+	public void renderOversizeBlock(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, boolean existsInWorld, RenderBlocks renderer, Block block, int x, int y, int z, int meta) {
+		renderer.setRenderBounds(minX, minY, minZ, maxX, maxY, maxZ);
 		
-		if (inWorld) {
+		if (existsInWorld) {
+			renderer.setOverrideBlockTexture(block.getIcon(7, meta));
 			renderer.renderStandardBlock(block, x, y, z);
+			renderer.clearOverrideBlockTexture();
 		} else {
 			Tessellator tess = Tessellator.instance;
 			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);

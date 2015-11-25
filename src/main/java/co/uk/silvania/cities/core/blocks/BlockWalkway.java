@@ -23,16 +23,14 @@ import net.minecraft.world.World;
 
 public class BlockWalkway extends Block {
 	
-	Block textureBlock;
-	int textureMeta;
 	String textureName;
+	String oversizeName;
 
-	public BlockWalkway(Material mat, SoundType sound, Block block, int meta, String icon) {
+	public BlockWalkway(Material mat, SoundType sound, String icon, String icon2) {
 		super(mat);
 		this.setCreativeTab(FlenixCities_Core.tabCity);
-		this.textureBlock = block;
-		this.textureMeta = meta;
 		this.textureName = icon;
+		this.oversizeName = icon2;
 		this.setStepSound(sound);
 		this.setHardness(2.0F);
 		this.setResistance(12.0F);
@@ -56,8 +54,6 @@ public class BlockWalkway extends Block {
 			rot = rot + 360;
 		}
 		
-		System.out.println("Rotation: " + rot);
-		
 		if ((rot >= 45 && rot <= 135) || (rot >= 225 && rot <= 315)) {
 			world.setBlockMetadataWithNotify(x, y, z, 0, 3); //Facing east/west
 		} else {
@@ -75,11 +71,11 @@ public class BlockWalkway extends Block {
 		}
 		
 		int meta = world.getBlockMetadata(x, y, z);
-		
-		boolean connectNorth = checkConnections(world, x, y, z-1); //z-1
-		boolean connectEast  = checkConnections(world, x+1, y, z);  //x+1
-		boolean connectSouth = checkConnections(world, x, y, z+1); //z+1
-		boolean connectWest  = checkConnections(world, x-1, y, z);  //x-1
+		//North: Z1 - Z0, East: X0 - X1, South: Z0 - Z1, West = X1 - X0
+		boolean connectNorth = checkConnections(world, x, y, z-1, 0); //z-1
+		boolean connectEast  = checkConnections(world, x+1, y, z, 1);  //x+1
+		boolean connectSouth = checkConnections(world, x, y, z+1, 0); //z+1
+		boolean connectWest  = checkConnections(world, x-1, y, z, 1);  //x-1
 		
 		boolean hitboxNorth = false;
 		boolean hitboxEast  = false;
@@ -107,25 +103,25 @@ public class BlockWalkway extends Block {
 		
 		if (hitboxNorth) {
 			hasCollision = true;
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.0625F);
+			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0625F, 0.0625F);
 			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 		}
 		
 		if (hitboxSouth) {
 			hasCollision = true;
-			setBlockBounds(0.0F, 0.0F, 0.9375F, 1.0F, 1.0F, 1.0F);
+			setBlockBounds(0.0F, 0.0F, 0.9375F, 1.0F, 1.0625F, 1.0F);
 			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 		}
 		
 		if (hitboxEast) {
 			hasCollision = true;
-			setBlockBounds(0.9375F, 0.0F, 0.0625F, 1.0F, 1.0F, 1.0F);
+			setBlockBounds(0.9375F, 0.0F, 0.0625F, 1.0F, 1.0625F, 1.0F);
 			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 		}
 		
 		if (hitboxWest) {
 			hasCollision = true;
-			setBlockBounds(0.0F, 0.0F, 0.0F, 0.0625F, 1.0F, 1.0F);
+			setBlockBounds(0.0F, 0.0F, 0.0F, 0.0625F, 1.0625F, 1.0F);
 			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 		}
 
@@ -142,26 +138,44 @@ public class BlockWalkway extends Block {
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 	
-	public boolean checkConnections(World world, int x, int y, int z) {
+	public boolean checkConnections(World world, int x, int y, int z, int targetMeta) {
 		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z) || world.getBlock(x, y-1, z).isNormalCube(world, x, y, z)) {
 			return true;
 		}
 		if (world.getBlock(x, y, z) instanceof BlockWalkway) {
 			return true;
 		}
+		
+		if (targetMeta >= 0) {
+			if (world.getBlock(x, y - 1, z) instanceof BlockWalkwayStairs) {
+				int meta = world.getBlockMetadata(x, y - 1, z);
+				if (meta == targetMeta || meta == (targetMeta + 2)) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
+	
+	@SideOnly(Side.CLIENT)
+	private IIcon oversizeIcon;
 	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
 		blockIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + textureName);
+		oversizeIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + oversizeName);
 	}
+	
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
+        return true;
+    }
 	
 	@Override
 	public IIcon getIcon(int side, int metadata) {
-		if (textureBlock != null) {
-			return textureBlock.getIcon(0, textureMeta);
+		if (side == 7) {
+			return oversizeIcon;
 		} else {
 			return blockIcon;
 		}

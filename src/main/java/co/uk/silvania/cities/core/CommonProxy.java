@@ -59,6 +59,8 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.acaciaLaminateWalkway, "acaciaLaminateWalkway");
         GameRegistry.registerBlock(CoreBlocks.darkOakLaminateWalkway, "darkOakLaminateWalkway");
         
+        GameRegistry.registerBlock(CoreBlocks.oakWalkwayStairs, "oakWalkwayStairs");
+        
        	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
        	GameRegistry.registerBlock(CoreBlocks.lightingBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
        	GameRegistry.registerBlock(CoreBlocks.lightingRotateBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingRotateBlocks.getUnlocalizedName().substring(5)));
@@ -74,10 +76,6 @@ public class CommonProxy {
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster2, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster2.getUnlocalizedName().substring(5)));
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster3, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster3.getUnlocalizedName().substring(5)));
        	//GameRegistry.registerBlock(FlenixCities.verticalPoster4, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster4.getUnlocalizedName().substring(5)));
-        
-    	//GameRegistry.registerItem(CoreItems.plasticItem, "plasticItem");
-    	//GameRegistry.registerItem(CoreItems.smallPCB, "smallPCB");
-    	//GameRegistry.registerItem(CoreItems.largePCB, "largePCB");
 
         GameRegistry.registerItem(CoreItems.coin1, "coin1");
         GameRegistry.registerItem(CoreItems.coin2, "coin2");
@@ -110,11 +108,6 @@ public class CommonProxy {
     	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
     	GameRegistry.registerItem(CoreItems.necklaceItem, "necklaceItem");
     	GameRegistry.registerItem(CoreItems.rubyNecklace, "rubyNecklace");*/
-    }
-    
-    public void addNames() {    	
-    	LanguageRegistry.addName(CoreBlocks.styledGlassPane, "Styled Glass Pane");
-    	LanguageRegistry.addName(CoreBlocks.styledGlassWhitePane, "Styled Glass Pane");
     }
     
     public void addRecipes() {

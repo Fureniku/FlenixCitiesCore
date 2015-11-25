@@ -77,7 +77,6 @@ public class FlenixCities_Core {
         CoreItems.init();
         
 	    proxy.registerBlocks();
-	    proxy.addNames();
 	    proxy.entityStuff();
 	    
         proxy.registerRenderThings();

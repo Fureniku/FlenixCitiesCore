@@ -71,6 +71,8 @@ public class CoreBlocks {
 	public static Block acaciaLaminateWalkway;
 	public static Block darkOakLaminateWalkway;
 	
+	public static Block oakWalkwayStairs;
+	
 	public static void init() {
 		initBlocks();
 		initEconBlocks();
@@ -104,27 +106,27 @@ public class CoreBlocks {
     	
     	rebarBlock = new RebarBlock().setBlockName("rebarBlock");
     	
-    	oakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, Blocks.planks, 0, "").setBlockName("oakWalkway");
-    	spruceWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, Blocks.planks, 1, "").setBlockName("spruceWalkway");
-    	birchWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, Blocks.planks, 2, "").setBlockName("birchWalkway");
-    	jungleWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, Blocks.planks, 3, "").setBlockName("jungleWalkway");
-    	acaciaWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, Blocks.planks, 4, "").setBlockName("acaciaWalkway");
-    	darkOakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, Blocks.planks, 5, "").setBlockName("darkOakWalkway");
+    	oakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks11", "floorBlocks11").setBlockName("oakWalkway");
+    	spruceWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks12", "floorBlocks12").setBlockName("spruceWalkway");
+    	birchWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks13", "floorBlocks13").setBlockName("birchWalkway");
+    	jungleWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks14", "floorBlocks14").setBlockName("jungleWalkway");
+    	acaciaWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks15", "floorBlocks15").setBlockName("acaciaWalkway");
+    	darkOakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks16", "floorBlocks16").setBlockName("darkOakWalkway");
     	
-    	whiteWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, null, 0, "skyscraperBlocks0").setBlockName("whiteWalkway");
-    	lightGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, null, 0, "skyscraperBlocks1").setBlockName("lightGreyWalkway");
-    	darkGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, null, 0, "skyscraperBlocks2").setBlockName("darkGreyWalkway");
-    	blackWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, null, 0, "skyscraperBlocks3").setBlockName("blackWalkway");
+    	whiteWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks0", "skyscraperBlocks0").setBlockName("whiteWalkway");
+    	lightGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks1", "skyscraperBlocks1").setBlockName("lightGreyWalkway");
+    	darkGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks2", "skyscraperBlocks2").setBlockName("darkGreyWalkway");
+    	blackWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks3", "skyscraperBlocks3").setBlockName("blackWalkway");
     	
-    	oakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, null, 0, "floorBlocks4").setBlockName("oakLaminateWalkway");
-    	spruceLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, null, 0, "floorBlocks5").setBlockName("spruceLaminateWalkway");
-    	birchLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, null, 0, "floorBlocks6").setBlockName("birchLaminateWalkway");
-    	jungleLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, null, 0, "floorBlocks7").setBlockName("jungleLaminateWalkway");
-    	acaciaLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, null, 0, "floorBlocks9").setBlockName("acaciaLaminateWalkway");
-    	darkOakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, null, 0, "floorBlocks10").setBlockName("darkOakLaminateWalkway");
+    	oakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks4", "oakLaminateWalkway").setBlockName("oakLaminateWalkway");
+    	spruceLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks5", "spruceLaminateWalkway").setBlockName("spruceLaminateWalkway");
+    	birchLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks6", "birchLaminateWalkway").setBlockName("birchLaminateWalkway");
+    	jungleLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks7", "jungleLaminateWalkway").setBlockName("jungleLaminateWalkway");
+    	acaciaLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks9", "acaciaLaminateWalkway").setBlockName("acaciaLaminateWalkway");
+    	darkOakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks10", "darkOakLaminateWalkway").setBlockName("darkOakLaminateWalkway");
     	
-    	/*ironPanel = new BlockDrywall(config.ironPanelID, Block.blockIron.getItemIconName(), Block.blockIron.getItemIconName(), false).setBlockName("ironPanel");
-    	blockSilk = new BlockMulti(config.blockSilkID, Material.cloth).setBlockName("blockSilk");
+    	oakWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks11", "floorBlocks11").setBlockName("oakWalkwayStairs");
+    	/*blockSilk = new BlockMulti(config.blockSilkID, Material.cloth).setBlockName("blockSilk");
     	blockCloth = new BlockMulti(config.blockClothID, Material.cloth).setBlockName("blockCloth");
     	polishedStone = new BlockMulti(config.polishedStoneID, Material.rock).setBlockName("polishedStone");
     	polishedBrick = new BlockMulti(config.polishedBrickID, Material.rock).setBlockName("polishedBrick");
