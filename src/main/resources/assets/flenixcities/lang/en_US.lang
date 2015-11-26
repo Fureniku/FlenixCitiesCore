@@ -280,5 +280,24 @@ tile.jungleLaminateWalkway.name=Jungle Laminate Walkway
 tile.acaciaLaminateWalkway.name=Acacia Laminate Walkway
 tile.darkOakLaminateWalkway.name=Dark Oak Laminate Walkway
 
+tile.oakWalkwayStairs.name=Oak Walkway Stairs
+tile.spruceWalkwayStairs.name=Spruce Walkway Stairs
+tile.birchWalkwayStairs.name=Birch Walkway Stairs
+tile.jungleWalkwayStairs.name=Jungle Walkway Stairs
+tile.acaciaWalkwayStairs.name=Acacia Walkway Stairs
+tile.darkOakWalkwayStairs.name=Dark Oak Walkway Stairs
+
+tile.whiteWalkwayStairs.name=White Skyscraper Walkway Stairs
+tile.lightGreyWalkwayStairs.name=Light Grey Skyscraper Walkway Stairs
+tile.darkGreyWalkwayStairs.name=Dark Grey Skyscraper Walkway Stairs
+tile.blackWalkwayStairs.name=Black Skyscraper Walkway Stairs
+
+tile.oakLaminateWalkwayStairs.name=Oak Laminate Walkway Stairs
+tile.spruceLaminateWalkwayStairs.name=Spruce Laminate Walkway Stairs
+tile.birchLaminateWalkwayStairs.name=Birch Laminate Walkway Stairs
+tile.jungleLaminateWalkwayStairs.name=Jungle Laminate Walkway Stairs
+tile.acaciaLaminateWalkwayStairs.name=Acacia Laminate Walkway Stairs
+tile.darkOakLaminateWalkwayStairs.name=Dark Oak Laminate Walkway Stairs
+
 itemGroup.tabCity=FlenixCities Core
 itemGroup.tabEcon=FlenixCities Economy

@@ -72,6 +72,23 @@ public class CoreBlocks {
 	public static Block darkOakLaminateWalkway;
 	
 	public static Block oakWalkwayStairs;
+	public static Block spruceWalkwayStairs;
+	public static Block birchWalkwayStairs;
+	public static Block jungleWalkwayStairs;
+	public static Block acaciaWalkwayStairs;
+	public static Block darkOakWalkwayStairs;
+	
+	public static Block whiteWalkwayStairs;
+	public static Block lightGreyWalkwayStairs;
+	public static Block darkGreyWalkwayStairs;
+	public static Block blackWalkwayStairs;
+	
+	public static Block oakLaminateWalkwayStairs;
+	public static Block spruceLaminateWalkwayStairs;
+	public static Block birchLaminateWalkwayStairs;
+	public static Block jungleLaminateWalkwayStairs;
+	public static Block acaciaLaminateWalkwayStairs;
+	public static Block darkOakLaminateWalkwayStairs;
 	
 	public static void init() {
 		initBlocks();
@@ -126,6 +143,23 @@ public class CoreBlocks {
     	darkOakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks10", "darkOakLaminateWalkway").setBlockName("darkOakLaminateWalkway");
     	
     	oakWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks11", "floorBlocks11").setBlockName("oakWalkwayStairs");
+    	spruceWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks12", "floorBlocks12").setBlockName("spruceWalkwayStairs");
+    	birchWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks13", "floorBlocks13").setBlockName("birchWalkwayStairs");
+    	jungleWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks14", "floorBlocks14").setBlockName("jungleWalkwayStairs");
+    	acaciaWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks15", "floorBlocks15").setBlockName("acaciaWalkwayStairs");
+    	darkOakWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks16", "floorBlocks16").setBlockName("darkOakWalkwayStairs");
+    	
+    	whiteWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks0", "skyscraperBlocks0").setBlockName("whiteWalkwayStairs");
+    	lightGreyWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks1", "skyscraperBlocks1").setBlockName("lightGreyWalkwayStairs");
+    	darkGreyWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks2", "skyscraperBlocks2").setBlockName("darkGreyWalkwayStairs");
+    	blackWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks3", "skyscraperBlocks3").setBlockName("blackWalkwayStairs");
+    	
+    	oakLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks4", "oakLaminateWalkway").setBlockName("oakLaminateWalkwayStairs");
+    	spruceLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks5", "spruceLaminateWalkway").setBlockName("spruceLaminateWalkwayStairs");
+    	birchLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks6", "birchLaminateWalkway").setBlockName("birchLaminateWalkwayStairs");
+    	jungleLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks7", "jungleLaminateWalkway").setBlockName("jungleLaminateWalkwayStairs");
+    	acaciaLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks9", "acaciaLaminateWalkway").setBlockName("acaciaLaminateWalkwayStairs");
+    	darkOakLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks10", "darkOakLaminateWalkway").setBlockName("darkOakLaminateWalkwayStairs");
     	/*blockSilk = new BlockMulti(config.blockSilkID, Material.cloth).setBlockName("blockSilk");
     	blockCloth = new BlockMulti(config.blockClothID, Material.cloth).setBlockName("blockCloth");
     	polishedStone = new BlockMulti(config.polishedStoneID, Material.rock).setBlockName("polishedStone");

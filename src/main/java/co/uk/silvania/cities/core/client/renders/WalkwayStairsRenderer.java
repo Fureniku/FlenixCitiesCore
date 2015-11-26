@@ -135,13 +135,8 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 		boolean connectSouth = checkConnections(world, x, y, z+1);
 		boolean connectWest =  checkConnections(world, x-1, y, z);
 		
-		boolean connectNorthEast = checkConnections(world, x+1, y, z-1);
-		boolean connectNorthWest = checkConnections(world, x-1, y, z-1);
-		boolean connectSouthEast = checkConnections(world, x+1, y, z+1);
-		boolean connectSouthWest = checkConnections(world, x-1, y, z+1);
-		
-		boolean walkwayBelow = world.getBlock(x, y-1, z) instanceof BlockWalkway;
-		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof BlockWalkway;
+		boolean walkwayBelow = world.getBlock(x, y-1, z) instanceof BlockWalkwayStairs;
+		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof BlockWalkwayStairs;
 		
 		if (!walkwayBelow) {
 			//Main Stairs
@@ -415,21 +410,243 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 			if (!connectNorth) {
 				if (!walkwayAbove) {
 					//Handrail tess
+					//Handrail tess
+					tess.draw();
+					//Top
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z - 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z - 0.0625, u0, v1);
+					tess.draw();
+					
+					//Front
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x - 0.0001, y + 1.9375, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x - 0.0001, y + 2.0625, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 2.0625, z - 0.0625, u0, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 1.9375, z - 0.0625, u0, v1);
+					tess.draw();
+					
+					//Back
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z - 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z - 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.0625, u0, v1);
+					tess.draw();
+					
+					//Right
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z - 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z - 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z - 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z - 0.0625, u0, v1);
+					tess.draw();
+					
+					//Bottom
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z - 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z - 0.0625, u0, v1);
+					tess.draw();
+					
+					//Support Rail
+					//Top
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.0625, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 0.0625, z + 0,      u0, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0,      u0, v1);
+					tess.draw();
+					
+					//Front
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0,      u0, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0,      u0, v1);
+					tess.draw();
+					
+					//Back
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0,      u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0,      u1, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 0, y + 0.9375,  z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + -0.0625, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 0.0625,  z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625,  z + 0.0625, u0, v1);
+					tess.draw();
+					
+					//Right
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y + -0.0625, z - 0.0001, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375,  z - 0.0001, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625,  z - 0.0001, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.0625,  z - 0.0001, u0, v1);
+					tess.draw();
+					
+					//Bottom
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+					tess.addVertexWithUV(x + 1, y + -0.0625, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375,  z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 0.9375,  z + 0,      u0, v0);
+					tess.addVertexWithUV(x + 1, y + -0.0625, z + 0,      u0, v1);
+					tess.draw();				
+					
+					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.09375D, 0.75D, -0.03125D, 0.15625D, 1.75D, 0.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.50D, -0.03125D, 0.40625D, 1.50D, 0.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.25D, -0.03125D, 0.65625D, 1.25D, 0.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.0D,  -0.03125D, 0.90625D, 1.0D,  0.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.09375D, 0.75D, -0.03125D, 0.15625D, 1.875D, 0.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.34375D, 0.50D, -0.03125D, 0.40625D, 1.625D, 0.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.59375D, 0.25D, -0.03125D, 0.65625D, 1.375D, 0.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.84375D, 0.0D,  -0.03125D, 0.90625D, 1.125D, 0.03125D, true, renderer, block, x, y, z, meta);
 			}
 			
 			if (!connectSouth) {
 				if (!walkwayAbove) {
 					//Handrail tess
+					tess.draw();					
+					//Top
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Front
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x + 1.0001, y + 1.0625, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x + 1.0001, y + 0.9375, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x + 1.0001, y + 0.9375, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1.0001, y + 1.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Back
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 1.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 1.0625, u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 1.0625, u0, v1);
+					tess.draw();
+					
+					//Right
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Bottom
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Support Rail
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 1,      u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.0625, z + 1,      u1, v0);
+					tess.addVertexWithUV(x + 1, y + 0.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Front
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 1,      u1, v1);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 1,      u1, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Back
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1,      u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1,      u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1.0001, u1, v1);
+					tess.addVertexWithUV(x + 1, y - 0.0625, z + 1.0001, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 0.0625, z + 1.0001, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 1.0001, u0, v1);
+					tess.draw();
+					
+					//Right
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y - 0.0625, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Bottom
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+					tess.addVertexWithUV(x + 1, y - 0.0625, z + 1,      u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1,      u1, v0);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y - 0.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.09375D, 0.75D, 0.96875D, 0.15625D, 1.75D, 1.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.50D, 0.96875D, 0.40625D, 1.50D, 1.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.25D, 0.96875D, 0.65625D, 1.25D, 1.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.0D,  0.96875D, 0.90625D, 1.0D,  1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.09375D, 0.75D, 0.96875D, 0.15625D, 1.875D, 1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.34375D, 0.50D, 0.96875D, 0.40625D, 1.625D, 1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.59375D, 0.25D, 0.96875D, 0.65625D, 1.375D, 1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.84375D, 0.0D,  0.96875D, 0.90625D, 1.125D, 1.03125D, true, renderer, block, x, y, z, meta);
 			}
 		}
 		
@@ -680,140 +897,242 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 				if (!walkwayAbove) {
 					//Handrail tess
 					tess.draw();
+					//Top
 					tess.startDrawingQuads();
-					tess.setColorOpaque(col, col, col);
+					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
 					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.0625, u1, v1);
 					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0625, u1, v0);
 					tess.addVertexWithUV(x + 1, y + 2.0625, z - 0.0625, u0, v0);
 					tess.addVertexWithUV(x + 0, y + 1.0625, z - 0.0625, u0, v1);
 					tess.draw();
-
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 1.0625, y + 1.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 1.0625, y + 2.0625, z + 0, u0, v1);
-					tess.draw();
 					
 					//Back
 					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0.0001, y + 1.9375, z + 1.0625, u1, v1);
-					tess.addVertexWithUV(x + 0.0001, y + 2.0625, z + 1.0625, u1, v0);
-					tess.addVertexWithUV(x + 0.0001, y + 2.0625, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 0.0001, y + 1.9375, z + 0.9375, u0, v1);
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z - 0.0625, u0, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z - 0.0625, u0, v1);
 					tess.draw();
 					
 					//Front
 					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1.0625, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1.0625, u0, v1);
-					tess.draw();
-					
-					//Left
-					/*tess.startDrawingQuads();
 					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.9375, y + 1.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 0, u0, v1);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z - 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z - 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0625, u0, v1);
 					tess.draw();
 					
 					//Right
 					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1.0625, y + 0.9375, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 1.0625, y + 1.9375, z + 0, u1, v0);
-					tess.addVertexWithUV(x + 1.0625, y + 2.0625, z + 0, u0, v0);
-					tess.addVertexWithUV(x + 1.0625, y + 1.0625, z + 1, u0, v1);
-					tess.draw();*/
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.0625, u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z - 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z - 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z - 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z - 0.0625, u0, v1);
+					tess.draw();
 					
 					//Bottom
 					tess.startDrawingQuads();
 					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1.0625, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 1.0625, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u0, v1);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z - 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z - 0.0625, u0, v1);
 					tess.draw();
 					
-					//Left Support rail
+					//Support Rail
 					//Top
 					tess.startDrawingQuads();
 					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0, y + 0.0625, z + 0.9375, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.9375, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1,      u0, v0);
-					tess.addVertexWithUV(x + 1, y + 0.0625, z + 1,      u0, v1);
+					tess.addVertexWithUV(x + 0, y + 0.0625, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0,      u0, v0);
+					tess.addVertexWithUV(x + 0, y + 0.0625, z + 0,      u0, v1);
+					tess.draw();
+					
+					//Back
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x - 0.0001, y + -0.0625, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x - 0.0001, y + 0.0625,  z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 0.0625,  z + 0,      u0, v0);
+					tess.addVertexWithUV(x - 0.0001, y + -0.0625, z + 0,      u0, v1);
 					tess.draw();
 					
 					//Front
 					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0,      u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0,      u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u0, v1);
+					tess.draw();
+					
+					//Right
+					tess.startDrawingQuads();
 					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 1,      u1, v1);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1,      u1, v0);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 0, y + -0.0625, z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.9375,  z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625,  z + 0.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 0.0625,  z + 0.0625, u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y + 0.9375,  z - 0.0001, u1, v1);
+					tess.addVertexWithUV(x + 0, y + -0.0625, z - 0.0001, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 0.0625,  z - 0.0001, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625,  z - 0.0001, u0, v1);
+					tess.draw();
+					
+					//Bottom
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+					tess.addVertexWithUV(x + 1, y + 0.9375,  z + 0.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + -0.0625, z + 0.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + -0.0625, z + 0,      u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375,  z + 0,      u0, v1);
+					tess.draw();				
+					
+					tess.startDrawingQuads();
+				}
+				renderOversizeBlock(0.09375D, 0.0D,  -0.03125D, 0.15625D, 1.125D,  0.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.34375D, 0.25D, -0.03125D, 0.40625D, 1.375D, 0.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.59375D, 0.50D, -0.03125D, 0.65625D, 1.625D, 0.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.84375D, 0.75D, -0.03125D, 0.90625D, 1.875D, 0.03125D, true, renderer, block, x, y, z, meta);
+			}
+			
+			if (!connectSouth) {
+				if (!walkwayAbove) {
+					tess.draw();
+					//Handrail tess
+					
+					//Top
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.9375, u0, v0);
 					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.9375, u0, v1);
 					tess.draw();
 					
 					//Back
 					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1.0001, y + -0.0625, z + 0.9375, u1, v1);
-					tess.addVertexWithUV(x + 1.0001, y + 0.0625,  z + 0.9375, u1, v0);
-					tess.addVertexWithUV(x + 1.0001, y + 0.0625,  z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 1.0001, y + -0.0625, z + 0.9375, u0, v1);
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0.9375, u0, v1);
 					tess.draw();
 					
-					//Left
-					/*tess.startDrawingQuads();
+					//Front
+					tess.startDrawingQuads();
 					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375,  z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + -0.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 0.0625,  z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625,  z + 0, u0, v1);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 1.0625, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 1.0625, u0, v1);
 					tess.draw();
 					
 					//Right
 					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1.0001, y + -0.0625, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 1.0001, y + 0.9375,  z + 0, u1, v0);
-					tess.addVertexWithUV(x + 1.0001, y + 1.0625,  z + 0, u0, v0);
-					tess.addVertexWithUV(x + 1.0001, y + 0.0625,  z + 1, u0, v1);
-					tess.draw();*/
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 1.0625, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 1.0625, u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.9375, u0, v1);
+					tess.draw();
 					
 					//Bottom
 					tess.startDrawingQuads();
 					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 0, y + -0.0625, z + 1,      u1, v1);
-					tess.addVertexWithUV(x + 1, y + 0.9375,  z + 1,      u1, v0);
-					tess.addVertexWithUV(x + 1, y + 0.9375,  z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 0, y + -0.0625, z + 0.9375, u0, v1);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 1.0625, u1, v1);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1.0625, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.9375, u0, v1);
 					tess.draw();
 					
+					//Support Rail
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+					tess.addVertexWithUV(x + 0, y + 0.0625, z + 1,      u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1,      u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 0.0625, z + 0.9375, u0, v1);
+					tess.draw();
 					
+					//Back
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x - 0.0001, y - 0.0625, z + 1,      u1, v1);
+					tess.addVertexWithUV(x - 0.0001, y + 0.0625, z + 1,      u1, v0);
+					tess.addVertexWithUV(x - 0.0001, y + 0.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x - 0.0001, y - 0.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Front
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1,      u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1,      u0, v1);
+					tess.draw();
+					
+					//Right
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 0, y - 0.0625, z + 1.0001, u1, v1);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1.0001, u1, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1.0001, u0, v0);
+					tess.addVertexWithUV(x + 0, y + 0.0625, z + 1.0001, u0, v1);
+					tess.draw();
+					
+					//Left
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u1, v1);
+					tess.addVertexWithUV(x + 0, y - 0.0625, z + 0.9375, u1, v0);
+					tess.addVertexWithUV(x + 0, y + 0.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u0, v1);
+					tess.draw();
+					
+					//Bottom
+					tess.startDrawingQuads();
+					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1,      u1, v1);
+					tess.addVertexWithUV(x + 0, y - 0.0625, z + 1,      u1, v0);
+					tess.addVertexWithUV(x + 0, y - 0.0625, z + 0.9375, u0, v0);
+					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u0, v1);
+					tess.draw();
 					
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.09375D, 0.0D,  -0.03125D, 0.15625D, 1.0D,  0.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.25D, -0.03125D, 0.40625D, 1.25D, 0.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.50D, -0.03125D, 0.65625D, 1.50D, 0.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.75D, -0.03125D, 0.90625D, 1.75D, 0.03125D, true, renderer, block, x, y, z, meta);
-			}
-			
-			if (!connectSouth) {
-				if (!walkwayAbove) {
-					//Handrail tess
-				}
-				renderOversizeBlock(0.09375D, 0.0D,  0.96875D, 0.15625D, 1.0D,  1.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.25D, 0.96875D, 0.40625D, 1.25D, 1.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.50D, 0.96875D, 0.65625D, 1.50D, 1.03125D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.75D, 0.96875D, 0.90625D, 1.75D, 1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.09375D, 0.0D,  0.96875D, 0.15625D, 1.125D,  1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.34375D, 0.25D, 0.96875D, 0.40625D, 1.375D, 1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.59375D, 0.50D, 0.96875D, 0.65625D, 1.625D, 1.03125D, true, renderer, block, x, y, z, meta);
+				renderOversizeBlock(0.84375D, 0.75D, 0.96875D, 0.90625D, 1.875D, 1.03125D, true, renderer, block, x, y, z, meta);
 			}
 		}
 		return true;
