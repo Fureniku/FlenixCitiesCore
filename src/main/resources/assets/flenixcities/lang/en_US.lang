@@ -27,6 +27,7 @@ item.atmInternals.name=ATM Internals
 item.atmScreen.name=ATM Screen
 item.atmButtons.name=ATM Buttons
 item.cpu.name=CPU
+item.pliers.name=Pliers
 
 tile.atmBlock.0.name=ATM Stone
 tile.atmBlock.1.name=ATM Stone
@@ -298,6 +299,8 @@ tile.birchLaminateWalkwayStairs.name=Birch Laminate Walkway Stairs
 tile.jungleLaminateWalkwayStairs.name=Jungle Laminate Walkway Stairs
 tile.acaciaLaminateWalkwayStairs.name=Acacia Laminate Walkway Stairs
 tile.darkOakLaminateWalkwayStairs.name=Dark Oak Laminate Walkway Stairs
+
+entity.flenixcities:Banker.name=Banker
 
 itemGroup.tabCity=FlenixCities Core
 itemGroup.tabEcon=FlenixCities Economy
