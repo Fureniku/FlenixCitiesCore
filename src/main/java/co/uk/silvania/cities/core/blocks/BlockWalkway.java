@@ -1,7 +1,9 @@
 package co.uk.silvania.cities.core.blocks;
 
 import java.util.List;
+import java.util.Random;
 
+import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.core.FlenixCities_Core;
 import co.uk.silvania.cities.core.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
@@ -11,13 +13,18 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -34,10 +41,147 @@ public class BlockWalkway extends Block {
 		this.setStepSound(sound);
 		this.setHardness(2.0F);
 		this.setResistance(12.0F);
+		this.setTickRandomly(true);
 	}
 	
 	@Override public boolean renderAsNormalBlock() { return false; }
 	@Override public boolean isOpaqueCube() { return false; }
+	
+	@Override
+	public int getLightValue(IBlockAccess world, int x, int y, int z) {
+		int meta = world.getBlockMetadata(x, y, z);
+		
+		if ((meta >= 8 && meta <= 11) || meta == 14 || meta == 15) {
+			return 15;
+		} else {
+			return 0;
+		}
+	}
+	
+	@Override
+	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
+		ItemStack item = player.getHeldItem();
+		int meta = world.getBlockMetadata(x, y, z);
+		System.out.println("Clicked block");
+		if (!world.isRemote) {
+			if (item != null) {
+				System.out.println("Has item");
+				if (item.getItem().getHarvestLevel(item, "shovel") > 0) {
+					System.out.println("Item is a shovel");
+					if (meta >= 4 && meta <= 7) {
+						System.out.println("Removed snow");
+						world.setBlockMetadataWithNotify(x, y, z, meta - 4, 3);
+						if (!player.capabilities.isCreativeMode) {
+							world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.snowball)));
+							item.attemptDamageItem(1, new Random());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	//TODO sneak-clicking isn't working?
+	//TODO render corner parts
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float clickPosX, float clickPosY, float clickPosZ) {
+		int meta = world.getBlockMetadata(x, y, z);
+		if (player.isSneaking()) {
+			System.out.println("Meta: " + meta);
+		}
+		ItemStack item = player.getHeldItem();
+		System.out.println("Right-clicked block");
+		if (!world.isRemote) {
+			if (item != null) {
+				System.out.println("Has item");
+				if (item.getItem().equals(Items.snowball)) {
+					if (player.isSneaking()) {
+						System.out.println("Item is a snowball");
+						if (meta < 4) {
+							world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
+							System.out.println("Added snow");
+							if (!player.capabilities.isCreativeMode) {
+								item.stackSize--;
+							}
+						}
+					}
+				} else if (item.getItem().equals(Items.glowstone_dust)) {
+					System.out.println("Item is glowstone");
+					if (player.isSneaking()) {
+						if (meta < 4) {
+							System.out.println("Block is lit");
+							world.setBlockMetadataWithNotify(x, y, z, meta + 8, 3);
+							if (!player.capabilities.isCreativeMode) {
+								item.stackSize--;
+							}
+						} else if (meta < 8) {
+							System.out.println("Block is lit (and snow melted)");
+							world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
+							if (!player.capabilities.isCreativeMode) {
+								item.stackSize--;
+							}
+						} else if (meta == 12 || meta == 13) {
+							System.out.println("Block is lit");
+							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+							if (!player.capabilities.isCreativeMode) {
+								item.stackSize--;
+							}
+						}
+					}
+				} else if (item.getItem().getHarvestLevel(item, "pickaxe") > 0) {
+					System.out.println("Item is pickaxe");
+					if (meta >= 8 && meta <= 11) {
+						System.out.println("Glowstone removed.");
+						world.setBlockMetadataWithNotify(x, y, z, meta - 8, 3);
+						if (!player.capabilities.isCreativeMode) {
+							item.attemptDamageItem(1, new Random());
+						}
+					} else if (meta == 14 || meta == 15) {
+						System.out.println("Glowstone removed.");
+						world.setBlockMetadataWithNotify(x, y, z, meta - 2, 3);
+						if (!player.capabilities.isCreativeMode) {
+							item.attemptDamageItem(1, new Random());
+						}
+					}
+				} else if (item.getItem().equals(CoreItems.pliers)) {
+					System.out.println("Item is pliers");
+					//if (player.isSneaking()) {
+						System.out.println("Toggling base-checks");
+						if (meta == 0 || meta == 1) {
+							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+						} else if (meta == 2 || meta == 3) {
+							world.setBlockMetadataWithNotify(x, y, z, meta + 10, 3);
+						} else if (meta == 12 || meta == 13) {
+							world.setBlockMetadataWithNotify(x, y, z, meta - 12, 3);
+						}
+						
+						else if (meta == 4 || meta == 5) {
+							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+						} else if (meta == 6 || meta == 7) {
+							world.setBlockMetadataWithNotify(x, y, z, meta - 2, 3);
+						}
+						
+						else if (meta == 8 || meta == 9) {
+							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+						} else if (meta == 10 || meta == 11) {
+							world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
+						} else if (meta == 14 || meta == 15) {
+							world.setBlockMetadataWithNotify(x, y, z, meta - 6, 3);
+						}
+					/*} else {
+						System.out.println("Rotating");
+						if ((meta % 2) == 0 || meta == 0) {
+							world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
+						} else {
+							world.setBlockMetadataWithNotify(x, y, z, meta - 1, 3);
+						}
+					}*/
+				}
+			}
+		}		
+		return false;
+	}
 	
 	@Override
 	public int getRenderType() {
@@ -47,6 +191,8 @@ public class BlockWalkway extends Block {
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack item) {
 		int rot = MathHelper.floor_double(entity.getRotationYawHead());
+		int meta = item.getItemDamage();
+		
 		while (rot > 360) {
 			rot = rot - 360;
 		}
@@ -55,9 +201,9 @@ public class BlockWalkway extends Block {
 		}
 		
 		if ((rot >= 45 && rot <= 135) || (rot >= 225 && rot <= 315)) {
-			world.setBlockMetadataWithNotify(x, y, z, 0, 3); //Facing east/west
+			world.setBlockMetadataWithNotify(x, y, z, meta, 3); //Facing east/west
 		} else {
-			world.setBlockMetadataWithNotify(x, y, z, 1, 3);
+			world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
 		}
 	}
 	
@@ -72,17 +218,17 @@ public class BlockWalkway extends Block {
 		
 		int meta = world.getBlockMetadata(x, y, z);
 		//North: Z1 - Z0, East: X0 - X1, South: Z0 - Z1, West = X1 - X0
-		boolean connectNorth = checkConnections(world, x, y, z-1, 0); //z-1
-		boolean connectEast  = checkConnections(world, x+1, y, z, 1);  //x+1
-		boolean connectSouth = checkConnections(world, x, y, z+1, 0); //z+1
-		boolean connectWest  = checkConnections(world, x-1, y, z, 1);  //x-1
+		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta); //z-1
+		boolean connectEast  = checkConnections(world, x+1, y, z, 1, meta);  //x+1
+		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta); //z+1
+		boolean connectWest  = checkConnections(world, x-1, y, z, 1, meta);  //x-1
 		
 		boolean hitboxNorth = false;
 		boolean hitboxEast  = false;
 		boolean hitboxSouth = false;
 		boolean hitboxWest  = false;
 		
-		if (meta == 0) {
+		if ((meta % 2) == 0 || meta == 0) { //Even metadata
 			if (!connectNorth) { hitboxNorth = true; }
 			if (!connectSouth) { hitboxSouth = true; }
 			
@@ -91,7 +237,7 @@ public class BlockWalkway extends Block {
 			if (connectSouth && !connectEast) { hitboxEast = true; }
 			if (connectSouth && !connectWest) { hitboxWest = true; }
 			
-		} else if (meta == 1) {
+		} else {
 			if (!connectEast) { hitboxEast = true; }
 			if (!connectWest) { hitboxWest = true; }
 			
@@ -138,18 +284,45 @@ public class BlockWalkway extends Block {
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 	
-	public boolean checkConnections(World world, int x, int y, int z, int targetMeta) {
-		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z) || world.getBlock(x, y-1, z).isNormalCube(world, x, y, z)) {
+	@Override
+	public void updateTick(World world, int x, int y, int z, Random rand) {
+		int meta = world.getBlockMetadata(x, y, z);
+		if (world.isRaining()) {
+			if (world.getBiomeGenForCoords(x, z).getEnableSnow()) {
+				if (world.canBlockSeeTheSky(x, y, z)) {
+					if (meta == 4 || meta == 6) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
+					}
+				}
+			}
+		}
+		if (world.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11) {
+            if (meta == 5 || meta == 7) {
+            	world.setBlockMetadataWithNotify(x, y, z, meta - 1, 3);
+            }
+        }
+	}
+	
+	//TODO meta-based check for Y-1
+	public boolean checkConnections(World world, int x, int y, int z, int targetMeta, int meta) {
+		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z)) {
 			return true;
 		}
+		
+		if (!(meta == 2 || meta == 3 || meta == 6 || meta == 7 || meta >= 10)) {
+			if (world.getBlock(x, y-1, z).isNormalCube(world, x, y, z)) {
+				return true;
+			}
+		}
+		
 		if (world.getBlock(x, y, z) instanceof BlockWalkway) {
 			return true;
 		}
 		
 		if (targetMeta >= 0) {
 			if (world.getBlock(x, y - 1, z) instanceof BlockWalkwayStairs) {
-				int meta = world.getBlockMetadata(x, y - 1, z);
-				if (meta == targetMeta || meta == (targetMeta + 2)) {
+				int m = world.getBlockMetadata(x, y - 1, z);
+				if (m == targetMeta || m == (targetMeta + 2)) {
 					return true;
 				}
 			}

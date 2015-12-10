@@ -1,6 +1,7 @@
 package co.uk.silvania.cities.core;
 
 import co.uk.silvania.cities.core.items.CraftingIngredientItems;
+import co.uk.silvania.cities.core.items.PliersItem;
 import co.uk.silvania.cities.core.npc.spawner.BankerSpawnerItem;
 import co.uk.silvania.cities.econ.DebitCardItem;
 import co.uk.silvania.cities.econ.money.ItemCoin;
@@ -31,6 +32,7 @@ public class CoreItems {
 	public static Item storeStockPairer;
 	
 	public static Item bankerSpawner;
+	public static Item pliers;
 	
 	public static Item plasticItem;
 	public static Item rawPlasticItem;
@@ -81,6 +83,8 @@ public class CoreItems {
     	storeStockPairer = new StoreStockPairer().setUnlocalizedName("storeStockPairer");
     	
     	bankerSpawner = new BankerSpawnerItem().setUnlocalizedName("bankerSpawnerItem");
+    	
+    	pliers = new PliersItem().setUnlocalizedName("pliers");
 		//ringItem = new CraftingIngredientItems(config.ringItemID, 64).setUnlocalizedName("ringItem");
 		//diamondRing = new CraftingIngredientItems(config.diamondRingID, 64).setUnlocalizedName("diamondRing");
 		//necklaceItem = new CraftingIngredientItems(config.necklaceItemID, 64).setUnlocalizedName("necklaceItem");

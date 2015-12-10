@@ -120,6 +120,8 @@ public class CommonProxy {
         GameRegistry.registerItem(CoreItems.atmScreen, "atmScreen");
         GameRegistry.registerItem(CoreItems.atmButtons, "atmButtons");
         GameRegistry.registerItem(CoreItems.cpu, "cpu");
+        
+        GameRegistry.registerItem(CoreItems.pliers, "pliers");
 
     	/*GameRegistry.registerItem(CoreItems.ringItem, "ringItem");
     	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
