@@ -37,8 +37,8 @@ public class ATMWithdrawPacket implements IMessage {
 		@Override
 		public IMessage onMessage(ATMWithdrawPacket message, MessageContext ctx) {
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
-			EconUtils.withdrawFunds(message.withdrawAmount, player, player.worldObj);
-			FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
+			EconUtils.withdrawFunds(message.withdrawAmount, player);
+			FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player)), (EntityPlayerMP) player);
 			if (CityConfig.debugMode) {
 				System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
 			}

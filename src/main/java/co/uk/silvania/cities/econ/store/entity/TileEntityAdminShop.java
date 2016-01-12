@@ -199,7 +199,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 			}
 		}
 		if (invCash < itemCost) {
-			double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
+			double bankBalance = EconUtils.getBalance(entityPlayer);
 			/*if (bankBalance >= itemCost && hasSpace) {
 				if (EconUtils.hasOwnCard(entityPlayer)) {
 					if (EconUtils.chargePlayerAnywhere(entityPlayer, itemCost)) {
@@ -226,7 +226,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 							full = true;
 						}
 						entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
-						entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
+						entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer))));
 						if (full) {
 							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You didn't have enough room in your inventory, so the item was dropped."));
 						}

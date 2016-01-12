@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.World;
 
 public class EconUtils {
 	
@@ -42,6 +41,8 @@ public class EconUtils {
 	 * getBalance(player, world) - Gets the player's current bank balance. Does not count inventory.
 	 * TODO payBalanceViaCard(d cost, player, playerOwner, world) - Opens the GUI for a card transaction to send money from the player to the shop owner
 	 */
+	
+	public static NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		
 	public static void debug(String s) {
 		if (CityConfig.debugMode) {
@@ -49,10 +50,7 @@ public class EconUtils {
 		}
 	}
 	
-	
-	public static void createAccount(String s) {
-		
-	}
+	public static void createAccount(String s) {}
 	
 	//Use to convert things like a string to a double, usable by the economy.
 	//VERY useful for example in the ATM, keying in values from the buttons.
@@ -64,7 +62,6 @@ public class EconUtils {
 		}
 	}
 	
-	//This one is used to turn the PIN from a string to an int when changing it in the ATM.
 	public static int parseInt(String s) {
 		try {
 			return Integer.parseInt("" + s);
@@ -78,59 +75,7 @@ public class EconUtils {
 		return newBalance;
 	}
 	
-	/*TODO public static double reqClientInventoryBalance() {
-		return ClientPacketHandler.invBalance;
-	}
-	
-	public static double reqClientBankBalance() {
-		return ClientPacketHandler.initBal;
-	}*/
-	
-	/*
-	//Send info to the client with players bank balance.
-	TODO
-	public static void triggerServerBankBalancePacket(EntityPlayer player, World world) {
-        ByteArrayOutputStream bt = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(bt);
-        try {
-        	out.writeUTF("InitBalance");
-        	out.writeDouble(getBalance(player, world));
-        	
-        	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-        	
-        	Player par1Player = (Player)player;
-        	
-        	PacketDispatcher.sendPacketToPlayer(packet, par1Player);
-        }
-        catch (IOException ex) {
-        	System.out.println("Packet Failed!");
-        }
-	}
-	
-	//Send info to the client with players inventory balance.
-	TODO 
-	public static void triggerServerInventoryBalancePacket(EntityPlayer player, World world) {
-        ByteArrayOutputStream bt = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(bt);
-        try {
-        	out.writeUTF("InventoryBalance");
-        	out.writeDouble(getInventoryCash(player));
-        	
-        	Packet250CustomPayload packet = new Packet250CustomPayload("FCitiesPackets", bt.toByteArray());
-        	
-        	Player par1Player = (Player)player;
-        	
-        	PacketDispatcher.sendPacketToPlayer(packet, par1Player);
-        }
-        catch (IOException ex) {
-        	System.out.println("Packet Failed!");
-        }
-	}*/
-	
-
-	
-	public static void depositAllCash(EntityPlayer player, World world) {
-        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+	public static void depositAllCash(EntityPlayer player) {
         String uuid = player.getUniqueID().toString();
         
 		double cash = EconUtils.getInventoryCash(player); //Check how much cash the player has on them
@@ -154,12 +99,12 @@ public class EconUtils {
         }
         NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
         player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(cash) + " " + CityConfig.currencyLargePlural + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural));
-        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         EconUtils.removeAllPlayerCash(player);
 	}
 	
-	public static void withdrawFunds(double amount, EntityPlayer entityPlayer, World world) {
-		double balance = getBalance(entityPlayer, world);
+	public static void withdrawFunds(double amount, EntityPlayer entityPlayer) {
+		double balance = getBalance(entityPlayer);
 		if ((balance - amount) >= 0) {
 			chargeBalance(entityPlayer, amount);
 			giveChange(amount, 0, entityPlayer);
@@ -170,7 +115,6 @@ public class EconUtils {
 	//It ensures you have space for it, and if you don't it'll send the excess to your bank account instead.
 	//This method is also used by the withdrawl system - so if you don't have room to withdraw, it basically will just stay in your account.
 	public static void giveChange(double paid, double cost, EntityPlayer entityPlayer) {
-		World world = entityPlayer.worldObj;
 		double change = parseDouble(formatBalance(paid - cost));
 		double toBank = 0;	
 		
@@ -320,7 +264,7 @@ public class EconUtils {
 		if (toBank >= 0.01) {
 			System.out.println("Depositing " + toBank + " to " + entityPlayer.getDisplayName() + "'s account.");
 		}
-		depositToAccount(entityPlayer, world, toBank);
+		depositToAccount(entityPlayer, toBank);
 	}
 	
 	//Counts up all the money in the players inventory.
@@ -427,7 +371,7 @@ public class EconUtils {
 									player.inventory.decrStackSize(i, x);
 								double paidAmount = moneyValue * x;
 								debug("Give change: " + (paidAmount - value));
-								depositToAccount(player, player.worldObj, paidAmount-value);
+								depositToAccount(player, paidAmount-value);
 								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 								//If second loop pays enough, we return; we don't need to do anything else as the balance has been paid.
 								return true;
@@ -484,16 +428,15 @@ public class EconUtils {
 	}
 	
 	//Attempt to give change from an inventory, such as a shop's cash register.
-	public static boolean giveChangeFromInventory(EntityPlayer player, World world, int x, int y, int z, double value) {
+	public static boolean giveChangeFromInventory(EntityPlayer player, int x, int y, int z, double value) {
 		return false;
 	}
 	
 	public static boolean chargePlayerAnywhere(EntityPlayer player, double value) {
-		World world = player.worldObj;
 		if (findCashInInventory(player, value) == false) {
 			
 			double invBalance = getInventoryCash(player);
-			double cardBalance = getBalance(player, world);
+			double cardBalance = getBalance(player);
 			
 			double totalBalance = invBalance + cardBalance;
 			if (player.inventory.hasItem(CoreItems.debitCardNew)) {
@@ -532,7 +475,7 @@ public class EconUtils {
 									player.inventory.decrStackSize(i, x);
 								double paidAmount = coinValue * x;
 								debug("Give change: " + (paidAmount - value));
-								depositToAccount(player, player.worldObj, (paidAmount-value));
+								depositToAccount(player, (paidAmount-value));
 								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 								return true;
 							}
@@ -568,7 +511,7 @@ public class EconUtils {
 									player.inventory.decrStackSize(i, x);
 								double paidAmount = noteValue * x;
 								debug("Give change: " + (paidAmount - value));
-								depositToAccount(player, player.worldObj, (paidAmount-value));
+								depositToAccount(player, (paidAmount-value));
 								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 								return true;
 							}
@@ -586,8 +529,7 @@ public class EconUtils {
 	//Basically removes value from the players account
 	public static boolean payBalanceByCard(EntityPlayer player, double value) {
 		debug("Attempting to pay balance by card");
-		World world = player.worldObj;
-		double cardBalance = getBalance(player, world);
+		double cardBalance = getBalance(player);
 		if (value <= cardBalance) {
 			//They can pay by card!
 			//Open GUI
@@ -600,11 +542,9 @@ public class EconUtils {
 	//Removes money from the players account- for withdrawl etc.
 	public static boolean chargeBalance(EntityPlayer player, double amt) {
 		debug("Charging balance!");
-		World world = player.worldObj;
-		double cardBalance = getBalance(player, world);
+		double cardBalance = getBalance(player);
 		if (amt <= cardBalance) {			
 			String victimPlayerUUID = DebitCardItem.checkCardOwner(player);
-	        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
 			double currentBalance = 0;
 	        if (nbt.hasKey(victimPlayerUUID)) {
 	            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
@@ -624,7 +564,7 @@ public class EconUtils {
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        }
 	        NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
-	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
 			return true;
 		}
 		debug(player.getDisplayName() + " did not have enough to withdraw.");
@@ -645,9 +585,8 @@ public class EconUtils {
 	}
 
 	//Quick n' easy method of getting the players balance.
-	public static double getBalance(EntityPlayer player, World world) {
+	public static double getBalance(EntityPlayer player) {
 		String victimPlayerUUID = DebitCardItem.checkCardOwner(player);
-        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
         double balance = 0;
         if (nbt.hasKey(victimPlayerUUID)) {
             NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
@@ -702,8 +641,7 @@ public class EconUtils {
 		return false;
 	}
 	
-	public static void depositToAccount(EntityPlayer player, World world, double deposit) {
-		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+	public static void depositToAccount(EntityPlayer player, double deposit) {
 		double currentBalance = 0;
 		String playerUUID = player.getUniqueID().toString();
         if (nbt.hasKey(playerUUID)) {
@@ -724,14 +662,13 @@ public class EconUtils {
             nbt.setTag(playerUUID, playernbt);
         }
         NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
-        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         if (deposit >= 0.1) {
-        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is " + EnumChatFormatting.GOLD  + "$" + formatBalance(getBalance(player, player.worldObj))));
+        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is " + EnumChatFormatting.GOLD  + "$" + formatBalance(getBalance(player))));
         }
 	}
 	
-	public static void depositToAccountViaUUID(String uuid, World world, double deposit) {
-		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+	public static void depositToAccountViaUUID(String uuid, double deposit) {
 		double currentBalance = 0;
 		String playerUUID = uuid;
         if (nbt.hasKey(playerUUID)) {
@@ -752,16 +689,15 @@ public class EconUtils {
             nbt.setTag(playerUUID, playernbt);
         }
         NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
-        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         if (deposit >= 0.1) {
         	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
         }
 	}
 	
-	public static boolean chargeAccountViaUUID(String uuid, World world, double amt) {
-		double cardBalance = getBalanceViaUUID(uuid, world);
-		if (amt <= cardBalance) {			
-	        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+	public static boolean chargeAccountViaUUID(String uuid, double amt) {
+		double cardBalance = getBalanceViaUUID(uuid);
+		if (amt <= cardBalance) {
 			double currentBalance = 0;
 	        if (nbt.hasKey(uuid)) {
 	            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
@@ -781,14 +717,14 @@ public class EconUtils {
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        }
 	        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
 			return true;
 		}
 		return false;
 	}
 	
-	public static double getBalanceViaUUID(String uuid, World world) {
-        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+	public static double getBalanceViaUUID(String uuid) {
+        NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         double balance = 0;
         if (nbt.hasKey(uuid)) {
             NBTTagCompound playernbt = nbt.getCompoundTag(uuid);

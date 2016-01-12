@@ -50,14 +50,14 @@ public class TileEntityATMBlock extends BlockContainer {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
         if (!world.isRemote) {
         	if (player.isSneaking()) {
-        		EconUtils.depositAllCash(player, world);
+        		EconUtils.depositAllCash(player);
         	} else if (player.getHeldItem() != null) {
         		if (player.getHeldItem().getItem() == CoreItems.debitCardNew) {
         			world.playSoundEffect(20, 70, 20, "FlenixCities:block.atm.cardInsert", 1, 1);
         			player.openGui(FlenixCities_Core.instance, 0, world, x, y, z);
-        			EconUtils.getBalance(player, world);                 
+        			EconUtils.getBalance(player);                 
         		} else {  
-        			NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig(world));
+        			NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         			ItemStack item = player.getHeldItem();
         			String uuid = player.getUniqueID().toString();
         			// Coin 1
@@ -85,7 +85,7 @@ public class TileEntityATMBlock extends BlockContainer {
         				NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
         				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(coin.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
         				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + EnumChatFormatting.ITALIC + "all your money!"));
-        				NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+        				NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         				--item.stackSize;
         			} else if (player.getHeldItem().getItem() instanceof ItemNote) {
 	                    ItemNote note = (ItemNote) player.getHeldItem().getItem();
@@ -110,7 +110,7 @@ public class TileEntityATMBlock extends BlockContainer {
 	                    NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
 	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(note.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
 	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + EnumChatFormatting.ITALIC + "all your money!"));
-	                    NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig(world));
+	                    NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
 	                    --item.stackSize;
         			} else {
         				player.openGui(FlenixCities_Core.instance, 2, world, x, y, z);
@@ -121,8 +121,8 @@ public class TileEntityATMBlock extends BlockContainer {
         	}
         
         	EntityPlayerMP playerMP = (EntityPlayerMP) player;
-        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, world)), playerMP); //TODO
-       		System.out.println("Current Balance Packet Sent! Balance: $" + EconUtils.getBalance(player, world));
+        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player)), playerMP); //TODO
+       		System.out.println("Current Balance Packet Sent! Balance: $" + EconUtils.getBalance(player));
        	}
         return true;
     }

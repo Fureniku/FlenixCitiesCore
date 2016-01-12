@@ -129,7 +129,7 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
 		    	if (tileEntity != null) {
 		        	FlenixCities_Core.network.sendTo(new FloatingShelvesPricePacket(tileEntity.ownerName, tileEntity.buyPrice1, tileEntity.sellPrice1, tileEntity.buyPrice2, tileEntity.sellPrice2,
 		            			tileEntity.buyPrice3, tileEntity.sellPrice3, tileEntity.buyPrice4, tileEntity.sellPrice4), (EntityPlayerMP) player);
-		        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player, player.worldObj)), (EntityPlayerMP) player);
+		        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player)), (EntityPlayerMP) player);
 		    	}
 	        }
 	        player.openGui(FlenixCities_Core.instance, 1, world, x, y, z);

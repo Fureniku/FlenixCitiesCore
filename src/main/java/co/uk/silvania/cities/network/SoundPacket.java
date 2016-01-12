@@ -37,10 +37,7 @@ public class SoundPacket implements IMessage {
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
 			World world = ctx.getServerHandler().playerEntity.worldObj;
 			player.worldObj.playSoundAtEntity(player, message.soundName, 1, 1);
-			if (CityConfig.debugMode) {
-				System.out.println(player.getDisplayName() + " is requesting a balance update.");
-			}
-			return new ServerBalancePacket("" + EconUtils.getBalance(player, world));
+			return null;
 		}
 	}
 }

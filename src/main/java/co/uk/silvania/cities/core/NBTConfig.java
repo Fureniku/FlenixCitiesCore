@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.chunk.storage.IChunkLoader;
 import net.minecraft.world.storage.ISaveHandler;
+import net.minecraftforge.common.DimensionManager;
 
 public class NBTConfig {
 
@@ -24,12 +25,14 @@ public class NBTConfig {
         return new File(new File(Minecraft.getMinecraft().mcDataDir, "config"), "flenixcities");
     }
     
-    public static File getWorldConfig(World world) {
-        return new File(getWorldDir(world), "FC_Econ.dat");
+    public static File getWorldConfig() {
+        return new File(getWorldDir(), "FC_Econ.dat");
     }
     
-    public static File getWorldDir(World world) {
+    public static File getWorldDir() {
         try {
+        	World world = DimensionManager.getWorld(0);
+        	
             ISaveHandler worldsaver = world.getSaveHandler();
             IChunkLoader loader = worldsaver.getChunkLoader(world.provider);
             File file = ReflectionHelper.<File, AnvilChunkLoader> getPrivateValue(AnvilChunkLoader.class, (AnvilChunkLoader) loader, 3);
