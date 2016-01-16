@@ -107,8 +107,7 @@ public class DebitCardItem extends Item {
 		return pin;
 	}
 	
-	public static String checkCardOwner(EntityPlayer player) {
-		ItemStack held = player.inventory.getCurrentItem();
+	public static String checkCardOwner(EntityPlayer player, ItemStack held) {
 		if (held != null) {
 			if (held.getItem() == CoreItems.debitCardNew) {
 				return held.stackTagCompound.getString("playerUUID");

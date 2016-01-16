@@ -41,8 +41,6 @@ public class EconUtils {
 	 * getBalance(player, world) - Gets the player's current bank balance. Does not count inventory.
 	 * TODO payBalanceViaCard(d cost, player, playerOwner, world) - Opens the GUI for a card transaction to send money from the player to the shop owner
 	 */
-	
-	public static NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		
 	public static void debug(String s) {
 		if (CityConfig.debugMode) {
@@ -76,6 +74,7 @@ public class EconUtils {
 	}
 	
 	public static void depositAllCash(EntityPlayer player) {
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         String uuid = player.getUniqueID().toString();
         
 		double cash = EconUtils.getInventoryCash(player); //Check how much cash the player has on them
@@ -541,31 +540,34 @@ public class EconUtils {
 	
 	//Removes money from the players account- for withdrawl etc.
 	public static boolean chargeBalance(EntityPlayer player, double amt) {
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		debug("Charging balance!");
 		double cardBalance = getBalance(player);
-		if (amt <= cardBalance) {			
-			String victimPlayerUUID = DebitCardItem.checkCardOwner(player);
-			double currentBalance = 0;
-	        if (nbt.hasKey(victimPlayerUUID)) {
-	            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
-	            if (playernbt.hasKey("Balance")) {
-	                currentBalance = playernbt.getDouble("Balance");
-	            }
-	            double modifiedBalance = currentBalance - amt;
-	            playernbt.setDouble("Balance", modifiedBalance);
-	            //TODO nbt.setCompoundTag(player.username, playernbt);
-	        } else {
-	            NBTTagCompound playernbt = new NBTTagCompound();
-	            if (playernbt.hasKey("Balance")) {
-	                currentBalance = playernbt.getDouble("Balance");
-	            }
-	            double modifiedBalance = currentBalance - amt;
-	            playernbt.setDouble("Balance", modifiedBalance);
-	            //TODO nbt.setCompoundTag(player.username, playernbt);
-	        }
-	        NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
-	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
-			return true;
+		if (amt <= cardBalance) {		
+			if (player.inventory.getCurrentItem() != null) { //TODO this won't work. Gotta iterate through and find a card instead.
+				String victimPlayerUUID = DebitCardItem.checkCardOwner(player, player.inventory.getCurrentItem());
+				double currentBalance = 0;
+		        if (nbt.hasKey(victimPlayerUUID)) {
+		            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
+		            if (playernbt.hasKey("Balance")) {
+		                currentBalance = playernbt.getDouble("Balance");
+		            }
+		            double modifiedBalance = currentBalance - amt;
+		            playernbt.setDouble("Balance", modifiedBalance);
+		            //TODO nbt.setCompoundTag(player.username, playernbt);
+		        } else {
+		            NBTTagCompound playernbt = new NBTTagCompound();
+		            if (playernbt.hasKey("Balance")) {
+		                currentBalance = playernbt.getDouble("Balance");
+		            }
+		            double modifiedBalance = currentBalance - amt;
+		            playernbt.setDouble("Balance", modifiedBalance);
+		            //TODO nbt.setCompoundTag(player.username, playernbt);
+		        }
+		        NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
+		        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
+				return true;
+			}
 		}
 		debug(player.getDisplayName() + " did not have enough to withdraw.");
 		return false;
@@ -586,14 +588,23 @@ public class EconUtils {
 
 	//Quick n' easy method of getting the players balance.
 	public static double getBalance(EntityPlayer player) {
-		String victimPlayerUUID = DebitCardItem.checkCardOwner(player);
-        double balance = 0;
-        if (nbt.hasKey(victimPlayerUUID)) {
-            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
-            if (playernbt.hasKey("Balance")) {
-                balance = playernbt.getDouble("Balance");
-            }
-        }
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
+		System.out.println("Calling getBalance");
+        return getBalanceViaUUID(player.getUniqueID().toString());
+	}
+	
+	public static double getVictimBalance(EntityPlayer player) {
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
+		double balance = 0;
+		if (player.inventory.getCurrentItem() != null) {
+			String victimPlayerUUID = DebitCardItem.checkCardOwner(player, player.inventory.getCurrentItem());
+	        if (nbt.hasKey(victimPlayerUUID)) {
+	            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
+	            if (playernbt.hasKey("Balance")) {
+	                balance = playernbt.getDouble("Balance");
+	            }
+	        }
+		}
         return balance;
 	}
 	
@@ -642,6 +653,7 @@ public class EconUtils {
 	}
 	
 	public static void depositToAccount(EntityPlayer player, double deposit) {
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		double currentBalance = 0;
 		String playerUUID = player.getUniqueID().toString();
         if (nbt.hasKey(playerUUID)) {
@@ -669,6 +681,7 @@ public class EconUtils {
 	}
 	
 	public static void depositToAccountViaUUID(String uuid, double deposit) {
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		double currentBalance = 0;
 		String playerUUID = uuid;
         if (nbt.hasKey(playerUUID)) {
@@ -696,18 +709,25 @@ public class EconUtils {
 	}
 	
 	public static boolean chargeAccountViaUUID(String uuid, double amt) {
+		System.out.println("chargeAccountViaUUID");
+		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		double cardBalance = getBalanceViaUUID(uuid);
+		System.out.println("Amount (" + amt + " is less than/equal to cardBalanace (" + cardBalance + ")");
 		if (amt <= cardBalance) {
+			System.out.println("True!");
 			double currentBalance = 0;
 	        if (nbt.hasKey(uuid)) {
+	        	System.out.println("hasKey UUID");
 	            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
 	            if (playernbt.hasKey("Balance")) {
+	            	System.out.println("hasKey balance");
 	                currentBalance = playernbt.getDouble("Balance");
 	            }
 	            double modifiedBalance = currentBalance - amt;
 	            playernbt.setDouble("Balance", modifiedBalance);
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        } else {
+	        	System.out.println("Doesn't hasKey UUID");
 	            NBTTagCompound playernbt = new NBTTagCompound();
 	            if (playernbt.hasKey("Balance")) {
 	                currentBalance = playernbt.getDouble("Balance");
@@ -724,11 +744,15 @@ public class EconUtils {
 	}
 	
 	public static double getBalanceViaUUID(String uuid) {
+		System.out.println("get balance via UUID");
+		System.out.println("UUID: " + uuid);
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         double balance = 0;
         if (nbt.hasKey(uuid)) {
+        	System.out.println("nbt.hasKey UUID");
             NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
             if (playernbt.hasKey("Balance")) {
+            	System.out.println("nbt.hasKey Balance");
                 balance = playernbt.getDouble("Balance");
             }
         }

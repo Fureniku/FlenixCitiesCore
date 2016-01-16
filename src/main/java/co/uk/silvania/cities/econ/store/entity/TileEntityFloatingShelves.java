@@ -398,7 +398,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		for (int i = player.inventory.getSizeInventory(); i >= 0; --i) {
 			ItemStack item = player.inventory.getStackInSlot(i);
 			if (item.getItem() == CoreItems.debitCardNew) {
-				return (DebitCardItem.checkCardOwner(player).equalsIgnoreCase(player.getUniqueID().toString()));
+				return (DebitCardItem.checkCardOwner(player, item).equalsIgnoreCase(player.getUniqueID().toString()));
 			}
 		}
 		return false;
