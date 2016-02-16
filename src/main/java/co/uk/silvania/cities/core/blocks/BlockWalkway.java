@@ -320,7 +320,7 @@ public class BlockWalkway extends Block {
 		}
 		
 		if (targetMeta >= 0) {
-			if (world.getBlock(x, y - 1, z) instanceof BlockWalkwayStairs) {
+			if (world.getBlock(x, y - 1, z) instanceof BlockWalkwayStairs || world.getBlock(x, y, z) instanceof BlockWalkwayStairs) {
 				int m = world.getBlockMetadata(x, y - 1, z);
 				if (m == targetMeta || m == (targetMeta + 2)) {
 					return true;

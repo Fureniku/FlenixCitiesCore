@@ -58,7 +58,6 @@ public class BlockWalkwayStairs extends Block {
 			hasCollision = true;
 			
 			if (meta == 0) { //South-facing
-				System.out.println("Meta 0");
 				setBlockBounds(0.0F, 0.0F,  0.0F,  1.0F, 0.0625F, 0.25F);
 				super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 				setBlockBounds(0.0F, 0.25F, 0.25F, 1.0F, 0.3125F, 0.50F);
@@ -68,7 +67,6 @@ public class BlockWalkwayStairs extends Block {
 				setBlockBounds(0.0F, 0.75F, 0.75F, 1.0F, 0.8125F, 1.0F);
 				super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 			} else if (meta == 1) { //West-facing
-				System.out.println("Meta 1");
 				setBlockBounds(0.75F, 0.0F, 0.0F,  1.00F, 0.0625F, 1.0F);
 				super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 				setBlockBounds(0.50F, 0.25F, 0.0F, 0.75F, 0.3125F, 1.0F);
@@ -78,7 +76,6 @@ public class BlockWalkwayStairs extends Block {
 				setBlockBounds(0.0F,  0.75F, 0.0F, 0.25F, 0.8125F, 1.0F);
 				super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 			} else if (meta == 2) { //North-facing
-				System.out.println("Meta 2");
 				setBlockBounds(0.0F, 0.0F, 0.75F,  1.0F, 0.0625F, 1.0F);
 				super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 				setBlockBounds(0.0F, 0.25F, 0.50F, 1.0F, 0.3125F, 0.75F);
@@ -88,7 +85,6 @@ public class BlockWalkwayStairs extends Block {
 				setBlockBounds(0.0F, 0.75F, 0.0F,  1.0F, 0.8125F, 0.25F);
 				super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 			} else if (meta == 3) { //East-facing
-				System.out.println("Meta 3");
 				setBlockBounds(0.0F, 0.0F, 0.0F, 0.25F, 0.0625F, 1.0F);
 				super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
 				setBlockBounds(0.25F, 0.25F, 0.0F, 0.50F, 0.3125F, 1.0F);

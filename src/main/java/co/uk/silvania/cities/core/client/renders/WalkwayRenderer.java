@@ -55,19 +55,11 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 		
 		if ((!(world.getBlock(x, y-1, z).isOpaqueCube()) && !walkwayBelow) || (world.getBlock(x, y-1, z).isOpaqueCube() && meta >= 12)) {
 			renderPlatform = true;
-			renderBlock(0.0D, -0.0625D, 0.0D, 1.0D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D, -0.125D, 0.0D, 1.0D, 0.0D, 1.0D, true, renderer, block, x, y, z, meta);
 		}
 		
 		if (renderSnow) {
-			if (!renderPlatform) {
-				renderSnowBlock(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D, true, renderer, block, x, y, z, meta);
-				//renderer.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D);
-				//renderer.renderBlockUsingTexture(block, x, y, z, Blocks.snow_layer.getIcon(0, 0));
-			} else {
-				renderSnowBlock(0.0D, 0.0625D, 0.0D, 1.0D, 0.1875D, 1.0D, true, renderer, block, x, y, z, meta);
-				//renderer.setRenderBounds(0.0D, 0.0625D, 0.0D, 1.0D, 0.1875D, 1.0D);
-				//renderer.renderBlockUsingTexture(block, x, y, z, Blocks.snow_layer.getIcon(0, 0));
-			}
+			renderSnowBlock(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D, true, renderer, block, x, y, z, meta);
 		}
 		
 		boolean renderNorth = false; //X 0-1,  Z 0
