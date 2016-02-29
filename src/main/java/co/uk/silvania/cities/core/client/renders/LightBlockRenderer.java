@@ -360,7 +360,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//North Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u3, v3);
 			tess.addVertexWithUV(x + 1, y + a, z + 0, u3, v2);
 			tess.addVertexWithUV(x + 0, y + a, z + 0, u2, v2);
@@ -369,7 +369,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//East Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u3, v3);
 			tess.addVertexWithUV(x + 1, y + a, z + 1, u3, v2);
 			tess.addVertexWithUV(x + 1, y + a, z + 0, u2, v2);
@@ -378,7 +378,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//South Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u3, v3);
 			tess.addVertexWithUV(x + 0, y + a, z + 1, u3, v2);
 			tess.addVertexWithUV(x + 1, y + a, z + 1, u2, v2);
@@ -387,7 +387,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//West Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u3, v3);
 			tess.addVertexWithUV(x + 0, y + a, z + 0, u3, v2);
 			tess.addVertexWithUV(x + 0, y + a, z + 1, u2, v2);
@@ -396,6 +396,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//Bottom Side
 			tess.startDrawingQuads();
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0, y + a, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + a, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1, y + a, z + 0, u0, v0);
@@ -413,7 +414,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//North Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.75, y + 1, z + 0.25, u3, v3);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.25, u3, v2);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.25, u2, v2);
@@ -422,7 +423,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//East Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.75, y + 1, z + 0.75, u3, v3);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.75, u3, v2);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.25, u2, v2);
@@ -431,7 +432,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//South Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.25, y + 1, z + 0.75, u3, v3);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.75, u3, v2);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.75, u2, v2);
@@ -440,7 +441,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//West Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.25, y + 1, z + 0.25, u3, v3);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.25, u3, v2);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.75, u2, v2);
@@ -449,6 +450,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//Bottom Side
 			tess.startDrawingQuads();
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.75, u1, v1);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.25, u1, v0);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.25, u0, v0);
@@ -465,7 +467,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//North Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.75, y + 1, z + 0.25, u3, v3);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.25, u3, v2);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.25, u2, v2);
@@ -474,7 +476,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//East Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.75, y + 1, z + 0.75, u3, v3);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.75, u3, v2);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.25, u2, v2);
@@ -483,7 +485,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//South Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.25, y + 1, z + 0.75, u3, v3);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.75, u3, v2);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.75, u2, v2);
@@ -492,7 +494,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//West Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.25, y + 1, z + 0.25, u3, v3);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.25, u3, v2);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.75, u2, v2);
@@ -501,6 +503,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//Bottom Side
 			tess.startDrawingQuads();
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.75, u1, v1);
 			tess.addVertexWithUV(x + 0.25, y + a, z + 0.25, u1, v0);
 			tess.addVertexWithUV(x + 0.75, y + a, z + 0.25, u0, v0);
@@ -517,7 +520,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//North Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.625, y + 1, z + 0.375, u3, v3);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.375, u3, v2);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.375, u2, v2);
@@ -526,7 +529,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//East Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.625, y + 1, z + 0.625, u3, v3);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.625, u3, v2);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.375, u2, v2);
@@ -535,7 +538,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//South Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.375, y + 1, z + 0.625, u3, v3);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.625, u3, v2);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.625, u2, v2);
@@ -544,7 +547,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//West Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.375, y + 1, z + 0.375, u3, v3);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.375, u3, v2);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.625, u2, v2);
@@ -553,6 +556,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//Bottom Side
 			tess.startDrawingQuads();
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.625, u1, v1);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.375, u1, v0);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.375, u0, v0);
@@ -569,7 +573,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//North Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.625, y + 1, z + 0.375, u3, v3);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.375, u3, v2);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.375, u2, v2);
@@ -578,7 +582,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//East Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.625, y + 1, z + 0.625, u3, v3);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.625, u3, v2);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.375, u2, v2);
@@ -587,7 +591,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 			
 			//South Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(204, 204, 204);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.375, y + 1, z + 0.625, u3, v3);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.625, u3, v2);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.625, u2, v2);
@@ -596,7 +600,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//West Side
 			tess.startDrawingQuads();
-			tess.setColorOpaque(153, 153, 153);
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.375, y + 1, z + 0.375, u3, v3);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.375, u3, v2);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.625, u2, v2);
@@ -605,6 +609,7 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	
 			//Bottom Side
 			tess.startDrawingQuads();
+			tess.setColorOpaque(col, col, col);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.625, u1, v1);
 			tess.addVertexWithUV(x + 0.375, y + a, z + 0.375, u1, v0);
 			tess.addVertexWithUV(x + 0.625, y + a, z + 0.375, u0, v0);
