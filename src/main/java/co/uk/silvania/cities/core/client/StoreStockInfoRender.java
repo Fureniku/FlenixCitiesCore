@@ -209,12 +209,14 @@ public class StoreStockInfoRender extends Gui {
 	}
 	
 	public int quadrantHit(Vec3 vector, int x, int y, int z, int side) {
-		double xCoord = vector.xCoord - Math.abs(x);
-		double yCoord = vector.yCoord - Math.abs(y);
-		double zCoord = vector.zCoord - Math.abs(z);
+		double xCoord = vector.xCoord - (int) x;
+		double yCoord = vector.yCoord - (int) y;
+		double zCoord = vector.zCoord - (int) z;
+		
 		
 		//Side 2: X 0.9 (left) 0.0 (right)		Y 0.9 (top) 63.0 (base)		Z 0.5 (all)
-		if (side == 2) {
+		if (side == 2) { //Player facing SOUTH, shop shelves facing NORTH
+			System.out.println("X: " + xCoord + ", Y: " + yCoord + ", Z: " + zCoord);
 			if (xCoord < 0.5) {
 				if (yCoord < 0.5) {
 					return 3;
@@ -231,7 +233,7 @@ public class StoreStockInfoRender extends Gui {
 		}
 		
 		//Side 3: X 0.0 (left) 0.9 (right)		Y 0.9 (top) 0.0 (base)		Z 0.5 (all)
-		if (side == 3) {
+		if (side == 3) { //Player facing NORTH, shop shelves facing SOUTH
 			if (xCoord < 0.5) {
 				if (yCoord < 0.5) {
 					return 2;
@@ -248,7 +250,7 @@ public class StoreStockInfoRender extends Gui {
 		}
 		
 		//Side 4: X 0.5 (all)					Y 0.9 (top) 0.0 (base)		Z 0.0 (left) 0.9 (right)
-		if (side == 4) {
+		if (side == 4) { //Player facing EAST, shop shelves facing WEST
 			if (zCoord < 0.5) {
 				if (yCoord < 0.5) {
 					return 2;
@@ -265,7 +267,7 @@ public class StoreStockInfoRender extends Gui {
 		}
 		
 		//Side 5: X 0.5 (all)					Y 0.9 (top) 0.0 (base) 		Z 0.9 (left) 0.0 (right))
-		if (side == 5) {
+		if (side == 5) { //Player facing WEST, shop shelves facing EAST.
 			if (zCoord < 0.5) {
 				if (yCoord < 0.5) {
 					return 3;

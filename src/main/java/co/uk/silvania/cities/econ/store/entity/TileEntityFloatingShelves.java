@@ -187,7 +187,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 							if (stock.stackSize == 0) {
 								setInventorySlotContents(i, null);
 							}
-							System.out.println("amt: " + amt + ", Stock stacksize: " + stock.stackSize + ", Item stacksize:" + item.stackSize);
 							stockChest.markDirty();
 							stockChest.closeInventory();
 							return retrievedItems;
@@ -565,7 +564,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 
 	@Override
 	public ItemStack decrStackSize(int i, int amount) {
-		System.out.println("decrStackSize");
 		ItemStack itemStack = getStackInSlot(i);
 		
 		if (itemStack != null) {
@@ -580,7 +578,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		System.out.println("getStackInSlotOnClosing");
 		ItemStack itemStack = getStackInSlot(i);
 		setInventorySlotContents(i, null);
 		return itemStack;
@@ -588,7 +585,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemStack) {
-		System.out.println("Setting stack contents for floating shelves");
 		if (isItemValidForSlot(i, itemStack)) {
 			items[i] = itemStack;
 		
