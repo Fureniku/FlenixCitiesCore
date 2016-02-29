@@ -223,7 +223,7 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 				return true;
 			}
 		}
-		if (world.getBlock(x, y, z) instanceof BlockWalkway) {
+		if (world.getBlock(x, y, z) instanceof BlockWalkway || world.getBlock(x, y, z) instanceof BlockWalkwayStairs) {
 			return true;
 		}
 		

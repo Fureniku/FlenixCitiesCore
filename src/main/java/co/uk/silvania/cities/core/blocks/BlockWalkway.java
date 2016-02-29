@@ -62,14 +62,10 @@ public class BlockWalkway extends Block {
 	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
 		ItemStack item = player.getHeldItem();
 		int meta = world.getBlockMetadata(x, y, z);
-		System.out.println("Clicked block");
 		if (!world.isRemote) {
 			if (item != null) {
-				System.out.println("Has item");
 				if (item.getItem().getHarvestLevel(item, "shovel") > 0) {
-					System.out.println("Item is a shovel");
 					if (meta >= 4 && meta <= 7) {
-						System.out.println("Removed snow");
 						world.setBlockMetadataWithNotify(x, y, z, meta - 4, 3);
 						if (!player.capabilities.isCreativeMode) {
 							world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.snowball)));
@@ -81,9 +77,6 @@ public class BlockWalkway extends Block {
 		}
 	}
 	
-	
-	//TODO sneak-clicking isn't working?
-	//TODO render corner parts
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float clickPosX, float clickPosY, float clickPosZ) {
 		int meta = world.getBlockMetadata(x, y, z);
@@ -91,85 +84,64 @@ public class BlockWalkway extends Block {
 			System.out.println("Meta: " + meta);
 		}
 		ItemStack item = player.getHeldItem();
-		System.out.println("Right-clicked block");
 		if (!world.isRemote) {
 			if (item != null) {
-				System.out.println("Has item");
 				if (item.getItem().equals(Items.snowball)) {
-					if (player.isSneaking()) {
-						System.out.println("Item is a snowball");
-						if (meta < 4) {
-							world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
-							System.out.println("Added snow");
-							if (!player.capabilities.isCreativeMode) {
-								item.stackSize--;
-							}
-						}
+					if (meta < 4) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
 					}
 				} else if (item.getItem().equals(Items.glowstone_dust)) {
-					System.out.println("Item is glowstone");
-					if (player.isSneaking()) {
-						if (meta < 4) {
-							System.out.println("Block is lit");
-							world.setBlockMetadataWithNotify(x, y, z, meta + 8, 3);
-							if (!player.capabilities.isCreativeMode) {
-								item.stackSize--;
-							}
-						} else if (meta < 8) {
-							System.out.println("Block is lit (and snow melted)");
-							world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
-							if (!player.capabilities.isCreativeMode) {
-								item.stackSize--;
-							}
-						} else if (meta == 12 || meta == 13) {
-							System.out.println("Block is lit");
-							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
-							if (!player.capabilities.isCreativeMode) {
-								item.stackSize--;
-							}
+					if (meta < 4) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 8, 3);
+						if (!player.capabilities.isCreativeMode) {
+							item.stackSize--;
+						}
+					} else if (meta < 8) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
+						if (!player.capabilities.isCreativeMode) {
+							item.stackSize--;
+						}
+					} else if (meta == 12 || meta == 13) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+						if (!player.capabilities.isCreativeMode) {
+							item.stackSize--;
 						}
 					}
 				} else if (item.getItem().getHarvestLevel(item, "pickaxe") > 0) {
-					System.out.println("Item is pickaxe");
 					if (meta >= 8 && meta <= 11) {
-						System.out.println("Glowstone removed.");
 						world.setBlockMetadataWithNotify(x, y, z, meta - 8, 3);
 						if (!player.capabilities.isCreativeMode) {
 							item.attemptDamageItem(1, new Random());
 						}
 					} else if (meta == 14 || meta == 15) {
-						System.out.println("Glowstone removed.");
 						world.setBlockMetadataWithNotify(x, y, z, meta - 2, 3);
 						if (!player.capabilities.isCreativeMode) {
 							item.attemptDamageItem(1, new Random());
 						}
 					}
 				} else if (item.getItem().equals(CoreItems.pliers)) {
-					System.out.println("Item is pliers");
-					//if (player.isSneaking()) {
-						System.out.println("Toggling base-checks");
-						if (meta == 0 || meta == 1) {
-							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
-						} else if (meta == 2 || meta == 3) {
-							world.setBlockMetadataWithNotify(x, y, z, meta + 10, 3);
-						} else if (meta == 12 || meta == 13) {
-							world.setBlockMetadataWithNotify(x, y, z, meta - 12, 3);
-						}
-						
-						else if (meta == 4 || meta == 5) {
-							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
-						} else if (meta == 6 || meta == 7) {
-							world.setBlockMetadataWithNotify(x, y, z, meta - 2, 3);
-						}
-						
-						else if (meta == 8 || meta == 9) {
-							world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
-						} else if (meta == 10 || meta == 11) {
-							world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
-						} else if (meta == 14 || meta == 15) {
-							world.setBlockMetadataWithNotify(x, y, z, meta - 6, 3);
-						}
-					/*} else {
+					if (meta == 0 || meta == 1) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+					} else if (meta == 2 || meta == 3) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 10, 3);
+					} else if (meta == 12 || meta == 13) {
+						world.setBlockMetadataWithNotify(x, y, z, meta - 12, 3);
+					}
+					
+					else if (meta == 4 || meta == 5) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+					} else if (meta == 6 || meta == 7) {
+						world.setBlockMetadataWithNotify(x, y, z, meta - 2, 3);
+					}
+					
+					else if (meta == 8 || meta == 9) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+					} else if (meta == 10 || meta == 11) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
+					} else if (meta == 14 || meta == 15) {
+						world.setBlockMetadataWithNotify(x, y, z, meta - 6, 3);
+					}
+					/*} else { //TODO sneak-click isn't working. Set pliers able to sneak-click stuff.
 						System.out.println("Rotating");
 						if ((meta % 2) == 0 || meta == 0) {
 							world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
@@ -281,7 +253,7 @@ public class BlockWalkway extends Block {
 	
 	@Override
 	public void setBlockBoundsForItemRender() {
-		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
 	}
 	
 	@Override
@@ -290,8 +262,8 @@ public class BlockWalkway extends Block {
 		if (world.isRaining()) {
 			if (world.getBiomeGenForCoords(x, z).getEnableSnow()) {
 				if (world.canBlockSeeTheSky(x, y, z)) {
-					if (meta == 4 || meta == 6) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
+					if (meta < 4) {
+						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
 					}
 				}
 			}
@@ -315,7 +287,7 @@ public class BlockWalkway extends Block {
 			}
 		}
 		
-		if (world.getBlock(x, y, z) instanceof BlockWalkway) {
+		if (world.getBlock(x, y, z) instanceof BlockWalkway || world.getBlock(x, y, z) instanceof BlockWalkwayStairs) {
 			return true;
 		}
 		
