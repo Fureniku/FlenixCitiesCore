@@ -99,11 +99,13 @@ public class TileEntityAdminShopRenderer extends TileEntitySpecialRenderer {
 		
 		if (slot0 != null) {
 			GL11.glPushMatrix();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot0);
+			ItemStack renderStack = slot0.copy();
+			renderStack.stackSize = 1;
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, renderStack);
 			entity.hoverStart = 0.0F;
 			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.585F, (float) z + S1zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot0);
+			entity.setEntityItemStack(renderStack);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
