@@ -122,6 +122,8 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				items.appendTag(tag);
 			}
 		}
+		nbt.setTag("ClientAShelfInv", items);
+		
 		nbt.setString("ownerName", ownerName + "");
 		nbt.setDouble("buyPrice1", buyPrice1);
 		nbt.setDouble("sellPrice1", sellPrice1);
@@ -132,8 +134,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		nbt.setDouble("buyPrice4", buyPrice4);
 		nbt.setDouble("sellPrice4", sellPrice4);
 		nbt.setBoolean("matchNBT", matchNBT);
-		
-		nbt.setTag("ClientAShelfInv", items);
 		
 		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		markDirty();

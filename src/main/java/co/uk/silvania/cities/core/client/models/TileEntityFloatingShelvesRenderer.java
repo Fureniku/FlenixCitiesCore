@@ -1,5 +1,8 @@
 package co.uk.silvania.cities.core.client.models;
 
+import org.lwjgl.opengl.GL11;
+
+import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -13,11 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
-import org.lwjgl.opengl.GL11;
-
-import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
-
 
 public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer {
 		

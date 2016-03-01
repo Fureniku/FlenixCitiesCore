@@ -10,10 +10,10 @@ import net.minecraftforge.client.IItemRenderer;
 
 public class AdminShelvesItemRenderer implements IItemRenderer {
 	
-	private AdminShelvesModel model;
+	private FloatingShelvesModel model;
 	
 	public AdminShelvesItemRenderer() {
-		model = new AdminShelvesModel();
+		model = new FloatingShelvesModel();
 	}
 	
 	@Override

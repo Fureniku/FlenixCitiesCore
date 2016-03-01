@@ -216,7 +216,6 @@ public class StoreStockInfoRender extends Gui {
 		
 		//Side 2: X 0.9 (left) 0.0 (right)		Y 0.9 (top) 63.0 (base)		Z 0.5 (all)
 		if (side == 2) { //Player facing SOUTH, shop shelves facing NORTH
-			System.out.println("X: " + xCoord + ", Y: " + yCoord + ", Z: " + zCoord);
 			if (xCoord < 0.5) {
 				if (yCoord < 0.5) {
 					return 3;

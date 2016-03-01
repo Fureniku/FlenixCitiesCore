@@ -1,5 +1,8 @@
 package co.uk.silvania.cities.core.client.models;
 
+import org.lwjgl.opengl.GL11;
+
+import co.uk.silvania.cities.econ.store.entity.TileEntityAdminShop;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -9,21 +12,14 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import org.lwjgl.opengl.GL11;
-
-import co.uk.silvania.cities.econ.store.entity.TileEntityFloatingShelves;
-
-
-
 public class TileEntityAdminShopRenderer extends TileEntitySpecialRenderer {
 		
-	private final AdminShelvesModel model;
+	private final FloatingShelvesModel model;
 	private final RenderItem renderer;
 	
 	private ItemStack slot0;
@@ -31,10 +27,10 @@ public class TileEntityAdminShopRenderer extends TileEntitySpecialRenderer {
 	private ItemStack slot2;
 	private ItemStack slot3;
 	
-	private TileEntityFloatingShelves shelvesEntity;
+	private TileEntityAdminShop shelvesEntity;
 		
 	public TileEntityAdminShopRenderer() {
-		this.model = new AdminShelvesModel();
+		this.model = new FloatingShelvesModel();
 		this.renderer = new RenderItem();
 		
 		renderer.setRenderManager(RenderManager.instance);
@@ -42,7 +38,7 @@ public class TileEntityAdminShopRenderer extends TileEntitySpecialRenderer {
 	
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale) {
-		this.shelvesEntity = (TileEntityFloatingShelves) te;
+		this.shelvesEntity = (TileEntityAdminShop) te;
 		int i = te.getBlockMetadata();
 		int meta = 180;
 		
