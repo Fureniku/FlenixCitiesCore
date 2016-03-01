@@ -91,7 +91,9 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 			S2xOffset = 0.75F;
 		}
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("flenixcities", "textures/entities/floatingshelves.png"));
+		Minecraft mc = Minecraft.getMinecraft();
+		
+		mc.renderEngine.bindTexture(new ResourceLocation("flenixcities", "textures/entities/floatingshelves.png"));
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 		GL11.glRotatef(meta, 0.0F, 1.0F, 0.0F);
@@ -101,52 +103,44 @@ public class TileEntityFloatingShelvesRenderer extends TileEntitySpecialRenderer
 		
 		if (slot0 != null) {
 			GL11.glPushMatrix();
-			ItemStack slot0Render = slot0.copy();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot0Render);
-			if (slot0.stackTagCompound != null) { entity.writeToNBT(slot0.stackTagCompound); }
+			EntityItem entity = new EntityItem(mc.theWorld, 0.0D, 0.0D, 0.0D, slot0);
 			entity.hoverStart = 0.0F;
 			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.585F, (float) z + S1zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot0Render);
+			entity.setEntityItemStack(slot0);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
 		if (slot1 != null) {
 			GL11.glPushMatrix();
-			ItemStack slot1Render = slot1.copy();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot1Render);
-			if (slot1.stackTagCompound != null) { entity.writeToNBT(slot1.stackTagCompound); }
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot1);
 			entity.hoverStart = 0.0F;
 			GL11.glTranslated((float) x + S2xOffset, (float) y + 0.585F, (float) z + S2zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot1Render);
+			entity.setEntityItemStack(slot1);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
 		if (slot2 != null) {
 			GL11.glPushMatrix();
-			ItemStack slot2Render = slot2.copy();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot2Render);
-			if (slot2.stackTagCompound != null) { entity.writeToNBT(slot2.stackTagCompound); }
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot2);
 			entity.hoverStart = 0.0F;
 			GL11.glTranslated((float) x + S1xOffset, (float) y + 0.075F, (float) z + S1zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot2Render);
+			entity.setEntityItemStack(slot2);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
 		
 		if (slot3 != null) {
 			GL11.glPushMatrix();
-			ItemStack slot3Render = slot3.copy();
-			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot3Render);
-			if (slot3.stackTagCompound != null) { entity.writeToNBT(slot3.stackTagCompound); }
+			EntityItem entity = new EntityItem(null, 0.0D, 0.0D, 0.0D, slot3);
 			entity.hoverStart = 0.0F;
 			GL11.glTranslated((float) x + S2xOffset, (float) y + 0.075F, (float) z + S2zOffset);
 			GL11.glRotatef(meta + 180, 0.0F, 1.0F, 0.0F);
-			entity.setEntityItemStack(slot3Render);
+			entity.setEntityItemStack(slot3);
 			renderer.doRender(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			GL11.glPopMatrix();
 		}
