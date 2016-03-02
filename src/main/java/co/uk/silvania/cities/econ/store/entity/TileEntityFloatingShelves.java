@@ -426,7 +426,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 			stockChest = (TileEntityStockChest) te;
 		}
 		
-		ItemStack item = getStackInSlot(slotId - 1);
+		ItemStack shopItem = getStackInSlot(slotId - 1);
 		int invQty = 0;
 		double itemCost = 0;
 		
@@ -446,54 +446,67 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 			if (stockChest.buying) {
 				if (stockChest.buyFundLimit >= itemCost) {
 					if (EconUtils.getBalanceViaUUID(ownerUuid) >= itemCost) {
-						for (int x = entityPlayer.inventory.getSizeInventory() - 1; x >= 0; -- x) {
-							ItemStack stack = entityPlayer.inventory.getStackInSlot(x);
-							if (stack != null) {
-								if (stack.getItem() == item.getItem()) {
-									invQty = invQty + stack.stackSize;
-									if (invQty >= item.stackSize) {
-										invQty = item.stackSize;
+						for (int x = entityPlayer.inventory.getSizeInventory() - 1; x >= 0; x--) {
+							ItemStack playerInvStack = entityPlayer.inventory.getStackInSlot(x);
+							if (playerInvStack != null) {
+								if (playerInvStack.getItem() == shopItem.getItem()) {
+									invQty = invQty + playerInvStack.stackSize;
+									if (invQty >= shopItem.stackSize) {
+										invQty = shopItem.stackSize;
 									}
 								}
 							}
 						}
-						if (invQty >= item.stackSize) {
-							int insertSlot = findEmptySlot(item, stockChest);
-							if (insertSlot >= 0) {
-								int remain = item.stackSize;
-								for (int x = entityPlayer.inventory.getSizeInventory() - 1; x >= 0; -- x) {
-									ItemStack stack = entityPlayer.inventory.getStackInSlot(x);
-									if (stack != null) {
-										if (remain > 0) {
-											if (stack.getItem() == item.getItem()) {
-												if (stack.stackSize >= remain) {
-													if (stockChest.getStackInSlot(insertSlot) != null) {
-														int size = stockChest.getStackInSlot(insertSlot).stackSize;
-														ItemStack insertItem = stack.copy();
-														stack.stackSize = item.stackSize;
-														insertItem.stackSize = insertItem.stackSize + size;
+						//Player has enough/more than the shop wants.
+						if (invQty >= shopItem.stackSize) {
+							int insertSlot = findEmptySlot(shopItem, stockChest); //Find a slot to put it in.
+							if (insertSlot >= 0) { //Only true if there's a slot, no slots free = -1
+								int remain = shopItem.stackSize; //How many we want in total (in case taking from multiple stacks of player inv)
+								for (int x = entityPlayer.inventory.getSizeInventory() - 1; x >= 0; x--) {
+									ItemStack playerInvStack = entityPlayer.inventory.getStackInSlot(x);
+									if (playerInvStack != null) { //Player has items
+										if (remain > 0) { //We still need to take more items.
+											if (playerInvStack.getItem() == shopItem.getItem()) { //The items are the same.
+												if (playerInvStack.stackSize >= remain) { //A single stack is greater than or equal to total amount needed.
+													if (stockChest.getStackInSlot(insertSlot) != null) { //There's an identical item in the slot.
+														int size = stockChest.getStackInSlot(insertSlot).stackSize; //Total stacksize.
+														ItemStack insertItem = playerInvStack.copy(); //Copy the item from the player inventory.
+														//playerInvStack.stackSize -= remain;
+														//if (playerInvStack.stackSize <= 0) {
+															//entityPlayer.inventory.setInventorySlotContents(x, null);
+														//}
+														
+														insertItem.stackSize = remain + size; //We already checked they have enough. Combine with size.
 														if (insertItem.stackSize > insertItem.getMaxStackSize()) {
-															insertItem.stackSize = insertItem.getMaxStackSize();
+															ItemStack secondStack = insertItem.copy(); //If new stack and existing one are too big together,
+															secondStack.stackSize = insertItem.stackSize - insertItem.getMaxStackSize(); //Make a new second stack
+															insertItem.stackSize = insertItem.getMaxStackSize(); //And put that in the next available slot.
+															stockChest.setInventorySlotContents(insertSlot, insertItem);
+															stockChest.setInventorySlotContents(findEmptySlot(shopItem, stockChest), secondStack);
+														} else {
+															stockChest.setInventorySlotContents(insertSlot, insertItem);
 														}
-														stockChest.setInventorySlotContents(insertSlot, insertItem);
 													} else {
-														stockChest.setInventorySlotContents(insertSlot, item);
+														stockChest.setInventorySlotContents(insertSlot, shopItem);
 													}
 													entityPlayer.inventory.decrStackSize(x, remain);
+													if (playerInvStack.stackSize <= 0) {
+														entityPlayer.inventory.setInventorySlotContents(x, null);
+													}
 													EconUtils.chargeAccountViaUUID(ownerUuid, itemCost);
 													EconUtils.giveChange(itemCost, 0, entityPlayer);
 													stockChest.buyFundLimit = stockChest.buyFundLimit - itemCost;
 													stockChest.markDirty();
 													stockChest.getDescriptionPacket();
 													remain = 0;
-													System.out.println(entityPlayer.getDisplayName() + " sold " + item.stackSize + " " + item.getDisplayName() + " to the server, for $" + EconUtils.formatBalance(itemCost));
-													entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You sold " + gold + item.stackSize + " " + item.getDisplayName() + green + " to " + ownerName + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+													System.out.println(entityPlayer.getDisplayName() + " sold " + shopItem.stackSize + " " + shopItem.getDisplayName() + " to the server, for $" + EconUtils.formatBalance(itemCost));
+													entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to " + ownerName + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 													if (storeOwner != null) {
-														storeOwner.addChatComponentMessage(new ChatComponentText(green + entityPlayer.getDisplayName() + " has sold " + gold + item.stackSize + " " + item.getDisplayName() + green + " to you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+														storeOwner.addChatComponentMessage(new ChatComponentText(green + entityPlayer.getDisplayName() + " has sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
 													}
-													setInventorySlotContents(slotId - 1, item);
+													setInventorySlotContents(slotId - 1, shopItem);
 												} else {
-													remain = remain - stack.stackSize;
+													remain = remain - playerInvStack.stackSize;
 													entityPlayer.inventory.setInventorySlotContents(x, null);
 												}
 											}
