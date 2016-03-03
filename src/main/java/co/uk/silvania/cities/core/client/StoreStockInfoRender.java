@@ -88,6 +88,11 @@ public class StoreStockInfoRender extends Gui {
 					
 					String costBuy = "";
 					String costSell = "";
+					String qty = "";
+					
+					if (item != null) {
+						qty = " (" + item.stackSize + ") ";
+					}
 					
 					if (lookingAtSlot == 0) {
 						costBuy = buy1;
@@ -113,7 +118,7 @@ public class StoreStockInfoRender extends Gui {
 							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 							GL11.glDisable(GL11.GL_LIGHTING);
 							GL11.glScalef(0.5F, 0.5F, 0.5F);
-							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, (", " + EnumChatFormatting.GREEN + "Buy: " + EnumChatFormatting.GOLD + "$" + costBuy + ", " + EnumChatFormatting.YELLOW + "Sell: " + EnumChatFormatting.GOLD + "$" + costSell), player, font);
+							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, (qty + ", " + EnumChatFormatting.GREEN + "Buy: " + EnumChatFormatting.GOLD + "$" + costBuy + ", " + EnumChatFormatting.YELLOW + "Sell: " + EnumChatFormatting.GOLD + "$" + costSell), player, font);
 							GL11.glPopMatrix();
 						}
 					}
@@ -142,6 +147,11 @@ public class StoreStockInfoRender extends Gui {
 					
 					String costBuy = "";
 					String costSell = "";
+					String qty = "";
+					
+					if (item != null) {
+						qty = " (" + item.stackSize + ") ";
+					}
 					
 					if (lookingAtSlot == 0) {
 						costBuy = buy1;
@@ -164,7 +174,7 @@ public class StoreStockInfoRender extends Gui {
 							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 							GL11.glDisable(GL11.GL_LIGHTING);
 							GL11.glScalef(0.5F, 0.5F, 0.5F);
-							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, (", " + EnumChatFormatting.GREEN + "Buy: " + EnumChatFormatting.GOLD + "$" + costBuy + ", " + EnumChatFormatting.YELLOW + "Sell: " + EnumChatFormatting.GOLD + "$" + costSell), player, font);
+							renderToolTip(item, res.getScaledWidth() + 10, res.getScaledHeight() + 10, (qty + ", " + EnumChatFormatting.GREEN + "Buy: " + EnumChatFormatting.GOLD + "$" + costBuy + ", " + EnumChatFormatting.YELLOW + "Sell: " + EnumChatFormatting.GOLD + "$" + costSell), player, font);
 							GL11.glPopMatrix();
 						}
 					}
