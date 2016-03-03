@@ -259,6 +259,7 @@ tile.lightingRotateBlocks.15.name=Vertical Light Panel (Small)
 
 tile.floatingShelvesBlock.name=Floating Shelves Shop
 tile.adminShopBlock.name=Admin Shop
+tile.stockChest.name=Stock Chest
 
 tile.rebarBlock.name=Rebar
 
