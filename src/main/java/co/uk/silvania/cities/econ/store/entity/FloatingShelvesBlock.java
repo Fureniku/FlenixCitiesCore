@@ -89,30 +89,24 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
 		if (!world.isRemote) {
 			TileEntityFloatingShelves tileEntity = (TileEntityFloatingShelves) world.getTileEntity(x, y, z);
 	    	ItemStack item = player.getHeldItem();
-	    	System.out.println("Block was right-clicked");
 			if (item != null && item.getItem() == CoreItems.storeStockPairer) {
-				System.out.println("Held item is correct");
 	        	if (player.getUniqueID().toString().equals(tileEntity.ownerUuid)) {
-	        		System.out.println("UUID matches TE's");
 		        	if (item.stackTagCompound == null) {
 		        		player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "Link it with a stock chest first!"));
 		        	} else {
-		        		System.out.println("NBT is not null");
 		        		if (item.stackTagCompound.getString("playerUUID").equals(tileEntity.ownerUuid)) {
-		        			System.out.println("UUIDs between TE and Item match");
 			        		int stockX = item.stackTagCompound.getInteger("xPos");
 			        		int stockY = item.stackTagCompound.getInteger("yPos");
 			        		int stockZ = item.stackTagCompound.getInteger("zPos");
 			        		if (world.getTileEntity(stockX, stockY, stockZ) instanceof TileEntityStockChest) {
 			        			TileEntityStockChest stockEntity = (TileEntityStockChest) world.getTileEntity(stockX, stockY, stockZ);
-			        			System.out.println("Stock Chest found at position");
 			        			if (stockEntity.ownerUuid.equals(tileEntity.ownerUuid)) {
 			        				if (tileEntity != null) {
-			        					System.out.println("Coordinates set within TE");
 						        		tileEntity.stockXPos = stockX;
 						        		tileEntity.stockYPos = stockY;
 						        		tileEntity.stockZPos = stockZ;
 			        				}
+			        				System.out.println(player.getDisplayName() + " has linked a stock chest to a shop.");
 					        		player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Store successfully linked with Stock Chest at " + stockX + ", " + stockY + ", " + stockZ));
 			        			} else {
 			        				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "This is not your store!"));

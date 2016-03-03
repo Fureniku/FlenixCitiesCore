@@ -470,7 +470,6 @@ public class GuiFloatingShelves extends GuiContainer {
 	
 	public void updateTileEntity() {
         if (isShopOwner()) {
-        	System.out.println("Sending FloatingShelvesClientPacket. Buy1, Sell1, x y z:" + buy1Text.getText() + " " + sell1Text.getText() + " " + x + " " + y + " " + z);
         	FlenixCities_Core.network.sendToServer(new FloatingShelvesClientPacket(
         			buy1Text.getText(), 
         			sell1Text.getText(), 

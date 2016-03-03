@@ -589,7 +589,6 @@ public class EconUtils {
 	//Quick n' easy method of getting the players balance.
 	public static double getBalance(EntityPlayer player) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
-		System.out.println("Calling getBalance");
         return getBalanceViaUUID(player.getUniqueID().toString());
 	}
 	
@@ -709,25 +708,19 @@ public class EconUtils {
 	}
 	
 	public static boolean chargeAccountViaUUID(String uuid, double amt) {
-		System.out.println("chargeAccountViaUUID");
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		double cardBalance = getBalanceViaUUID(uuid);
-		System.out.println("Amount (" + amt + " is less than/equal to cardBalanace (" + cardBalance + ")");
 		if (amt <= cardBalance) {
-			System.out.println("True!");
 			double currentBalance = 0;
 	        if (nbt.hasKey(uuid)) {
-	        	System.out.println("hasKey UUID");
 	            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
 	            if (playernbt.hasKey("Balance")) {
-	            	System.out.println("hasKey balance");
 	                currentBalance = playernbt.getDouble("Balance");
 	            }
 	            double modifiedBalance = currentBalance - amt;
 	            playernbt.setDouble("Balance", modifiedBalance);
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        } else {
-	        	System.out.println("Doesn't hasKey UUID");
 	            NBTTagCompound playernbt = new NBTTagCompound();
 	            if (playernbt.hasKey("Balance")) {
 	                currentBalance = playernbt.getDouble("Balance");
@@ -744,12 +737,9 @@ public class EconUtils {
 	}
 	
 	public static double getBalanceViaUUID(String uuid) {
-		System.out.println("get balance via UUID");
-		System.out.println("UUID: " + uuid);
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         double balance = 0;
         if (nbt.hasKey(uuid)) {
-        	System.out.println("nbt.hasKey UUID");
             NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
             if (playernbt.hasKey("Balance")) {
             	System.out.println("nbt.hasKey Balance");
