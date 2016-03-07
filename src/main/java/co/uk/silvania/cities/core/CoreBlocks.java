@@ -21,6 +21,9 @@ public class CoreBlocks {
 	public static Block stockChest;
 	
 	public static Block skyscraperBlocks;
+	public static Block skyscraperBlocks2;
+	public static Block skyscraperBlocks3;
+	public static Block skyscraperBlocks4;
 	public static Block stainedGlass;
 	public static Block stainedGlassLit;
 	public static Block styledGlass;
@@ -104,7 +107,10 @@ public class CoreBlocks {
 	}
 	
 	public static void initBlocks() {
-    	skyscraperBlocks = new SkyscraperBlocks().setBlockName("skyscraperBlocks");
+		skyscraperBlocks = new SkyscraperBlocks().setBlockName("skyscraperBlocks");
+		skyscraperBlocks2 = new SkyscraperBlocks().setBlockName("skyscraperBlocks2");
+		skyscraperBlocks3 = new SkyscraperBlocks().setBlockName("skyscraperBlocks3");
+		skyscraperBlocks4 = new SkyscraperBlocks().setBlockName("skyscraperBlocks4");
     	stainedGlass = new StainedGlass().setBlockName("stainedGlass");
     	stainedGlassLit = new StainedGlassLit().setBlockName("stainedGlassLit");
     	styledGlass = new StyledGlass().setBlockName("styledGlass");

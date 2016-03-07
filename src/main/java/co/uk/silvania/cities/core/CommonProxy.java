@@ -30,6 +30,9 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.stockChest, "stockChest");
         
         GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks2, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks2.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks3, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks3.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks4, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks4.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.stainedGlass, ItemStainedGlass.class, "FlenixCities" + (CoreBlocks.stainedGlass.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.stainedGlassLit, ItemStainedGlassLit.class, "FlenixCities" + (CoreBlocks.stainedGlassLit.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.styledGlass, ItemStyledGlass.class, "FlenixCities" + (CoreBlocks.styledGlass.getUnlocalizedName().substring(5)));
