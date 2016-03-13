@@ -2,26 +2,23 @@ package co.uk.silvania.cities.core;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EventDrops {
 
 	@SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
-        if (event.source.getSourceOfDamage() instanceof FakePlayer) {
-        } else if (event.source.getSourceOfDamage() instanceof EntityPlayerMP) {
+        if (event.source.getSourceOfDamage() instanceof EntityPlayerMP) {
     		Random rand = new Random();
             int chance = rand.nextInt(200);
             if (event.entityLiving instanceof EntityZombie) {
@@ -142,7 +139,7 @@ public class EventDrops {
                     event.entityLiving.dropItem(CoreItems.coin10, rand.nextInt(4) + 1);
                     event.entityLiving.dropItem(CoreItems.coin5, rand.nextInt(3) + 1);
                 }
-            } else if (event.entityLiving instanceof EntityMob) {
+            } else if (event.entityLiving instanceof IMob) {
                 if (chance < 40) {
                     event.entityLiving.dropItem(CoreItems.coin25, rand.nextInt(1) + 1);
                 } else if (chance < 58) {

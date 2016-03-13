@@ -742,7 +742,6 @@ public class EconUtils {
         if (nbt.hasKey(uuid)) {
             NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
             if (playernbt.hasKey("Balance")) {
-            	System.out.println("nbt.hasKey Balance");
                 balance = playernbt.getDouble("Balance");
             }
         }
