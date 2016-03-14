@@ -35,6 +35,7 @@ public class StoreStockInfoRender extends Gui {
 
 	public Minecraft mc;
 	protected FontRenderer fontRendererObj;
+	public EconUtils econ = new EconUtils();
 	
 	public StoreStockInfoRender(Minecraft mc) {
 		super();
@@ -76,15 +77,15 @@ public class StoreStockInfoRender extends Gui {
 					nf.setMaximumFractionDigits(2);
 					nf.setRoundingMode(RoundingMode.HALF_UP);
 					
-					String buy1 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice1));
-					String buy2 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice2));
-					String buy3 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice3));
-					String buy4 = nf.format(EconUtils.parseDouble("" + adminShop.buyPrice4));
+					String buy1 = nf.format(econ.parseDouble("" + adminShop.buyPrice1));
+					String buy2 = nf.format(econ.parseDouble("" + adminShop.buyPrice2));
+					String buy3 = nf.format(econ.parseDouble("" + adminShop.buyPrice3));
+					String buy4 = nf.format(econ.parseDouble("" + adminShop.buyPrice4));
 					
-					String sell1 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice1));
-					String sell2 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice2));
-					String sell3 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice3));
-					String sell4 = nf.format(EconUtils.parseDouble("" + adminShop.sellPrice4));
+					String sell1 = nf.format(econ.parseDouble("" + adminShop.sellPrice1));
+					String sell2 = nf.format(econ.parseDouble("" + adminShop.sellPrice2));
+					String sell3 = nf.format(econ.parseDouble("" + adminShop.sellPrice3));
+					String sell4 = nf.format(econ.parseDouble("" + adminShop.sellPrice4));
 					
 					String costBuy = "";
 					String costSell = "";
@@ -135,15 +136,15 @@ public class StoreStockInfoRender extends Gui {
 					nf.setMaximumFractionDigits(2);
 					nf.setRoundingMode(RoundingMode.HALF_UP);
 					
-					String buy1 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice1));
-					String buy2 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice2));
-					String buy3 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice3));
-					String buy4 = nf.format(EconUtils.parseDouble("" + playerShop.buyPrice4));
+					String buy1 = nf.format(econ.parseDouble("" + playerShop.buyPrice1));
+					String buy2 = nf.format(econ.parseDouble("" + playerShop.buyPrice2));
+					String buy3 = nf.format(econ.parseDouble("" + playerShop.buyPrice3));
+					String buy4 = nf.format(econ.parseDouble("" + playerShop.buyPrice4));
 					
-					String sell1 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice1));
-					String sell2 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice2));
-					String sell3 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice3));
-					String sell4 = nf.format(EconUtils.parseDouble("" + playerShop.sellPrice4));
+					String sell1 = nf.format(econ.parseDouble("" + playerShop.sellPrice1));
+					String sell2 = nf.format(econ.parseDouble("" + playerShop.sellPrice2));
+					String sell3 = nf.format(econ.parseDouble("" + playerShop.sellPrice3));
+					String sell4 = nf.format(econ.parseDouble("" + playerShop.sellPrice4));
 					
 					String costBuy = "";
 					String costSell = "";

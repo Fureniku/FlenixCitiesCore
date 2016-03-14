@@ -26,6 +26,8 @@ public class FloatingShelvesClientPacket implements IMessage {
 	public static int y;
 	public static int z;
 	
+	public static EconUtils econ = new EconUtils();
+	
 	public FloatingShelvesClientPacket() {}
 	
 	public FloatingShelvesClientPacket(String b1, String s1, String b2, String s2, String b3, String s3, String b4, String s4, int xPos, int yPos, int zPos) {
@@ -101,14 +103,14 @@ public class FloatingShelvesClientPacket implements IMessage {
 				TileEntityFloatingShelves tileShop = container.te;
 				
 				if (tileShop != null) {
-					tileShop.buyPrice1 = EconUtils.parseDouble(str1);
-					tileShop.sellPrice1 = EconUtils.parseDouble(str2);
-					tileShop.buyPrice2 = EconUtils.parseDouble(str3);
-					tileShop.sellPrice2 = EconUtils.parseDouble(str4);
-					tileShop.buyPrice3 = EconUtils.parseDouble(str5);
-					tileShop.sellPrice3 = EconUtils.parseDouble(str6);
-					tileShop.buyPrice4 = EconUtils.parseDouble(str7);
-					tileShop.sellPrice4 = EconUtils.parseDouble(str8);
+					tileShop.buyPrice1 = econ.parseDouble(str1);
+					tileShop.sellPrice1 = econ.parseDouble(str2);
+					tileShop.buyPrice2 = econ.parseDouble(str3);
+					tileShop.sellPrice2 = econ.parseDouble(str4);
+					tileShop.buyPrice3 = econ.parseDouble(str5);
+					tileShop.sellPrice3 = econ.parseDouble(str6);
+					tileShop.buyPrice4 = econ.parseDouble(str7);
+					tileShop.sellPrice4 = econ.parseDouble(str8);
 					
 					tileShop.getDescriptionPacket();
 					if (CityConfig.debugMode) {

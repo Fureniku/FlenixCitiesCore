@@ -29,6 +29,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiFloatingShelves extends GuiContainer {
 	
+	public EconUtils econ = new EconUtils();
+	
 	int sellMode = 0;
 	int x;
 	int y;
@@ -281,16 +283,16 @@ public class GuiFloatingShelves extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		if (EconUtils.parseDouble(buy1Text.getText()) > 0 && EconUtils.parseDouble(sell1Text.getText()) > EconUtils.parseDouble(buy1Text.getText())) {
+		if (econ.parseDouble(buy1Text.getText()) > 0 && econ.parseDouble(sell1Text.getText()) > econ.parseDouble(buy1Text.getText())) {
 			sellButton1.enabled = false;
 		}
-		if (EconUtils.parseDouble(buy2Text.getText()) > 0 && EconUtils.parseDouble(sell2Text.getText()) > EconUtils.parseDouble(buy2Text.getText())) {
+		if (econ.parseDouble(buy2Text.getText()) > 0 && econ.parseDouble(sell2Text.getText()) > econ.parseDouble(buy2Text.getText())) {
 			sellButton2.enabled = false;
 		}
-		if (EconUtils.parseDouble(buy3Text.getText()) > 0 && EconUtils.parseDouble(sell3Text.getText()) > EconUtils.parseDouble(buy3Text.getText())) {
+		if (econ.parseDouble(buy3Text.getText()) > 0 && econ.parseDouble(sell3Text.getText()) > econ.parseDouble(buy3Text.getText())) {
 			sellButton3.enabled = false;
 		}
-		if (EconUtils.parseDouble(buy4Text.getText()) > 0 && EconUtils.parseDouble(sell4Text.getText()) > EconUtils.parseDouble(buy4Text.getText())) {
+		if (econ.parseDouble(buy4Text.getText()) > 0 && econ.parseDouble(sell4Text.getText()) > econ.parseDouble(buy4Text.getText())) {
 			sellButton4.enabled = false;
 		}
 		if (slot0 == null) {
@@ -335,15 +337,15 @@ public class GuiFloatingShelves extends GuiContainer {
 			nf.setMaximumFractionDigits(2);
 			nf.setRoundingMode(RoundingMode.HALF_UP);
 			
-			String buy1 = nf.format(EconUtils.parseDouble("" + displayBuy1));
-			String buy2 = nf.format(EconUtils.parseDouble("" + displayBuy2));
-			String buy3 = nf.format(EconUtils.parseDouble("" + displayBuy3));
-			String buy4 = nf.format(EconUtils.parseDouble("" + displayBuy4));
+			String buy1 = nf.format(econ.parseDouble("" + displayBuy1));
+			String buy2 = nf.format(econ.parseDouble("" + displayBuy2));
+			String buy3 = nf.format(econ.parseDouble("" + displayBuy3));
+			String buy4 = nf.format(econ.parseDouble("" + displayBuy4));
 			
-			String sell1 = nf.format(EconUtils.parseDouble("" + displaySell1));
-			String sell2 = nf.format(EconUtils.parseDouble("" + displaySell2));
-			String sell3 = nf.format(EconUtils.parseDouble("" + displaySell3));
-			String sell4 = nf.format(EconUtils.parseDouble("" + displaySell4));
+			String sell1 = nf.format(econ.parseDouble("" + displaySell1));
+			String sell2 = nf.format(econ.parseDouble("" + displaySell2));
+			String sell3 = nf.format(econ.parseDouble("" + displaySell3));
+			String sell4 = nf.format(econ.parseDouble("" + displaySell4));
 			
 			
 			fontRendererObj.drawString("$" + buy1, 51 - fontRendererObj.getStringWidth(buy1) / 2, 54, 4210752);
@@ -360,7 +362,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	    
 		fontRendererObj.drawString(mode, 5, 19, 4210752);
 		fontRendererObj.drawString(FloatingShelvesPricePacket.ownerName + "'s Shop", 36, 5, 4210752);
-    	//fontRendererObj.drawString("You have: " + EconUtils.reqClientInventoryBalance(), 100, 5, 4210752);
+    	//fontRendererObj.drawString("You have: " + econ.reqClientInventoryBalance(), 100, 5, 4210752);
 	}
 	
 	public int focus() {

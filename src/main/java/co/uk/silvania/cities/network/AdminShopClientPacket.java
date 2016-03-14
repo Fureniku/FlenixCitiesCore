@@ -26,6 +26,8 @@ public class AdminShopClientPacket implements IMessage {
 	public static int y;
 	public static int z;
 	
+	public static EconUtils econ = new EconUtils();
+	
 	public AdminShopClientPacket() {}
 	
 	public AdminShopClientPacket(String b1, String s1, String b2, String s2, String b3, String s3, String b4, String s4, int xPos, int yPos, int zPos) {
@@ -101,14 +103,14 @@ public class AdminShopClientPacket implements IMessage {
 				TileEntityAdminShop tileAdmin = container.te;
 				
 				if (tileAdmin != null) {
-					tileAdmin.buyPrice1 = EconUtils.parseDouble(str1);
-					tileAdmin.sellPrice1 = EconUtils.parseDouble(str2);
-					tileAdmin.buyPrice2 = EconUtils.parseDouble(str3);
-					tileAdmin.sellPrice2 = EconUtils.parseDouble(str4);
-					tileAdmin.buyPrice3 = EconUtils.parseDouble(str5);
-					tileAdmin.sellPrice3 = EconUtils.parseDouble(str6);
-					tileAdmin.buyPrice4 = EconUtils.parseDouble(str7);
-					tileAdmin.sellPrice4 = EconUtils.parseDouble(str8);
+					tileAdmin.buyPrice1 = econ.parseDouble(str1);
+					tileAdmin.sellPrice1 = econ.parseDouble(str2);
+					tileAdmin.buyPrice2 = econ.parseDouble(str3);
+					tileAdmin.sellPrice2 = econ.parseDouble(str4);
+					tileAdmin.buyPrice3 = econ.parseDouble(str5);
+					tileAdmin.sellPrice3 = econ.parseDouble(str6);
+					tileAdmin.buyPrice4 = econ.parseDouble(str7);
+					tileAdmin.sellPrice4 = econ.parseDouble(str8);
 					
 					//Update all players nearby of shop changes (Avoids localized scamming by bumping the price after players come into range)
 					tileAdmin.getDescriptionPacket();

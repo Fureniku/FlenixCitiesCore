@@ -21,7 +21,7 @@ import co.uk.silvania.cities.network.SoundPacket;
 public class GuiATM extends GuiContainer {
 
     private static final ResourceLocation texture = new ResourceLocation("flenixcities", "textures/gui/atm.png");
-
+    public EconUtils econ = new EconUtils();
     
     public GuiATM (InventoryPlayer inventoryPlayer, TileEntityATMEntity tileEntity, World world, int x, int y, int z) {
     	super(new ContainerATM(inventoryPlayer, tileEntity));
@@ -80,7 +80,7 @@ public class GuiATM extends GuiContainer {
     }
     
     public void actionPerformed(GuiButton guibutton) {
-    	initBalance = EconUtils.parseDouble(ServerBalancePacket.balanceAmount);
+    	initBalance = econ.parseDouble(ServerBalancePacket.balanceAmount);
     	if (CityConfig.debugMode) {
     		System.out.println("Balance available in GUI! Balance: $" + initBalance);
     	}
@@ -321,7 +321,7 @@ public class GuiATM extends GuiContainer {
 	    		withdrawCustom = "";
 	    		break;
 	    	case 12: //Confirm
-	    		int customWithdrawFinal = EconUtils.parseInt(withdrawCustom);
+	    		int customWithdrawFinal = econ.parseInt(withdrawCustom);
 	            
 	            withdrawAmount = customWithdrawFinal;
 	            withdrawFunds(withdrawAmount);
@@ -344,7 +344,7 @@ public class GuiATM extends GuiContainer {
     		}
     	}
     	
-		if (EconUtils.parseInt(guiStage) >= 8) {
+		if (econ.parseInt(guiStage) >= 8) {
 			switch(guibutton.id) {
 	    	case 4: //Cancel
 	    		guiStage = "1";
@@ -466,8 +466,8 @@ public class GuiATM extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
     	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
-    	String bal = EconUtils.formatBalance(initBalance);
-    	String shortAmt = "" + (withdrawAmount - EconUtils.parseDouble(bal));
+    	String bal = econ.formatBalance(initBalance);
+    	String shortAmt = "" + (withdrawAmount - econ.parseDouble(bal));
     	String underScore = "";
     	if (tick < 80) {
     		tick++;
@@ -536,7 +536,7 @@ public class GuiATM extends GuiContainer {
         	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     		fontRendererObj.drawString("Withdrawl Successful!", 35, 8, 0x007F0E);
     		fontRendererObj.drawString("You have withdrawn", 39, 18, 0x007F0E);
-    		fontRendererObj.drawString("$" + EconUtils.formatBalance(withdrawAmount) + " " + CityConfig.currencyLargePlural, 50, 28, 0x007F0E);
+    		fontRendererObj.drawString("$" + econ.formatBalance(withdrawAmount) + " " + CityConfig.currencyLargePlural, 50, 28, 0x007F0E);
     		fontRendererObj.drawString("Press Confirm to continue.", 22, 58, 0x007F0E);
 
     	}
@@ -555,7 +555,7 @@ public class GuiATM extends GuiContainer {
     		fontRendererObj.drawString("$" + withdrawCustom, 72, 24, 0x007F0E);
         	fontRendererObj.drawString("Back", 12, 78, 0x007F0E);
     	}
-    	if (EconUtils.parseInt(guiStage) >= 8) {
+    	if (econ.parseInt(guiStage) >= 8) {
         	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
     		fontRendererObj.drawString("   Invalid Selection    ", 26, -12, 0xFFD800);
         	fontRendererObj.drawString("Main Menu", 12, 24, 0x007F0E);

@@ -17,6 +17,7 @@ public class StockChestUpdatePacket implements IMessage {
 	public static String toggleBuy;
 	public static String toggleSell;
 	public static String buyFundLimit;
+	public static EconUtils econ = new EconUtils();
 
 	public StockChestUpdatePacket() {}
 	
@@ -64,7 +65,7 @@ public class StockChestUpdatePacket implements IMessage {
 				if (tileEntity != null) {					
 					tileEntity.buying = Boolean.valueOf(str1);
 					tileEntity.selling = Boolean.valueOf(str2);
-					tileEntity.buyFundLimit = EconUtils.parseDouble(str3);
+					tileEntity.buyFundLimit = econ.parseDouble(str3);
 
 					tileEntity.getDescriptionPacket();
 					

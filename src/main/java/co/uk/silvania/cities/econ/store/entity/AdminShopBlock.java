@@ -25,6 +25,8 @@ import co.uk.silvania.cities.network.AdminShopPricePacket;
 import co.uk.silvania.cities.network.ServerBalancePacket;
 
 public class AdminShopBlock extends BlockContainer implements IStoreBlock {
+	
+	public EconUtils econ = new EconUtils();
 
 	float minX = 0.0F;
 	float minY = 0.0F;
@@ -91,7 +93,7 @@ public class AdminShopBlock extends BlockContainer implements IStoreBlock {
         	if (!world.isRemote) {
         		FlenixCities_Core.network.sendTo(new AdminShopPricePacket(tileEntity.ownerName, tileEntity.buyPrice1, tileEntity.sellPrice1, tileEntity.buyPrice2, tileEntity.sellPrice2,
             			tileEntity.buyPrice3, tileEntity.sellPrice3, tileEntity.buyPrice4, tileEntity.sellPrice4), (EntityPlayerMP) player);
-        		FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player)), (EntityPlayerMP) player);
+        		FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), (EntityPlayerMP) player);
         	}
         }
         player.openGui(FlenixCities_Core.instance, 3, world, x, y, z);

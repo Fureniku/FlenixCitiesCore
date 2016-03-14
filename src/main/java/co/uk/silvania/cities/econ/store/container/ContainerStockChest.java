@@ -49,10 +49,8 @@ public class ContainerStockChest extends Container {
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
 		if (slot > 117) {
-			EconUtils.debug("[BAD] Slot: " + slot);
 			return null;
 		}
-		EconUtils.debug("Slot: " + slot);
 		ItemStack stack = null;
 		Slot slotObject = (Slot) inventorySlots.get(slot);
 

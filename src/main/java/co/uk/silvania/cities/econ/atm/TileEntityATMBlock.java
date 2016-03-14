@@ -32,8 +32,8 @@ import net.minecraft.world.World;
 
 public class TileEntityATMBlock extends BlockContainer {	
 	
-	public static double playerBalance = 0;
-
+	public EconUtils econ = new EconUtils();
+	
 	public TileEntityATMBlock() {
 		super(Material.iron);
 		this.setHardness(1.0F);
@@ -50,12 +50,12 @@ public class TileEntityATMBlock extends BlockContainer {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
         if (!world.isRemote) {
         	if (player.isSneaking()) {
-        		EconUtils.depositAllCash(player);
+        		econ.depositAllCash(player);
         	} else if (player.getHeldItem() != null) {
         		if (player.getHeldItem().getItem() == CoreItems.debitCardNew) {
         			world.playSoundEffect(20, 70, 20, "FlenixCities:block.atm.cardInsert", 1, 1);
         			player.openGui(FlenixCities_Core.instance, 0, world, x, y, z);
-        			EconUtils.getBalance(player);                 
+        			econ.getBalance(player);                 
         		} else {  
         			NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         			ItemStack item = player.getHeldItem();
@@ -83,7 +83,7 @@ public class TileEntityATMBlock extends BlockContainer {
         					nbt.setTag(uuid, playernbt);
         				}
         				NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-        				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(coin.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
+        				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + econ.formatBalance(coin.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + econ.formatBalance(playernbt.getDouble("Balance"))));
         				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + EnumChatFormatting.ITALIC + "all your money!"));
         				NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         				--item.stackSize;
@@ -108,7 +108,7 @@ public class TileEntityATMBlock extends BlockContainer {
 	                        nbt.setTag(uuid, playernbt);
 	                    }
 	                    NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(note.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + EconUtils.formatBalance(playernbt.getDouble("Balance"))));
+	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + econ.formatBalance(note.getMoneyValue()) + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + econ.formatBalance(playernbt.getDouble("Balance"))));
 	                    player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + EnumChatFormatting.ITALIC + "all your money!"));
 	                    NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
 	                    --item.stackSize;
@@ -121,8 +121,8 @@ public class TileEntityATMBlock extends BlockContainer {
         	}
         
         	EntityPlayerMP playerMP = (EntityPlayerMP) player;
-        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player)), playerMP); //TODO
-       		System.out.println("Current Balance Packet Sent! Balance: $" + EconUtils.getBalance(player));
+        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), playerMP); //TODO
+       		System.out.println("Current Balance Packet Sent! Balance: $" + econ.getBalance(player));
        	}
         return true;
     }

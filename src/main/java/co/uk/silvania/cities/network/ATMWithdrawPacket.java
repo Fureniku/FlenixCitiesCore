@@ -14,6 +14,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 public class ATMWithdrawPacket implements IMessage {
 	
 	private int withdrawAmount;
+	public static EconUtils econ = new EconUtils();
 	
 	public ATMWithdrawPacket() {}
 	
@@ -37,8 +38,8 @@ public class ATMWithdrawPacket implements IMessage {
 		@Override
 		public IMessage onMessage(ATMWithdrawPacket message, MessageContext ctx) {
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
-			EconUtils.withdrawFunds(message.withdrawAmount, player);
-			FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+EconUtils.getBalance(player)), (EntityPlayerMP) player);
+			econ.withdrawFunds(message.withdrawAmount, player);
+			FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), (EntityPlayerMP) player);
 			if (CityConfig.debugMode) {
 				System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
 			}

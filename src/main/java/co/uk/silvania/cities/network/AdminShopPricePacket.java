@@ -23,6 +23,8 @@ public class AdminShopPricePacket implements IMessage {
 	public static double buyPrice4;
 	public static double sellPrice4;
 	
+	public EconUtils econ = new EconUtils();
+	
 	public AdminShopPricePacket() {}
 	
 	public AdminShopPricePacket(String owner, double b1, double s1, double b2, double s2, double b3, double s3, double b4, double s4) {
@@ -40,14 +42,14 @@ public class AdminShopPricePacket implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		ownerName = ByteBufUtils.readUTF8String(buf);
-		buyPrice1 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
-		sellPrice1 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
-		buyPrice2 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
-		sellPrice2 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
-		buyPrice3 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
-		sellPrice3 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
-		buyPrice4 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
-		sellPrice4 = EconUtils.parseDouble(ByteBufUtils.readUTF8String(buf));
+		buyPrice1 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
+		sellPrice1 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
+		buyPrice2 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
+		sellPrice2 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
+		buyPrice3 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
+		sellPrice3 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
+		buyPrice4 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
+		sellPrice4 = econ.parseDouble(ByteBufUtils.readUTF8String(buf));
 		
 	}
 
