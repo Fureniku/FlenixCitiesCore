@@ -22,13 +22,13 @@ public class CityConfig {
 
 	public static boolean playerOwnedShops;
 	public static boolean debugMode;
+	public static boolean allowCardPurchases;
 	
 	
 	//public static void loadConfig(FMLPreInitializationEvent event) {
 	//Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 	public static void initConfig (File configFile) {
 		config = new Configuration(configFile);
-		
 		
 		try {
 			config.load();	
@@ -39,6 +39,7 @@ public class CityConfig {
 
 			playerOwnedShops = config.get(Configuration.CATEGORY_GENERAL, "Enable player-owned shops", true).getBoolean(true);
 			debugMode = config.get(Configuration.CATEGORY_GENERAL, "debug mode", false).getBoolean(false);
+			allowCardPurchases = config.get(Configuration.CATEGORY_GENERAL, "Enable player-owned shops", true).getBoolean(true);
 		}
 		catch (Exception e) {
 			System.out.println("### Warning! FlenixCities Core could not load it's config file! ###");

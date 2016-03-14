@@ -24,6 +24,8 @@ import co.uk.silvania.cities.econ.money.ItemNote;
 
 public class TileEntityFloatingShelves extends TileEntity implements IInventory {
 	
+	public EconUtils econ = new EconUtils();
+	
 	public String ownerName;
 	public String ownerUuid;
 	public String userName;
@@ -258,8 +260,8 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		if (slotId == 4) {
 			itemCost = buyPrice4;
 		}
-		double invCash = EconUtils.getInventoryCash(entityPlayer);
-		boolean hasSpace = EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1));
+		double invCash = econ.getInventoryCash(entityPlayer);
+		boolean hasSpace = econ.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1));
 		ItemStack item = getStackInSlot(slotId - 1);
 		if (item == null) {
 			return;
@@ -274,14 +276,14 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 						if (CityConfig.debugMode) {
 							System.out.println("Attempting to charge player");
 						}
-						double paidAmount = EconUtils.findCashInInventoryWithChange(entityPlayer, itemCost); //Complex code to charge the player's inventory
+						double paidAmount = econ.findCashInInventoryWithChange(entityPlayer, itemCost); //Complex code to charge the player's inventory
 						if (paidAmount < 0) {
 							if (CityConfig.debugMode) {
 								System.out.println("No monies.");
 							}
 							return;
 						} else {
-							if (EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
+							if (econ.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
 								if (CityConfig.debugMode) {
 									System.out.println("Player still has space");
 								}
@@ -293,14 +295,14 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 								full = true;
 								worldObj.spawnEntityInWorld(new EntityItem(worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, stockItem));
 							}
-							System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from " + ownerName + " for $" + EconUtils.formatBalance(itemCost));
+							System.out.println(entityPlayer.getDisplayName() + " bought " + item.stackSize + " " + item.getDisplayName() + " from " + ownerName + " for $" + econ.formatBalance(itemCost));
 				
 							if (storeOwner != null) {
-								storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+								storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + econ.formatBalance(itemCost) + "!"));
 							}
 							
-							EconUtils.depositToAccountViaUUID(ownerUuid, itemCost);
-							entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+							econ.depositToAccountViaUUID(ownerUuid, itemCost);
+							entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + econ.formatBalance(itemCost) + "!"));
 							if (full) {
 								entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You didn't have enough room in your inventory, so the item was dropped."));
 							}
@@ -313,59 +315,25 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 						}
 					}
 				} else if (invCash < itemCost) {
-					double bankBalance = EconUtils.getBalance(entityPlayer);
-					/*if (CityConfig.debugMode) {
-						System.out.println("Not enough money in player's inventory. Trying bank.");
-					}
-					double bankBalance = EconUtils.getBalance(entityPlayer, entityPlayer.getEntityWorld());
-					if (bankBalance >= itemCost && hasSpace) {
-						if (EconUtils.hasOwnCard(entityPlayer)) {
-							if (CityConfig.debugMode) {
-								System.out.println("Player has their card with them.");
-							}
-							ItemStack stockItem = findStockItem(stockChest, item.copy(), ownerName);
-							if (stockItem != null) {
-								if (EconUtils.chargePlayerAnywhere(entityPlayer, itemCost)) {
-									if (EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
-										entityPlayer.inventory.addItemStackToInventory(stockItem);
-									} else {
-										worldObj.spawnEntityInWorld(new EntityItem(worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, stockItem));
-										full = true;
-									}
-									
-									if (storeOwner != null) {
-										storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
-									}
-									
-									EconUtils.depositToAccountViaUUID(ownerUuid, worldObj, itemCost);
-									
-									entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from " + gold + ownerName + green + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
-									entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You didn't have enough money with you, so the cost was split between your cash, and your bank balance. Your remaining bank balance is " + gold  + "$" + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer, worldObj))));
-									if (full) {
-										entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You didn't have enough room in your inventory, so the item was dropped."));
-									}
-								}
-							}
-						}*/
-					if (bankBalance >= itemCost && hasSpace) {
-						if (EconUtils.hasOwnCard(entityPlayer)) {
-							if (EconUtils.payBalanceByCard(entityPlayer, itemCost)) {
+					if (econ.getBalance(entityPlayer) >= itemCost && hasSpace && CityConfig.allowCardPurchases) {
+						if (econ.hasOwnCard(entityPlayer)) {
+							if (econ.payBalanceByCard(entityPlayer, itemCost)) {
 								ItemStack stockItem = findStockItem(stockChest, item.copy(), ownerName);
 								if (stockItem != null) {
-									if (EconUtils.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
+									if (econ.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
 										entityPlayer.inventory.addItemStackToInventory(stockItem);
 									} else {
 										worldObj.spawnEntityInWorld(new EntityItem(worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, stockItem));
 										full = true;
 									}
 									if (storeOwner != null) {
-										storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+										storeOwner.addChatComponentMessage(new ChatComponentText(gold + entityPlayer.getDisplayName() + green + " bought " + gold + item.stackSize + " " + item.getDisplayName() + green + " from you for " + darkGreen + "$" + econ.formatBalance(itemCost) + "!"));
 									}
 									
-									EconUtils.depositToAccountViaUUID(ownerUuid, itemCost);
+									econ.depositToAccountViaUUID(ownerUuid, itemCost);
 									
-									entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + EconUtils.formatBalance(itemCost) + "!"));
-									entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have paid by card. Your remaining bank balance is $" + EnumChatFormatting.GOLD + EconUtils.formatBalance(EconUtils.getBalance(entityPlayer))));
+									entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + econ.formatBalance(itemCost) + "!"));
+									entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have paid by card. Your remaining bank balance is $" + EnumChatFormatting.GOLD + econ.formatBalance(econ.getBalance(entityPlayer))));
 									if (full) {
 										entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You didn't have enough room in your inventory, so the item was dropped."));
 									}
@@ -445,7 +413,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		if (stockChest != null) {
 			if (stockChest.buying) {
 				if (stockChest.buyFundLimit >= itemCost) {
-					if (EconUtils.getBalanceViaUUID(ownerUuid) >= itemCost) {
+					if (econ.getBalanceViaUUID(ownerUuid) >= itemCost) {
 						for (int x = entityPlayer.inventory.getSizeInventory() - 1; x >= 0; x--) {
 							ItemStack playerInvStack = entityPlayer.inventory.getStackInSlot(x);
 							if (playerInvStack != null) {
@@ -493,16 +461,16 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 													if (playerInvStack.stackSize <= 0) {
 														entityPlayer.inventory.setInventorySlotContents(x, null);
 													}
-													EconUtils.chargeAccountViaUUID(ownerUuid, itemCost);
-													EconUtils.giveChange(itemCost, 0, entityPlayer);
+													econ.chargeAccountViaUUID(ownerUuid, itemCost);
+													econ.giveChange(itemCost, 0, entityPlayer);
 													stockChest.buyFundLimit = stockChest.buyFundLimit - itemCost;
 													stockChest.markDirty();
 													stockChest.getDescriptionPacket();
 													remain = 0;
-													System.out.println(entityPlayer.getDisplayName() + " sold " + shopItem.stackSize + " " + shopItem.getDisplayName() + " to the server, for $" + EconUtils.formatBalance(itemCost));
-													entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to " + ownerName + " for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+													System.out.println(entityPlayer.getDisplayName() + " sold " + shopItem.stackSize + " " + shopItem.getDisplayName() + " to the server, for $" + econ.formatBalance(itemCost));
+													entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to " + ownerName + " for " + darkGreen + "$" + econ.formatBalance(itemCost) + "!"));
 													if (storeOwner != null) {
-														storeOwner.addChatComponentMessage(new ChatComponentText(green + entityPlayer.getDisplayName() + " has sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to you for " + darkGreen + "$" + EconUtils.formatBalance(itemCost) + "!"));
+														storeOwner.addChatComponentMessage(new ChatComponentText(green + entityPlayer.getDisplayName() + " has sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to you for " + darkGreen + "$" + econ.formatBalance(itemCost) + "!"));
 													}
 													setInventorySlotContents(slotId - 1, shopItem);
 												} else {
