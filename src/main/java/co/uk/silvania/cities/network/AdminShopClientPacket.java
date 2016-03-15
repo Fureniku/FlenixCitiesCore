@@ -75,14 +75,6 @@ public class AdminShopClientPacket implements IMessage {
 		public IMessage onMessage(AdminShopClientPacket message, MessageContext ctx) {
 			if (CityConfig.debugMode) {
 				System.out.println("Packet recieved from client regarding prices in shops!");
-				System.out.println("String 1: " + message.buyPrice1); 
-				System.out.println("String 2: " + message.sellPrice1); 
-				System.out.println("String 3: " + message.buyPrice2); 
-				System.out.println("String 4: " + message.sellPrice2); 
-				System.out.println("String 5: " + message.buyPrice3); 
-				System.out.println("String 6: " + message.sellPrice3); 
-				System.out.println("String 7: " + message.buyPrice4); 
-				System.out.println("String 8: " + message.sellPrice4); 
 			}
 			World world = ctx.getServerHandler().playerEntity.worldObj;
 			EntityPlayer player = ctx.getServerHandler().playerEntity;

@@ -289,7 +289,9 @@ public class EconUtils {
 				int quantity = stack.stackSize;
 				double totalValue = moneyValue * quantity;
 				
-				debug("There is a money stack with value of " + moneyValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
+				if (moneyValue > 0) {
+					debug("There is a money stack with value of " + moneyValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
+				}
 				balance = balance + totalValue;
 			}
 		}
@@ -541,33 +543,29 @@ public class EconUtils {
 	//Removes money from the players account- for withdrawl etc.
 	public boolean chargeBalance(EntityPlayer player, double amt) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
-		debug("Charging balance!");
+		debug("Charging balance! Amount: $" + amt);
 		double cardBalance = getBalance(player);
-		if (amt <= cardBalance) {		
-			if (player.inventory.getCurrentItem() != null) { //TODO this won't work. Gotta iterate through and find a card instead.
-				String victimPlayerUUID = DebitCardItem.checkCardOwner(player, player.inventory.getCurrentItem());
-				double currentBalance = 0;
-		        if (nbt.hasKey(victimPlayerUUID)) {
-		            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
-		            if (playernbt.hasKey("Balance")) {
-		                currentBalance = playernbt.getDouble("Balance");
-		            }
-		            double modifiedBalance = currentBalance - amt;
-		            playernbt.setDouble("Balance", modifiedBalance);
-		            //TODO nbt.setCompoundTag(player.username, playernbt);
-		        } else {
-		            NBTTagCompound playernbt = new NBTTagCompound();
-		            if (playernbt.hasKey("Balance")) {
-		                currentBalance = playernbt.getDouble("Balance");
-		            }
-		            double modifiedBalance = currentBalance - amt;
-		            playernbt.setDouble("Balance", modifiedBalance);
-		            //TODO nbt.setCompoundTag(player.username, playernbt);
-		        }
-		        NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
-		        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
-				return true;
-			}
+		debug("cardBalance: " + cardBalance);
+		if (amt <= cardBalance) {
+			debug("AMT is >= cardBalance");
+			String playerUUID = player.getUniqueID().toString();
+			double currentBalance = 0;
+	        if (nbt.hasKey(playerUUID)) {
+	        	debug("nbt.hasKey");
+	            NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
+	            if (playernbt.hasKey("Balance")) {
+	                currentBalance = playernbt.getDouble("Balance");
+	            }
+	            double modifiedBalance = currentBalance - amt;
+	            playernbt.setDouble("Balance", modifiedBalance);
+	            //TODO nbt.setCompoundTag(player.username, playernbt);
+	        } else {
+	            debug("BAD! Player has no money, how'd they get this far?");
+	            return false;
+	        }
+	        NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
+	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
+			return true;
 		}
 		debug(player.getDisplayName() + " did not have enough to withdraw.");
 		return false;
@@ -629,7 +627,6 @@ public class EconUtils {
 					}	
 				}
 			} else {
-				debug("Emtpy slot found. How useful! ID: " + x);
 				return true;
 			}
 		}
@@ -642,7 +639,7 @@ public class EconUtils {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
 				if (stack.getItem() == CoreItems.debitCardNew) {
-					if (player.getDisplayName().equals(stack.stackTagCompound.getString("playerName"))) {
+					if (player.getUniqueID().toString().equals(stack.stackTagCompound.getString("playerUUID"))) {
 						return true;
 					}
 				}

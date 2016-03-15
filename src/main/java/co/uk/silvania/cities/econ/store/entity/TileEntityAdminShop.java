@@ -14,6 +14,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.oredict.OreDictionary;
@@ -159,6 +160,9 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 	
 	//Selling items TO the player
 	public void sellItem(int slotId, EntityPlayer entityPlayer) {
+		ChatStyle red = new ChatStyle().setColor(EnumChatFormatting.RED);
+		ChatStyle green = new ChatStyle().setColor(EnumChatFormatting.GREEN);
+		
 		double itemCost = 0;
 		if (slotId == 1) {
 			itemCost = buyPrice1;
@@ -197,6 +201,7 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 			}
 		}
 		if (invCash < itemCost) {
+			//Pay by card
 			if (econ.getBalance(entityPlayer) >= itemCost && hasSpace && CityConfig.allowCardPurchases) {
 				if (econ.hasOwnCard(entityPlayer)) {
 					if (econ.payBalanceByCard(entityPlayer, itemCost)) {
@@ -206,8 +211,9 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 							worldObj.spawnEntityInWorld(new EntityItem(worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, item.copy()));
 							full = true;
 						}
+						
 						entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You bought " + EnumChatFormatting.GOLD + item.stackSize + " " + item.getDisplayName() + EnumChatFormatting.GREEN + " from the server for " + EnumChatFormatting.DARK_GREEN + "$" + econ.formatBalance(itemCost) + "!"));
-						entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is $" + EnumChatFormatting.GOLD + econ.formatBalance(econ.getBalance(entityPlayer))));
+						entityPlayer.addChatComponentMessage(new ChatComponentText("You didn't have enough money with you, so it was charged to your bank account instead. Your remaining bank balance is \u00A76$" + econ.formatBalance(econ.getBalance(entityPlayer))).setChatStyle(green));
 						if (full) {
 							entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You didn't have enough room in your inventory, so the item was dropped."));
 						}
@@ -215,12 +221,12 @@ public class TileEntityAdminShop extends TileEntity implements IInventory {
 				}
 			} else {
 				if (hasSpace) {
-					entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not have enough money to do that! Next time, why not " + EnumChatFormatting.RED + "pay by card?"));
+					entityPlayer.addChatComponentMessage(new ChatComponentText("You do not have enough money to do that! Next time, why not pay by card?").setChatStyle(red));
 				}
 			}
 		}
 		if (!hasSpace) {
-			entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not have enough free inventory space to buy that!"));
+			entityPlayer.addChatComponentMessage(new ChatComponentText("You do not have enough free inventory space to buy that!").setChatStyle(red));
 		}
 	}
 	

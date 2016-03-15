@@ -317,9 +317,9 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 				} else if (invCash < itemCost) {
 					if (econ.getBalance(entityPlayer) >= itemCost && hasSpace && CityConfig.allowCardPurchases) {
 						if (econ.hasOwnCard(entityPlayer)) {
-							if (econ.payBalanceByCard(entityPlayer, itemCost)) {
-								ItemStack stockItem = findStockItem(stockChest, item.copy(), ownerName);
-								if (stockItem != null) {
+							ItemStack stockItem = findStockItem(stockChest, item.copy(), ownerName);
+							if (stockItem != null) {
+								if (econ.payBalanceByCard(entityPlayer, itemCost)) {
 									if (econ.inventoryHasSpace(entityPlayer, getStackInSlot(slotId - 1))) {
 										entityPlayer.inventory.addItemStackToInventory(stockItem);
 									} else {
@@ -337,6 +337,12 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 									if (full) {
 										entityPlayer.addChatComponentMessage(new ChatComponentText(red + "You didn't have enough room in your inventory, so the item was dropped."));
 									}
+								}
+							} else {
+								entityPlayer.addChatComponentMessage(new ChatComponentText(red + item.getDisplayName() + " is currently out of stock."));
+								
+								if (storeOwner != null) {
+									storeOwner.addChatComponentMessage(new ChatComponentText(red + "Your " + item.getDisplayName() + " at " + gold + xCoord + ", " + yCoord + ", " + zCoord + red + " is currently out of stock."));
 								}
 							}
 						}
