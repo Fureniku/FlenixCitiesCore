@@ -131,7 +131,7 @@ public class LightingRotateBlocks extends Block {
     @Override
     public void onBlockAdded(World world, int x, int y, int z) {
     	int meta = world.getBlockMetadata(x, y, z);
-        if (meta >= 0 && meta <= 3) {
+        /*if (meta >= 0 && meta <= 3) {
             if (world.isSideSolid(x - 1, y, z, EAST, true)) {
                 world.setBlockMetadataWithNotify(x, y, z, 1, 2);
             } else if (world.isSideSolid(x + 1, y, z, WEST, true)) {
@@ -171,6 +171,6 @@ public class LightingRotateBlocks extends Block {
             } else if (world.isSideSolid(x, y, z + 1, NORTH, true)) {
                 world.setBlockMetadataWithNotify(x, y, z, 12, 2);
             }
-        }
+        }*/
     }
 }

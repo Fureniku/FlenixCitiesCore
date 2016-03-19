@@ -103,7 +103,7 @@ tile.skyscraperBlocks4.2.name=Green Skyscraper Block
 tile.skyscraperBlocks4.3.name=Red Skyscraper Block
 tile.skyscraperBlocks4.4.name=Blue Skyscraper Block (Framed)
 tile.skyscraperBlocks4.5.name=Brown Skyscraper Block (Framed)
-tile.skyscraperBlocks4.6.name=GreenSkyscraper Block (Framed)
+tile.skyscraperBlocks4.6.name=Green Skyscraper Block (Framed)
 tile.skyscraperBlocks4.7.name=Red Skyscraper Block (Framed)
 tile.skyscraperBlocks4.8.name=Blue Skyscraper Block (Framed)
 tile.skyscraperBlocks4.9.name=Brown Skyscraper Block (Framed)
@@ -113,6 +113,57 @@ tile.skyscraperBlocks4.12.name=Blue Skyscraper Block (Framed)
 tile.skyscraperBlocks4.13.name=Brown Skyscraper Block (Framed)
 tile.skyscraperBlocks4.14.name=Green Skyscraper Block (Framed)
 tile.skyscraperBlocks4.15.name=Red Skyscraper Block (Framed)
+
+tile.skyscraperBlocks5.0.name=Pastel Dark Blue Skyscraper Block
+tile.skyscraperBlocks5.1.name=Pastel Brown Skyscraper Block
+tile.skyscraperBlocks5.2.name=Pastel Green Skyscraper Block
+tile.skyscraperBlocks5.3.name=Pastel Pink Skyscraper Block
+tile.skyscraperBlocks5.4.name=Pastel Dark Blue Skyscraper Block (Framed)
+tile.skyscraperBlocks5.5.name=Pastel Brown Skyscraper Block (Framed)
+tile.skyscraperBlocks5.6.name=Pastel Green Skyscraper Block (Framed)
+tile.skyscraperBlocks5.7.name=Pastel Pink Skyscraper Block (Framed)
+tile.skyscraperBlocks5.8.name=Pastel Dark Blue Skyscraper Block (Framed)
+tile.skyscraperBlocks5.9.name=Pastel Brown Skyscraper Block (Framed)
+tile.skyscraperBlocks5.10.name=Pastel Green Skyscraper Block (Framed)
+tile.skyscraperBlocks5.11.name=Pastel Pink Skyscraper Block (Framed)
+tile.skyscraperBlocks5.12.name=Pastel Dark Blue Skyscraper Block (Framed)
+tile.skyscraperBlocks5.13.name=Pastel Brown Skyscraper Block (Framed)
+tile.skyscraperBlocks5.14.name=Pastel Green Skyscraper Block (Framed)
+tile.skyscraperBlocks5.15.name=Pastel Pink Skyscraper Block (Framed)
+
+tile.skyscraperBlocks6.0.name=Pastel Orange Skyscraper Block
+tile.skyscraperBlocks6.1.name=Pastel Magenta Skyscraper Block
+tile.skyscraperBlocks6.2.name=Pastel Red Skyscraper Block
+tile.skyscraperBlocks6.3.name=Pastel Yellow Skyscraper Block
+tile.skyscraperBlocks6.4.name=Pastel Orange Skyscraper Block (Framed)
+tile.skyscraperBlocks6.5.name=Pastel Magenta Skyscraper Block (Framed)
+tile.skyscraperBlocks6.6.name=Pastel Red Skyscraper Block (Framed)
+tile.skyscraperBlocks6.7.name=Pastel Yellow Skyscraper Block (Framed)
+tile.skyscraperBlocks6.8.name=Pastel Orange Skyscraper Block (Framed)
+tile.skyscraperBlocks6.9.name=Pastel Magenta Skyscraper Block (Framed)
+tile.skyscraperBlocks6.10.name=Pastel Red Skyscraper Block (Framed)
+tile.skyscraperBlocks6.11.name=Pastel Yellow Skyscraper Block (Framed)
+tile.skyscraperBlocks6.12.name=Pastel Orange Skyscraper Block (Framed)
+tile.skyscraperBlocks6.13.name=Pastel Magenta Skyscraper Block (Framed)
+tile.skyscraperBlocks6.14.name=Pastel Red Skyscraper Block (Framed)
+tile.skyscraperBlocks6.15.name=Pastel Yellow Skyscraper Block (Framed)
+
+tile.skyscraperBlocks7.0.name=Pastel Light Blue Skyscraper Block
+tile.skyscraperBlocks7.1.name=Pastel Light Green Skyscraper Block
+tile.skyscraperBlocks7.2.name=Pastel Cyan Skyscraper Block
+tile.skyscraperBlocks7.3.name=Pastel Purple Skyscraper Block
+tile.skyscraperBlocks7.4.name=Pastel Light Blue Skyscraper Block (Framed)
+tile.skyscraperBlocks7.5.name=Pastel Light Green Skyscraper Block (Framed)
+tile.skyscraperBlocks7.6.name=Pastel Cyan Skyscraper Block (Framed)
+tile.skyscraperBlocks7.7.name=Pastel Purple Skyscraper Block (Framed)
+tile.skyscraperBlocks7.8.name=Pastel Light Blue Skyscraper Block (Framed)
+tile.skyscraperBlocks7.9.name=Pastel Light Green Skyscraper Block (Framed)
+tile.skyscraperBlocks7.10.name=Pastel Cyan Skyscraper Block (Framed)
+tile.skyscraperBlocks7.11.name=Pastel Purple Skyscraper Block (Framed)
+tile.skyscraperBlocks7.12.name=Pastel Light Blue Skyscraper Block (Framed)
+tile.skyscraperBlocks7.13.name=Pastel Light Green Skyscraper Block (Framed)
+tile.skyscraperBlocks7.14.name=Pastel Cyan Skyscraper Block (Framed)
+tile.skyscraperBlocks7.15.name=Pastel Purple Skyscraper Block (Framed)
 
 tile.stainedGlass.0.name=White Stained Glass
 tile.stainedGlass.1.name=Orange Stained Glass
@@ -261,11 +312,13 @@ tile.floorBlocks.7.name=Jungle Wood Laminate
 tile.floorBlocks.8.name=Ceiling Panel
 tile.floorBlocks.9.name=Acacia Wood Laminate
 tile.floorBlocks.10.name=Dark Oak Wood Laminate
-tile.floorBlocks.11.name=-
-tile.floorBlocks.12.name=-
-tile.floorBlocks.13.name=-
-tile.floorBlocks.14.name=-
-tile.floorBlocks.15.name=-
+tile.floorBlocks.11.name=Oak Smooth Wood
+tile.floorBlocks.12.name=Spruce Smooth Wood
+tile.floorBlocks.13.name=Birch Smooth Wood
+tile.floorBlocks.14.name=Jungle Smooth Wood
+tile.floorBlocks.15.name=Acacia Smooth Wood
+
+tile.floorBlocks2.0.name=Dark Oak Smooth Wood
 
 tile.quartzDecorBlocks.0.name=Quartz Large Brick
 tile.quartzDecorBlocks.1.name=Quartz Brick
@@ -325,6 +378,36 @@ tile.lightGreyWalkway.name=Light Grey Skyscraper Walkway
 tile.darkGreyWalkway.name=Dark Grey Skyscraper Walkway
 tile.blackWalkway.name=Black Skyscraper Walkway
 
+tile.lightGreenWalkway.name=Light Green Skyscraper Walkway
+tile.cyanWalkway.name=Cyan Skyscraper Walkway
+tile.purpleWalkway.name=Purple Skyscraper Walkway
+tile.pinkWalkway.name=Pink Skyscraper Walkway
+
+tile.blueWalkway.name=Blue Skyscraper Walkway
+tile.brownWalkway.name=Brown Skyscraper Walkway
+tile.greenWalkway.name=Green Skyscraper Walkway
+tile.redWalkway.name=Red Skyscraper Walkway
+
+tile.orangeWalkway.name=Orange Skyscraper Walkway
+tile.magentaWalkway.name=Magenta Skyscraper Walkway
+tile.lightBlueWalkway.name=Light Blue Skyscraper Walkway
+tile.yellowWalkway.name=Yellow Skyscraper Walkway
+
+tile.pastelDarkBlueWalkway.name=Pastel Dark Blue Skyscraper Walkway
+tile.pastelBrownWalkway.name=Pastel Brown Skyscraper Walkway
+tile.pastelGreenWalkway.name=Pastel Green Skyscraper Walkway
+tile.pastelPinkWalkway.name=Pastel Pink Skyscraper Walkway
+
+tile.pastelOrangeWalkway.name=Pastel Orange Skyscraper Walkway
+tile.pastelMagentaWalkway.name=Pastel MagentaSkyscraper Walkway
+tile.pastelRedWalkway.name=Pastel Red Skyscraper Walkway
+tile.pastelYellowWalkway.name=Pastel Yellow Skyscraper Walkway
+
+tile.pastelLightBlueWalkway.name=Pastel Light Blue Skyscraper Walkway
+tile.pastelLightGreenWalkway.name=Pastel Light Green Skyscraper Walkway
+tile.pastelCyanWalkway.name=Pastel Cyan Skyscraper Walkway
+tile.pastelPurpleWalkway.name=Pastel Purple Skyscraper Walkway
+
 tile.oakLaminateWalkway.name=Oak Laminate Walkway
 tile.spruceLaminateWalkway.name=Spruce Laminate Walkway
 tile.birchLaminateWalkway.name=Birch Laminate Walkway
@@ -343,6 +426,37 @@ tile.whiteWalkwayStairs.name=White Skyscraper Walkway Stairs
 tile.lightGreyWalkwayStairs.name=Light Grey Skyscraper Walkway Stairs
 tile.darkGreyWalkwayStairs.name=Dark Grey Skyscraper Walkway Stairs
 tile.blackWalkwayStairs.name=Black Skyscraper Walkway Stairs
+
+tile.lightGreenWalkwayStairs.name=Light Green Skyscraper Walkway Stairs
+tile.cyanWalkwayStairs.name=Cyan Skyscraper Walkway Stairs
+tile.purpleWalkwayStairs.name=Purple Skyscraper Walkway Stairs
+tile.pinkWalkwayStairs.name=Pink Skyscraper Walkway Stairs
+
+tile.blueWalkwayStairs.name=Blue Skyscraper Walkway Stairs
+tile.brownWalkwayStairs.name=Brown Skyscraper Walkway Stairs
+tile.greenWalkwayStairs.name=Green Skyscraper Walkway Stairs
+tile.redWalkwayStairs.name=Red Skyscraper Walkway Stairs
+
+tile.orangeWalkwayStairs.name=Orange Skyscraper Walkway Stairs
+tile.magentaWalkwayStairs.name=Magenta Skyscraper Walkway Stairs
+tile.lightBlueWalkwayStairs.name=Light Blue Skyscraper Walkway Stairs
+tile.yellowWalkwayStairs.name=Yellow Skyscraper Walkway Stairs
+
+tile.pastelDarkBlueWalkwayStairs.name=Pastel Dark Blue Skyscraper Walkway Stairs
+tile.pastelBrownWalkwayStairs.name=Pastel Brown Skyscraper Walkway Stairs
+tile.pastelGreenWalkwayStairs.name=Pastel Green Skyscraper Walkway Stairs
+tile.pastelPinkWalkwayStairs.name=Pastel Pink Skyscraper Walkway Stairs
+
+tile.pastelOrangeWalkwayStairs.name=Pastel Orange Skyscraper Walkway Stairs
+tile.pastelMagentaWalkwayStairs.name=Pastel MagentaSkyscraper Walkway Stairs
+tile.pastelRedWalkwayStairs.name=Pastel Red Skyscraper Walkway Stairs
+tile.pastelYellowWalkwayStairs.name=Pastel Yellow Skyscraper Walkway Stairs
+
+tile.pastelLightBlueWalkwayStairs.name=Pastel Light Blue Skyscraper Walkway Stairs
+tile.pastelLightGreenWalkwayStairs.name=Pastel Light Green Skyscraper Walkway Stairs
+tile.pastelCyanWalkwayStairs.name=Pastel Cyan Skyscraper Walkway Stairs
+tile.pastelPurpleWalkwayStairs.name=Pastel Purple Skyscraper Walkway Stairs
+
 
 tile.oakLaminateWalkwayStairs.name=Oak Laminate Walkway Stairs
 tile.spruceLaminateWalkwayStairs.name=Spruce Laminate Walkway Stairs

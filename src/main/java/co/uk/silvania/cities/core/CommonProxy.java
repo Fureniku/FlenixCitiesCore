@@ -1,5 +1,6 @@
 package co.uk.silvania.cities.core;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -33,6 +34,10 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks2, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks2.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks3, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks3.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks4, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks4.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks5, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks5.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks6, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks6.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks7, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks7.getUnlocalizedName().substring(5)));
+        
         GameRegistry.registerBlock(CoreBlocks.stainedGlass, ItemStainedGlass.class, "FlenixCities" + (CoreBlocks.stainedGlass.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.stainedGlassLit, ItemStainedGlassLit.class, "FlenixCities" + (CoreBlocks.stainedGlassLit.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.styledGlass, ItemStyledGlass.class, "FlenixCities" + (CoreBlocks.styledGlass.getUnlocalizedName().substring(5)));
@@ -42,6 +47,7 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.woolWood, ItemWoolStone.class, "FlenixCities" + (CoreBlocks.woolWood.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.plasticBlock, ItemPlasticBlocks.class, "FlenixCities" + (CoreBlocks.plasticBlock.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(CoreBlocks.floorBlocks, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.floorBlocks.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(CoreBlocks.floorBlocks2, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.floorBlocks2.getUnlocalizedName().substring(5)));
        	
         GameRegistry.registerBlock(CoreBlocks.oakWalkway, "oakWalkway");
         GameRegistry.registerBlock(CoreBlocks.spruceWalkway, "spruceWalkway");
@@ -54,6 +60,36 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.lightGreyWalkway, "lightGreyWalkway");
         GameRegistry.registerBlock(CoreBlocks.darkGreyWalkway, "darkGreyWalkway");
         GameRegistry.registerBlock(CoreBlocks.blackWalkway, "blackWalkway");
+        
+        GameRegistry.registerBlock(CoreBlocks.lightGreenWalkway, "lightGreenWalkway");
+        GameRegistry.registerBlock(CoreBlocks.cyanWalkway, "cyanWalkway");
+        GameRegistry.registerBlock(CoreBlocks.purpleWalkway, "purpleWalkway");
+        GameRegistry.registerBlock(CoreBlocks.pinkWalkway, "pinkWalkway");
+        
+        GameRegistry.registerBlock(CoreBlocks.blueWalkway, "blueWalkway");
+        GameRegistry.registerBlock(CoreBlocks.brownWalkway, "brownWalkway");
+        GameRegistry.registerBlock(CoreBlocks.greenWalkway, "greenWalkway");
+        GameRegistry.registerBlock(CoreBlocks.redWalkway, "redWalkway");
+        
+        GameRegistry.registerBlock(CoreBlocks.orangeWalkway, "orangeWalkway");
+        GameRegistry.registerBlock(CoreBlocks.magentaWalkway, "magentaWalkway");
+        GameRegistry.registerBlock(CoreBlocks.lightBlueWalkway, "lightBlueWalkway");
+        GameRegistry.registerBlock(CoreBlocks.yellowWalkway, "yellowWalkway");
+        
+        GameRegistry.registerBlock(CoreBlocks.pastelDarkBlueWalkway, "pastelDarkBlueWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelBrownWalkway, "pastelBrownWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelGreenWalkway, "pastelGreenWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelPinkWalkway, "pastelPinkWalkway");
+    	
+    	GameRegistry.registerBlock(CoreBlocks.pastelOrangeWalkway, "pastelOrangeWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelMagentaWalkway, "pastelMagentaWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelRedWalkway, "pastelRedWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelYellowWalkway, "pastelYellowWalkway");
+    	
+    	GameRegistry.registerBlock(CoreBlocks.pastelLightBlueWalkway, "pastelLightBlueWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelLightGreenWalkway, "pastelLightGreenWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelCyanWalkway, "pastelCyanWalkway");
+    	GameRegistry.registerBlock(CoreBlocks.pastelPurpleWalkway, "pastelPurpleWalkway");
         
         GameRegistry.registerBlock(CoreBlocks.oakLaminateWalkway, "oakLaminateWalkway");
         GameRegistry.registerBlock(CoreBlocks.spruceLaminateWalkway, "spruceLaminateWalkway");
@@ -73,6 +109,36 @@ public class CommonProxy {
         GameRegistry.registerBlock(CoreBlocks.lightGreyWalkwayStairs, "lightGreyWalkwayStairs");
         GameRegistry.registerBlock(CoreBlocks.darkGreyWalkwayStairs, "darkGreyWalkwayStairs");
         GameRegistry.registerBlock(CoreBlocks.blackWalkwayStairs, "blackWalkwayStairs");
+        
+        GameRegistry.registerBlock(CoreBlocks.lightGreenWalkwayStairs, "lightGreenWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.cyanWalkwayStairs, "cyanWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.purpleWalkwayStairs, "purpleWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.pinkWalkwayStairs, "pinkWalkwayStairs");
+        
+        GameRegistry.registerBlock(CoreBlocks.blueWalkwayStairs, "blueWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.brownWalkwayStairs, "brownWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.greenWalkwayStairs, "greenWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.redWalkwayStairs, "redWalkwayStairs");
+        
+        GameRegistry.registerBlock(CoreBlocks.orangeWalkwayStairs, "orangeWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.magentaWalkwayStairs, "magentaWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.lightBlueWalkwayStairs, "lightBlueWalkwayStairs");
+        GameRegistry.registerBlock(CoreBlocks.yellowWalkwayStairs, "yellowWalkwayStairs");
+        
+        GameRegistry.registerBlock(CoreBlocks.pastelDarkBlueWalkwayStairs, "pastelDarkBlueWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelBrownWalkwayStairs, "pastelBrownWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelGreenWalkwayStairs, "pastelGreenWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelPinkWalkwayStairs, "pastelPinkWalkwayStairs");
+    	
+    	GameRegistry.registerBlock(CoreBlocks.pastelOrangeWalkwayStairs, "pastelOrangeWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelMagentaWalkwayStairs, "pastelMagentaWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelRedWalkwayStairs, "pastelRedWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelYellowWalkwayStairs, "pastelYellowWalkwayStairs");
+    	
+    	GameRegistry.registerBlock(CoreBlocks.pastelLightBlueWalkwayStairs, "pastelLightBlueWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelLightGreenWalkwayStairs, "pastelLightGreenWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelCyanWalkwayStairs, "pastelCyanWalkwayStairs");
+    	GameRegistry.registerBlock(CoreBlocks.pastelPurpleWalkwayStairs, "pastelPurpleWalkwayStairs");
         
         GameRegistry.registerBlock(CoreBlocks.oakLaminateWalkwayStairs, "oakLaminateWalkwayStairs");
         GameRegistry.registerBlock(CoreBlocks.spruceLaminateWalkwayStairs, "spruceLaminateWalkwayStairs");

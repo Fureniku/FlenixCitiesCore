@@ -24,6 +24,10 @@ public class CoreBlocks {
 	public static Block skyscraperBlocks2;
 	public static Block skyscraperBlocks3;
 	public static Block skyscraperBlocks4;
+	public static Block skyscraperBlocks5;
+	public static Block skyscraperBlocks6;
+	public static Block skyscraperBlocks7;
+		
 	public static Block stainedGlass;
 	public static Block stainedGlassLit;
 	public static Block styledGlass;
@@ -33,6 +37,7 @@ public class CoreBlocks {
 	public static Block woolWood;
 	public static Block plasticBlock;
 	public static Block floorBlocks;
+	public static Block floorBlocks2;
 	public static Block lightingBlocks;
 	public static Block lightingRotateBlocks;
 	public static Block stainedGlassPane;
@@ -67,6 +72,36 @@ public class CoreBlocks {
 	public static Block darkGreyWalkway;
 	public static Block blackWalkway;
 	
+	public static Block lightGreenWalkway;
+	public static Block cyanWalkway;
+	public static Block purpleWalkway;
+	public static Block pinkWalkway;
+	
+	public static Block blueWalkway;
+	public static Block brownWalkway;
+	public static Block greenWalkway;
+	public static Block redWalkway;
+	
+	public static Block orangeWalkway;
+	public static Block magentaWalkway;
+	public static Block lightBlueWalkway;
+	public static Block yellowWalkway;
+	
+	public static Block pastelDarkBlueWalkway;
+	public static Block pastelBrownWalkway;
+	public static Block pastelGreenWalkway;
+	public static Block pastelPinkWalkway;
+	
+	public static Block pastelOrangeWalkway;
+	public static Block pastelMagentaWalkway;
+	public static Block pastelRedWalkway;
+	public static Block pastelYellowWalkway;
+	
+	public static Block pastelLightBlueWalkway;
+	public static Block pastelLightGreenWalkway;
+	public static Block pastelCyanWalkway;
+	public static Block pastelPurpleWalkway;
+	
 	public static Block oakLaminateWalkway;
 	public static Block spruceLaminateWalkway;
 	public static Block birchLaminateWalkway;
@@ -85,6 +120,36 @@ public class CoreBlocks {
 	public static Block lightGreyWalkwayStairs;
 	public static Block darkGreyWalkwayStairs;
 	public static Block blackWalkwayStairs;
+	
+	public static Block lightGreenWalkwayStairs;
+	public static Block cyanWalkwayStairs;
+	public static Block purpleWalkwayStairs;
+	public static Block pinkWalkwayStairs;
+	
+	public static Block blueWalkwayStairs;
+	public static Block brownWalkwayStairs;
+	public static Block greenWalkwayStairs;
+	public static Block redWalkwayStairs;
+	
+	public static Block orangeWalkwayStairs;
+	public static Block magentaWalkwayStairs;
+	public static Block lightBlueWalkwayStairs;
+	public static Block yellowWalkwayStairs;
+	
+	public static Block pastelDarkBlueWalkwayStairs;
+	public static Block pastelBrownWalkwayStairs;
+	public static Block pastelGreenWalkwayStairs;
+	public static Block pastelPinkWalkwayStairs;
+	
+	public static Block pastelOrangeWalkwayStairs;
+	public static Block pastelMagentaWalkwayStairs;
+	public static Block pastelRedWalkwayStairs;
+	public static Block pastelYellowWalkwayStairs;
+	
+	public static Block pastelLightBlueWalkwayStairs;
+	public static Block pastelLightGreenWalkwayStairs;
+	public static Block pastelCyanWalkwayStairs;
+	public static Block pastelPurpleWalkwayStairs;
 	
 	public static Block oakLaminateWalkwayStairs;
 	public static Block spruceLaminateWalkwayStairs;
@@ -111,6 +176,10 @@ public class CoreBlocks {
 		skyscraperBlocks2 = new SkyscraperBlocks().setBlockName("skyscraperBlocks2");
 		skyscraperBlocks3 = new SkyscraperBlocks().setBlockName("skyscraperBlocks3");
 		skyscraperBlocks4 = new SkyscraperBlocks().setBlockName("skyscraperBlocks4");
+		skyscraperBlocks5 = new SkyscraperBlocks().setBlockName("skyscraperBlocks5");
+		skyscraperBlocks6 = new SkyscraperBlocks().setBlockName("skyscraperBlocks6");
+		skyscraperBlocks7 = new SkyscraperBlocks().setBlockName("skyscraperBlocks7");
+		
     	stainedGlass = new StainedGlass().setBlockName("stainedGlass");
     	stainedGlassLit = new StainedGlassLit().setBlockName("stainedGlassLit");
     	styledGlass = new StyledGlass().setBlockName("styledGlass");
@@ -120,6 +189,7 @@ public class CoreBlocks {
     	woolWood = new WoolWood().setBlockName("woolWood");
     	plasticBlock = new PlasticBlocks().setBlockName("plasticBlock");
     	floorBlocks = new FloorBlocks().setBlockName("floorBlocks");
+    	floorBlocks2 = new FloorBlocks().setBlockName("floorBlocks2");
     	lightingBlocks = new LightingBlocks().setBlockName("lightingBlocks");
     	lightingRotateBlocks = new LightingRotateBlocks().setBlockName("lightingRotateBlocks");
     	styledGlassPane = new StainedGlassPane(FlenixCities_Core.modid + ":styledGlass0", FlenixCities_Core.modid + ":styledGlass0", false).setBlockName("styledGlassPane");
@@ -141,6 +211,36 @@ public class CoreBlocks {
     	darkGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks2", "skyscraperBlocks2").setBlockName("darkGreyWalkway");
     	blackWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks3", "skyscraperBlocks3").setBlockName("blackWalkway");
     	
+    	lightGreenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks20", "skyscraperBlocks20").setBlockName("lightGreenWalkway");
+    	cyanWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks21", "skyscraperBlocks21").setBlockName("cyanWalkway");
+    	purpleWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks22", "skyscraperBlocks22").setBlockName("purpleWalkway");
+    	pinkWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks23", "skyscraperBlocks23").setBlockName("pinkWalkway");
+    	
+    	blueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks30", "skyscraperBlocks30").setBlockName("blueWalkway");
+    	brownWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks31", "skyscraperBlocks31").setBlockName("brownWalkway");
+    	greenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks32", "skyscraperBlocks32").setBlockName("greenWalkway");
+    	redWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks33", "skyscraperBlocks33").setBlockName("redWalkway");
+    	
+    	orangeWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks40", "skyscraperBlocks40").setBlockName("orangeWalkway");
+    	magentaWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks41", "skyscraperBlocks41").setBlockName("magentaWalkway");
+    	lightBlueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks42", "skyscraperBlocks42").setBlockName("lightBlueWalkway");
+    	yellowWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks43", "skyscraperBlocks43").setBlockName("yellowWalkway");
+    	
+    	pastelDarkBlueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks50", "skyscraperBlocks50").setBlockName("pastelDarkBlueWalkway");
+    	pastelBrownWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks51", "skyscraperBlocks51").setBlockName("pastelBrownWalkway");
+    	pastelGreenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks52", "skyscraperBlocks52").setBlockName("pastelGreenWalkway");
+    	pastelPinkWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks53", "skyscraperBlocks53").setBlockName("pastelPinkWalkway");
+    	
+    	pastelOrangeWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks60", "skyscraperBlocks60").setBlockName("pastelOrangeWalkway");
+    	pastelMagentaWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks61", "skyscraperBlocks61").setBlockName("pastelMagentaWalkway");
+    	pastelRedWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks62", "skyscraperBlocks62").setBlockName("pastelRedWalkway");
+    	pastelYellowWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks63", "skyscraperBlocks63").setBlockName("pastelYellowWalkway");
+    	
+    	pastelLightBlueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks70", "skyscraperBlocks70").setBlockName("pastelLightBlueWalkway");
+    	pastelLightGreenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks71", "skyscraperBlocks71").setBlockName("pastelLightGreenWalkway");
+    	pastelCyanWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks72", "skyscraperBlocks72").setBlockName("pastelCyanWalkway");
+    	pastelPurpleWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks73", "skyscraperBlocks73").setBlockName("pastelPurpleWalkway");
+    	
     	oakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks4", "oakLaminateWalkway").setBlockName("oakLaminateWalkway");
     	spruceLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks5", "spruceLaminateWalkway").setBlockName("spruceLaminateWalkway");
     	birchLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks6", "birchLaminateWalkway").setBlockName("birchLaminateWalkway");
@@ -159,6 +259,36 @@ public class CoreBlocks {
     	lightGreyWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks1", "skyscraperBlocks1").setBlockName("lightGreyWalkwayStairs");
     	darkGreyWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks2", "skyscraperBlocks2").setBlockName("darkGreyWalkwayStairs");
     	blackWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks3", "skyscraperBlocks3").setBlockName("blackWalkwayStairs");
+    	
+    	lightGreenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks20", "skyscraperBlocks20").setBlockName("lightGreenWalkwayStairs");
+    	cyanWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks21", "skyscraperBlocks21").setBlockName("cyanWalkwayStairs");
+    	purpleWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks22", "skyscraperBlocks22").setBlockName("purpleWalkwayStairs");
+    	pinkWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks23", "skyscraperBlocks23").setBlockName("pinkWalkwayStairs");
+    	
+    	blueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks30", "skyscraperBlocks30").setBlockName("blueWalkwayStairs");
+    	brownWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks31", "skyscraperBlocks31").setBlockName("brownWalkwayStairs");
+    	greenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks32", "skyscraperBlocks32").setBlockName("greenWalkwayStairs");
+    	redWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks33", "skyscraperBlocks33").setBlockName("redWalkwayStairs");
+    	
+    	orangeWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks40", "skyscraperBlocks40").setBlockName("orangeWalkwayStairs");
+    	magentaWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks41", "skyscraperBlocks41").setBlockName("magentaWalkwayStairs");
+    	lightBlueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks42", "skyscraperBlocks42").setBlockName("lightBlueWalkwayStairs");
+    	yellowWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks43", "skyscraperBlocks43").setBlockName("yellowWalkwayStairs");
+    	
+    	pastelDarkBlueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks50", "skyscraperBlocks50").setBlockName("pastelDarkBlueWalkwayStairs");
+    	pastelBrownWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks51", "skyscraperBlocks51").setBlockName("pastelBrownWalkwayStairs");
+    	pastelGreenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks52", "skyscraperBlocks52").setBlockName("pastelGreenWalkwayStairs");
+    	pastelPinkWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks53", "skyscraperBlocks53").setBlockName("pastelPinkWalkwayStairs");
+    	
+    	pastelOrangeWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks60", "skyscraperBlocks60").setBlockName("pastelOrangeWalkwayStairs");
+    	pastelMagentaWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks61", "skyscraperBlocks61").setBlockName("pastelMagentaWalkwayStairs");
+    	pastelRedWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks62", "skyscraperBlocks62").setBlockName("pastelRedWalkwayStairs");
+    	pastelYellowWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks63", "skyscraperBlocks63").setBlockName("pastelYellowWalkwayStairs");
+    	
+    	pastelLightBlueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks70", "skyscraperBlocks70").setBlockName("pastelLightBlueWalkwayStairs");
+    	pastelLightGreenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks71", "skyscraperBlocks71").setBlockName("pastelLightGreenWalkwayStairs");
+    	pastelCyanWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks72", "skyscraperBlocks72").setBlockName("pastelCyanWalkwayStairs");
+    	pastelPurpleWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks73", "skyscraperBlocks73").setBlockName("pastelPurpleWalkwayStairs");
     	
     	oakLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks4", "oakLaminateWalkway").setBlockName("oakLaminateWalkwayStairs");
     	spruceLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks5", "spruceLaminateWalkway").setBlockName("spruceLaminateWalkwayStairs");

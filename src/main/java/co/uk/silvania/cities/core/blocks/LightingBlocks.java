@@ -117,9 +117,8 @@ public class LightingBlocks extends Block {
 		int meta = world.getBlockMetadata(x, y, z);
 		if (meta == 0 || meta == 1 || meta == 3) {
 			return world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN, true);
-		} else {
-			return world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN, true) || world.isSideSolid(x, y - 1, z, ForgeDirection.UP,  true);
 		}
+		return true;
     }
     
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {

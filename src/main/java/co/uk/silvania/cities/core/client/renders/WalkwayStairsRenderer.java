@@ -31,76 +31,245 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 		
 		final float FACE_XZ_NORMAL = 0.8944F;
 		final float FACE_Y_NORMAL  = 0.4472F;
+		
+		double a = 0.5;
 
+		//Top
 		tess.startDrawingQuads();
 		tess.setNormal(0.0F, 1.0F, 0.0F);
-		tess.addVertexWithUV(0.375, 1.0625, 0.375, u1, v1);
-		tess.addVertexWithUV(0.375, 2.0625, 0.625, u1, v0);
-		tess.addVertexWithUV(0.625, 2.0625, 0.625, u0, v0);
-		tess.addVertexWithUV(0.625, 1.0625, 0.375, u0, v1);
+		tess.addVertexWithUV(0, 2.0, 0.0625, u1, v1);
+		tess.addVertexWithUV(1, 1.0, 0.0625, u1, v0);
+		tess.addVertexWithUV(1, 1.0, -0.0625, u0, v0);
+		tess.addVertexWithUV(0, 2.0, -0.0625, u0, v1);
 		tess.draw();
 		
-		//North Side
+		//Front
 		tess.startDrawingQuads();
 		tess.setNormal(0.0F, FACE_Y_NORMAL, -FACE_XZ_NORMAL);
-		tess.addVertexWithUV(0.625, 1.9375, 0.375, u1, v1);
-		tess.addVertexWithUV(0.625, 0.9375, 0.375, u1, v0);
-		tess.addVertexWithUV(0.375, 1.0625, 0.375, u0, v0);
-		tess.addVertexWithUV(0.375, 2.0625, 0.375, u0, v1);
+		tess.addVertexWithUV(-0.0001, 1.875, 0.0625, u1, v1);
+		tess.addVertexWithUV(-0.0001, 2.0,   0.0625, u1, v0);
+		tess.addVertexWithUV(-0.0001, 2.0,  -0.0625, u0, v0);
+		tess.addVertexWithUV(-0.0001, 1.875,-0.0625, u0, v1);
 		tess.draw();
 		
-		//East Side
+		//Back
 		tess.startDrawingQuads();
 		tess.setNormal(FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
-		tess.addVertexWithUV(0.625, 0.9375, 0.625, u1, v1);
-		tess.addVertexWithUV(0.625, 1.0625, 0.625, u1, v0);
-		tess.addVertexWithUV(0.625, 1.0625, 0.375, u0, v0);
-		tess.addVertexWithUV(0.625, 0.9375, 0.375, u0, v1);
+		tess.addVertexWithUV(1, 0.875,-0.0625, u1, v1);
+		tess.addVertexWithUV(1, 1.0,  -0.0625, u1, v0);
+		tess.addVertexWithUV(1, 1.0,   0.0625, u0, v0);
+		tess.addVertexWithUV(1, 0.875, 0.0625, u0, v1);
 		tess.draw();
 		
-		//South Side
+		//Left
 		tess.startDrawingQuads();
 		tess.setNormal(0.0F, FACE_Y_NORMAL, FACE_XZ_NORMAL);
-		tess.addVertexWithUV(0.375, 0.9375, 0.625, u1, v1);
-		tess.addVertexWithUV(0.375, 1.9375, 0.625, u1, v0);
-		tess.addVertexWithUV(0.625, 2.0625, 0.625, u0, v0);
-		tess.addVertexWithUV(0.625, 1.0625, 0.625, u0, v1);
+		tess.addVertexWithUV(0, 0.875,  0.0625, u1, v1);
+		tess.addVertexWithUV(1, -0.125, 0.0625, u1, v0);
+		tess.addVertexWithUV(1, 0.0,    0.0625, u0, v0);
+		tess.addVertexWithUV(0, 1.0,    0.0625, u0, v1);
 		tess.draw();
 
-		//West Side
+		//Right
 		tess.startDrawingQuads();
 		tess.setNormal(-FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
-		tess.addVertexWithUV(0.375, 1.9375, 0.375, u1, v1);
-		tess.addVertexWithUV(0.375, 2.0625, 0.375, u1, v0);
-		tess.addVertexWithUV(0.375, 2.0625, 0.625, u0, v0);
-		tess.addVertexWithUV(0.375, 1.9375, 0.625, u0, v1);
+		tess.addVertexWithUV(1, 0.875, -0.0625, u1, v1);
+		tess.addVertexWithUV(0, 1.875, -0.0625, u1, v0);
+		tess.addVertexWithUV(0, 2.0,   -0.0625, u0, v0);
+		tess.addVertexWithUV(1, 1.0,   -0.0625, u0, v1);
 		tess.draw();
 
 		//Bottom Side
 		tess.startDrawingQuads();
 		tess.setNormal(0.0F, -1.0F, 0.0F);
-		tess.addVertexWithUV(0.375, 0.9375, 0.625, u1, v1);
-		tess.addVertexWithUV(0.375, 1.9375, 0.375, u1, v0);
-		tess.addVertexWithUV(0.625, 1.9375, 0.375, u0, v0);
-		tess.addVertexWithUV(0.625, 0.9375, 0.625, u0, v1);
+		tess.addVertexWithUV(1, 0.875, 0.0625, u1, v1);
+		tess.addVertexWithUV(0, 1.875, 0.0625, u1, v0);
+		tess.addVertexWithUV(0, 1.875, -0.0625, u0, v0);
+		tess.addVertexWithUV(1, 0.875, -0.0625, u0, v1);
 		tess.draw();
 		
-		renderBlock(0.75D, 0.0D, 0.0D,  1.00D, 0.0625D, 1.0D, false, renderer, block, 0, 0, 0, 0);
-		renderBlock(0.50D, 0.25D, 0.0D, 0.75D, 0.3125D, 1.0D, false, renderer, block, 0, 0, 0, 0);
-		renderBlock(0.25D, 0.50D, 0.0D, 0.50D, 0.5625D, 1.0D, false, renderer, block, 0, 0, 0, 0);
-		renderBlock(0.0D,  0.75D, 0.0D, 0.25D, 0.8125D, 1.0D, false, renderer, block, 0, 0, 0, 0);
+		//SUPPORT RAIL
+		//Top
+		tess.startDrawingQuads();
+		tess.setNormal(0.0F, 1.0F, 0.0F);
+		tess.addVertexWithUV(0, 1.0, 0.0625, u1, v1);
+		tess.addVertexWithUV(1, 0.0, 0.0625, u1, v0);
+		tess.addVertexWithUV(1, 0.0, 0,      u0, v0);
+		tess.addVertexWithUV(0, 1.0, 0,      u0, v1);
+		tess.draw();
+		
+		//Front
+		tess.startDrawingQuads();
+		tess.setNormal(0.0F, FACE_Y_NORMAL, -FACE_XZ_NORMAL);
+		tess.addVertexWithUV(-0.0001, 1.0,   0.0625, u1, v1);
+		tess.addVertexWithUV(-0.0001, 0.875, 0.0625, u1, v0);
+		tess.addVertexWithUV(-0.0001, 0.875, 0,      u0, v0);
+		tess.addVertexWithUV(-0.0001, 1.0,   0,      u0, v1);
+		tess.draw();
+		
+		//Back
+		tess.startDrawingQuads();
+		tess.setNormal(FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
+		tess.addVertexWithUV(1, 1.0,   0,      u1, v1);
+		tess.addVertexWithUV(1, 0.875, 0,      u1, v0);
+		tess.addVertexWithUV(1, 0.875, 0.0625, u0, v0);
+		tess.addVertexWithUV(1, 1.0,   0.0625, u0, v1);
+		tess.draw();
+		
+		//Left
+		tess.startDrawingQuads();
+		tess.setNormal(0.0F, FACE_Y_NORMAL, FACE_XZ_NORMAL);
+		tess.addVertexWithUV(0, 0.875,  0.0625, u1, v1);
+		tess.addVertexWithUV(1, -0.125, 0.0625, u1, v0);
+		tess.addVertexWithUV(1, 0.0,    0.0625, u0, v0);
+		tess.addVertexWithUV(0, 1.0,    0.0625, u0, v1);
+		tess.draw();
+
+		//Right
+		tess.startDrawingQuads();
+		tess.setNormal(-FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
+		tess.addVertexWithUV(1, -0.125, -0.0001, u1, v1);
+		tess.addVertexWithUV(0, 0.875,  -0.0001, u1, v0);
+		tess.addVertexWithUV(0, 1.0,    -0.0001, u0, v0);
+		tess.addVertexWithUV(1, 0.0,    -0.0001, u0, v1);
+		tess.draw();
+
+		//Bottom Side
+		tess.startDrawingQuads();
+		tess.setNormal(0.0F, -1.0F, 0.0F);
+		tess.addVertexWithUV(1, -0.125, 0.0625, u1, v1);
+		tess.addVertexWithUV(0, 0.875,  0.0625, u1, v0);
+		tess.addVertexWithUV(0, 0.875,  0,      u0, v0);
+		tess.addVertexWithUV(1, -0.125, 0,      u0, v1);
+		tess.draw();
+		
+		
+		//Top
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+		tess.addVertexWithUV(0, 2.0, 1.0625, u1, v1);
+		tess.addVertexWithUV(1, 1.0, 1.0625, u1, v0);
+		tess.addVertexWithUV(1, 1.0, 0.9375, u0, v0);
+		tess.addVertexWithUV(0, 2.0, 0.9375, u0, v1);
+		tess.draw();
+		
+		//Front
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tess.addVertexWithUV(1.0001, 1.0,   1.0625, u1, v1);
+		tess.addVertexWithUV(1.0001, 0.875, 1.0625, u1, v0);
+		tess.addVertexWithUV(1.0001, 0.875, 0.9375, u0, v0);
+		tess.addVertexWithUV(1.0001, 1.0,   0.9375, u0, v1);
+		tess.draw();
+		
+		//Back
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tess.addVertexWithUV(0, 2.0,   0.9375, u1, v1);
+		tess.addVertexWithUV(0, 1.875, 0.9375, u1, v0);
+		tess.addVertexWithUV(0, 1.875, 1.0625, u0, v0);
+		tess.addVertexWithUV(0, 2.0,   1.0625, u0, v1);
+		tess.draw();
+		
+		//Left
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tess.addVertexWithUV(0, 1.875, 1.0625, u1, v1);
+		tess.addVertexWithUV(1, 0.875, 1.0625, u1, v0);
+		tess.addVertexWithUV(1, 1.0,   1.0625, u0, v0);
+		tess.addVertexWithUV(0, 2.0,   1.0625, u0, v1);
+		tess.draw();
+		
+		//Right
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tess.addVertexWithUV(1, 0.875, 0.9375, u1, v1);
+		tess.addVertexWithUV(0, 1.875, 0.9375, u1, v0);
+		tess.addVertexWithUV(0, 2.0,   0.9375, u0, v0);
+		tess.addVertexWithUV(1, 1.0,   0.9375, u0, v1);
+		tess.draw();
+		
+		//Bottom
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+		tess.addVertexWithUV(1, 0.875, 1.0625, u1, v1);
+		tess.addVertexWithUV(0, 1.875, 1.0625, u1, v0);
+		tess.addVertexWithUV(0, 1.875, 0.9375, u0, v0);
+		tess.addVertexWithUV(1, 0.875, 0.9375, u0, v1);
+		tess.draw();
+		
+		//Support Rail
+		//Top
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+		tess.addVertexWithUV(0, 1.0, 1,      u1, v1);
+		tess.addVertexWithUV(1, 0.0, 1,      u1, v0);
+		tess.addVertexWithUV(1, 0.0, 0.9375, u0, v0);
+		tess.addVertexWithUV(0, 1.0, 0.9375, u0, v1);
+		tess.draw();
+		
+		//Front
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tess.addVertexWithUV(-0.0001, 0.875, 1,      u1, v1);
+		tess.addVertexWithUV(-0.0001, 1.0,   1,      u1, v0);
+		tess.addVertexWithUV(-0.0001, 1.0,   0.9375, u0, v0);
+		tess.addVertexWithUV(-0.0001, 0.875, 0.9375, u0, v1);
+		tess.draw();
+		
+		//Back
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tess.addVertexWithUV(1, 1.0,   0.9375, u1, v1);
+		tess.addVertexWithUV(1, 0.875, 0.9375, u1, v0);
+		tess.addVertexWithUV(1, 0.875, 1,      u0, v0);
+		tess.addVertexWithUV(1, 1.0,   1,      u0, v1);
+		tess.draw();
+		
+		//Left
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tess.addVertexWithUV(0, 0.875,  1.0001, u1, v1);
+		tess.addVertexWithUV(1, -0.125, 1.0001, u1, v0);
+		tess.addVertexWithUV(1, 0.0,    1.0001, u0, v0);
+		tess.addVertexWithUV(0, 1.0,    1.0001, u0, v1);
+		tess.draw();
+		
+		//Right
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tess.addVertexWithUV(1, -0.125, 0.9375, u1, v1);
+		tess.addVertexWithUV(0, 0.875,  0.9375, u1, v0);
+		tess.addVertexWithUV(0, 1.0,    0.9375, u0, v0);
+		tess.addVertexWithUV(1, 0.0,    0.9375, u0, v1);
+		tess.draw();
+		
+		//Bottom
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+		tess.addVertexWithUV(1, 0.,    1,      u1, v1);
+		tess.addVertexWithUV(0, 0.875, 1,      u1, v0);
+		tess.addVertexWithUV(0, 0.875, 0.9375, u0, v0);
+		tess.addVertexWithUV(1, 0.0,   0.9375, u0, v1);
+		tess.draw();
+		
+		renderBlock(0.75D+a, 0.0D+a,  0.0D+a,  1.00D+a, 0.0625D+a, 1.0D+a, false, renderer, block, 0, 0, 0, 0);
+		renderBlock(0.50D+a, 0.25D+a, 0.0D+a, 0.75D+a, 0.3125D+a, 1.0D+a,  false, renderer, block, 0, 0, 0, 0);
+		renderBlock(0.25D+a, 0.50D+a, 0.0D+a, 0.50D+a, 0.5625D+a, 1.0D+a,  false, renderer, block, 0, 0, 0, 0);
+		renderBlock(0.0D+a,  0.75D+a, 0.0D+a, 0.25D+a, 0.8125D+a, 1.0D+a,  false, renderer, block, 0, 0, 0, 0);
 		
 		//Handrails (2x)
 		
-		renderOversizeBlock(0.09375D, 0.75D, -0.03125D, 0.15625D, 1.75D, 0.03125D, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.34375D, 0.50D, -0.03125D, 0.40625D, 1.50D, 0.03125D, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.59375D, 0.25D, -0.03125D, 0.65625D, 1.25D, 0.03125D, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.84375D, 0.0D,  -0.03125D, 0.90625D, 1.0D,  0.03125D, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.09375D+a, 0.75D+a, -0.03125D+a, 0.15625D+a, 1.75D+a, 0.03125D+a, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.34375D+a, 0.50D+a, -0.03125D+a, 0.40625D+a, 1.50D+a, 0.03125D+a, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.59375D+a, 0.25D+a, -0.03125D+a, 0.65625D+a, 1.25D+a, 0.03125D+a, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.84375D+a, 0.0D+a,  -0.03125D+a, 0.90625D+a, 1.0D+a,  0.03125D+a, false, renderer, block, 0, 0, 0, 0);
 
-		renderOversizeBlock(0.09375D, 0.75D, 0.96875D, 0.15625D, 1.75D, 1.03125D, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.34375D, 0.50D, 0.96875D, 0.40625D, 1.50D, 1.03125D, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.59375D, 0.25D, 0.96875D, 0.65625D, 1.25D, 1.03125D, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.84375D, 0.0D,  0.96875D, 0.90625D, 1.0D,  1.03125D, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.09375D+a, 0.75D+a, 0.96875D+a, 0.15625D+a, 1.75D+a, 1.03125D+a, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.34375D+a, 0.50D+a, 0.96875D+a, 0.40625D+a, 1.50D+a, 1.03125D+a, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.59375D+a, 0.25D+a, 0.96875D+a, 0.65625D+a, 1.25D+a, 1.03125D+a, false, renderer, block, 0, 0, 0, 0);
+		renderOversizeBlock(0.84375D+a, 0.0D+a,  0.96875D+a, 0.90625D+a, 1.0D+a,  1.03125D+a, false, renderer, block, 0, 0, 0, 0);
+		
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
 
