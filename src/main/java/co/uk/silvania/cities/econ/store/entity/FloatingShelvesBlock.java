@@ -128,7 +128,9 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
 		        	FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), (EntityPlayerMP) player);
 		    	}
 	        }
-	        player.openGui(FlenixCities_Core.instance, 1, world, x, y, z);
+			if ((item != null && item.getItem() != CoreItems.storeStockPairer) || item == null) {
+				player.openGui(FlenixCities_Core.instance, 1, world, x, y, z);
+			}
 		}
         return true;
     }

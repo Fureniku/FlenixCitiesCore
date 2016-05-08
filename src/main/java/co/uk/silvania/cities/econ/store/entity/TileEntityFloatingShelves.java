@@ -15,6 +15,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 import co.uk.silvania.cities.core.CityConfig;
 import co.uk.silvania.cities.core.CoreItems;
 import co.uk.silvania.cities.econ.DebitCardItem;
@@ -172,17 +173,16 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	
 	public ItemStack findStockItem(TileEntityStockChest stockChest, ItemStack item, String owner) {
 		if (stockChest.ownerName.equalsIgnoreCase(ownerName)) {
-		
+			econ.debug("Checking stock chest for stock. Chest found.");
 			for (int i = 0; i < stockChest.invSize - 1; i++) {
 				ItemStack stock = stockChest.getStackInSlot(i);
 				if (stock != null && item != null) {
 					ItemStack itemCopy = item.copy();
 					ItemStack stockCopy = stock.copy();
 					if (compareItemStacks(itemCopy, stockCopy)) {
+						econ.debug("Stock match found");
 						if (stock.stackSize >= item.stackSize) {
-							if (CityConfig.debugMode) {
-								System.out.println("And there is enough in the stack!");
-							}
+							econ.debug("And there is enough in the stack!");
 							int amt = item.stackSize;
 							ItemStack retrievedItems = stockChest.decrStackSize(i, amt);
 							//stock = stock.splitStack(amt);
@@ -204,27 +204,49 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		item1.stackSize = 1;
 		item2.stackSize = 1;
 		
-		if (CityConfig.debugMode) {
-			System.out.println("Comparing stacks.");
-			System.out.println("Stack 1 is " + item1.getItem());
-			System.out.println("Stack 2 is " + item2.getItem());
-		}
+		econ.debug("Comparing stacks.");
+		econ.debug("Stack 1 is " + item1.getItem());
+		econ.debug("Stack 2 is " + item2.getItem());
 			
-		if (item1.getItem().equals(item2.getItem())) {
-			if (matchNBT) {
-				NBTTagCompound nbt1 = item1.getTagCompound();
-				NBTTagCompound nbt2 = item2.getTagCompound();
-				if (nbt1.equals(nbt2)) {
-					return true;
-				} else {
-					return false;
+		if (item1.getItem().equals(item2.getItem()) || compareStackForOreDict(item1, item2)) {
+			econ.debug("Stacks match and are of the same oredict entry");
+			if (item1.getItemDamage() == item2.getItemDamage()) {
+				econ.debug("Damage is correct");
+				if (matchNBT) {
+					econ.debug("NBT check enabled. Checking NBT...");
+					NBTTagCompound nbt1 = item1.getTagCompound();
+					NBTTagCompound nbt2 = item2.getTagCompound();
+					if (nbt1.equals(nbt2)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+				econ.debug("Items match on ID, metadata and NBT");
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean compareStackForOreDict(ItemStack stack, ItemStack item) {
+		econ.debug("Checking oredict for a match");
+		int[] stackOD = OreDictionary.getOreIDs(stack);
+		int[] itemOD = OreDictionary.getOreIDs(item);
+		
+		if (stackOD != null  && itemOD != null) {
+			for(int i = 0; i < stackOD.length; i++) {
+				for (int j = 0; j < itemOD.length; j++) {
+					if (stackOD[i] == itemOD[j]) {
+						econ.debug("Oredict match found!");
+						return true;
+					}
 				}
 			}
-			if (CityConfig.debugMode) {
-				System.out.println("Items match on ID, metadata and NBT");
-			}
-			return true;
 		}
+		econ.debug("Oredict mismatch!");
+		econ.debug("Oredict 1: " + stackOD);
+		econ.debug("Oredict 2: " + itemOD);
 		return false;
 	}
 	
@@ -377,11 +399,6 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		return false;
 	}
 	
-	//TODO Bugs to fix before release:
-	//- Fund limit isn't altered when shop buys from player ///
-	//- When selling an item to the shop, the stack directly in the shop goes up (dupe)
-	//- The GUI updating on the stock chest is buggy.
-	
 	//Buying items FROM the player
 	public void buyItem(int slotId, EntityPlayer entityPlayer) {
 		World world = entityPlayer.worldObj;
@@ -394,9 +411,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		EnumChatFormatting darkGreen = EnumChatFormatting.DARK_GREEN;
 		
 		if (te != null && te instanceof TileEntityStockChest) {
-			if (CityConfig.debugMode) {
-				System.out.println("Stock chest found");
-			}
+			econ.debug("Stock chest found");
 			stockChest = (TileEntityStockChest) te;
 		}
 		
@@ -418,12 +433,12 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		}
 		if (stockChest != null) {
 			if (stockChest.buying) {
-				if (stockChest.buyFundLimit >= itemCost) {
+				if (stockChest.buyFundLimit >= itemCost || stockChest.buyFundLimit <= -1) {
 					if (econ.getBalanceViaUUID(ownerUuid) >= itemCost) {
 						for (int x = entityPlayer.inventory.getSizeInventory() - 1; x >= 0; x--) {
 							ItemStack playerInvStack = entityPlayer.inventory.getStackInSlot(x);
 							if (playerInvStack != null) {
-								if (playerInvStack.getItem() == shopItem.getItem()) {
+								if ((playerInvStack.getItem() == shopItem.getItem() && playerInvStack.getItemDamage() == shopItem.getItemDamage()) || compareStackForOreDict(playerInvStack, shopItem)) {
 									invQty = invQty + playerInvStack.stackSize;
 									if (invQty >= shopItem.stackSize) {
 										invQty = shopItem.stackSize;
@@ -440,9 +455,12 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 									ItemStack playerInvStack = entityPlayer.inventory.getStackInSlot(x);
 									if (playerInvStack != null) { //Player has items
 										if (remain > 0) { //We still need to take more items.
-											if (playerInvStack.getItem() == shopItem.getItem()) { //The items are the same.
+											if ((playerInvStack.getItem() == shopItem.getItem() && playerInvStack.getItemDamage() == shopItem.getItemDamage()) || compareStackForOreDict(playerInvStack, shopItem)) { //The items are the same.
+												econ.debug("[Selling Item] Compare check has passed");
 												if (playerInvStack.stackSize >= remain) { //A single stack is greater than or equal to total amount needed.
+													econ.debug("[Selling Item] player stack >= remain. Stack: " + playerInvStack.stackSize + ", remain: " + remain);
 													if (stockChest.getStackInSlot(insertSlot) != null) { //There's an identical item in the slot.
+														econ.debug("[Selling Item] Merging with a stack");
 														int size = stockChest.getStackInSlot(insertSlot).stackSize; //Total stacksize.
 														ItemStack insertItem = playerInvStack.copy(); //Copy the item from the player inventory.
 														//playerInvStack.stackSize -= remain;
@@ -462,24 +480,30 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 														}
 													} else {
 														stockChest.setInventorySlotContents(insertSlot, shopItem);
+														econ.debug("[Selling Item] Creating a new stack");
 													}
+													econ.debug("[Selling Item] Decreasing player's stack by " + remain);
 													entityPlayer.inventory.decrStackSize(x, remain);
+													econ.debug("[Selling Item] Stack size is now " + playerInvStack.stackSize);
 													if (playerInvStack.stackSize <= 0) {
+														econ.debug("[Selling Item] I just said, it's zero. NULLIFY!");
 														entityPlayer.inventory.setInventorySlotContents(x, null);
 													}
+													econ.debug("[Selling Item] Charging owner, giving money to seller");
 													econ.chargeAccountViaUUID(ownerUuid, itemCost);
 													econ.giveChange(itemCost, 0, entityPlayer);
 													stockChest.buyFundLimit = stockChest.buyFundLimit - itemCost;
 													stockChest.markDirty();
 													stockChest.getDescriptionPacket();
 													remain = 0;
-													System.out.println(entityPlayer.getDisplayName() + " sold " + shopItem.stackSize + " " + shopItem.getDisplayName() + " to the server, for $" + econ.formatBalance(itemCost));
+													System.out.println(entityPlayer.getDisplayName() + " sold " + shopItem.stackSize + " " + shopItem.getDisplayName() + " to " + ownerName + ", for $" + econ.formatBalance(itemCost));
 													entityPlayer.addChatComponentMessage(new ChatComponentText(green + "You sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to " + ownerName + " for " + darkGreen + "$" + econ.formatBalance(itemCost) + "!"));
 													if (storeOwner != null) {
 														storeOwner.addChatComponentMessage(new ChatComponentText(green + entityPlayer.getDisplayName() + " has sold " + gold + shopItem.stackSize + " " + shopItem.getDisplayName() + green + " to you for " + darkGreen + "$" + econ.formatBalance(itemCost) + "!"));
 													}
 													setInventorySlotContents(slotId - 1, shopItem);
 												} else {
+													econ.debug("[Selling Item] NEED MORE! Removing this stack and looping back around.");
 													remain = remain - playerInvStack.stackSize;
 													entityPlayer.inventory.setInventorySlotContents(x, null);
 												}
@@ -518,10 +542,23 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	public int findEmptySlot(ItemStack item, TileEntityStockChest stockChest) {
 		for (int i = 0; i < stockChest.getSizeInventory(); i++) {
 			if (stockChest.getStackInSlot(i) != null) {
-				if (item.getItem().equals(stockChest.getStackInSlot(i).getItem())) {
-					int space = stockChest.getStackInSlot(i).getMaxStackSize() - stockChest.getStackInSlot(i).stackSize;
-					if (space >= item.stackSize) {
-						return i;
+				ItemStack stockItem = stockChest.getStackInSlot(i);
+				if (item.getItem().equals(stockItem.getItem())) {
+					econ.debug("Finding empty slot in stock chest: Item matches");
+					if (item.getItemDamage() == stockItem.getItemDamage()) {
+						econ.debug("Finding empty slot in stock chest: Damage matches");
+						int space = stockItem.getMaxStackSize() - stockItem.stackSize;
+						if (item.stackTagCompound != null && stockItem.stackTagCompound != null && item.stackTagCompound.equals(stockItem.stackTagCompound)) {
+							econ.debug("Finding empty slot in stock chest: NBT matches");
+							if (space >= item.stackSize) {
+								return i;
+							}
+						} else if (item.stackTagCompound == null && stockItem.stackTagCompound == null) {
+							econ.debug("Finding empty slot in stock chest: NBT doesn't exist");
+							if (space >= item.stackSize) {
+								return i;
+							}
+						}
 					}
 				}
 			}
