@@ -586,6 +586,7 @@ public class EconUtils {
 
 	//Quick n' easy method of getting the players balance.
 	public double getBalance(EntityPlayer player) {
+		System.out.println("Getting balance for player " + player.getDisplayName());
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         return getBalanceViaUUID(player.getUniqueID().toString());
 	}
