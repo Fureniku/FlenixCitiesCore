@@ -1,15 +1,11 @@
 package co.uk.silvania.cities.econ;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import co.uk.silvania.cities.core.CityConfig;
-import co.uk.silvania.cities.econ.EconUtils;
-import myessentials.economy.IEconManager;
+import myessentials.economy.api.IEconManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
 
 public class MEC_EconomyHandler implements IEconManager {
 	
