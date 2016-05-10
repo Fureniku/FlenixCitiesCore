@@ -11,7 +11,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class MEC_EconomyHandler implements IEconManager {
 	
-	private EconUtils econ;
+	private EconUtils econ = new EconUtils();
 	private String uuid;
 	public EntityPlayer player;
 	
