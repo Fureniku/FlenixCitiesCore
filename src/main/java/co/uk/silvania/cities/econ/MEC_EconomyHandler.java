@@ -1,16 +1,19 @@
 package co.uk.silvania.cities.econ;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
 import co.uk.silvania.cities.core.CityConfig;
 import myessentials.economy.api.IEconManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 
 public class MEC_EconomyHandler implements IEconManager {
 	
 	private EconUtils econ;
 	private String uuid;
+	public EntityPlayer player;
 	
 	public MEC_EconomyHandler(UUID uuid) {
 		this.setPlayer(uuid);
@@ -19,22 +22,35 @@ public class MEC_EconomyHandler implements IEconManager {
 	}
 	
 	public MEC_EconomyHandler() {}
-	@Override public void setPlayer(UUID uuid) {}
+	
+	@Override
+	public void setPlayer(UUID uuid) {
+		ArrayList<EntityPlayer> players = (ArrayList<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getUniqueID().equals(uuid)) {
+				System.out.println("Player found!");
+				player = players.get(i);
+			}
+		}
+		System.out.println("Player may or may not have been set.");
+	}
 
 	@Override
 	public void addToWallet(int amountToAdd) {
-		econ.depositToAccountViaUUID(uuid, amountToAdd);
+		econ.depositToAccount(player, amountToAdd);
+		//econ.depositToAccountViaUUID(uuid, amountToAdd);
 	}
 
 	@Override
 	public int getWallet() {
 		System.out.println("Getting wallet for UUID: " + uuid);
-		return (int) econ.getBalanceViaUUID(uuid);
+		return (int) econ.getBalance(player);// econ.getBalanceViaUUID(uuid);
 	}
 
 	@Override
 	public boolean removeFromWallet(int amountToSubtract) {
-		return econ.chargeAccountViaUUID(uuid, amountToSubtract);
+		return econ.chargeBalance(player, amountToSubtract);
+		//return econ.chargeAccountViaUUID(uuid, amountToSubtract);
 	}
 
 	@Override
