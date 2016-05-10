@@ -44,7 +44,9 @@ public class MEC_EconomyHandler implements IEconManager {
 	@Override
 	public int getWallet() {
 		System.out.println("Getting wallet for UUID: " + uuid + " / Player: " + player.getDisplayName());
-		return (int) econ.getBalance(player);// econ.getBalanceViaUUID(uuid);
+		double bal = econ.getBalance(player);
+		System.out.println("Balance got! It's " + bal);
+		return (int) bal;// econ.getBalanceViaUUID(uuid);
 	}
 
 	@Override
