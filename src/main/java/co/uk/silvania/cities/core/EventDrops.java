@@ -18,7 +18,7 @@ public class EventDrops {
 
 	@SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
-        if (event.source.getSourceOfDamage() instanceof EntityPlayerMP) {
+        if (event.source.getSourceOfDamage() instanceof EntityPlayerMP && CityConfig.mobsDropMoney) {
     		Random rand = new Random();
             int chance = rand.nextInt(200);
             if (event.entityLiving instanceof EntityZombie) {
