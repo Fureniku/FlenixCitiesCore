@@ -128,49 +128,24 @@ public class LightingRotateBlocks extends Block {
     	}
     }
 
-    @Override
-    public void onBlockAdded(World world, int x, int y, int z) {
-    	int meta = world.getBlockMetadata(x, y, z);
-        if (meta >= 0 && meta <= 3) {
-            if (!world.isAirBlock(x - 1, y, z)) {
-                world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-            } else if (!world.isAirBlock(x + 1, y, z)) {
-            	world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-            } else if (!world.isAirBlock(x, y, z - 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-            } else if (!world.isAirBlock(x, y, z + 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-            }
-        } else if (meta >= 4 && meta <= 7) {
-            if (!world.isAirBlock(x - 1, y, z)) {
-                world.setBlockMetadataWithNotify(x, y, z, 5, 2);
-            } else if (!world.isAirBlock(x + 1, y, z)) {
-            	world.setBlockMetadataWithNotify(x, y, z, 7, 2);
-            } else if (!world.isAirBlock(x, y, z - 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 6, 2);
-            } else if (!world.isAirBlock(x, y, z + 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 4, 2);
-            }
-        } else if (meta >= 8 && meta <= 11) {
-            if (!world.isAirBlock(x - 1, y, z)) {
-                world.setBlockMetadataWithNotify(x, y, z, 9, 2);
-            } else if (!world.isAirBlock(x + 1, y, z)) {
-            	world.setBlockMetadataWithNotify(x, y, z, 11, 2);
-            } else if (!world.isAirBlock(x, y, z - 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 10, 2);
-            } else if (!world.isAirBlock(x, y, z + 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 8, 2);
-            }
-        } else if (meta >= 12 && meta <= 15) {
-            if (!world.isAirBlock(x - 1, y, z)) {
-                world.setBlockMetadataWithNotify(x, y, z, 13, 2);
-            } else if (!world.isAirBlock(x + 1, y, z)) {
-            	world.setBlockMetadataWithNotify(x, y, z, 15, 2);
-            } else if (!world.isAirBlock(x, y, z - 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 14, 2);
-            } else if (!world.isAirBlock(x, y, z + 1)) {
-                world.setBlockMetadataWithNotify(x, y, z, 12, 2);
-            }
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
+    	int placedMeta = meta;
+        if (side == 2 && world.isSideSolid(x, y, z + 1, NORTH, true)) {
+        	placedMeta += 0;
         }
+
+        if (side == 3 && world.isSideSolid(x, y, z - 1, SOUTH, true)) {
+        	placedMeta += 2;
+        }
+
+        if (side == 4 && world.isSideSolid(x + 1, y, z, WEST, true)) {
+        	placedMeta += 3; //2
+        }
+
+        if (side == 5 && world.isSideSolid(x - 1, y, z, EAST, true)) {
+        	placedMeta += 1; //1
+        }
+
+        return placedMeta;
     }
 }
