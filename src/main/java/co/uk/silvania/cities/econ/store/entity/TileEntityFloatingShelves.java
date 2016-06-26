@@ -1,5 +1,13 @@
 package co.uk.silvania.cities.econ.store.entity;
 
+import java.util.ArrayList;
+
+import co.uk.silvania.cities.core.CityConfig;
+import co.uk.silvania.cities.core.CoreItems;
+import co.uk.silvania.cities.econ.DebitCardItem;
+import co.uk.silvania.cities.econ.EconUtils;
+import co.uk.silvania.cities.econ.money.ItemCoin;
+import co.uk.silvania.cities.econ.money.ItemNote;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -10,18 +18,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import co.uk.silvania.cities.core.CityConfig;
-import co.uk.silvania.cities.core.CoreItems;
-import co.uk.silvania.cities.econ.DebitCardItem;
-import co.uk.silvania.cities.econ.EconUtils;
-import co.uk.silvania.cities.econ.money.ItemCoin;
-import co.uk.silvania.cities.econ.money.ItemNote;
 
 public class TileEntityFloatingShelves extends TileEntity implements IInventory {
 	
@@ -255,12 +258,19 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		World world = entityPlayer.worldObj;
 		TileEntity te = world.getTileEntity(stockXPos, stockYPos, stockZPos);
 		TileEntityStockChest stockChest = null;
-		EntityPlayer storeOwner = entityPlayer.worldObj.getPlayerEntityByName(ownerName);
+		EntityPlayer storeOwner = null;
 		EnumChatFormatting gold = EnumChatFormatting.GOLD;
 		EnumChatFormatting green = EnumChatFormatting.GREEN;
 		EnumChatFormatting red = EnumChatFormatting.RED;
 		EnumChatFormatting darkGreen = EnumChatFormatting.DARK_GREEN;
 		boolean full = false;
+		
+		ArrayList<EntityPlayer> players = (ArrayList<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getDisplayName().equalsIgnoreCase(ownerName)) {
+				storeOwner = players.get(i);
+			}
+		}
 		
 		if (te != null && te instanceof TileEntityStockChest) {
 			if (CityConfig.debugMode) {
@@ -404,11 +414,18 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 		World world = entityPlayer.worldObj;
 		TileEntity te = world.getTileEntity(stockXPos, stockYPos, stockZPos);
 		TileEntityStockChest stockChest = null;
-		EntityPlayer storeOwner = world.getPlayerEntityByName(ownerName);
+		EntityPlayer storeOwner = null;
 		EnumChatFormatting gold = EnumChatFormatting.GOLD;
 		EnumChatFormatting green = EnumChatFormatting.GREEN;
 		EnumChatFormatting red = EnumChatFormatting.RED;
 		EnumChatFormatting darkGreen = EnumChatFormatting.DARK_GREEN;
+		
+		ArrayList<EntityPlayer> players = (ArrayList<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getDisplayName().equalsIgnoreCase(ownerName)) {
+				storeOwner = players.get(i);
+			}
+		}
 		
 		if (te != null && te instanceof TileEntityStockChest) {
 			econ.debug("Stock chest found");
