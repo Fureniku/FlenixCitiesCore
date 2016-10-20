@@ -346,66 +346,67 @@ public class CoreBlocks {
 	}
 	
 	public static void initDecorativeGennedBlocks() {
-		ArrayList<String> materials = new ArrayList<String>();
-		
-		materials.add("white");
-		materials.add("lightGrey");
-		materials.add("darkGrey");
-		materials.add("black");
-		materials.add("orange");
-		materials.add("magenta");
-		materials.add("lightBlue");
-		materials.add("yellow");
-		materials.add("pink");
-		materials.add("cyan");
-		materials.add("purple");
-		materials.add("darkGreen");
-		materials.add("blue");
-		materials.add("brown");
-		materials.add("green");
-		materials.add("red");
-		
-		for (int i = 0; i < materials.size(); i++) {
-			String mat = materials.get(i);
+		if (CityConfig.extraDecorativeBlocks) {
+			ArrayList<String> materials = new ArrayList<String>();
 			
-			Block block;
+			materials.add("white");
+			materials.add("lightGrey");
+			materials.add("darkGrey");
+			materials.add("black");
+			materials.add("orange");
+			materials.add("magenta");
+			materials.add("lightBlue");
+			materials.add("yellow");
+			materials.add("pink");
+			materials.add("cyan");
+			materials.add("purple");
+			materials.add("darkGreen");
+			materials.add("blue");
+			materials.add("brown");
+			materials.add("green");
+			materials.add("red");
 			
-			if (mat.equalsIgnoreCase("white") || mat.equalsIgnoreCase("lightGrey") || mat.equalsIgnoreCase("darkGrey") || mat.equalsIgnoreCase("black")) {
-				block = skyscraperBlocks;
-			} else if (mat.equalsIgnoreCase("orange") || mat.equalsIgnoreCase("magenta") || mat.equalsIgnoreCase("lightBlue") || mat.equalsIgnoreCase("yellow")) {
-				block = skyscraperBlocks2;
-			} else if (mat.equalsIgnoreCase("pink") || mat.equalsIgnoreCase("cyan") || mat.equalsIgnoreCase("purple") || mat.equalsIgnoreCase("darkGreen")) {
-				block = skyscraperBlocks3;
-			} else {
-				block = skyscraperBlocks4;
+			for (int i = 0; i < materials.size(); i++) {
+				String mat = materials.get(i);
+				
+				Block block;
+				
+				if (mat.equalsIgnoreCase("white") || mat.equalsIgnoreCase("lightGrey") || mat.equalsIgnoreCase("darkGrey") || mat.equalsIgnoreCase("black")) {
+					block = skyscraperBlocks;
+				} else if (mat.equalsIgnoreCase("orange") || mat.equalsIgnoreCase("magenta") || mat.equalsIgnoreCase("lightBlue") || mat.equalsIgnoreCase("yellow")) {
+					block = skyscraperBlocks2;
+				} else if (mat.equalsIgnoreCase("pink") || mat.equalsIgnoreCase("cyan") || mat.equalsIgnoreCase("purple") || mat.equalsIgnoreCase("darkGreen")) {
+					block = skyscraperBlocks3;
+				} else {
+					block = skyscraperBlocks4;
+				}
+				
+				Block fence = new BlockFenceFCC(mat).setBlockName(mat + "Fence");
+				Block stairs = new BlockStairsFCC(block, mat).setBlockName(mat + "Stairs");
+				//Block panel = new BlockSlabFCC(mat).setBlockName(mat + "Panel");
+				Block walkwayFence = new WalkwayFenceFCC(mat, "walkwayFence").setBlockName(mat + "WalkwayFence");
+				Block walkwayStairs = new WalkwayStairsFCC(mat, "walkwayStairs").setBlockName(mat + "WalkwayStairs");
+				Block railing = new RailingFCC(mat, "railing").setBlockName(mat + "Railing");
+				Block openStairs = new OpenStairsFCC(mat, "openStairs").setBlockName(mat + "OpenStairs");
+				Block slope45 = new Slope45FCC(block, mat).setBlockName(mat + "Slope45");
+				Block slope225Low = new Slope225HorizontalAFCC(mat).setBlockName(mat + "Slope225Low");
+				Block slope225High = new Slope225HorizontalBFCC(mat).setBlockName(mat + "Slope225High");
+				Block slope225Vertical = new Slope225VerticalFCC(mat).setBlockName(mat + "Slope225Vertical");
+				Block cornerPost = new CornerPostFCC(mat, "cornerPost").setBlockName(mat + "CornerPost");
+				
+				GameRegistry.registerBlock(fence, ItemDecorativeBlock.class, mat + "Fence");
+				GameRegistry.registerBlock(stairs, ItemDecorativeBlock.class, mat + "Stairs");
+				//GameRegistry.registerBlock(panel, ItemDecorativeBlock.class, mat + "Panel");
+				GameRegistry.registerBlock(walkwayFence, ItemDecorativeBlock.class, mat + "WalkwayFence");
+				GameRegistry.registerBlock(walkwayStairs, ItemDecorativeBlock.class, mat + "WalkwayStairsNew");
+				GameRegistry.registerBlock(railing, ItemDecorativeBlock.class, mat + "Railing");
+				GameRegistry.registerBlock(openStairs, ItemDecorativeBlock.class, mat + "OpenStairs");
+				GameRegistry.registerBlock(slope45, ItemDecorativeBlock.class, mat + "Slope45");
+				GameRegistry.registerBlock(slope225Low, ItemDecorativeBlock.class, mat + "Slope225Low");
+				GameRegistry.registerBlock(slope225High, ItemDecorativeBlock.class, mat + "Slope225High");
+				GameRegistry.registerBlock(slope225Vertical, ItemDecorativeBlock.class, mat + "Slope225Vertical");
+				GameRegistry.registerBlock(cornerPost, ItemDecorativeBlock.class, mat + "CornerPost");
 			}
-			
-			Block fence = new BlockFenceFCC(mat).setBlockName(mat + "Fence");
-			Block stairs = new BlockStairsFCC(block, mat).setBlockName(mat + "Stairs");
-			//Block panel = new BlockSlabFCC(mat).setBlockName(mat + "Panel");
-			Block walkwayFence = new WalkwayFenceFCC(mat, "walkwayFence").setBlockName(mat + "WalkwayFence");
-			Block walkwayStairs = new WalkwayStairsFCC(mat, "walkwayStairs").setBlockName(mat + "WalkwayStairs");
-			Block railing = new RailingFCC(mat, "railing").setBlockName(mat + "Railing");
-			Block openStairs = new OpenStairsFCC(mat, "openStairs").setBlockName(mat + "OpenStairs");
-			Block slope45 = new Slope45FCC(block, mat).setBlockName(mat + "Slope45");
-			Block slope225Low = new Slope225HorizontalAFCC(mat).setBlockName(mat + "Slope225Low");
-			Block slope225High = new Slope225HorizontalBFCC(mat).setBlockName(mat + "Slope225High");
-			Block slope225Vertical = new Slope225VerticalFCC(mat).setBlockName(mat + "Slope225Vertical");
-			Block cornerPost = new CornerPostFCC(mat, "cornerPost").setBlockName(mat + "CornerPost");
-			
-			GameRegistry.registerBlock(fence, ItemDecorativeBlock.class, mat + "Fence");
-			GameRegistry.registerBlock(stairs, ItemDecorativeBlock.class, mat + "Stairs");
-			//GameRegistry.registerBlock(panel, ItemDecorativeBlock.class, mat + "Panel");
-			GameRegistry.registerBlock(walkwayFence, ItemDecorativeBlock.class, mat + "WalkwayFence");
-			GameRegistry.registerBlock(walkwayStairs, ItemDecorativeBlock.class, mat + "WalkwayStairsNew");
-			GameRegistry.registerBlock(railing, ItemDecorativeBlock.class, mat + "Railing");
-			GameRegistry.registerBlock(openStairs, ItemDecorativeBlock.class, mat + "OpenStairs");
-			GameRegistry.registerBlock(slope45, ItemDecorativeBlock.class, mat + "Slope45");
-			GameRegistry.registerBlock(slope225Low, ItemDecorativeBlock.class, mat + "Slope225Low");
-			GameRegistry.registerBlock(slope225High, ItemDecorativeBlock.class, mat + "Slope225High");
-			GameRegistry.registerBlock(slope225Vertical, ItemDecorativeBlock.class, mat + "Slope225Vertical");
-			GameRegistry.registerBlock(cornerPost, ItemDecorativeBlock.class, mat + "CornerPost");
 		}
 	}
-
 }

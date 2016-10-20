@@ -23,6 +23,7 @@ public class CityConfig {
 	public static boolean playerOwnedShops;
 	public static boolean debugMode;
 	public static boolean allowCardPurchases;
+	public static boolean extraDecorativeBlocks;
 	
 	public static boolean mobsDropMoney;
 	
@@ -43,6 +44,7 @@ public class CityConfig {
 			debugMode = config.get(Configuration.CATEGORY_GENERAL, "debug mode", false).getBoolean(false);
 			allowCardPurchases = config.get(Configuration.CATEGORY_GENERAL, "Enable player-owned shops", true).getBoolean(true);
 			mobsDropMoney = config.get(Configuration.CATEGORY_GENERAL, "Allow mobs dropping money (Only when killed by players directly!)", true).getBoolean(true);
+			extraDecorativeBlocks = config.get(Configuration.CATEGORY_GENERAL, "Add loads of extra decorative blocks (Uses an additional 170 block IDs)", true).getBoolean(true);
 		}
 		catch (Exception e) {
 			System.out.println("### Warning! FlenixCities Core could not load it's config file! ###");
