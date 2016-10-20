@@ -1,0 +1,73 @@
+package com.silvaniastudios.cities.core.blocks;
+
+import java.util.List;
+
+import com.silvaniastudios.cities.core.FlenixCities_Core;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class BlockMulti extends Block {
+
+	public BlockMulti(Material material) {
+		super(material);
+		this.setCreativeTab(FlenixCities_Core.tabCity);
+		this.setHardness(2.5F);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private IIcon[] icons;
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerBlockIcons(IIconRegister iconRegister) {
+		icons = new IIcon[16];
+
+		for(int i = 0; i < icons.length; i++) {
+			icons[i] = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)) + i);
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IIcon getIcon(int side, int meta) {
+		if (this.getUnlocalizedName().contains("quartzDecorBlocks")) {
+			if (meta == 2 || meta == 5 || meta == 10) {
+				if (side == 0) {
+					return icons[meta -1];
+				} else if (side == 1) {
+					return icons[15];
+				}
+			}
+			if (meta == 10) {
+				if (side == 0) {
+					return icons[9];
+				} else if (side == 1) {
+					return icons[15];
+				}
+			}
+		}
+		return icons[meta];
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
+		for (int var4 = 0; var4 < 16; ++var4) {
+			list.add(new ItemStack(item, 1, var4));
+		}
+	}
+	
+    @Override
+    public int damageDropped(int meta) {
+    	return meta;
+    }
+}
