@@ -1,16 +1,45 @@
 package com.silvaniastudios.cities.core;
 
-import com.silvaniastudios.cities.core.blocks.*;
+import java.util.ArrayList;
+
+import com.silvaniastudios.cities.core.blocks.BlockMulti;
+import com.silvaniastudios.cities.core.blocks.BlockWalkway;
+import com.silvaniastudios.cities.core.blocks.BlockWalkwayStairs;
+import com.silvaniastudios.cities.core.blocks.FloorBlocks;
+import com.silvaniastudios.cities.core.blocks.LightingBlocks;
+import com.silvaniastudios.cities.core.blocks.LightingRotateBlocks;
+import com.silvaniastudios.cities.core.blocks.PlasticBlocks;
+import com.silvaniastudios.cities.core.blocks.RebarBlock;
+import com.silvaniastudios.cities.core.blocks.SkyscraperBlocks;
+import com.silvaniastudios.cities.core.blocks.StainedGlass;
+import com.silvaniastudios.cities.core.blocks.StainedGlassLit;
+import com.silvaniastudios.cities.core.blocks.StainedGlassPane;
+import com.silvaniastudios.cities.core.blocks.StyledGlass;
+import com.silvaniastudios.cities.core.blocks.StyledGlassLit;
+import com.silvaniastudios.cities.core.blocks.WoolCeilingTile;
+import com.silvaniastudios.cities.core.blocks.WoolStone;
+import com.silvaniastudios.cities.core.blocks.WoolWood;
+import com.silvaniastudios.cities.core.blocks.decorative.BlockFenceFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.BlockStairsFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.CornerPostFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.ItemDecorativeBlock;
+import com.silvaniastudios.cities.core.blocks.decorative.OpenStairsFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.RailingFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.Slope225HorizontalAFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.Slope225HorizontalBFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.Slope225VerticalFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.Slope45FCC;
+import com.silvaniastudios.cities.core.blocks.decorative.WalkwayFenceFCC;
+import com.silvaniastudios.cities.core.blocks.decorative.WalkwayStairsFCC;
 import com.silvaniastudios.cities.core.npc.spawner.NPCSpawnerBlock;
 import com.silvaniastudios.cities.econ.atm.TileEntityATMBlock;
 import com.silvaniastudios.cities.econ.store.entity.AdminShopBlock;
 import com.silvaniastudios.cities.econ.store.entity.FloatingShelvesBlock;
 import com.silvaniastudios.cities.econ.store.entity.StockChestBlock;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 
 public class CoreBlocks {
 	private static CityConfig config;
@@ -163,6 +192,7 @@ public class CoreBlocks {
 		initBlocks();
 		initEconBlocks();
 		initSpecialBlocks();
+		initDecorativeGennedBlocks();
 	}
 
 	
@@ -205,7 +235,7 @@ public class CoreBlocks {
     	birchWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks13", "floorBlocks13").setBlockName("birchWalkway");
     	jungleWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks14", "floorBlocks14").setBlockName("jungleWalkway");
     	acaciaWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks15", "floorBlocks15").setBlockName("acaciaWalkway");
-    	darkOakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks16", "floorBlocks16").setBlockName("darkOakWalkway");
+    	darkOakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks20", "floorBlocks20").setBlockName("darkOakWalkway");
     	
     	whiteWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks0", "skyscraperBlocks0").setBlockName("whiteWalkway");
     	lightGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks1", "skyscraperBlocks1").setBlockName("lightGreyWalkway");
@@ -254,7 +284,7 @@ public class CoreBlocks {
     	birchWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks13", "floorBlocks13").setBlockName("birchWalkwayStairs");
     	jungleWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks14", "floorBlocks14").setBlockName("jungleWalkwayStairs");
     	acaciaWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks15", "floorBlocks15").setBlockName("acaciaWalkwayStairs");
-    	darkOakWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks16", "floorBlocks16").setBlockName("darkOakWalkwayStairs");
+    	darkOakWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks20", "floorBlocks20").setBlockName("darkOakWalkwayStairs");
     	
     	whiteWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks0", "skyscraperBlocks0").setBlockName("whiteWalkwayStairs");
     	lightGreyWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks1", "skyscraperBlocks1").setBlockName("lightGreyWalkwayStairs");
@@ -313,6 +343,69 @@ public class CoreBlocks {
 	public static void initSpecialBlocks() {
 		npcSpawnerBlock = new NPCSpawnerBlock().setBlockName("npcSpawnerBlock");
 		adminShopBlock = new AdminShopBlock().setBlockName("adminShopBlock");
+	}
+	
+	public static void initDecorativeGennedBlocks() {
+		ArrayList<String> materials = new ArrayList<String>();
+		
+		materials.add("white");
+		materials.add("lightGrey");
+		materials.add("darkGrey");
+		materials.add("black");
+		materials.add("orange");
+		materials.add("magenta");
+		materials.add("lightBlue");
+		materials.add("yellow");
+		materials.add("pink");
+		materials.add("cyan");
+		materials.add("purple");
+		materials.add("darkGreen");
+		materials.add("blue");
+		materials.add("brown");
+		materials.add("green");
+		materials.add("red");
+		
+		for (int i = 0; i < materials.size(); i++) {
+			String mat = materials.get(i);
+			
+			Block block;
+			
+			if (mat.equalsIgnoreCase("white") || mat.equalsIgnoreCase("lightGrey") || mat.equalsIgnoreCase("darkGrey") || mat.equalsIgnoreCase("black")) {
+				block = skyscraperBlocks;
+			} else if (mat.equalsIgnoreCase("orange") || mat.equalsIgnoreCase("magenta") || mat.equalsIgnoreCase("lightBlue") || mat.equalsIgnoreCase("yellow")) {
+				block = skyscraperBlocks2;
+			} else if (mat.equalsIgnoreCase("pink") || mat.equalsIgnoreCase("cyan") || mat.equalsIgnoreCase("purple") || mat.equalsIgnoreCase("darkGreen")) {
+				block = skyscraperBlocks3;
+			} else {
+				block = skyscraperBlocks4;
+			}
+			
+			Block fence = new BlockFenceFCC(mat).setBlockName(mat + "Fence");
+			Block stairs = new BlockStairsFCC(block, mat).setBlockName(mat + "Stairs");
+			//Block panel = new BlockSlabFCC(mat).setBlockName(mat + "Panel");
+			Block walkwayFence = new WalkwayFenceFCC(mat, "walkwayFence").setBlockName(mat + "WalkwayFence");
+			Block walkwayStairs = new WalkwayStairsFCC(mat, "walkwayStairs").setBlockName(mat + "WalkwayStairs");
+			Block railing = new RailingFCC(mat, "railing").setBlockName(mat + "Railing");
+			Block openStairs = new OpenStairsFCC(mat, "openStairs").setBlockName(mat + "OpenStairs");
+			Block slope45 = new Slope45FCC(block, mat).setBlockName(mat + "Slope45");
+			Block slope225Low = new Slope225HorizontalAFCC(mat).setBlockName(mat + "Slope225Low");
+			Block slope225High = new Slope225HorizontalBFCC(mat).setBlockName(mat + "Slope225High");
+			Block slope225Vertical = new Slope225VerticalFCC(mat).setBlockName(mat + "Slope225Vertical");
+			Block cornerPost = new CornerPostFCC(mat, "cornerPost").setBlockName(mat + "CornerPost");
+			
+			GameRegistry.registerBlock(fence, ItemDecorativeBlock.class, mat + "Fence");
+			GameRegistry.registerBlock(stairs, ItemDecorativeBlock.class, mat + "Stairs");
+			//GameRegistry.registerBlock(panel, ItemDecorativeBlock.class, mat + "Panel");
+			GameRegistry.registerBlock(walkwayFence, ItemDecorativeBlock.class, mat + "WalkwayFence");
+			GameRegistry.registerBlock(walkwayStairs, ItemDecorativeBlock.class, mat + "WalkwayStairsNew");
+			GameRegistry.registerBlock(railing, ItemDecorativeBlock.class, mat + "Railing");
+			GameRegistry.registerBlock(openStairs, ItemDecorativeBlock.class, mat + "OpenStairs");
+			GameRegistry.registerBlock(slope45, ItemDecorativeBlock.class, mat + "Slope45");
+			GameRegistry.registerBlock(slope225Low, ItemDecorativeBlock.class, mat + "Slope225Low");
+			GameRegistry.registerBlock(slope225High, ItemDecorativeBlock.class, mat + "Slope225High");
+			GameRegistry.registerBlock(slope225Vertical, ItemDecorativeBlock.class, mat + "Slope225Vertical");
+			GameRegistry.registerBlock(cornerPost, ItemDecorativeBlock.class, mat + "CornerPost");
+		}
 	}
 
 }
