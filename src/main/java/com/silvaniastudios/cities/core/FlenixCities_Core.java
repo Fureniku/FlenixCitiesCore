@@ -27,7 +27,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.17.0")
+@Mod(modid=FlenixCities_Core.modid, dependencies="after:BuildCraft|Core;after:BuildCraft|Energy", name="FlenixCities", version="0.18.0")
 public class FlenixCities_Core { 
 	
 	public static final String modid = "flenixcities";
@@ -36,13 +36,20 @@ public class FlenixCities_Core {
     public static FlenixCities_Core instance;
     public static GuiHandler cityGuiHandler = new GuiHandler();
 
-    @SidedProxy(clientSide="co.uk.silvania.cities.core.client.ClientProxy", serverSide="co.uk.silvania.cities.core.CommonProxy")
+    @SidedProxy(clientSide="com.silvaniastudios.cities.core.client.ClientProxy", serverSide="com.silvaniastudios.cities.core.CommonProxy")
     public static CommonProxy proxy;
     
 	public static CreativeTabs tabCity = new CreativeTabs("tabCity") {
 		@Override
 		public Item getTabIconItem() {
 			return new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0).getItem();
+		}
+	};
+	
+	public static CreativeTabs tabDecorative = new CreativeTabs("tabDecorative") {
+		@Override
+		public Item getTabIconItem() {
+			return new ItemStack(CoreBlocks.skyscraperBlocks, 15, 0).getItem();
 		}
 	};
 	

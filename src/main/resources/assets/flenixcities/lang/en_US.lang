@@ -468,4 +468,53 @@ tile.darkOakLaminateWalkwayStairs.name=Dark Oak Laminate Walkway Stairs
 entity.flenixcities:Banker.name=Banker
 
 itemGroup.tabCity=FlenixCities Core
+itemGroup.tabDecorative=FlenixCities Decorative Blocks
 itemGroup.tabEcon=FlenixCities Economy
+
+material.white=White Skyscraper
+material.lightGrey=Light Grey Skyscraper
+material.darkGrey=Dark Grey Skyscraper
+material.black=Black Skyscraper
+material.orange=Orange Skyscraper
+material.magenta=Magenta Skyscraper
+material.lightBlue=Light Blue Skyscraper
+material.yellow=Yellow Skyscraper
+material.pink=Pink Skyscraper
+material.cyan=Cyan Skyscraper
+material.purple=Purple Skyscraper
+material.darkGreen=Dark Green Skyscraper
+material.blue=Blue Skyscraper
+material.brown=Brown Skyscraper
+material.green=Green Skyscraper
+material.red=Red Skyscraper
+
+blockType.block=Block
+blockType.pillar=Pillar
+blockType.fence=Fence
+blockType.stairs=Stairs
+blockType.slab=Slab
+blockType.panel=Panel
+blockType.cover=Cover
+blockType.walkwayStairs=Walkway Stairs
+blockType.openStairs=Open Stairs
+blockType.railing=Railing
+blockType.slope45=45 Degree Slope
+blockType.slope225a=22.5 Degree Slope (Horizontal Thin)
+blockType.slope225b=22.5 Degree Slope (Horizontal Thick)
+blockType.slope225Verticala=22.5 Degree Slope (Vertical Thin)
+blockType.slope225Verticalb=22.5 Degree Slope (Vertical Thick)
+blockType.cornerPost=Corner Post
+
+blockType.oneFence=Walkway Fence (One-Sided)
+blockType.rightAngleFence=Walkway Fence (Right Angle)
+blockType.threeFence=Walkway Fence (Three-Sided)
+blockType.parallelFence=Walkway Fence (Parallel)
+blockType.squareFence=Walkway Fence (Square)
+blockType.connectedFence=Walkway Fence (Connecting)
+
+blockType.oneRailing=Railing (One-Sided)
+blockType.rightAngleRailing=Railing (Right Angle)
+blockType.threeRailing=Railing (Three-Sided)
+blockType.parallelRailing=Railing (Parallel)
+blockType.squareRailing=Railing (Square)
+blockType.connectedRailing=Railing (Connecting)

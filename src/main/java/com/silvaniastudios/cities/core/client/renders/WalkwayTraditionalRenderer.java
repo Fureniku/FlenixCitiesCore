@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 
-public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
+public class WalkwayTraditionalRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
@@ -210,7 +210,7 @@ public class WalkwayRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public int getRenderId() {
-		return ClientProxy.walkwayRenderID;
+		return ClientProxy.walkwayTraditionalRenderID;
 	}
 	
 	//North: Z1 - Z0, East: X0 - X1, South: Z0 - Z1, West = X1 - X0

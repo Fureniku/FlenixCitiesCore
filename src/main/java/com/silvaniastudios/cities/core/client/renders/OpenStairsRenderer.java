@@ -1,3 +1,5 @@
+//CLONED FROM FLENIXCITIES Walkway Stairs Renderer, then modified.
+//Taken with permission, as it's my own damn mod. :D
 package com.silvaniastudios.cities.core.client.renders;
 
 import org.lwjgl.opengl.GL11;
@@ -13,7 +15,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
+public class OpenStairsRenderer implements ISimpleBlockRenderingHandler {
 	
 	Tessellator tess;
 	
@@ -35,60 +37,6 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 		final float FACE_Y_NORMAL  = 0.4472F;
 		
 		double a = 0.5;
-
-		//Top
-		tess.startDrawingQuads();
-		tess.setNormal(0.0F, 1.0F, 0.0F);
-		tess.addVertexWithUV(0, 2.0, 0.125, u1, v1);
-		tess.addVertexWithUV(1, 1.0, 0.125, u1, v0);
-		tess.addVertexWithUV(1, 1.0, 0.0,   u0, v0);
-		tess.addVertexWithUV(0, 2.0, 0.0,   u0, v1);
-		tess.draw();
-		
-		//Front
-		tess.startDrawingQuads();
-		tess.setNormal(0.0F, FACE_Y_NORMAL, -FACE_XZ_NORMAL);
-		tess.addVertexWithUV(-0.0001, 1.875, 0.125, u1, v1);
-		tess.addVertexWithUV(-0.0001, 2.0,   0.125, u1, v0);
-		tess.addVertexWithUV(-0.0001, 2.0,   0.0,   u0, v0);
-		tess.addVertexWithUV(-0.0001, 1.875, 0.0,   u0, v1);
-		tess.draw();
-		
-		//Back
-		tess.startDrawingQuads();
-		tess.setNormal(FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
-		tess.addVertexWithUV(1, 0.875, 0.0,    u1, v1);
-		tess.addVertexWithUV(1, 1.0,   0.0,    u1, v0);
-		tess.addVertexWithUV(1, 1.0,   0.125, u0, v0);
-		tess.addVertexWithUV(1, 0.875, 0.125, u0, v1);
-		tess.draw();
-		
-		//Left
-		tess.startDrawingQuads();
-		tess.setNormal(0.0F, FACE_Y_NORMAL, FACE_XZ_NORMAL);
-		tess.addVertexWithUV(0, 0.875,  0.125, u1, v1);
-		tess.addVertexWithUV(1, -0.125, 0.125, u1, v0);
-		tess.addVertexWithUV(1, 0.0,    0.125, u0, v0);
-		tess.addVertexWithUV(0, 1.0,    0.125, u0, v1);
-		tess.draw();
-
-		//Right
-		tess.startDrawingQuads();
-		tess.setNormal(-FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
-		tess.addVertexWithUV(1, 0.875, 0.0, u1, v1);
-		tess.addVertexWithUV(0, 1.875, 0.0, u1, v0);
-		tess.addVertexWithUV(0, 2.0,   0.0, u0, v0);
-		tess.addVertexWithUV(1, 1.0,   0.0, u0, v1);
-		tess.draw();
-
-		//Bottom Side
-		tess.startDrawingQuads();
-		tess.setNormal(0.0F, -1.0F, 0.0F);
-		tess.addVertexWithUV(1, 0.875, 0.125, u1, v1);
-		tess.addVertexWithUV(0, 1.875, 0.125, u1, v0);
-		tess.addVertexWithUV(0, 1.875, 0.0,   u0, v0);
-		tess.addVertexWithUV(1, 0.875, 0.0,   u0, v1);
-		tess.draw();
 		
 		//SUPPORT RAIL
 		//Top
@@ -143,61 +91,6 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 		tess.addVertexWithUV(0, 0.875,  0.0625, u1, v0);
 		tess.addVertexWithUV(0, 0.875,  0,      u0, v0);
 		tess.addVertexWithUV(1, -0.125, 0,      u0, v1);
-		tess.draw();
-		
-		
-		//Top
-		tess.startDrawingQuads();
-		tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-		tess.addVertexWithUV(0, 2.0, 1.0,   u1, v1);
-		tess.addVertexWithUV(1, 1.0, 1.0,   u1, v0);
-		tess.addVertexWithUV(1, 1.0, 0.875, u0, v0);
-		tess.addVertexWithUV(0, 2.0, 0.875, u0, v1);
-		tess.draw();
-		
-		//Front
-		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-		tess.addVertexWithUV(1.0001, 1.0,   1.0,   u1, v1);
-		tess.addVertexWithUV(1.0001, 0.875, 1.0,   u1, v0);
-		tess.addVertexWithUV(1.0001, 0.875, 0.875, u0, v0);
-		tess.addVertexWithUV(1.0001, 1.0,   0.875, u0, v1);
-		tess.draw();
-		
-		//Back
-		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-		tess.addVertexWithUV(0, 2.0,   0.875, u1, v1);
-		tess.addVertexWithUV(0, 1.875, 0.875, u1, v0);
-		tess.addVertexWithUV(0, 1.875, 1.0,   u0, v0);
-		tess.addVertexWithUV(0, 2.0,   1.0,   u0, v1);
-		tess.draw();
-		
-		//Left
-		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-		tess.addVertexWithUV(0, 1.875, 1.0, u1, v1);
-		tess.addVertexWithUV(1, 0.875, 1.0, u1, v0);
-		tess.addVertexWithUV(1, 1.0,   1.0, u0, v0);
-		tess.addVertexWithUV(0, 2.0,   1.0, u0, v1);
-		tess.draw();
-		
-		//Right
-		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-		tess.addVertexWithUV(1, 0.875, 0.875, u1, v1);
-		tess.addVertexWithUV(0, 1.875, 0.875, u1, v0);
-		tess.addVertexWithUV(0, 2.0,   0.875, u0, v0);
-		tess.addVertexWithUV(1, 1.0,   0.875, u0, v1);
-		tess.draw();
-		
-		//Bottom
-		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-		tess.addVertexWithUV(1, 0.875, 1.0,   u1, v1);
-		tess.addVertexWithUV(0, 1.875, 1.0,   u1, v0);
-		tess.addVertexWithUV(0, 1.875, 0.875, u0, v0);
-		tess.addVertexWithUV(1, 0.875, 0.875, u0, v1);
 		tess.draw();
 		
 		//Support Rail
@@ -260,18 +153,6 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 		renderBlock(0.25D+a, 0.50D+a, 0.0D+a, 0.50D+a, 0.5625D+a, 1.0D+a,  false, renderer, block, 0, 0, 0, 0);
 		renderBlock(0.0D+a,  0.75D+a, 0.0D+a, 0.25D+a, 0.8125D+a, 1.0D+a,  false, renderer, block, 0, 0, 0, 0);
 		
-		//Handrails (2x)
-		
-		renderOversizeBlock(0.09375D+a, 0.75D+a, 0.0D+a, 0.15625D+a, 1.75D+a, 0.0625D+a, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.34375D+a, 0.50D+a, 0.0D+a, 0.40625D+a, 1.50D+a, 0.0625D+a, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.59375D+a, 0.25D+a, 0.0D+a, 0.65625D+a, 1.25D+a, 0.0625D+a, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.84375D+a, 0.0D+a,  0.0D+a, 0.90625D+a, 1.0D+a,  0.0625D+a, false, renderer, block, 0, 0, 0, 0);
-
-		renderOversizeBlock(0.09375D+a, 0.75D+a, 0.9375D+a, 0.15625D+a, 1.75D+a, 1.0D+a, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.34375D+a, 0.50D+a, 0.9375D+a, 0.40625D+a, 1.50D+a, 1.0D+a, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.59375D+a, 0.25D+a, 0.9375D+a, 0.65625D+a, 1.25D+a, 1.0D+a, false, renderer, block, 0, 0, 0, 0);
-		renderOversizeBlock(0.84375D+a, 0.0D+a,  0.9375D+a, 0.90625D+a, 1.0D+a,  1.0D+a, false, renderer, block, 0, 0, 0, 0);
-		
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
 
@@ -310,91 +191,34 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 		boolean walkwayBelow = world.getBlock(x, y-1, z) instanceof WalkwayStairsFCC;
 		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof WalkwayStairsFCC;
 		
-		if (!walkwayBelow) {
-			//Main Stairs
-			if (meta == 0) { //South-facing
-				renderBlock(0.0D, 0.0D,  0.0D,  1.0D, 0.0625D, 0.25D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.0D, 0.25D, 0.25D, 1.0D, 0.3125D, 0.50D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.0D, 0.50D, 0.50D, 1.0D, 0.5625D, 0.75D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.0D, 0.75D, 0.75D, 1.0D, 0.8125D, 1.0D,  true, renderer, block, x, y, z, meta);
-			} else if (meta == 1) { //West-facing
-				renderBlock(0.75D, 0.0D, 0.0D,  1.00D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.50D, 0.25D, 0.0D, 0.75D, 0.3125D, 1.0D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.25D, 0.50D, 0.0D, 0.50D, 0.5625D, 1.0D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.0D,  0.75D, 0.0D, 0.25D, 0.8125D, 1.0D, true, renderer, block, x, y, z, meta);
-			} else if (meta == 2) { //North-facing
-				renderBlock(0.0D, 0.0D, 0.75D,  1.0D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.0D, 0.25D, 0.50D, 1.0D, 0.3125D, 0.75D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.0D, 0.50D, 0.25D, 1.0D, 0.5625D, 0.50D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.0D, 0.75D, 0.0D,  1.0D, 0.8125D, 0.25D, true, renderer, block, x, y, z, meta);
-			} else if (meta == 3) { //East-facing
-				renderBlock(0.0D, 0.0D, 0.0D, 0.25D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.25D, 0.25D, 0.0D, 0.50D, 0.3125D, 1.0D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.50D, 0.50D, 0.0D, 0.75D, 0.5625D, 1.0D, true, renderer, block, x, y, z, meta);
-				renderBlock(0.75D, 0.75D, 0.0D, 1.00D, 0.8125D, 1.0D, true, renderer, block, x, y, z, meta);
-			}
-		}		
+
+		//Main Stairs
+		if (meta == 0) { //South-facing
+			renderBlock(0.0D, 0.0D,  0.0D,  1.0D, 0.0625D, 0.25D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D, 0.25D, 0.25D, 1.0D, 0.3125D, 0.50D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D, 0.50D, 0.50D, 1.0D, 0.5625D, 0.75D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D, 0.75D, 0.75D, 1.0D, 0.8125D, 1.0D,  true, renderer, block, x, y, z, meta);
+		} else if (meta == 1) { //West-facing
+			renderBlock(0.75D, 0.0D, 0.0D,  1.00D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.50D, 0.25D, 0.0D, 0.75D, 0.3125D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.25D, 0.50D, 0.0D, 0.50D, 0.5625D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D,  0.75D, 0.0D, 0.25D, 0.8125D, 1.0D, true, renderer, block, x, y, z, meta);
+		} else if (meta == 2) { //North-facing
+			renderBlock(0.0D, 0.0D, 0.75D,  1.0D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D, 0.25D, 0.50D, 1.0D, 0.3125D, 0.75D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D, 0.50D, 0.25D, 1.0D, 0.5625D, 0.50D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D, 0.75D, 0.0D,  1.0D, 0.8125D, 0.25D, true, renderer, block, x, y, z, meta);
+		} else if (meta == 3) { //East-facing
+			renderBlock(0.0D, 0.0D, 0.0D, 0.25D, 0.0625D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.25D, 0.25D, 0.0D, 0.50D, 0.3125D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.50D, 0.50D, 0.0D, 0.75D, 0.5625D, 1.0D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.75D, 0.75D, 0.0D, 1.00D, 0.8125D, 1.0D, true, renderer, block, x, y, z, meta);
+		}
 		
 		if (meta == 0) { //SOUTH
 			if (!connectWest) {
 				if (!walkwayAbove) {
 					tess.draw();
-					
-					//Right Handrail
-					//Top
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0.0,    y + 1.0625, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0,    y + 2.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 2.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 1.0625, z + 0, u0, v1);
-					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0.0625, y + 1.9375, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 0.0625, y + 2.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 2.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 1.9375, z + 1, u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0.0,    y + 0.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0,    y + 1.0625, z + 0, u1, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 1.0625, z + 0, u0, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 0.9375, z + 0, u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.0,    y + 0.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0,    y + 1.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 2.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 1.0625, z + 0, u0, v1);
-					tess.draw();
-					
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.0625, y + 1.9375, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 0.0625, y + 0.9375, z + 0, u1, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 1.0625, z + 0, u0, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 2.0625, z + 1, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 0.0625, y + 0.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0625, y + 1.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0,   y + 1.9375, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0,   y + 0.9375, z + 0, u0, v1);
-					tess.draw();
-					
 					//Right Support Bar
 					//Top
 					tess.startDrawingQuads();
@@ -452,69 +276,10 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.005D, 0.0D,  0.09375D, 0.062D, 1.125D, 0.15625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.005D, 0.25D, 0.34375D, 0.062D, 1.375D, 0.40625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.005D, 0.50D, 0.59375D, 0.062D, 1.625D, 0.65625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.005D, 0.75D, 0.84375D, 0.062D, 1.875D, 0.90625D, true, renderer, block, x, y, z, meta);
 			}
 			if (!connectEast) {
 				if (!walkwayAbove) {
-					//Left Handrail
-					//Top
 					tess.draw();
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 1.0,   y + 2.0625,  z + 1, u0, v0);
-					tess.addVertexWithUV(x + 1.0,   y + 1.0625,  z + 0, u0, v1);
-					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1.0, y + 1.9375, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 1.0, y + 2.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.9375, z + 1, u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375, z - 0.0001, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z - 0.0001, u1, v0);
-					tess.addVertexWithUV(x + 1.0, y + 1.0625, z - 0.0001, u0, v0);
-					tess.addVertexWithUV(x + 1.0, y + 0.9375, z - 0.0001, u0, v1);
-					tess.draw();
-					
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 1.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z + 0, u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1.0, y + 1.9375, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 1.0, y + 0.9375, z + 0, u1, v0);
-					tess.addVertexWithUV(x + 1.0, y + 1.0625, z + 0, u0, v0);
-					tess.addVertexWithUV(x + 1.0, y + 2.0625, z + 1, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 1.0, y + 0.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 1.0, y + 1.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.9375, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375, z + 0, u0, v1);
-					tess.draw();
-					
 					//Left Support rail
 					//Top
 					tess.startDrawingQuads();
@@ -571,73 +336,13 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					tess.draw();
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.938D, 0.0D,  0.09375D, 0.9995D, 1.125D, 0.15625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.938D, 0.25D, 0.34375D, 0.9995D, 1.375D, 0.40625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.938D, 0.50D, 0.59375D, 0.9995D, 1.625D, 0.65625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.938D, 0.75D, 0.84375D, 0.9995D, 1.875D, 0.90625D, true, renderer, block, x, y, z, meta);
 			}
 		}
 	
 		if (meta == 1) { //WEST
 			if (!connectNorth) {
 				if (!walkwayAbove) {
-					//Handrail tess
-					//Handrail tess
 					tess.draw();
-					//Top
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0,    u0, v0);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.0,    u0, v1);
-					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x - 0.0001, y + 1.9375, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x - 0.0001, y + 2.0625, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x - 0.0001, y + 2.0625, z + 0.0,    u0, v0);
-					tess.addVertexWithUV(x - 0.0001, y + 1.9375, z + 0.0,    u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0,    u1, v1);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0,    u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0625, u0, v0);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.0625, u0, v1);
-					tess.draw();
-					
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.0, u1, v0);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.0, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.0, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.0,    u0, v0);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.0,    u0, v1);
-					tess.draw();
-					
 					//Support Rail
 					//Top
 					tess.startDrawingQuads();
@@ -695,70 +400,11 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.09375D, 0.75D, 0.0005D, 0.15625D, 1.875D, 0.062D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.50D, 0.0005D, 0.40625D, 1.625D, 0.062D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.25D, 0.0005D, 0.65625D, 1.375D, 0.062D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.0D,  0.0005D, 0.90625D, 1.125D, 0.062D, true, renderer, block, x, y, z, meta);
 			}
 			
 			if (!connectSouth) {
 				if (!walkwayAbove) {
-					//Handrail tess
-					tess.draw();					
-					//Top
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 1.0,    u1, v1);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1.0,    u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.9375, u0, v1);
 					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1.0001, y + 1.0625, z + 1.0,    u1, v1);
-					tess.addVertexWithUV(x + 1.0001, y + 0.9375, z + 1.0,    u1, v0);
-					tess.addVertexWithUV(x + 1.0001, y + 0.9375, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 1.0001, y + 1.0625, z + 0.9375, u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.9375, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.9375, u1, v0);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 1.0,    u0, v0);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 1.0,    u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 1.0, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1.0, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 1.0, u0, v0);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 1.0, u0, v1);
-					tess.draw();
-					
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.9375, u1, v0);
-					tess.addVertexWithUV(x + 0, y + 2.0625, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 1.0625, z + 0.9375, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 1.0,    u1, v1);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 1.0,    u1, v0);
-					tess.addVertexWithUV(x + 0, y + 1.9375, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 0.9375, z + 0.9375, u0, v1);
-					tess.draw();
-					
 					//Support Rail
 					tess.startDrawingQuads();
 					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
@@ -815,10 +461,6 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.09375D, 0.75D, 0.938D, 0.15625D, 1.875D, 0.9995D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.50D, 0.938D, 0.40625D, 1.625D, 0.9995D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.25D, 0.938D, 0.65625D, 1.375D, 0.9995D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.0D,  0.938D, 0.90625D, 1.125D, 0.9995D, true, renderer, block, x, y, z, meta);
 			}
 		}
 		
@@ -826,61 +468,6 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 			if (!connectWest) {
 				if (!walkwayAbove) {
 					tess.draw();
-					//Right Handrail
-					//Top
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0.0,    y + 2.0625, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0,    y + 1.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 1.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 2.0625, z + 0, u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0.0625, y + 2.0625, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0625, y + 1.9375, z + 0, u1, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 1.9375, z + 0, u0, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 2.0625, z + 0, u0, v1);
-					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0.0,    y + 1.0625, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 0.0,    y + 0.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 0.9375, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 1.0625, z + 1, u0, v1);
-					tess.draw();
-					
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.0, y + 1.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0, y + 0.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0, y + 1.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0, y + 2.0625, z + 0, u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.0625, y + 0.9375, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 0.0625, y + 1.9375, z + 0, u1, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 2.0625, z + 0, u0, v0);
-					tess.addVertexWithUV(x + 0.0625, y + 1.0625, z + 1, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 0.0625, y + 1.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.0625, y + 0.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 0.9375, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.0,    y + 1.9375, z + 0, u0, v1);
-					tess.draw();
-					
 					//Right Support Bar
 					//Top
 					tess.startDrawingQuads();
@@ -938,69 +525,10 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.0005D, 0.75D, 0.09375D, 0.062D, 1.875D, 0.15625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.0005D, 0.50D, 0.34375D, 0.062D, 1.625D, 0.40625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.0005D, 0.25D, 0.59375D, 0.062D, 1.375D, 0.65625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.0005D, 0.0D,  0.84375D, 0.062D, 1.125D, 0.90625D, true, renderer, block, x, y, z, meta);
 			}
 			if (!connectEast) {
 				if (!walkwayAbove) {
-					//Left Handrail
-					//Top
 					tess.draw();
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 1.0,    y + 1.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 1.0,    y + 2.0625, z + 0, u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1.0,    y + 2.0625, z + 0.0001, u1, v1);
-					tess.addVertexWithUV(x + 1.0,    y + 1.9375, z + 0.0001, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.9375, z + 0.0001, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 0.0001, u0, v1);
-					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 1.0,    y + 0.9375, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 1.0,    y + 1.0625, z + 1, u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 0.9375, y + 1.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.0625, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 2.0625, z + 0, u0, v1);
-					tess.draw();
-
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1.0, y + 0.9375, z + 1, u1, v1);
-					tess.addVertexWithUV(x + 1.0, y + 1.9375, z + 0, u1, v0);
-					tess.addVertexWithUV(x + 1.0, y + 2.0625, z + 0, u0, v0);
-					tess.addVertexWithUV(x + 1.0, y + 1.0625, z + 1, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 1.0,    y + 1.9375, z + 0, u1, v1);
-					tess.addVertexWithUV(x + 1.0,    y + 0.9375, z + 1, u1, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 0.9375, z + 1, u0, v0);
-					tess.addVertexWithUV(x + 0.9375, y + 1.9375, z + 0, u0, v1);
-					tess.draw();
-					
 					//Left Support rail
 					//Top
 					tess.startDrawingQuads();
@@ -1057,72 +585,13 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					tess.draw();
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.938D, 0.75D, 0.09375D, 0.9995D, 1.875D, 0.15625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.938D, 0.50D, 0.34375D, 0.9995D, 1.625D, 0.40625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.938D, 0.25D, 0.59375D, 0.9995D, 1.375D, 0.65625D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.938D, 0.0D,  0.84375D, 0.9995D, 1.125D, 0.90625D, true, renderer, block, x, y, z, meta);
 			}
 		}
 		
 		if (meta == 3) { //EAST
 			if (!connectNorth) {
 				if (!walkwayAbove) {
-					//Handrail tess
 					tess.draw();
-					//Top
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0,    u0, v0);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.0,    u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0.0,    u0, v0);
-					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0.0,    u0, v1);
-					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0,    u1, v1);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0,    u1, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0625, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0625, u0, v1);
-					tess.draw();
-					
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0625, u0, v0);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.0625, u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.0, u1, v0);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.0, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.0, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0625, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.0625, u1, v0);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.0,    u0, v0);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.0,    u0, v1);
-					tess.draw();
-					
 					//Support Rail
 					//Top
 					tess.startDrawingQuads();
@@ -1180,71 +649,11 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.09375D, 0.0D,  0.0005D, 0.15625D, 1.125D, 0.062D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.25D, 0.0005D, 0.40625D, 1.375D, 0.062D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.50D, 0.0005D, 0.65625D, 1.625D, 0.062D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.75D, 0.0005D, 0.90625D, 1.875D, 0.062D, true, renderer, block, x, y, z, meta);
 			}
 			
 			if (!connectSouth) {
 				if (!walkwayAbove) {
 					tess.draw();
-					//Handrail tess
-					
-					//Top
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 1.0,    u1, v1);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 1.0,    u1, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.9375, u0, v1);
-					tess.draw();
-					
-					//Back
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 1.0,    u1, v1);
-					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 1.0,    u1, v0);
-					tess.addVertexWithUV(x - 0.0001, y + 1.0625, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x - 0.0001, y + 0.9375, z + 0.9375, u0, v1);
-					tess.draw();
-					
-					//Front
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.9375, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.9375, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 1.0,    u0, v0);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 1.0,    u0, v1);
-					tess.draw();
-					
-					//Right
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1.0, u1, v1);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 1.0, u1, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 1.0, u0, v0);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 1.0, u0, v1);
-					tess.draw();
-					
-					//Left
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.9375, u1, v1);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u1, v0);
-					tess.addVertexWithUV(x + 0, y + 1.0625, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 2.0625, z + 0.9375, u0, v1);
-					tess.draw();
-					
-					//Bottom
-					tess.startDrawingQuads();
-					tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 1.0,    u1, v1);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 1.0,    u1, v0);
-					tess.addVertexWithUV(x + 0, y + 0.9375, z + 0.9375, u0, v0);
-					tess.addVertexWithUV(x + 1, y + 1.9375, z + 0.9375, u0, v1);
-					tess.draw();
-					
 					//Support Rail
 					tess.startDrawingQuads();
 					tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
@@ -1301,10 +710,6 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 					
 					tess.startDrawingQuads();
 				}
-				renderOversizeBlock(0.09375D, 0.0D,  0.962D, 0.15625D, 1.125D, 0.9995D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.34375D, 0.25D, 0.962D, 0.40625D, 1.375D, 0.9995D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.59375D, 0.50D, 0.962D, 0.65625D, 1.625D, 0.9995D, true, renderer, block, x, y, z, meta);
-				renderOversizeBlock(0.84375D, 0.75D, 0.962D, 0.90625D, 1.875D, 0.9995D, true, renderer, block, x, y, z, meta);
 			}
 		}
 		return true;

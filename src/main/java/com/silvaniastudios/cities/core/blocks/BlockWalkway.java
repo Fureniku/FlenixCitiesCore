@@ -158,7 +158,7 @@ public class BlockWalkway extends Block {
 	
 	@Override
 	public int getRenderType() {
-		return ClientProxy.walkwayRenderID;
+		return ClientProxy.walkwayTraditionalRenderID;
 	}
 	
 	@Override

@@ -39,7 +39,6 @@ public class MEC_EconomyHandler implements IEconManager {
 	@Override
 	public void addToWallet(int amountToAdd) {
 		econ.depositToAccount(player, amountToAdd);
-		//econ.depositToAccountViaUUID(uuid, amountToAdd);
 	}
 
 	@Override
@@ -47,13 +46,12 @@ public class MEC_EconomyHandler implements IEconManager {
 		System.out.println("Getting wallet for UUID: " + uuid + " / Player: " + player.getDisplayName());
 		double bal = econ.getBalance(player);
 		System.out.println("Balance got! It's " + bal);
-		return (int) bal;// econ.getBalanceViaUUID(uuid);
+		return (int) bal;
 	}
 
 	@Override
 	public boolean removeFromWallet(int amountToSubtract) {
 		return econ.chargeBalance(player, amountToSubtract);
-		//return econ.chargeAccountViaUUID(uuid, amountToSubtract);
 	}
 
 	@Override
