@@ -652,7 +652,7 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			
 			//NORTH
 			tess.startDrawingQuads();
-			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setColorOpaque_F(0.7F, 0.7F, 0.7F);
 			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
@@ -703,7 +703,7 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			
 			//SOUTH
 			tess.startDrawingQuads();
-			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setColorOpaque_F(0.7F, 0.7F, 0.7F);
 			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
