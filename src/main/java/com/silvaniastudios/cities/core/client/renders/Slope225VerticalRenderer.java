@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import com.silvaniastudios.cities.core.blocks.decorative.CornerPostFCC;
 import com.silvaniastudios.cities.core.client.ClientProxy;
@@ -1060,4 +1060,4 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 	public int getRenderId() {
 		return ClientProxy.slope45RenderID;
 	}
-}
+}*/

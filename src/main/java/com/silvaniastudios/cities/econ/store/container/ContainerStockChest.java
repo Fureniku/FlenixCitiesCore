@@ -1,6 +1,5 @@
 package com.silvaniastudios.cities.econ.store.container;
 
-import com.silvaniastudios.cities.econ.EconUtils;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityStockChest;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +31,7 @@ public class ContainerStockChest extends Container {
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return te.isUseableByPlayer(player);
+		return te.isUsableByPlayer(player);
 	}
 	
 	protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
@@ -74,16 +73,16 @@ public class ContainerStockChest extends Container {
                     return null;
             }
 
-            if (stackInSlot.stackSize == 0) {
+            if (stackInSlot.getCount() == 0) {
                 slotObject.putStack(null);
 	        } else {
 	                slotObject.onSlotChanged();
 	        }
 	
-	        if (stackInSlot.stackSize == stack.stackSize) {
+	        if (stackInSlot.getCount() == stack.getCount()) {
 	                return null;
 	        }
-	        slotObject.onPickupFromSlot(player, stackInSlot);
+	        slotObject.onTake(player, stackInSlot);
 			}
 		return stack;
     }

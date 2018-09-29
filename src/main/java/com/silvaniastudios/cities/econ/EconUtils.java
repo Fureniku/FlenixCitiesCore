@@ -7,15 +7,14 @@ import java.util.Locale;
 import com.silvaniastudios.cities.core.CityConfig;
 import com.silvaniastudios.cities.core.CoreItems;
 import com.silvaniastudios.cities.core.NBTConfig;
-import com.silvaniastudios.cities.econ.money.ItemCoin;
-import com.silvaniastudios.cities.econ.money.ItemNote;
+import com.silvaniastudios.cities.econ.money.ItemMoney;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 
 public class EconUtils {
 	
@@ -69,42 +68,37 @@ public class EconUtils {
 		}
 	}
 	
-	public double moveIntToBalance(int i) {
-		double newBalance = i;
-		return newBalance;
-	}
-	
 	public void depositAllCash(EntityPlayer player) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         String uuid = player.getUniqueID().toString();
         
-		double cash = getInventoryCash(player); //Check how much cash the player has on them
-		double currentBalance = 0;
+		int cash = getInventoryCash(player); //Check how much cash the player has on them
+		int currentBalance = 0;
         if (nbt.hasKey(uuid)) {
             NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
             if (playernbt.hasKey("Balance")) {
-                currentBalance = playernbt.getDouble("Balance");
+                currentBalance = playernbt.getInteger("Balance");
             }
-            double modifiedBalance = currentBalance + cash;
-            playernbt.setDouble("Balance", modifiedBalance);
+            int  modifiedBalance = currentBalance + cash;
+            playernbt.setInteger("Balance", modifiedBalance);
             nbt.setTag(uuid, playernbt);
         } else {
             NBTTagCompound playernbt = new NBTTagCompound();
             if (playernbt.hasKey("Balance")) {
-                currentBalance = playernbt.getDouble("Balance");
+                currentBalance = playernbt.getInteger("Balance");
             }
-            double modifiedBalance = currentBalance + cash;
-            playernbt.setDouble("Balance", modifiedBalance);
+            int modifiedBalance = currentBalance + cash;
+            playernbt.setInteger("Balance", modifiedBalance);
             nbt.setTag(uuid, playernbt);
         }
         NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
-        player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + formatBalance(cash) + " " + CityConfig.currencyLargePlural + EnumChatFormatting.GREEN + " Deposited! Your balance is now " + EnumChatFormatting.GOLD + "$" + formatBalance(playernbt.getDouble("Balance")) + " " + CityConfig.currencyLargePlural));
+        player.sendMessage(new TextComponentString(TextFormatting.GOLD + "$" + formatBalance(cash) + " " + CityConfig.currencyLargePlural + TextFormatting.GREEN + " Deposited! Your balance is now " + TextFormatting.GOLD + "$" + formatBalance(playernbt.getInteger("Balance")) + " " + CityConfig.currencyLargePlural));
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         removeAllPlayerCash(player);
 	}
 	
-	public void withdrawFunds(double amount, EntityPlayer entityPlayer) {
-		double balance = getBalance(entityPlayer);
+	public void withdrawFunds(int amount, EntityPlayer entityPlayer) {
+		int balance = getBalance(entityPlayer);
 		if ((balance - amount) >= 0) {
 			chargeBalance(entityPlayer, amount);
 			giveChange(amount, 0, entityPlayer);
@@ -114,154 +108,156 @@ public class EconUtils {
 	//This takes the amount paid against the total cost, and pays the player the correct change.
 	//It ensures you have space for it, and if you don't it'll send the excess to your bank account instead.
 	//This method is also used by the withdrawl system - so if you don't have room to withdraw, it basically will just stay in your account.
-	public void giveChange(double paid, double cost, EntityPlayer entityPlayer) {
-		double change = parseDouble(formatBalance(paid - cost));
-		double toBank = 0;	
+	public void giveChange(int paid, int cost, EntityPlayer entityPlayer) {
+		int change = paid - cost;
+		int toBank = 0;	
 		
-		while (change >= 100) {
+		while (change >= 10000) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note10000))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note10000));
-				debug("100 to inventory :)");
+				debug("$100 to inventory :)");
 			} else {
-				debug("Sending 100 to bank");
+				debug("Sending $100 to bank");
+				toBank = toBank + 10000;
+			}
+			change = change - 10000;
+		}
+		
+		while (change >= 5000) {
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note5000))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note5000));
+				debug("$50 to inventory :)");
+			} else {
+				debug("$50 to bank.");
+				toBank = toBank + 5000;
+			}
+			change = change - 5000;
+		} 
+		
+		while (change >= 2000) {
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note2000))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note2000));
+				debug("$20 to inventory :)");
+			} else {
+				debug("$20 to bank.");
+				toBank = toBank + 2000;
+			}
+			change = change - 2000;
+		}
+		
+		while (change >= 1000) {
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note1000))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note1000));
+				debug("$10 to inventory :)");
+			} else {
+				if (CityConfig.debugMode) {
+					debug("$10 to bank.");
+				}
+				toBank = toBank + 1000;
+			}
+			change = change - 1000;
+		}
+		
+		while (change >= 500) {
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note500))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note500));
+				debug("$5 to inventory :)");
+			} else {
+				debug("$5 to bank.");
+				toBank = toBank + 500;
+			}
+			change = change - 500;
+		}
+		
+		while (change >= 200) {
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note200))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note200));
+				debug("$2 to inventory :)");
+			} else {
+				debug("$2 to bank.");
+				toBank = toBank + 200;
+			}
+			change = change - 200;
+		}
+		
+		while (change >= 100) {
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note100))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note100));
+				debug("$1 to inventory :)");
+			} else {
+				debug("$1 to bank.");
 				toBank = toBank + 100;
 			}
 			change = change - 100;
+	
+		//Coins
 		}
-		
 		while (change >= 50) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note5000))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note5000));
-				debug("50 to inventory :)");
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin50))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin50));
+				debug("$0.50 to inventory :)");
 			} else {
-				debug("50 to bank.");
+				debug("$0.50 to bank.");
 				toBank = toBank + 50;
 			}
 			change = change - 50;
-		} 
+		}
 		
-		while (change >= 20) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note2000))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note2000));
-				debug("20 to inventory :)");
+		while (change >= 25) {
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin25))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin25));
+				debug("$0.25 to inventory :)");
 			} else {
-				debug("20 to bank.");
-				toBank = toBank + 20;
+				debug("$0.25 to bank.");
+				toBank = toBank + 25;
 			}
-			change = change - 20;
+			change = change - 25;
 		}
 		
 		while (change >= 10) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note1000))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note1000));
-				debug("10 to inventory :)");
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin10))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin10));
+				debug("$0.10 to inventory :)");
 			} else {
-				if (CityConfig.debugMode) {
-					System.out.println("10 to bank.");
-				}
+				debug("$0.10 to bank.");
 				toBank = toBank + 10;
 			}
 			change = change - 10;
 		}
 		
 		while (change >= 5) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note500))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note500));
-				debug("5 to inventory :)");
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin5))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin5));
+				debug("$0.05 to inventory :)");
 			} else {
-				debug("5 to bank.");
+				debug("$0.05 to bank.");
 				toBank = toBank + 5;
 			}
 			change = change - 5;
 		}
 		
 		while (change >= 2) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note200))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note200));
-				debug("2 to inventory :)");
+			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin2))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin2));
+				debug("$0.02 to inventory :)");
 			} else {
-				debug("2 to bank.");
+				debug("$0.02 to bank.");
 				toBank = toBank + 2;
 			}
 			change = change - 2;
 		}
 		
-		while (change >= 1) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note100))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note100));
-				debug("1 to inventory :)");
-			} else {
-				debug("1 to bank.");
-				toBank = toBank + 1;
-			}
-			change = change - 1;
-	
-		//Coins
-		}
-		while (change >= 0.5) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin50))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin50));
-				debug("0.50 to inventory :)");
-			} else {
-				debug("0.50 to bank.");
-				toBank = toBank + 0.5;
-			}
-			change = change - 0.5;
-		}
-		
-		while (change >= 0.25) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin25))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin25));
-				debug("0.25 to inventory :)");
-			} else {
-				debug("0.25 to bank.");
-				toBank = toBank + 0.25;
-			}
-			change = change - 0.25;
-		}
-		
-		while (change >= 0.1) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin10))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin10));
-				debug("0.10 to inventory :)");
-			} else {
-				debug("0.10 to bank.");
-				toBank = toBank + 0.1;
-			}
-			change = change - 0.1;
-		}
-		
-		while (change >= 0.05) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin5))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin5));
-				debug("0.05 to inventory :)");
-			} else {
-				debug("0.05 to bank.");
-				toBank = toBank + 0.05;
-			}
-			change = change - 0.05;
-		}
-		
-		while (change >= 0.02) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin2))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin2));
-				debug("0.02 to inventory :)");
-			} else {
-				debug("0.02 to bank.");
-				toBank = toBank + 0.02;
-			}
-			change = change - 0.02;
-		}
-		
 		while (change > 0) {
 			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin1))) { 
 				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin1));
+				debug("$0.01 to inventory :)");
 			} else {
-				toBank = toBank + 0.01;
+				debug("$0.01 to bank.");
+				toBank = toBank + 1;
 			}
-			change = change - 0.01;
+			change = change - 1;
 		}
-		if (toBank >= 0.01) {
+		if (toBank >= 1) {
 			System.out.println("Depositing " + toBank + " to " + entityPlayer.getDisplayName() + "'s account.");
 		}
 		depositToAccount(entityPlayer, toBank);
@@ -270,25 +266,20 @@ public class EconUtils {
 	//Counts up all the money in the players inventory.
 	//When wallets are added, they will have something like this independently, and will just be added to the final balance.
 	//That way, getInventoryCash will return all money both in your wallet and in your general inventory.
-	public double getInventoryCash(EntityPlayer player) {
-		double balance = 0;
+	public int getInventoryCash(EntityPlayer player) {
+		int balance = 0;
 		for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
-				double moneyValue = 0;
-				if (stack.getItem() instanceof ItemNote) {
-					ItemNote note = (ItemNote) stack.getItem();
+				int moneyValue = 0;
+				if (stack.getItem() instanceof ItemMoney) {
+					ItemMoney note = (ItemMoney) stack.getItem();
 					if (note.getMoneyValue() >= 0) {
 						moneyValue = note.getMoneyValue();
 					}
-				} else if (stack.getItem() instanceof ItemCoin) {
-					ItemCoin coin = (ItemCoin) stack.getItem();
-					if (coin.getMoneyValue() >= 0) {
-						moneyValue = coin.getMoneyValue();
-					}
 				}
-				int quantity = stack.stackSize;
-				double totalValue = moneyValue * quantity;
+				int quantity = stack.getCount();
+				int totalValue = moneyValue * quantity;
 				
 				if (moneyValue > 0) {
 					debug("There is a money stack with value of " + moneyValue  + ". The stack size is " + quantity + " with a total value of " + totalValue);
@@ -304,9 +295,9 @@ public class EconUtils {
 		for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
-				if (stack.getItem() instanceof ItemNote || stack.getItem() instanceof ItemCoin) {
-					debug("Found note, Removing!");
-					player.inventory.setInventorySlotContents(i, null);
+				if (stack.getItem() instanceof ItemMoney) {
+					debug("Found money, Removing!");
+					player.inventory.removeStackFromSlot(i);
 					((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
 				}
 			}
@@ -341,27 +332,16 @@ public class EconUtils {
 	 * 
 	 * LIKE A BOSS.
 	 */
-	public boolean findCashInInventory(EntityPlayer player, double value) {
+	public boolean findCashInInventory(EntityPlayer player, int value) {
 		if (getInventoryCash(player) >= value) {
 			for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 				ItemStack stack = player.inventory.getStackInSlot(i);
 				if (stack != null) {
-					if (stack.getItem() instanceof ItemNote || stack.getItem() instanceof ItemCoin) {
-						int qty = stack.stackSize;
-						double noteValue = 0;
-						double coinValue = 0;
-						if (stack.getItem() instanceof ItemNote) {
-							//These are inside if statements in order to avoid bad casting.
-							ItemNote note = (ItemNote) stack.getItem();
-							noteValue = note.getMoneyValue();
-						}
-						if (stack.getItem() instanceof ItemCoin) {
-							ItemCoin coin = (ItemCoin) stack.getItem();
-							coinValue = coin.getMoneyValue();
-						}
-						//Here, we add the two values. Only one of the two is ever used, so "moneyValue" is both note and coin value.
-						double moneyValue = noteValue + coinValue;
-						double currentlyPaid = 0;
+					if (stack.getItem() instanceof ItemMoney) {
+						int qty = stack.getCount();
+						ItemMoney money = (ItemMoney) stack.getItem();
+						int moneyValue = money.getMoneyValue();
+						int currentlyPaid = 0;
 						//Second loop, basically checks if the stack's value is high enough one item at a time (as to not overpay)
 						for(int x = 1; x <= qty; x++) {
 							debug("Nested Loop! Current stack value is: " + (moneyValue * x) + " - The target is " + value);
@@ -371,7 +351,7 @@ public class EconUtils {
 									player.inventory.setInventorySlotContents(i, null);
 								} else
 									player.inventory.decrStackSize(i, x);
-								double paidAmount = moneyValue * x;
+								int paidAmount = moneyValue * x;
 								debug("Give change: " + (paidAmount - value));
 								depositToAccount(player, paidAmount-value);
 								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
@@ -393,27 +373,18 @@ public class EconUtils {
 	
 	//Almost identical to findCashInInv, except it returns the value of the change.
 	//Useful for player owned shop systems, as change should be taken from the player and NOT generated.
-	public double findCashInInventoryWithChange(EntityPlayer player, double value) {
-		double currentlyPaid = 0;
+	public int findCashInInventoryWithChange(EntityPlayer player, int value) {
+		int currentlyPaid = 0;
 		if (getInventoryCash(player) >= value) {
 			for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 				debug("Currently paid: " + currentlyPaid + ", Value: " + value);
 				ItemStack stack = player.inventory.getStackInSlot(i);
 				if (stack != null) {
-					if (stack.getItem() instanceof ItemNote || stack.getItem() instanceof ItemCoin) {
-						int qty = stack.stackSize;
-						double noteValue = 0;
-						double coinValue = 0;
-						if (stack.getItem() instanceof ItemNote) {
-							ItemNote note = (ItemNote) stack.getItem();
-							noteValue = note.getMoneyValue();
-						}
-						if (stack.getItem() instanceof ItemCoin) {
-							ItemCoin coin = (ItemCoin) stack.getItem();
-							coinValue = coin.getMoneyValue();
-						}
-						double moneyValue = noteValue + coinValue; //How much
-						double stackValue = qty * (parseDouble(formatBalance(moneyValue)));
+					if (stack.getItem() instanceof ItemMoney) {
+						int qty = stack.getCount();
+						ItemMoney money = (ItemMoney) stack.getItem();
+						int moneyValue = money.getMoneyValue();
+						int stackValue = qty * moneyValue;
 						currentlyPaid = currentlyPaid + stackValue;
 						player.inventory.setInventorySlotContents(i, null);
 						if (currentlyPaid >= value) {
@@ -430,21 +401,21 @@ public class EconUtils {
 	}
 	
 	//Attempt to give change from an inventory, such as a shop's cash register.
-	public boolean giveChangeFromInventory(EntityPlayer player, int x, int y, int z, double value) {
+	public boolean giveChangeFromInventory(EntityPlayer player, int x, int y, int z, int value) {
 		return false;
 	}
 	
-	public boolean chargePlayerAnywhere(EntityPlayer player, double value) {
+	public boolean chargePlayerAnywhere(EntityPlayer player, int value) {
 		if (findCashInInventory(player, value) == false) {
 			
-			double invBalance = getInventoryCash(player);
-			double cardBalance = getBalance(player);
+			int invBalance = getInventoryCash(player);
+			int cardBalance = getBalance(player);
 			
-			double totalBalance = invBalance + cardBalance;
-			if (player.inventory.hasItem(CoreItems.debitCardNew)) {
+			int totalBalance = invBalance + cardBalance;
+			if (player.inventory.hasItemStack(new ItemStack(CoreItems.debitCard))) {
 				if (invBalance < value) {
 					if (totalBalance >= value) {
-						double payAmount = value - invBalance;
+						int payAmount = value - invBalance;
 						if (payBalanceByCard(player, payAmount)) {
 							removeAllPlayerCash(player);
 							return true;
@@ -455,83 +426,11 @@ public class EconUtils {
 		}
 		return false;
 	}
-	
-	public boolean findCoinsInInventory(EntityPlayer player, double value) {
-		if (getInventoryCash(player) >= value) {
-			for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
-				ItemStack stack = player.inventory.getStackInSlot(i);
-				if (stack != null) {
-					if (stack.getItem() instanceof ItemCoin) {
-						int qty = stack.stackSize;
-						double coinValue = 0;
-						ItemCoin coin = (ItemCoin) stack.getItem();
-						coinValue = coin.getMoneyValue();
-						double currentlyPaid = 0;
-						for(int x = 1; x <= qty; x++) {
-							debug("Nested Loop! Current stack value is: " + (coinValue * x) + " - The target is " + value);
-							if (currentlyPaid + (coinValue * x) >= value) {
-								debug("This is fired if the moneyValue is higher than the value, allegedly");
-								if (x == qty) {
-									player.inventory.setInventorySlotContents(i, null);
-								} else
-									player.inventory.decrStackSize(i, x);
-								double paidAmount = coinValue * x;
-								debug("Give change: " + (paidAmount - value));
-								depositToAccount(player, (paidAmount-value));
-								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
-								return true;
-							}
-						}
-						currentlyPaid = currentlyPaid + (coinValue * qty);
-						player.inventory.setInventorySlotContents(i, null);
-						((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public boolean findNotesInInventory(EntityPlayer player, double value) {
-		if (getInventoryCash(player) >= value) {
-			for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
-				ItemStack stack = player.inventory.getStackInSlot(i);
-				if (stack != null) {
-					if (stack.getItem() instanceof ItemNote) {
-						int qty = stack.stackSize;
-						double noteValue = 0;
-						ItemNote note = (ItemNote) stack.getItem();
-						noteValue = note.getMoneyValue();
-						double currentlyPaid = 0;
-						for(int x = 1; x <= qty; x++) {
-							debug("Nested Loop! Current stack value is: " + (noteValue * x) + " - The target is " + value);
-							if (currentlyPaid + (noteValue * x) >= value) {
-								debug("This is fired if the moneyValue is higher than the value, allegedly");
-								if (x == qty) {
-									player.inventory.setInventorySlotContents(i, null);
-								} else
-									player.inventory.decrStackSize(i, x);
-								double paidAmount = noteValue * x;
-								debug("Give change: " + (paidAmount - value));
-								depositToAccount(player, (paidAmount-value));
-								((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
-								return true;
-							}
-						}
-						currentlyPaid = currentlyPaid + (noteValue * qty);
-						player.inventory.setInventorySlotContents(i, null);
-						((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
+
 	//Basically removes value from the players account
-	public boolean payBalanceByCard(EntityPlayer player, double value) {
+	public boolean payBalanceByCard(EntityPlayer player, int value) {
 		debug("Attempting to pay balance by card");
-		double cardBalance = getBalance(player);
+		int cardBalance = getBalance(player);
 		if (value <= cardBalance) {
 			//They can pay by card!
 			//Open GUI
@@ -542,29 +441,29 @@ public class EconUtils {
 	}
 	
 	//Removes money from the players account- for withdrawl etc.
-	public boolean chargeBalance(EntityPlayer player, double amt) {
+	public boolean chargeBalance(EntityPlayer player, int amt) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
 		debug("Charging balance! Amount: $" + amt);
-		double cardBalance = getBalance(player);
+		int cardBalance = getBalance(player);
 		debug("cardBalance: " + cardBalance);
 		if (amt <= cardBalance) {
 			debug("AMT is >= cardBalance");
 			String playerUUID = player.getUniqueID().toString();
-			double currentBalance = 0;
+			int currentBalance = 0;
 	        if (nbt.hasKey(playerUUID)) {
 	        	debug("nbt.hasKey");
 	            NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
 	            if (playernbt.hasKey("Balance")) {
-	                currentBalance = playernbt.getDouble("Balance");
+	                currentBalance = playernbt.getInteger("Balance");
 	            }
-	            double modifiedBalance = currentBalance - amt;
-	            playernbt.setDouble("Balance", modifiedBalance);
+	            int modifiedBalance = currentBalance - amt;
+	            playernbt.setInteger("Balance", modifiedBalance);
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        } else {
 	            debug("BAD! Player has no money, how'd they get this far?");
 	            return false;
 	        }
-	        NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
+	        //NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
 	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
 			return true;
 		}
@@ -573,34 +472,33 @@ public class EconUtils {
 	}
 	
 	//Used for printing the balance ONLY. Do NOT use anywhere money values are actually altered!
-	//Simply rounds any double to two decimal places, stops bugs where doubles add micro factions.
-	public String formatBalance(double bal) {
+	public String formatBalance(int bal) {
+		double printBal = bal / 100.0; 
 		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
 		nf.setMinimumFractionDigits(2);
 		nf.setMaximumFractionDigits(2);
 		nf.setRoundingMode(RoundingMode.HALF_UP);
-		String str = nf.format(bal);
+		String str = nf.format(printBal);
 		str = str.replace(",", "");
 		
 		return str;
 	}
 
 	//Quick n' easy method of getting the players balance.
-	public double getBalance(EntityPlayer player) {
+	public int getBalance(EntityPlayer player) {
 		System.out.println("Getting balance for player " + player.getDisplayName());
-		//NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
         return getBalanceViaUUID(player.getUniqueID().toString());
 	}
 	
-	public double getVictimBalance(EntityPlayer player) {
+	public int getVictimBalance(EntityPlayer player) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
-		double balance = 0;
+		int balance = 0;
 		if (player.inventory.getCurrentItem() != null) {
 			String victimPlayerUUID = DebitCardItem.checkCardOwner(player, player.inventory.getCurrentItem());
 	        if (nbt.hasKey(victimPlayerUUID)) {
 	            NBTTagCompound playernbt = nbt.getCompoundTag(victimPlayerUUID);
 	            if (playernbt.hasKey("Balance")) {
-	                balance = playernbt.getDouble("Balance");
+	                balance = playernbt.getInteger("Balance");
 	            }
 	        }
 		}
@@ -620,8 +518,8 @@ public class EconUtils {
 			if (slot != null) {
 				if (slot.getItem().equals(item.getItem())) {
 					int max = slot.getMaxStackSize();
-					int slotSize = slot.stackSize;
-					int itemSize = item.stackSize;
+					int slotSize = slot.getCount();
+					int itemSize = item.getCount();
 					
 					if ((itemSize + slotSize) <= max) {
 						debug("Unfilled compatable stack found; adding to it.");
@@ -640,8 +538,8 @@ public class EconUtils {
 		for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
-				if (stack.getItem() == CoreItems.debitCardNew) {
-					if (player.getUniqueID().toString().equals(stack.stackTagCompound.getString("playerUUID"))) {
+				if (stack.getItem() == CoreItems.debitCard) {
+					if (player.getUniqueID().toString().equals(stack.getTagCompound().getString("playerUUID"))) {
 						return true;
 					}
 				}
@@ -650,98 +548,98 @@ public class EconUtils {
 		return false;
 	}
 	
-	public void depositToAccount(EntityPlayer player, double deposit) {
+	public void depositToAccount(EntityPlayer player, int deposit) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
-		double currentBalance = 0;
+		int currentBalance = 0;
 		String playerUUID = player.getUniqueID().toString();
         if (nbt.hasKey(playerUUID)) {
             NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
             if (playernbt.hasKey("Balance")) {
-                currentBalance = playernbt.getDouble("Balance");
+                currentBalance = playernbt.getInteger("Balance");
             }
-            double modifiedBalance = currentBalance + deposit;
-            playernbt.setDouble("Balance", modifiedBalance);
+            int modifiedBalance = currentBalance + deposit;
+            playernbt.setInteger("Balance", modifiedBalance);
             nbt.setTag(playerUUID, playernbt);
         } else {
             NBTTagCompound playernbt = new NBTTagCompound();
             if (playernbt.hasKey("Balance")) {
-                currentBalance = playernbt.getDouble("Balance");
+                currentBalance = playernbt.getInteger("Balance");
             }
-            double modifiedBalance = currentBalance + deposit;
-            playernbt.setDouble("Balance", modifiedBalance);
+            int modifiedBalance = currentBalance + deposit;
+            playernbt.setInteger("Balance", modifiedBalance);
             nbt.setTag(playerUUID, playernbt);
         }
-        NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
+       // NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         if (deposit >= 0.1) {
-        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is " + EnumChatFormatting.GOLD  + "$" + formatBalance(getBalance(player))));
+        	player.sendMessage(new TextComponentString(TextFormatting.GOLD + "$" + formatBalance(deposit) + TextFormatting.GREEN + " was sent to your bank account. Your current total balance is " + TextFormatting.GOLD  + "$" + formatBalance(getBalance(player))));
         }
 	}
 	
-	public void depositToAccountViaUUID(String uuid, double deposit) {
+	public void depositToAccountViaUUID(String uuid, int deposit) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
-		double currentBalance = 0;
+		int currentBalance = 0;
 		String playerUUID = uuid;
         if (nbt.hasKey(playerUUID)) {
             NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
             if (playernbt.hasKey("Balance")) {
-                currentBalance = playernbt.getDouble("Balance");
+                currentBalance = playernbt.getInteger("Balance");
             }
-            double modifiedBalance = currentBalance + deposit;
-            playernbt.setDouble("Balance", modifiedBalance);
+            int modifiedBalance = currentBalance + deposit;
+            playernbt.setInteger("Balance", modifiedBalance);
             nbt.setTag(playerUUID, playernbt);
         } else {
             NBTTagCompound playernbt = new NBTTagCompound();
             if (playernbt.hasKey("Balance")) {
-                currentBalance = playernbt.getDouble("Balance");
+                currentBalance = playernbt.getInteger("Balance");
             }
-            double modifiedBalance = currentBalance + deposit;
-            playernbt.setDouble("Balance", modifiedBalance);
+            int modifiedBalance = currentBalance + deposit;
+            playernbt.setInteger("Balance", modifiedBalance);
             nbt.setTag(playerUUID, playernbt);
         }
-        NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
+        //NBTTagCompound playernbt = nbt.getCompoundTag(playerUUID);
         NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
         if (deposit >= 0.1) {
-        	//TODO player.addChatMessage(EnumChatFormatting.GOLD + "$" + formatBalance(deposit) + EnumChatFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + EnumChatFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
+        	//TODO player.addChatMessage(TextFormatting.GOLD + "$" + formatBalance(deposit) + TextFormatting.GREEN + " was sent to your bank account. Your current total balance is $" + TextFormatting.GOLD + formatBalance(getBalance(player, player.worldObj)));
         }
 	}
 	
-	public boolean chargeAccountViaUUID(String uuid, double amt) {
+	public boolean chargeAccountViaUUID(String uuid, int amt) {
 		NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
-		double cardBalance = getBalanceViaUUID(uuid);
+		int cardBalance = getBalanceViaUUID(uuid);
 		if (amt <= cardBalance) {
-			double currentBalance = 0;
+			int currentBalance = 0;
 	        if (nbt.hasKey(uuid)) {
 	            NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
 	            if (playernbt.hasKey("Balance")) {
-	                currentBalance = playernbt.getDouble("Balance");
+	                currentBalance = playernbt.getInteger("Balance");
 	            }
-	            double modifiedBalance = currentBalance - amt;
-	            playernbt.setDouble("Balance", modifiedBalance);
+	            int modifiedBalance = currentBalance - amt;
+	            playernbt.setInteger("Balance", modifiedBalance);
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        } else {
 	            NBTTagCompound playernbt = new NBTTagCompound();
 	            if (playernbt.hasKey("Balance")) {
-	                currentBalance = playernbt.getDouble("Balance");
+	                currentBalance = playernbt.getInteger("Balance");
 	            }
-	            double modifiedBalance = currentBalance - amt;
-	            playernbt.setDouble("Balance", modifiedBalance);
+	            int modifiedBalance = currentBalance - amt;
+	            playernbt.setInteger("Balance", modifiedBalance);
 	            //TODO nbt.setCompoundTag(player.username, playernbt);
 	        }
-	        NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
+	        //NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
 	        NBTConfig.saveConfig(nbt, NBTConfig.getWorldConfig());
 			return true;
 		}
 		return false;
 	}
 	
-	public double getBalanceViaUUID(String uuid) {
+	public int getBalanceViaUUID(String uuid) {
         NBTTagCompound nbt = NBTConfig.getTagCompoundInFile(NBTConfig.getWorldConfig());
-        double balance = 0;
+        int balance = 0;
         if (nbt.hasKey(uuid)) {
             NBTTagCompound playernbt = nbt.getCompoundTag(uuid);
             if (playernbt.hasKey("Balance")) {
-                balance = playernbt.getDouble("Balance");
+                balance = playernbt.getInteger("Balance");
             }
         }
         return balance;

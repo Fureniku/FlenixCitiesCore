@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import org.lwjgl.opengl.GL11;
 
@@ -629,4 +629,4 @@ public class LightBlockRenderer implements ISimpleBlockRenderingHandler {
 	public int getRenderId() {
 		return ClientProxy.lightBlockRenderID;
 	}
-}
+}*/

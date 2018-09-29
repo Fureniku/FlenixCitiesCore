@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import com.silvaniastudios.cities.core.client.ClientProxy;
 
@@ -49,7 +49,7 @@ public class CornerPostRenderer extends BlockRenderCore implements ISimpleBlockR
 		if (meta < 0 && inWorld) {
 			meta = world.getBlockMetadata(x, y+yOffset, z);
 		}
-		double /*gary*/ barLow = yOffset == 1 ? 0.0625 : 0;
+		double barLow = yOffset == 1 ? 0.0625 : 0;
 		double barHigh = yOffset == -1 ? 0.9375 : 1;
 		if (meta == 0 || meta == 4 || meta == 7 || meta == 8 || meta == 10 || meta == 11 || meta == 12 || meta == 13) {
 			renderBlock(0.8125, barLow, 0.0625, 0.9375, barHigh, 0.1875, inWorld, renderer, block, x, y, z, meta);
@@ -69,4 +69,4 @@ public class CornerPostRenderer extends BlockRenderCore implements ISimpleBlockR
 	public int getRenderId() {
 		return ClientProxy.cornerPostRenderID;
 	}
-}
+}*/

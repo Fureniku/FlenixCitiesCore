@@ -2,7 +2,7 @@ package com.silvaniastudios.cities.core.npc;
 
 import com.silvaniastudios.cities.core.CityConfig;
 import com.silvaniastudios.cities.core.CoreItems;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
+import com.silvaniastudios.cities.core.FlenixCities;
 import com.silvaniastudios.cities.core.npc.ai.NPCAITempt;
 
 import net.minecraft.entity.EntityAgeable;
@@ -14,12 +14,12 @@ import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class EntityBanker extends EntityAnimal {
@@ -38,11 +38,9 @@ public class EntityBanker extends EntityAnimal {
 	
 	public EntityBanker(World par1World) {
 		super(par1World);
-		this.getNavigator().setAvoidsWater(true);
 		this.setSize(0.6F, 1.8F);
         this.isImmuneToFire = false;
 		float var2 = 0.25F;
-		this.isEntityInvulnerable();
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new NPCAITempt(this, 1.1D, CoreItems.note10000, false));
         this.tasks.addTask(2, new NPCAITempt(this, 1.0D, CoreItems.note5000, false));
@@ -57,10 +55,9 @@ public class EntityBanker extends EntityAnimal {
 	}
 		
 	@Override
-	public boolean interact(EntityPlayer player) {
-		//Right now this is just here so I can right-click the mob and printline what his NBT is as an in-game check.
-		if (!player.inventory.hasItem(CoreItems.debitCardNew)) {
-			player.inventory.addItemStackToInventory(new ItemStack(CoreItems.debitCardNew));
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (!player.inventory.hasItemStack(new ItemStack(CoreItems.debitCard))) {
+			player.inventory.addItemStackToInventory(new ItemStack(CoreItems.debitCard));
 		}
 		NBTTagCompound nbt = this.getEntityData();
 		readEntityFromNBT(nbt);
@@ -69,7 +66,7 @@ public class EntityBanker extends EntityAnimal {
 
 	public boolean onInteractFirst(EntityPlayer player) {
 		System.out.println("Interacting First!");
-		player.openGui(FlenixCities_Core.instance, 0, worldObj, 0, 0, 0);
+		player.openGui(FlenixCities.instance, 0, player.world, 0, 0, 0);
 		return true;
 	}
 	
@@ -153,7 +150,7 @@ public class EntityBanker extends EntityAnimal {
 	protected void applyEntityAttributes() {
 		if (invincible == false) {
 			super.applyEntityAttributes();
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue(); 
+			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue(); 
 			if (CityConfig.debugMode == true) {
 				System.out.println("Entity is not invincible. Can be attacked. Status: " + invincible);
 			}

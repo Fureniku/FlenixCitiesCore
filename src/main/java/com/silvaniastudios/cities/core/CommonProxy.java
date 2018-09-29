@@ -1,203 +1,21 @@
 package com.silvaniastudios.cities.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.Instance;
 
-import com.silvaniastudios.cities.core.items.*;
-import com.silvaniastudios.cities.core.npc.EntityBanker;
-
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
+@Mod.EventBusSubscriber
 public class CommonProxy {
 	
 	@Instance
-	public static FlenixCities_Core instance;
+	public static FlenixCities instance;
 	
-    public void entityStuff() {
+	public void registerItemRenderer(Item item, int meta, String id) {}
+	
+	public void openGui(int guiId) {}
+	
+    /*public void entityStuff() {
     	EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 1, FlenixCities_Core.instance, 32, 5, true);
-    }
-    
-    public void registerBlocks() {
-        GameRegistry.registerBlock(CoreBlocks.atmBlock, ItemATMBlock.class, "FlenixCities" + (CoreBlocks.atmBlock.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.floatingShelvesBlock, "floatingShelvesBlock");
-        GameRegistry.registerBlock(CoreBlocks.npcSpawnerBlock, "npcSpawnerBlock");
-        GameRegistry.registerBlock(CoreBlocks.stockChest, "stockChest");
-        
-        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks2, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks2.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks3, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks3.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks4, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks4.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks5, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks5.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks6, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks6.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.skyscraperBlocks7, ItemSkyscraperBlocks.class, "FlenixCities" + (CoreBlocks.skyscraperBlocks7.getUnlocalizedName().substring(5)));
-        
-        GameRegistry.registerBlock(CoreBlocks.stainedGlass, ItemStainedGlass.class, "FlenixCities" + (CoreBlocks.stainedGlass.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.stainedGlassLit, ItemStainedGlassLit.class, "FlenixCities" + (CoreBlocks.stainedGlassLit.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.styledGlass, ItemStyledGlass.class, "FlenixCities" + (CoreBlocks.styledGlass.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.styledGlassWhite, ItemStyledGlassLit.class, "FlenixCities" + (CoreBlocks.styledGlassWhite.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.woolCeilingTile, ItemWoolCeilingTile.class, "FlenixCities" + (CoreBlocks.woolCeilingTile.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.woolStone, ItemWoolStone.class, "FlenixCities" + (CoreBlocks.woolStone.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.woolWood, ItemWoolStone.class, "FlenixCities" + (CoreBlocks.woolWood.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.plasticBlock, ItemPlasticBlocks.class, "FlenixCities" + (CoreBlocks.plasticBlock.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.floorBlocks, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.floorBlocks.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(CoreBlocks.floorBlocks2, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.floorBlocks2.getUnlocalizedName().substring(5)));
-       	
-        GameRegistry.registerBlock(CoreBlocks.oakWalkway, "oakWalkway");
-        GameRegistry.registerBlock(CoreBlocks.spruceWalkway, "spruceWalkway");
-        GameRegistry.registerBlock(CoreBlocks.birchWalkway, "birchWalkway");
-        GameRegistry.registerBlock(CoreBlocks.jungleWalkway, "jungleWalkway");
-        GameRegistry.registerBlock(CoreBlocks.acaciaWalkway, "acaciaWalkway");
-        GameRegistry.registerBlock(CoreBlocks.darkOakWalkway, "darkOakWalkway");
-        
-        GameRegistry.registerBlock(CoreBlocks.whiteWalkway, "whiteWalkway");
-        GameRegistry.registerBlock(CoreBlocks.lightGreyWalkway, "lightGreyWalkway");
-        GameRegistry.registerBlock(CoreBlocks.darkGreyWalkway, "darkGreyWalkway");
-        GameRegistry.registerBlock(CoreBlocks.blackWalkway, "blackWalkway");
-        
-        GameRegistry.registerBlock(CoreBlocks.lightGreenWalkway, "lightGreenWalkway");
-        GameRegistry.registerBlock(CoreBlocks.cyanWalkway, "cyanWalkway");
-        GameRegistry.registerBlock(CoreBlocks.purpleWalkway, "purpleWalkway");
-        GameRegistry.registerBlock(CoreBlocks.pinkWalkway, "pinkWalkway");
-        
-        GameRegistry.registerBlock(CoreBlocks.blueWalkway, "blueWalkway");
-        GameRegistry.registerBlock(CoreBlocks.brownWalkway, "brownWalkway");
-        GameRegistry.registerBlock(CoreBlocks.greenWalkway, "greenWalkway");
-        GameRegistry.registerBlock(CoreBlocks.redWalkway, "redWalkway");
-        
-        GameRegistry.registerBlock(CoreBlocks.orangeWalkway, "orangeWalkway");
-        GameRegistry.registerBlock(CoreBlocks.magentaWalkway, "magentaWalkway");
-        GameRegistry.registerBlock(CoreBlocks.lightBlueWalkway, "lightBlueWalkway");
-        GameRegistry.registerBlock(CoreBlocks.yellowWalkway, "yellowWalkway");
-        
-        GameRegistry.registerBlock(CoreBlocks.pastelDarkBlueWalkway, "pastelDarkBlueWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelBrownWalkway, "pastelBrownWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelGreenWalkway, "pastelGreenWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelPinkWalkway, "pastelPinkWalkway");
-    	
-    	GameRegistry.registerBlock(CoreBlocks.pastelOrangeWalkway, "pastelOrangeWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelMagentaWalkway, "pastelMagentaWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelRedWalkway, "pastelRedWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelYellowWalkway, "pastelYellowWalkway");
-    	
-    	GameRegistry.registerBlock(CoreBlocks.pastelLightBlueWalkway, "pastelLightBlueWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelLightGreenWalkway, "pastelLightGreenWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelCyanWalkway, "pastelCyanWalkway");
-    	GameRegistry.registerBlock(CoreBlocks.pastelPurpleWalkway, "pastelPurpleWalkway");
-        
-        GameRegistry.registerBlock(CoreBlocks.oakLaminateWalkway, "oakLaminateWalkway");
-        GameRegistry.registerBlock(CoreBlocks.spruceLaminateWalkway, "spruceLaminateWalkway");
-        GameRegistry.registerBlock(CoreBlocks.birchLaminateWalkway, "birchLaminateWalkway");
-        GameRegistry.registerBlock(CoreBlocks.jungleLaminateWalkway, "jungleLaminateWalkway");
-        GameRegistry.registerBlock(CoreBlocks.acaciaLaminateWalkway, "acaciaLaminateWalkway");
-        GameRegistry.registerBlock(CoreBlocks.darkOakLaminateWalkway, "darkOakLaminateWalkway");
-        
-        GameRegistry.registerBlock(CoreBlocks.oakWalkwayStairs, "oakWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.spruceWalkwayStairs, "spruceWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.birchWalkwayStairs, "birchWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.jungleWalkwayStairs, "jungleWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.acaciaWalkwayStairs, "acaciaWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.darkOakWalkwayStairs, "darkOakWalkwayStairs");
-        
-        GameRegistry.registerBlock(CoreBlocks.whiteWalkwayStairs, "whiteWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.lightGreyWalkwayStairs, "lightGreyWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.darkGreyWalkwayStairs, "darkGreyWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.blackWalkwayStairs, "blackWalkwayStairs");
-        
-        GameRegistry.registerBlock(CoreBlocks.lightGreenWalkwayStairs, "lightGreenWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.cyanWalkwayStairs, "cyanWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.purpleWalkwayStairs, "purpleWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.pinkWalkwayStairs, "pinkWalkwayStairs");
-        
-        GameRegistry.registerBlock(CoreBlocks.blueWalkwayStairs, "blueWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.brownWalkwayStairs, "brownWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.greenWalkwayStairs, "greenWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.redWalkwayStairs, "redWalkwayStairs");
-        
-        GameRegistry.registerBlock(CoreBlocks.orangeWalkwayStairs, "orangeWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.magentaWalkwayStairs, "magentaWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.lightBlueWalkwayStairs, "lightBlueWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.yellowWalkwayStairs, "yellowWalkwayStairs");
-        
-        GameRegistry.registerBlock(CoreBlocks.pastelDarkBlueWalkwayStairs, "pastelDarkBlueWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelBrownWalkwayStairs, "pastelBrownWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelGreenWalkwayStairs, "pastelGreenWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelPinkWalkwayStairs, "pastelPinkWalkwayStairs");
-    	
-    	GameRegistry.registerBlock(CoreBlocks.pastelOrangeWalkwayStairs, "pastelOrangeWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelMagentaWalkwayStairs, "pastelMagentaWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelRedWalkwayStairs, "pastelRedWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelYellowWalkwayStairs, "pastelYellowWalkwayStairs");
-    	
-    	GameRegistry.registerBlock(CoreBlocks.pastelLightBlueWalkwayStairs, "pastelLightBlueWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelLightGreenWalkwayStairs, "pastelLightGreenWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelCyanWalkwayStairs, "pastelCyanWalkwayStairs");
-    	GameRegistry.registerBlock(CoreBlocks.pastelPurpleWalkwayStairs, "pastelPurpleWalkwayStairs");
-        
-        GameRegistry.registerBlock(CoreBlocks.oakLaminateWalkwayStairs, "oakLaminateWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.spruceLaminateWalkwayStairs, "spruceLaminateWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.birchLaminateWalkwayStairs, "birchLaminateWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.jungleLaminateWalkwayStairs, "jungleLaminateWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.acaciaLaminateWalkwayStairs, "acaciaLaminateWalkwayStairs");
-        GameRegistry.registerBlock(CoreBlocks.darkOakLaminateWalkwayStairs, "darkOakLaminateWalkwayStairs");
-        
-       	GameRegistry.registerBlock(CoreBlocks.rebarBlock, "rebarBlock");
-       	GameRegistry.registerBlock(CoreBlocks.lightingBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingBlocks.getUnlocalizedName().substring(5)));
-       	GameRegistry.registerBlock(CoreBlocks.lightingRotateBlocks, ItemLightingBlock.class, "FlenixCities" + (CoreBlocks.lightingRotateBlocks.getUnlocalizedName().substring(5)));
-
-       	GameRegistry.registerBlock(CoreBlocks.styledGlassPane, "styledGlassPane"); //, ItemFloorBlocks.class, "FlenixCities" + (CoreBlocks.styledGlassPane.getUnlocalizedName().substring(5)));
-       	GameRegistry.registerBlock(CoreBlocks.styledGlassWhitePane, "styledGlassWhitePane");
-       	
-       	GameRegistry.registerBlock(CoreBlocks.quartzDecorBlocks, ItemFloorBlocks.class, "quartzDecorBlocks");
-        GameRegistry.registerBlock(CoreBlocks.adminShopBlock, "adminShopBlock");
-       	
-       	
-       	//GameRegistry.registerBlock(FlenixCities.verticalPoster1, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster1.getUnlocalizedName().substring(5)));
-       	//GameRegistry.registerBlock(FlenixCities.verticalPoster2, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster2.getUnlocalizedName().substring(5)));
-       	//GameRegistry.registerBlock(FlenixCities.verticalPoster3, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster3.getUnlocalizedName().substring(5)));
-       	//GameRegistry.registerBlock(FlenixCities.verticalPoster4, ItemBlockPosterVertical.class, "FlenixCities" + (FlenixCities.verticalPoster4.getUnlocalizedName().substring(5)));
-
-        GameRegistry.registerItem(CoreItems.coin1, "coin1");
-        GameRegistry.registerItem(CoreItems.coin2, "coin2");
-        GameRegistry.registerItem(CoreItems.coin5, "coin5");
-        GameRegistry.registerItem(CoreItems.coin10, "coin10");
-        GameRegistry.registerItem(CoreItems.coin25, "coin25");
-        GameRegistry.registerItem(CoreItems.coin50, "coin50");
-        GameRegistry.registerItem(CoreItems.coin100, "coin100");
-        GameRegistry.registerItem(CoreItems.note100, "note100");
-        GameRegistry.registerItem(CoreItems.note200, "note200");
-        GameRegistry.registerItem(CoreItems.note500, "note500");
-        GameRegistry.registerItem(CoreItems.note1000, "note1000");
-        GameRegistry.registerItem(CoreItems.note2000, "note2000");
-        GameRegistry.registerItem(CoreItems.note5000, "note5000");
-        GameRegistry.registerItem(CoreItems.note10000, "note10000");
-        GameRegistry.registerItem(CoreItems.debitCardNew, "debitCardNew");
-        GameRegistry.registerItem(CoreItems.bankerSpawner, "bankerSpawner");
-        GameRegistry.registerItem(CoreItems.storeStockPairer, "storeStockPairer");
-        
-        GameRegistry.registerItem(CoreItems.plasticItem, "plasticItem");
-        GameRegistry.registerItem(CoreItems.rawPlasticItem, "rawPlasticItem");
-        GameRegistry.registerItem(CoreItems.smallPCB, "smallPCB");
-        GameRegistry.registerItem(CoreItems.largePCB, "largePCB");
-        GameRegistry.registerItem(CoreItems.atmInternals, "atmInternals");
-        GameRegistry.registerItem(CoreItems.atmScreen, "atmScreen");
-        GameRegistry.registerItem(CoreItems.atmButtons, "atmButtons");
-        GameRegistry.registerItem(CoreItems.cpu, "cpu");
-        
-        GameRegistry.registerItem(CoreItems.pliers, "pliers");
-
-    	/*GameRegistry.registerItem(CoreItems.ringItem, "ringItem");
-    	GameRegistry.registerItem(CoreItems.diamondRing, "diamondRing");
-    	GameRegistry.registerItem(CoreItems.necklaceItem, "necklaceItem");
-    	GameRegistry.registerItem(CoreItems.rubyNecklace, "rubyNecklace");*/
     }
     
     public void addRecipes() {
@@ -206,17 +24,17 @@ public class CommonProxy {
     	OreDictionary.registerOre("rawPlastic", CoreItems.rawPlasticItem);
     	OreDictionary.registerOre("dustPlastic", CoreItems.rawPlasticItem);
 
-    	ItemStack ironIngot = new ItemStack(Items.iron_ingot);
-    	ItemStack glowstone = new ItemStack(Items.glowstone_dust);
-    	ItemStack redstone = new ItemStack(Items.redstone);
-    	ItemStack redstoneTorch = new ItemStack(Blocks.redstone_torch);
-    	ItemStack diamond = new ItemStack(Items.diamond);
-    	ItemStack goldIngot = new ItemStack(Items.gold_ingot);
-    	ItemStack ironBlock = new ItemStack(Blocks.iron_block);
-    	ItemStack glass = new ItemStack(Blocks.glass);
+    	ItemStack ironIngot = new ItemStack(Items.IRON_INGOT);
+    	ItemStack glowstone = new ItemStack(Items.GLOWSTONE_DUST);
+    	ItemStack redstone = new ItemStack(Items.REDSTONE);
+    	ItemStack redstoneTorch = new ItemStack(Blocks.REDSTONE_TORCH);
+    	ItemStack diamond = new ItemStack(Items.DIAMOND);
+    	ItemStack goldIngot = new ItemStack(Items.GOLD_INGOT);
+    	ItemStack ironBlock = new ItemStack(Blocks.IRON_BLOCK);
+    	ItemStack glass = new ItemStack(Blocks.GLASS);
     	
-    	ItemStack stoneBlock = new ItemStack(Blocks.stone);
-    	ItemStack quartzItem = new ItemStack(Items.quartz);
+    	ItemStack stoneBlock = new ItemStack(Blocks.STONE);
+    	ItemStack quartzItem = new ItemStack(Items.QUARTZ);
     	ItemStack plasticBlockAny = new ItemStack(CoreBlocks.plasticBlock);
     	ItemStack skyscraperAny = new ItemStack(CoreBlocks.skyscraperBlocks);
     	ItemStack skyscraperWhite = new ItemStack(CoreBlocks.skyscraperBlocks, 1, 0);
@@ -233,41 +51,41 @@ public class CommonProxy {
     	ItemStack atmButtons = new ItemStack(CoreItems.atmButtons);
     	ItemStack cpu = new ItemStack(CoreItems.cpu);
     	
-    	ItemStack blackDye = new ItemStack(Items.dye, 1, 0);
-    	ItemStack redDye = new ItemStack(Items.dye, 1, 1);
-    	ItemStack greenDye = new ItemStack(Items.dye, 1, 2);
-    	ItemStack brownDye = new ItemStack(Items.dye, 1, 3);
-    	ItemStack blueDye = new ItemStack(Items.dye, 1, 4);
-    	ItemStack purpleDye = new ItemStack(Items.dye, 1, 5);
-    	ItemStack tealDye = new ItemStack(Items.dye, 1, 6);
-    	ItemStack lightGreyDye = new ItemStack(Items.dye, 1, 7);
-    	ItemStack darkGreyDye = new ItemStack(Items.dye, 1, 8);
-    	ItemStack pinkDye = new ItemStack(Items.dye, 1, 9);
-    	ItemStack limeGreenDye = new ItemStack(Items.dye, 1, 10);
-    	ItemStack yellowDye = new ItemStack(Items.dye, 1, 11);
-    	ItemStack lightBlueDye = new ItemStack(Items.dye, 1, 12);
-    	ItemStack magentaDye = new ItemStack(Items.dye, 1, 13);
-    	ItemStack orangeDye = new ItemStack(Items.dye, 1, 14);
-    	ItemStack whiteDye = new ItemStack(Items.dye, 1, 15);    	
+    	ItemStack blackDye = new ItemStack(Items.DYE, 1, 0);
+    	ItemStack redDye = new ItemStack(Items.DYE, 1, 1);
+    	ItemStack greenDye = new ItemStack(Items.DYE, 1, 2);
+    	ItemStack brownDye = new ItemStack(Items.DYE, 1, 3);
+    	ItemStack blueDye = new ItemStack(Items.DYE, 1, 4);
+    	ItemStack purpleDye = new ItemStack(Items.DYE, 1, 5);
+    	ItemStack tealDye = new ItemStack(Items.DYE, 1, 6);
+    	ItemStack lightGreyDye = new ItemStack(Items.DYE, 1, 7);
+    	ItemStack darkGreyDye = new ItemStack(Items.DYE, 1, 8);
+    	ItemStack pinkDye = new ItemStack(Items.DYE, 1, 9);
+    	ItemStack limeGreenDye = new ItemStack(Items.DYE, 1, 10);
+    	ItemStack yellowDye = new ItemStack(Items.DYE, 1, 11);
+    	ItemStack lightBlueDye = new ItemStack(Items.DYE, 1, 12);
+    	ItemStack magentaDye = new ItemStack(Items.DYE, 1, 13);
+    	ItemStack orangeDye = new ItemStack(Items.DYE, 1, 14);
+    	ItemStack whiteDye = new ItemStack(Items.DYE, 1, 15);    	
     	
-    	ItemStack blackWool = new ItemStack(Blocks.wool, 1, 15);
-    	ItemStack redWool = new ItemStack(Blocks.wool, 1, 14);
-    	ItemStack greenWool = new ItemStack(Blocks.wool, 1, 13);
-    	ItemStack brownWool = new ItemStack(Blocks.wool, 1, 12);
-    	ItemStack blueWool = new ItemStack(Blocks.wool, 1, 11);
-    	ItemStack purpleWool = new ItemStack(Blocks.wool, 1, 10);
-    	ItemStack tealWool = new ItemStack(Blocks.wool, 1, 9);
-    	ItemStack lightGreyWool = new ItemStack(Blocks.wool, 1, 8);
-    	ItemStack darkGreyWool = new ItemStack(Blocks.wool, 1, 7);
-    	ItemStack pinkWool = new ItemStack(Blocks.wool, 1, 6);
-    	ItemStack limeGreenWool = new ItemStack(Blocks.wool, 1, 5);
-    	ItemStack yellowWool = new ItemStack(Blocks.wool, 1, 4);
-    	ItemStack lightBlueWool = new ItemStack(Blocks.wool, 1, 3);
-    	ItemStack magentaWool = new ItemStack(Blocks.wool, 1, 2);
-    	ItemStack orangeWool = new ItemStack(Blocks.wool, 1, 1);
-    	ItemStack whiteWool = new ItemStack(Blocks.wool, 1, 0); 
+    	ItemStack blackWool = new ItemStack(Blocks.WOOL, 1, 15);
+    	ItemStack redWool = new ItemStack(Blocks.WOOL, 1, 14);
+    	ItemStack greenWool = new ItemStack(Blocks.WOOL, 1, 13);
+    	ItemStack brownWool = new ItemStack(Blocks.WOOL, 1, 12);
+    	ItemStack blueWool = new ItemStack(Blocks.WOOL, 1, 11);
+    	ItemStack purpleWool = new ItemStack(Blocks.WOOL, 1, 10);
+    	ItemStack tealWool = new ItemStack(Blocks.WOOL, 1, 9);
+    	ItemStack lightGreyWool = new ItemStack(Blocks.WOOL, 1, 8);
+    	ItemStack darkGreyWool = new ItemStack(Blocks.WOOL, 1, 7);
+    	ItemStack pinkWool = new ItemStack(Blocks.WOOL, 1, 6);
+    	ItemStack limeGreenWool = new ItemStack(Blocks.WOOL, 1, 5);
+    	ItemStack yellowWool = new ItemStack(Blocks.WOOL, 1, 4);
+    	ItemStack lightBlueWool = new ItemStack(Blocks.WOOL, 1, 3);
+    	ItemStack magentaWool = new ItemStack(Blocks.WOOL, 1, 2);
+    	ItemStack orangeWool = new ItemStack(Blocks.WOOL, 1, 1);
+    	ItemStack whiteWool = new ItemStack(Blocks.WOOL, 1, 0); 
     	
-    	ItemStack woodBlock = new ItemStack(Blocks.planks);
+    	ItemStack woodBlock = new ItemStack(Blocks.PLANKS);
     	
     	//TODO  GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), "   ", " t ", "   ", 't', titaniumIngot);
     	GameRegistry.addRecipe(new ItemStack(CoreBlocks.rebarBlock, 9, 0), " i ", " i ", " i ", 'i', ironIngot);
@@ -467,9 +285,5 @@ public class CommonProxy {
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 13), woodBlock, greenWool);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 14), woodBlock, redWool);
     	GameRegistry.addShapelessRecipe(new ItemStack(CoreBlocks.woolWood, 1, 15), woodBlock, blackWool);
-    }
-
-    public void registerRenderThings() {}
-    public void registerRenderers() {}
-    
+    }*/    
 }

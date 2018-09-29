@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks;
+/*package com.silvaniastudios.cities.core.blocks;
 
 import java.util.List;
 
@@ -194,4 +194,4 @@ public class BlockWalkwayStairs extends Block {
 			return blockIcon;
 		}
 	}
-}
+}*/

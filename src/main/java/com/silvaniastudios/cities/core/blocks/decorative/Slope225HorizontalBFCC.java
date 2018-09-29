@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks.decorative;
+/*package com.silvaniastudios.cities.core.blocks.decorative;
 
 import com.silvaniastudios.cities.core.FlenixCities_Core;
 import com.silvaniastudios.cities.core.client.ClientProxy;
@@ -115,4 +115,4 @@ public class Slope225HorizontalBFCC extends Block {
     public float getExplosionResistance(Entity p_149638_1_) {
         return 50F;
     }
-}
+}*/

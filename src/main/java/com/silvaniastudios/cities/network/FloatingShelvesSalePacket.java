@@ -1,17 +1,15 @@
 package com.silvaniastudios.cities.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
 import com.silvaniastudios.cities.core.CityConfig;
 import com.silvaniastudios.cities.econ.store.container.ContainerFloatingShelves;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityFloatingShelves;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class FloatingShelvesSalePacket implements IMessage {
 	
@@ -47,13 +45,13 @@ public class FloatingShelvesSalePacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(FloatingShelvesSalePacket message, MessageContext ctx) {
-			String pktId = message.packetId;
-			int slotId = message.slotId;
-			int x = message.x;
-			int y = message.y;
-			int z = message.z;
-			World world = ctx.getServerHandler().playerEntity.worldObj;
-			EntityPlayer player = ctx.getServerHandler().playerEntity;
+			String pktId = FloatingShelvesSalePacket.packetId;
+			int slotId = FloatingShelvesSalePacket.slotId;
+			int x = FloatingShelvesSalePacket.x;
+			int y = FloatingShelvesSalePacket.y;
+			int z = FloatingShelvesSalePacket.z;
+			
+			EntityPlayer player = ctx.getServerHandler().player;
 
 			if (CityConfig.debugMode) {
 				System.out.println("Pkt ID: " + pktId);
@@ -64,11 +62,11 @@ public class FloatingShelvesSalePacket implements IMessage {
 
 				TileEntityFloatingShelves tileShop = container.te;
 				if (tileShop != null) {
-					if (pktId.equalsIgnoreCase("salePacket")) {
+					/* TODO if (pktId.equalsIgnoreCase("salePacket")) {
 						tileShop.sellItem(slotId, player);
 					} else if (pktId.equalsIgnoreCase("buyPacket")) {
 						tileShop.buyItem(slotId, player);
-					}
+					}*/
 				}
 			}
 			return null;

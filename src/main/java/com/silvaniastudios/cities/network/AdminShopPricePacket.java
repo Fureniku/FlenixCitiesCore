@@ -1,17 +1,14 @@
 package com.silvaniastudios.cities.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-
 import com.silvaniastudios.cities.core.CityConfig;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
 import com.silvaniastudios.cities.econ.EconUtils;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
 
 public class AdminShopPricePacket implements IMessage {
 	
@@ -73,7 +70,7 @@ public class AdminShopPricePacket implements IMessage {
 		@Override
 		public IMessage onMessage(AdminShopPricePacket message, MessageContext ctx) {
 			if (CityConfig.debugMode) {
-				System.out.println(String.format("Packet recieved! 9 bits of data? %s %s %s %s %s etc", message.ownerName, message.buyPrice1, message.sellPrice1, message.buyPrice2, message.sellPrice2));
+				System.out.println(String.format("Packet recieved! 9 bits of data? %s %s %s %s %s etc", AdminShopPricePacket.ownerName, AdminShopPricePacket.buyPrice1, AdminShopPricePacket.sellPrice1, AdminShopPricePacket.buyPrice2, AdminShopPricePacket.sellPrice2));
 			}
 			return null;
 		}

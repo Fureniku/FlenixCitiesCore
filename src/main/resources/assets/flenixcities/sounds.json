@@ -1,14 +1,14 @@
 {
-	"atmButton": {
-		"category": "master","sounds":
-		[ "atmButton" ]
+	"atm_button": {
+		"category": "master",
+		"sounds": [ "atm_button" ]
 	},
-	"atmWithdraw": {
-		"category": "master","sounds":
-		[ "atmWithdraw" ]
+	"atm_withdraw": {
+		"category": "master",
+		"sounds": [ "atm_withdraw" ]
 	},
-	"cardInsert": {
-		"category": "master","sounds":
-		[ "cardInsert" ]
+	"card_insert": {
+		"category": "block",
+		"sounds": [ "card_insert" ]
 	}
 }

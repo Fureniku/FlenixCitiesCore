@@ -1,19 +1,15 @@
 package com.silvaniastudios.cities.econ.store.container;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.silvaniastudios.cities.core.CityConfig;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityFloatingShelves;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class ContainerFloatingShelves extends Container {
 	
@@ -74,16 +70,16 @@ public class ContainerFloatingShelves extends Container {
                         return null;
                 }
 
-                if (stackInSlot.stackSize == 0) {
+                if (stackInSlot.getCount() == 0) {
                         slotObject.putStack(null);
                 } else {
                         slotObject.onSlotChanged();
                 }
 
-                if (stackInSlot.stackSize == stack.stackSize) {
+                if (stackInSlot.getCount() == stack.getCount()) {
                         return null;
                 }
-                slotObject.onPickupFromSlot(player, stackInSlot);
+                slotObject.onTake(player, stackInSlot);
         }
         return stack;
 	}
@@ -98,28 +94,28 @@ public class ContainerFloatingShelves extends Container {
 	}
 	
 	@Override
-	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer entityPlayer) {
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
 		if (CityConfig.debugMode) {
 			System.out.println("Slot clicked! Checking UUID vs stored one.");
-			System.out.println(entityPlayer.getUniqueID().toString() + " = Current user UUID");
+			System.out.println(player.getUniqueID().toString() + " = Current user UUID");
 			System.out.println(te.ownerUuid + " = Stored UUID");
 			System.out.println(te.ownerName + " = Stored Username");
 		}
-		if (!entityPlayer.worldObj.isRemote) {
-			if (te.ownerUuid != null && te.ownerUuid.contains(entityPlayer.getUniqueID().toString())) {
+		if (!player.world.isRemote) {
+			if (te.ownerUuid != null && te.ownerUuid.contains(player.getUniqueID().toString())) {
 				if (CityConfig.debugMode) {
 					System.out.println("Owner is clicking the slot  (server)");
 				}
-				super.slotClick(par1, par2, par3, entityPlayer);
+				super.slotClick(slotId, dragType, clickTypeIn, player);
 			} else {
-				entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You are not the owner of this shop."));
+				//TODO player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "You are not the owner of this shop."));
 				if (te.ownerName == null) {
-					entityPlayer.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "This is a bug. Please tell an admin."));
+					//TODO player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "This is a bug. Please tell an admin."));
 				}
 			}
 		} else {
-			if (te.ownerName != null && te.ownerName.contains(entityPlayer.getDisplayName())) {
-				super.slotClick(par1, par2, par3, entityPlayer);
+			if (te.ownerName != null && te.ownerName.contains((CharSequence) player.getDisplayName())) {
+				super.slotClick(slotId, dragType, clickTypeIn, player);
 			}
 		}
 		return null;

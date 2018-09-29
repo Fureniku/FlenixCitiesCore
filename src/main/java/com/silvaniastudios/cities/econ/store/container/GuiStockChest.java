@@ -3,7 +3,7 @@ package com.silvaniastudios.cities.econ.store.container;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import com.silvaniastudios.cities.core.FlenixCities_Core;
+import com.silvaniastudios.cities.core.FlenixCities;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityStockChest;
 import com.silvaniastudios.cities.network.StockChestUpdatePacket;
 
@@ -16,7 +16,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiStockChest extends GuiContainer {
 	
-	private TileEntityStockChest stockEntity;
 	private static final ResourceLocation texture = new ResourceLocation("flenixcities", "textures/gui/stockChest.png");
 	
 	public GuiTextField buyLimit;
@@ -31,7 +30,6 @@ public class GuiStockChest extends GuiContainer {
 
 	public GuiStockChest(InventoryPlayer invPlayer, TileEntityStockChest stockEntity) {
 		super(new ContainerStockChest(invPlayer, stockEntity));
-		this.stockEntity = stockEntity;
 		
 		xSize = 256;
 		ySize = 256;
@@ -50,7 +48,7 @@ public class GuiStockChest extends GuiContainer {
 		buttonList.add(new GuiButton(2, guiLeft + 8, guiTop + 38, 30, 20, ""));
 		buttonList.add(new GuiButton(3, guiLeft + 6, guiTop + 229, 74, 20, "Save Changes"));
 		
-		buyLimit = new GuiTextField(this.fontRendererObj, 160, 18, 84, 14);
+		buyLimit = new GuiTextField(0, this.fontRenderer, 160, 18, 84, 14);
 		buyLimit.setFocused(true);
 		buyLimit.setText("" + buyFundLimit);
 	}
@@ -82,7 +80,7 @@ public class GuiStockChest extends GuiContainer {
 	}
 	
 	public void updateTileEntity() {
-		FlenixCities_Core.network.sendToServer(new StockChestUpdatePacket("" + toggleBuy, "" + toggleSell, buyLimit.getText()));
+		FlenixCities.network.sendToServer(new StockChestUpdatePacket("" + toggleBuy, "" + toggleSell, buyLimit.getText()));
 	}
 	
 	@Override
@@ -97,13 +95,13 @@ public class GuiStockChest extends GuiContainer {
 		if (toggleBuy) { tBuy = "True"; } else { tBuy = "False"; }
 		if (toggleSell) { tSell = "True"; } else { tSell = "False"; }
 		
-		fontRendererObj.drawString("Owner: " + ownerName, 8, 6, 4210752);
-		fontRendererObj.drawString("Buying Fund Limit", 160, 6, 4210752);
-		fontRendererObj.drawString("" + tBuy, 10 + addonBuy, 22, 0xE0E0E0, true);
-		fontRendererObj.drawString("" + tSell, 10 + addonSell, 44, 0xE0E0E0, true);
-		fontRendererObj.drawString("Buying (From players)", 42, 22, 4210752);
-		fontRendererObj.drawString("Selling (To players)", 42, 44, 4210752);
-		fontRendererObj.drawString("Display Item:", 160, 44, 4210752);
+		fontRenderer.drawString("Owner: " + ownerName, 8, 6, 4210752);
+		fontRenderer.drawString("Buying Fund Limit", 160, 6, 4210752);
+		fontRenderer.drawString("" + tBuy, 10 + addonBuy, 22, 0xE0E0E0, true);
+		fontRenderer.drawString("" + tSell, 10 + addonSell, 44, 0xE0E0E0, true);
+		fontRenderer.drawString("Buying (From players)", 42, 22, 4210752);
+		fontRenderer.drawString("Selling (To players)", 42, 44, 4210752);
+		fontRenderer.drawString("Display Item:", 160, 44, 4210752);
 		buyLimit.drawTextBox();
 	}
 

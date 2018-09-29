@@ -1,33 +1,115 @@
 package com.silvaniastudios.cities.econ.store.entity;
 
-import java.util.ArrayList;
-
-import com.silvaniastudios.cities.core.CityConfig;
-import com.silvaniastudios.cities.core.CoreItems;
-import com.silvaniastudios.cities.econ.DebitCardItem;
 import com.silvaniastudios.cities.econ.EconUtils;
-import com.silvaniastudios.cities.econ.money.ItemCoin;
-import com.silvaniastudios.cities.econ.money.ItemNote;
 
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.EnumSkyBlock;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityFloatingShelves extends TileEntity implements IInventory {
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomName() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getSizeInventory() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ItemStack decrStackSize(int index, int count) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ItemStack removeStackFromSlot(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getField(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getFieldCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	public EconUtils econ = new EconUtils();
 	
@@ -49,7 +131,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	public int stockYPos;
 	public int stockZPos;
 	
-	@Override
+	/*@Override
 	public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         NBTTagList nbttaglist = new NBTTagList();
@@ -96,7 +178,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 
             if (j >= 0 && j < this.items.length)
             {
-                this.items[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+                this.items[j] = new ItemStack(nbttagcompound1);
             }
         }
 		this.ownerName = nbt.getString("ownerName");
@@ -158,7 +240,7 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 			NBTTagCompound tag = tagList.getCompoundTagAt(i);
 			byte slot = tag.getByte("Slot");
 			if ((slot >= 0) && (slot < this.items.length)) {
-				this.items[slot] = ItemStack.loadItemStackFromNBT(tag);
+				this.items[slot] = new ItemStack(tag);
 			}
 		}
 		this.ownerName = nbt.getString("ownerName");
@@ -710,5 +792,5 @@ public class TileEntityFloatingShelves extends TileEntity implements IInventory 
 	public void openInventory() {}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory() {}*/
 }

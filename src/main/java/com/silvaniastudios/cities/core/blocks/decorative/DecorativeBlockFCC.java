@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks.decorative;
+/*package com.silvaniastudios.cities.core.blocks.decorative;
 
 import com.silvaniastudios.cities.core.FlenixCities_Core;
 
@@ -67,4 +67,4 @@ public class DecorativeBlockFCC extends Block {
 		if (id.equalsIgnoreCase("red")) { return "skyscraperBlocks43"; }
 		return "skyscraperBlocks0";
 	}
-}
+}*/

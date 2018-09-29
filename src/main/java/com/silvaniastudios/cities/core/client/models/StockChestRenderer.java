@@ -1,10 +1,10 @@
-package com.silvaniastudios.cities.core.client.models;
+/*package com.silvaniastudios.cities.core.client.models;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
@@ -49,4 +49,4 @@ public class StockChestRenderer extends TileEntitySpecialRenderer {
 			GL11.glPopMatrix();
 		}
 	}
-}
+}*/

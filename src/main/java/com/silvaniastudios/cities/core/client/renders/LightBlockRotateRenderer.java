@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import org.lwjgl.opengl.GL11;
 
@@ -394,5 +394,4 @@ public class LightBlockRotateRenderer implements ISimpleBlockRenderingHandler {
 		tess.addVertexWithUV(xh, yl, zl, u0, v0);
 		tess.addVertexWithUV(xh, yl, zh, u0, v1);
 	}
-
-}
+}*/

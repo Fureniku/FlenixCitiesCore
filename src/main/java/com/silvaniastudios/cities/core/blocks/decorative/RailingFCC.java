@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks.decorative;
+/*package com.silvaniastudios.cities.core.blocks.decorative;
 
 import com.silvaniastudios.cities.core.client.ClientProxy;
 
@@ -49,3 +49,4 @@ public class RailingFCC extends WalkwayFenceFCC {
         return 50F;
     }
 }
+*/

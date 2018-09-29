@@ -2,75 +2,246 @@ package com.silvaniastudios.cities.core.blocks;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import com.silvaniastudios.cities.core.CoreItems;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
-import com.silvaniastudios.cities.core.client.ClientProxy;
+import javax.annotation.Nullable;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import com.google.common.collect.ImmutableList;
+import com.silvaniastudios.cities.core.FlenixCities;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemSpade;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockWalkway extends Block {
+public class BlockWalkway extends CitiesBlockBase {
 	
-	String textureName;
-	String oversizeName;
+	public static final PropertyEnum<EnumWalkway> WALKWAY_TYPE = PropertyDirection.create("walkway_type", EnumWalkway.class);
+    
+	public static final ImmutableList<IProperty<Boolean>> CONNECTED_PROPERTIES = ImmutableList.copyOf(Stream.of(EnumFacing.VALUES).map(facing -> PropertyBool.create(facing.getName())).collect(Collectors.toList()));
+    
+    public static final AxisAlignedBB PLATE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D);
+    
+    public static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 1.0D, 0.875D, 1.0D, 1.0D);
+    public static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.125D, 0.0D, 1.0D, 1.0D);
+    public static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.125D, 0.0D, 0.0D, 1.0D, 1.0D, 0.0D);
+    public static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(1.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.875D);
 
-	public BlockWalkway(Material mat, SoundType sound, String icon, String icon2) {
-		super(mat);
-		this.setCreativeTab(FlenixCities_Core.tabCity);
-		this.textureName = icon;
-		this.oversizeName = icon2;
-		this.setStepSound(sound);
+	public BlockWalkway(String name, Material mat) {
+		super(name, mat);
+		this.setCreativeTab(FlenixCities.tabCity);
 		this.setHardness(2.0F);
 		this.setResistance(12.0F);
 		this.setTickRandomly(true);
+		this.setDefaultState(this.blockState.getBaseState().withProperty(CONNECTED_PROPERTIES.get(0), true));
 	}
 	
-	@Override public boolean renderAsNormalBlock() { return false; }
-	@Override public boolean isOpaqueCube() { return false; }
-	
 	@Override
-	public int getLightValue(IBlockAccess world, int x, int y, int z) {
-		int meta = world.getBlockMetadata(x, y, z);
-		
-		if ((meta >= 8 && meta <= 11) || meta == 14 || meta == 15) {
-			return 15;
-		} else {
-			return 0;
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+	
+	private boolean canWalkwayConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+        BlockPos other = pos.offset(facing);
+        Block block = world.getBlockState(other).getBlock();
+        return block.canBeConnectedTo(world, other, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
+    }
+	
+	public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+        BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, pos, facing);
+        Block block = iblockstate.getBlock();
+        return !isExceptBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID;
+    }
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		for (final EnumFacing facing : EnumFacing.VALUES) {
+			state = state.withProperty(CONNECTED_PROPERTIES.get(facing.getIndex()), canWalkwayConnectTo(world, pos, facing));
 		}
+
+		return state;
+	}
+
+	public final boolean isConnected(IBlockState state, EnumFacing facing) {
+		return state.getValue(CONNECTED_PROPERTIES.get(facing.getIndex()));
 	}
 	
 	@Override
-	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
-		ItemStack item = player.getHeldItem();
-		int meta = world.getBlockMetadata(x, y, z);
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, WALKWAY_TYPE, CONNECTED_PROPERTIES.get(0), CONNECTED_PROPERTIES.get(1), CONNECTED_PROPERTIES.get(2), CONNECTED_PROPERTIES.get(3), CONNECTED_PROPERTIES.get(4), CONNECTED_PROPERTIES.get(5));
+	}
+
+	
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+        if (!isActualState) {
+            state = state.getActualState(worldIn, pos);
+        }
+
+        if (!((Boolean)state.getValue(CONNECTED_PROPERTIES.get(0))).booleanValue()) {
+        	addCollisionBoxToList(pos, entityBox, collidingBoxes, PLATE_AABB);
+        }
+
+        if (!((Boolean)state.getValue(CONNECTED_PROPERTIES.get(2))).booleanValue()) {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
+        }
+
+        if (!((Boolean)state.getValue(CONNECTED_PROPERTIES.get(5))).booleanValue()) {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
+        }
+
+        if (!((Boolean)state.getValue(CONNECTED_PROPERTIES.get(3))).booleanValue()) {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
+        }
+
+        if (!((Boolean)state.getValue(CONNECTED_PROPERTIES.get(4))).booleanValue()) {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
+        }
+    }
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(WALKWAY_TYPE, EnumWalkway.byMetadata(meta));
+    }
+	
+	@Override
+    public int getMetaFromState(IBlockState state) {
+        return ((EnumWalkway)state.getValue(WALKWAY_TYPE)).getMetadata();
+    }
+    
+	@Override
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+		for (int i = 0; i < WALKWAY_TYPE.getAllowedValues().size(); i++) {
+			items.add(new ItemStack(this, 1, i));
+		}
+    }
+
+
+   /* public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        state = this.getActualState(state, source, pos);
+        return BOUNDING_BOXES[getBoundingBoxIdx(state)];
+    }*/
+
+    /**
+     * Returns the correct index into boundingBoxes, based on what the fence is connected to.
+     */
+    /*private static int getBoundingBoxIdx(IBlockState state)
+    {
+        int i = 0;
+
+        if (((Boolean)state.getValue(NORTH)).booleanValue())
+        {
+            i |= 1 << EnumFacing.NORTH.getHorizontalIndex();
+        }
+
+        if (((Boolean)state.getValue(EAST)).booleanValue())
+        {
+            i |= 1 << EnumFacing.EAST.getHorizontalIndex();
+        }
+
+        if (((Boolean)state.getValue(SOUTH)).booleanValue())
+        {
+            i |= 1 << EnumFacing.SOUTH.getHorizontalIndex();
+        }
+
+        if (((Boolean)state.getValue(WEST)).booleanValue())
+        {
+            i |= 1 << EnumFacing.WEST.getHorizontalIndex();
+        }
+
+        return i;
+    }*/
+	
+	@Override
+	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
+		ItemStack item = player.getHeldItemMainhand();
+		IBlockState state = world.getBlockState(pos);
 		if (!world.isRemote) {
 			if (item != null) {
-				if (item.getItem().getHarvestLevel(item, "shovel") > 0) {
-					if (meta >= 4 && meta <= 7) {
-						world.setBlockMetadataWithNotify(x, y, z, meta - 4, 3);
+				//Shovel to remove snow
+				if (item.getItem().getHarvestLevel(item, "shovel", player, state) > 0) {
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.SNOW)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.STANDARD));
 						if (!player.capabilities.isCreativeMode) {
-							world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.snowball)));
-							item.attemptDamageItem(1, new Random());
+							world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY()+0.5, pos.getZ(), new ItemStack(Items.SNOWBALL)));
+							item.attemptDamageItem(1, new Random(), (EntityPlayerMP) player);
+						}
+					}
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF_SNOW)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF));
+						if (!player.capabilities.isCreativeMode) {
+							world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY()+0.5, pos.getZ(), new ItemStack(Items.SNOWBALL)));
+							item.attemptDamageItem(1, new Random(), (EntityPlayerMP) player);
+						}
+					}
+				}
+				//Shears to remove leaves
+				if (item.getItem() instanceof ItemShears) {
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.STANDARD));
+						if (!player.capabilities.isCreativeMode) {
+							world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY()+0.5, pos.getZ(), new ItemStack(Blocks.LEAVES)));
+							item.attemptDamageItem(1, new Random(), (EntityPlayerMP) player);
+						}
+					}
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF_SNOW)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.SNOW));
+						if (!player.capabilities.isCreativeMode) {
+							world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY()+0.5, pos.getZ(), new ItemStack(Blocks.LEAVES)));
+							item.attemptDamageItem(1, new Random(), (EntityPlayerMP) player);
+						}
+					}
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF_LIGHT)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LIGHT));
+						if (!player.capabilities.isCreativeMode) {
+							world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY()+0.5, pos.getZ(), new ItemStack(Blocks.LEAVES)));
+							item.attemptDamageItem(1, new Random(), (EntityPlayerMP) player);
+						}
+					}
+				}
+				//???? to remove lights
+				if (item.getItem() instanceof ItemShears) {
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LIGHT)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.STANDARD));
+						if (!player.capabilities.isCreativeMode) {
+							//world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY()+0.5, pos.getZ(), new ItemStack(Blocks.LEAVES)));
+							item.attemptDamageItem(1, new Random(), (EntityPlayerMP) player);
+						}
+					}
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF_LIGHT)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF));
+						if (!player.capabilities.isCreativeMode) {
+							//world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY()+0.5, pos.getZ(), new ItemStack(Blocks.LEAVES)));
+							item.attemptDamageItem(1, new Random(), (EntityPlayerMP) player);
 						}
 					}
 				}
@@ -79,251 +250,83 @@ public class BlockWalkway extends Block {
 	}
 	
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float clickPosX, float clickPosY, float clickPosZ) {
-		int meta = world.getBlockMetadata(x, y, z);
-		if (player.isSneaking()) {
-			System.out.println("Meta: " + meta);
-		}
-		ItemStack item = player.getHeldItem();
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack item = player.getHeldItemMainhand();
 		if (!world.isRemote) {
 			if (item != null) {
-				if (item.getItem().equals(Items.snowball)) {
-					if (meta < 4) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
-					}
-				} else if (item.getItem().equals(Items.glowstone_dust)) {
-					if (meta < 4) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 8, 3);
+				if (item.getItem().equals(Items.SNOWBALL)) {
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.STANDARD)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.SNOW));
 						if (!player.capabilities.isCreativeMode) {
-							item.stackSize--;
+							item.setCount(item.getCount()-1);
 						}
-					} else if (meta < 8) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
+					}
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF_SNOW));
 						if (!player.capabilities.isCreativeMode) {
-							item.stackSize--;
+							item.setCount(item.getCount()-1);
 						}
-					} else if (meta == 12 || meta == 13) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
+					}
+				} else if (item.getItem().equals(Items.GLOWSTONE_DUST)) {
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.STANDARD)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LIGHT));
 						if (!player.capabilities.isCreativeMode) {
-							item.stackSize--;
+							item.setCount(item.getCount()-1);
 						}
 					}
-				} else if (item.getItem().getHarvestLevel(item, "pickaxe") > 0) {
-					if (meta >= 8 && meta <= 11) {
-						world.setBlockMetadataWithNotify(x, y, z, meta - 8, 3);
+					if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF)) {
+						world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF_LIGHT));
 						if (!player.capabilities.isCreativeMode) {
-							item.attemptDamageItem(1, new Random());
-						}
-					} else if (meta == 14 || meta == 15) {
-						world.setBlockMetadataWithNotify(x, y, z, meta - 2, 3);
-						if (!player.capabilities.isCreativeMode) {
-							item.attemptDamageItem(1, new Random());
+							item.setCount(item.getCount()-1);
 						}
 					}
-				} else if (item.getItem().equals(CoreItems.pliers)) {
-					if (meta == 0 || meta == 1) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
-					} else if (meta == 2 || meta == 3) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 10, 3);
-					} else if (meta == 12 || meta == 13) {
-						world.setBlockMetadataWithNotify(x, y, z, meta - 12, 3);
-					}
-					
-					else if (meta == 4 || meta == 5) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
-					} else if (meta == 6 || meta == 7) {
-						world.setBlockMetadataWithNotify(x, y, z, meta - 2, 3);
-					}
-					
-					else if (meta == 8 || meta == 9) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 2, 3);
-					} else if (meta == 10 || meta == 11) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
-					} else if (meta == 14 || meta == 15) {
-						world.setBlockMetadataWithNotify(x, y, z, meta - 6, 3);
-					}
-					/*} else { //TODO sneak-click isn't working. Set pliers able to sneak-click stuff.
-						System.out.println("Rotating");
-						if ((meta % 2) == 0 || meta == 0) {
-							world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
-						} else {
-							world.setBlockMetadataWithNotify(x, y, z, meta - 1, 3);
+				} else if (item.getItem() instanceof ItemBlock) {
+					ItemBlock itemBlock = (ItemBlock) item.getItem();
+					if (itemBlock.getBlock().equals(Blocks.LEAVES)) {
+						if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.STANDARD)) {
+							world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF));
+							if (!player.capabilities.isCreativeMode) {
+								item.setCount(item.getCount()-1);
+							}
 						}
-					}*/
+						if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.SNOW)) {
+							world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF_SNOW));
+							if (!player.capabilities.isCreativeMode) {
+								item.setCount(item.getCount()-1);
+							}
+						}
+						if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LIGHT)) {
+							world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF_LIGHT));
+							if (!player.capabilities.isCreativeMode) {
+								item.setCount(item.getCount()-1);
+							}
+						}
+					}
 				}
 			}
 		}		
 		return false;
 	}
-	
-	@Override
-	public int getRenderType() {
-		return ClientProxy.walkwayTraditionalRenderID;
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack item) {
-		int rot = MathHelper.floor_double(entity.getRotationYawHead());
-		int meta = item.getItemDamage();
-		
-		while (rot > 360) {
-			rot = rot - 360;
-		}
-		while (rot < 0) {
-			rot = rot + 360;
-		}
-		
-		if ((rot >= 45 && rot <= 135) || (rot >= 225 && rot <= 315)) {
-			world.setBlockMetadataWithNotify(x, y, z, meta, 3); //Facing east/west
-		} else {
-			world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
-		}
-	}
-	
-	@Override
-	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB bb, List list, Entity entity) {
-		boolean hasCollision = false;
-		if (!(world.getBlock(x, y-1, z) instanceof BlockWalkway)) {
-			hasCollision = true;
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
-		}
-		
-		int meta = world.getBlockMetadata(x, y, z);
-		//North: Z1 - Z0, East: X0 - X1, South: Z0 - Z1, West = X1 - X0
-		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta); //z-1
-		boolean connectEast  = checkConnections(world, x+1, y, z, 1, meta);  //x+1
-		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta); //z+1
-		boolean connectWest  = checkConnections(world, x-1, y, z, 1, meta);  //x-1
-		
-		boolean hitboxNorth = false;
-		boolean hitboxEast  = false;
-		boolean hitboxSouth = false;
-		boolean hitboxWest  = false;
-		
-		if ((meta % 2) == 0 || meta == 0) { //Even metadata
-			if (!connectNorth) { hitboxNorth = true; }
-			if (!connectSouth) { hitboxSouth = true; }
-			
-			if (connectNorth && !connectEast) { hitboxEast = true; }
-			if (connectNorth && !connectWest) { hitboxWest = true; }
-			if (connectSouth && !connectEast) { hitboxEast = true; }
-			if (connectSouth && !connectWest) { hitboxWest = true; }
-			
-		} else {
-			if (!connectEast) { hitboxEast = true; }
-			if (!connectWest) { hitboxWest = true; }
-			
-			if (connectEast && !connectNorth) { hitboxNorth = true; }
-			if (connectEast && !connectSouth) { hitboxSouth = true; }
-			if (connectWest && !connectNorth) { hitboxNorth = true; }
-			if (connectWest && !connectSouth) { hitboxSouth = true; }
-		}
-		
-		if (hitboxNorth) {
-			hasCollision = true;
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0625F, 0.0625F);
-			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
-		}
-		
-		if (hitboxSouth) {
-			hasCollision = true;
-			setBlockBounds(0.0F, 0.0F, 0.9375F, 1.0F, 1.0625F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
-		}
-		
-		if (hitboxEast) {
-			hasCollision = true;
-			setBlockBounds(0.9375F, 0.0F, 0.0625F, 1.0F, 1.0625F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
-		}
-		
-		if (hitboxWest) {
-			hasCollision = true;
-			setBlockBounds(0.0F, 0.0F, 0.0F, 0.0625F, 1.0625F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
-		}
 
-		if (!hasCollision) {
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
-		}
-		
-		setBlockBoundsForItemRender();
-	}
-	
 	@Override
-	public void setBlockBoundsForItemRender() {
-		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
-	}
-	
-	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
-		int meta = world.getBlockMetadata(x, y, z);
+	public void updateTick(World world, BlockPos pos, IBlockState state, Random random) {
 		if (world.isRaining()) {
-			if (world.getBiomeGenForCoords(x, z).getEnableSnow()) {
-				if (world.canBlockSeeTheSky(x, y, z)) {
-					if (meta < 4) {
-						world.setBlockMetadataWithNotify(x, y, z, meta + 4, 3);
-					}
+			if (world.canSnowAt(pos, true)) {
+				if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.STANDARD)) {
+					world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.SNOW));
+				}
+				if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF)) {
+					world.setBlockState(pos, state.withProperty(WALKWAY_TYPE, EnumWalkway.LEAF_SNOW));
 				}
 			}
 		}
-		if (world.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11) {
-            if (meta == 5 || meta == 7) {
-            	world.setBlockMetadataWithNotify(x, y, z, meta - 1, 3);
-            }
-        }
 	}
 	
-	//TODO meta-based check for Y-1
-	public boolean checkConnections(World world, int x, int y, int z, int targetMeta, int meta) {
-		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z)) {
-			return true;
-		}
-		
-		if (!(meta == 2 || meta == 3 || meta == 6 || meta == 7 || meta >= 10)) {
-			if (world.getBlock(x, y-1, z).isNormalCube(world, x, y, z)) {
-				return true;
-			}
-		}
-		
-		if (world.getBlock(x, y, z) instanceof BlockWalkway || world.getBlock(x, y, z) instanceof BlockWalkwayStairs) {
-			return true;
-		}
-		
-		if (targetMeta >= 0) {
-			if (world.getBlock(x, y - 1, z) instanceof BlockWalkwayStairs || world.getBlock(x, y, z) instanceof BlockWalkwayStairs) {
-				int m = world.getBlockMetadata(x, y - 1, z);
-				if (m == targetMeta || m == (targetMeta + 2)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	private IIcon oversizeIcon;
-	
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister iconRegister) {
-		blockIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + textureName);
-		oversizeIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + oversizeName);
-	}
-	
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
-        return true;
+    public int getLightValue(IBlockState state) {
+		if (state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LIGHT) || state.getValue(WALKWAY_TYPE).equals(EnumWalkway.LEAF_LIGHT)) {
+			return 12;
+		}
+        return this.lightValue;
     }
-	
-	@Override
-	public IIcon getIcon(int side, int metadata) {
-		if (side == 7) {
-			return oversizeIcon;
-		} else {
-			return blockIcon;
-		}
-	}
 }

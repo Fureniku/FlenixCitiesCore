@@ -1,18 +1,16 @@
 package com.silvaniastudios.cities.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
 import com.silvaniastudios.cities.core.CityConfig;
 import com.silvaniastudios.cities.econ.EconUtils;
 import com.silvaniastudios.cities.econ.store.container.ContainerFloatingShelves;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityFloatingShelves;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class FloatingShelvesClientPacket implements IMessage {
 	
@@ -78,20 +76,18 @@ public class FloatingShelvesClientPacket implements IMessage {
 			if (CityConfig.debugMode) {
 				System.out.println("Packet recieved from client regarding prices in shops!");
 			}
-			World world = ctx.getServerHandler().playerEntity.worldObj;
-			EntityPlayer player = ctx.getServerHandler().playerEntity;
+
+			EntityPlayer player = ctx.getServerHandler().player;
 			
-			String str1 = "" + message.buyPrice1;
-			String str2 = "" + message.sellPrice1;
-			String str3 = "" + message.buyPrice2;
-			String str4 = "" + message.sellPrice2;
-			String str5 = "" + message.buyPrice3;
-			String str6 = "" + message.sellPrice3;
-			String str7 = "" + message.buyPrice4;
-			String str8 = "" + message.sellPrice4;
-			int x = message.x;
-			int y = message.y;
-			int z = message.z;
+			String str1 = "" + FloatingShelvesClientPacket.buyPrice1;
+			String str2 = "" + FloatingShelvesClientPacket.sellPrice1;
+			String str3 = "" + FloatingShelvesClientPacket.buyPrice2;
+			String str4 = "" + FloatingShelvesClientPacket.sellPrice2;
+			String str5 = "" + FloatingShelvesClientPacket.buyPrice3;
+			String str6 = "" + FloatingShelvesClientPacket.sellPrice3;
+			String str7 = "" + FloatingShelvesClientPacket.buyPrice4;
+			String str8 = "" + FloatingShelvesClientPacket.sellPrice4;
+
 			if (player.openContainer instanceof ContainerFloatingShelves) {
 				ContainerFloatingShelves container = (ContainerFloatingShelves) player.openContainer;
 				TileEntityFloatingShelves tileShop = container.te;
@@ -106,7 +102,7 @@ public class FloatingShelvesClientPacket implements IMessage {
 					tileShop.buyPrice4 = econ.parseDouble(str7);
 					tileShop.sellPrice4 = econ.parseDouble(str8);
 					
-					tileShop.getDescriptionPacket();
+					//TODO tileShop.getDescriptionPacket();
 					if (CityConfig.debugMode) {
 						System.out.println("Floating Shelves prices have been set, and description packet triggered.");
 					}

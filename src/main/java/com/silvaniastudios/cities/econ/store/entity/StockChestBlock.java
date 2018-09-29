@@ -1,31 +1,17 @@
 package com.silvaniastudios.cities.econ.store.entity;
 
-import java.util.Random;
+import com.silvaniastudios.cities.core.FlenixCities;
 
-import org.lwjgl.opengl.GL11;
-
-import com.silvaniastudios.cities.core.CoreItems;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class StockChestBlock extends BlockContainer {
@@ -33,8 +19,8 @@ public class StockChestBlock extends BlockContainer {
 	public TileEntityStockChest te;
 	
 	public StockChestBlock() {
-		super(Material.iron);
-		this.setCreativeTab(FlenixCities_Core.tabEcon);
+		super(Material.IRON);
+		this.setCreativeTab(FlenixCities.tabEcon);
 		this.setHardness(2.0F);
 	}
 
@@ -42,18 +28,13 @@ public class StockChestBlock extends BlockContainer {
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
 		return new TileEntityStockChest();
 	}
-
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
 	
 	@Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-	        TileEntityStockChest tileEntity = (TileEntityStockChest) world.getTileEntity(x, y, z);
-	    	ItemStack item = player.getHeldItem();
-	        if (item != null && item.getItem() == CoreItems.storeStockPairer) {
+	        TileEntityStockChest tileEntity = (TileEntityStockChest) world.getTileEntity(pos);
+	    	ItemStack item = player.getHeldItemMainhand();
+	        /*if (item != null && item.getItem() == CoreItems.storeStockPairer) {
 	        	if (player.getUniqueID().toString().equals(tileEntity.ownerUuid)) {
 		        	if (item.stackTagCompound == null) {
 		    			if (!world.isRemote) {
@@ -82,18 +63,18 @@ public class StockChestBlock extends BlockContainer {
 		        } else {
 		        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "This stock chest belongs to " + tileEntity.ownerName));
 		        }
-	        }
+	        }*/
 		}
         return true;
     }
 	
 	@Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack par6ItemStack) {		
-		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			String name = player.getDisplayName();
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {		
+		if (placer instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) placer;
+			String name = player.getName();
 			String uuid = player.getUniqueID().toString();
-			TileEntityStockChest tileEntity = (TileEntityStockChest) world.getTileEntity(x, y, z);
+			TileEntityStockChest tileEntity = (TileEntityStockChest) world.getTileEntity(pos);
 			System.out.println("Placing Stock Chest");
 			System.out.println(name);
 			System.out.println(uuid);
@@ -101,35 +82,8 @@ public class StockChestBlock extends BlockContainer {
 			tileEntity.ownerUuid = uuid;
 		}
 	}
-	
-	@SideOnly(Side.CLIENT)
-	private IIcon top;
-	@SideOnly(Side.CLIENT)
-	private IIcon bottom;
-	@SideOnly(Side.CLIENT)
-	private IIcon sides;
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister iconRegister) {
-		top = iconRegister.registerIcon(FlenixCities_Core.modid + ":stockChest_top");
-		bottom = iconRegister.registerIcon(FlenixCities_Core.modid + ":stockChest_bottom");
-		sides = iconRegister.registerIcon(FlenixCities_Core.modid + ":stockChest_side");
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int side, int metadata) {
-		if (side == 0) {
-			return bottom;
-		} 
-		if (side == 1) {
-			return top;
-		}
-		return sides;
-	}
-
-	@Override
+	/*@Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6) {
 		dropItems(world, x, y, z);
 		super.breakBlock(world, x, y, z, block, par6);
@@ -166,5 +120,5 @@ public class StockChestBlock extends BlockContainer {
     			item.stackSize = 0;
     		}
     	}
-    }
+    }*/
 }

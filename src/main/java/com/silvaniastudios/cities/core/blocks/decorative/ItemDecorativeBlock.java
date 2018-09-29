@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks.decorative;
+/*package com.silvaniastudios.cities.core.blocks.decorative;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -65,4 +65,4 @@ public class ItemDecorativeBlock extends ItemBlock {
 		
 		return super.getItemStackDisplayName(item);
     }
-}
+}*/

@@ -1,15 +1,13 @@
 package com.silvaniastudios.cities.econ.store.container;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiTabButton extends GuiButton {
@@ -42,16 +40,16 @@ public class GuiTabButton extends GuiButton {
     }
 
     @Override
-    public void drawButton(Minecraft par1Minecraft, int par2, int par3) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         if (this.drawButton) {
-            FontRenderer fontrenderer = par1Minecraft.fontRenderer;
-            par1Minecraft.getTextureManager().bindTexture(field_110332_a);
+            FontRenderer fontrenderer = mc.fontRenderer;
+            mc.getTextureManager().bindTexture(field_110332_a);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
+            this.field_82253_i = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
             int k = this.getHoverState(this.field_82253_i);
             this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + k * 20, this.width, this.height);
             this.drawTexturedModalRect(this.xPosition + this.width, this.yPosition, 200 - this.width, 46 + k * 20, this.width, this.height);
-            this.mouseDragged(par1Minecraft, par2, par3);
+            this.mouseDragged(mc, mouseX, mouseY);
             int l = 14737632;
 
             if (!this.enabled) {

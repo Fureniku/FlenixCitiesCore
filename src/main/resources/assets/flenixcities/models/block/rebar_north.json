@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "flenixcities:blocks/rebar_side",
+		"1": "flenixcities:blocks/rebar_top",
+		"particle": "flenixcities:blocks/rebar_side"
+	},
+	"elements": [
+		{
+			"from": [7, 7, 0],
+			"to": [9, 9, 7],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"east": {"uv": [12, 0, 16, 16], "texture": "#0", "rotation": 90},
+				"south": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"west": {"uv": [4, 0, 8, 16], "texture": "#0", "rotation": 270},
+				"up": {"uv": [0, 0, 4.5, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 16], "texture": "#0", "rotation": 180}
+			}
+		}
+	]
+}

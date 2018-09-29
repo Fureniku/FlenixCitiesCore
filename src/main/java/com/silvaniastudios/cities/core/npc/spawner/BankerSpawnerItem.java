@@ -1,35 +1,35 @@
 package com.silvaniastudios.cities.core.npc.spawner;
 
-import com.silvaniastudios.cities.core.FlenixCities_Core;
+import com.silvaniastudios.cities.core.FlenixCities;
 import com.silvaniastudios.cities.core.npc.EntityBanker;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BankerSpawnerItem extends NPCPeripheral {
 
 	public BankerSpawnerItem() {
 		super();
-		this.setCreativeTab(FlenixCities_Core.tabEcon);
+		this.setCreativeTab(FlenixCities.tabEcon);
 	}
 	
 	@Override
-	public boolean onItemUseFirst(ItemStack item, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		EntityBanker entity = new EntityBanker(world);
 		if (!world.isRemote) {
-			entity.posX = x;
-			entity.posY = y;
-			entity.posZ = z;
-			entity.setLocationAndAngles((double)x + 0.5, (double)y + 1, (double)z + 0.5, 0.0F, 0.0F);
-			entity.onSpawnWithEgg(null);
-			world.spawnEntityInWorld(entity);
+			entity.setLocationAndAngles((double)pos.getX() + 0.5, (double)pos.getY() + 1, (double)pos.getZ() + 0.5, 0.0F, 0.0F);
+			//entity.onSpawnWithEgg(null);
+			world.spawnEntity(entity);
 			if (!player.capabilities.isCreativeMode) {
-				item.stackSize--;
+				player.getHeldItem(hand).setCount(player.getHeldItem(hand).getCount()-1);
 			}
-			return true;
+			return EnumActionResult.PASS;
 		} else {
-			return false;
+			return EnumActionResult.FAIL;
 		}
 	}
 	

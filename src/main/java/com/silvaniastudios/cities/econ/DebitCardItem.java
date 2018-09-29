@@ -3,70 +3,72 @@ package com.silvaniastudios.cities.econ;
 import java.util.List;
 import java.util.Random;
 
-import com.silvaniastudios.cities.core.CityConfig;
-import com.silvaniastudios.cities.core.CoreItems;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
+import javax.annotation.Nullable;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import com.silvaniastudios.cities.core.CoreItems;
+import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.core.items.CitiesItemBase;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class DebitCardItem extends Item {
+public class DebitCardItem extends CitiesItemBase {
 
-	public DebitCardItem() {
-		super();
-		this.setMaxStackSize(1);
-		this.setCreativeTab(FlenixCities_Core.tabEcon);
+	public DebitCardItem(String name) {
+		super(name, 1);
+		this.setCreativeTab(FlenixCities.tabEcon);
 	}
 		
 	@Override
 	public void onUpdate(ItemStack item, World world, Entity entity, int par4, boolean par5) {
 		EntityPlayer player = (EntityPlayer)entity;
 		Random rand = new Random();
-		String gold = EnumChatFormatting.GOLD + "";
-		String green = EnumChatFormatting.DARK_GREEN + "";
+		String gold = TextFormatting.GOLD + "";
+		String green = TextFormatting.DARK_GREEN + "";
 
-		if (item.stackTagCompound == null) {
+		if (item.getTagCompound() == null) {
 			if (!world.isRemote) {
-				item.stackTagCompound = new NBTTagCompound();
-				item.stackTagCompound.setString("playerName", player.getDisplayName());
-				item.stackTagCompound.setString("playerUUID", player.getUniqueID().toString());
-				item.stackTagCompound.setInteger("PIN", rand.nextInt(9000) + 1000);
-				player.addChatComponentMessage(new ChatComponentText(gold + "Hello, " + item.stackTagCompound.getString("playerName") + 
-						", your unique PIN is " + green + item.stackTagCompound.getInteger("PIN") + "."));
-				System.out.println(player.getDisplayName() + "'s PIN has been set to " + item.stackTagCompound.getInteger("PIN"));
+				item.setTagCompound(new NBTTagCompound());
+				item.getTagCompound().setString("playerName", player.getDisplayName().getFormattedText());
+				item.getTagCompound().setString("playerUUID", player.getUniqueID().toString());
+				item.getTagCompound().setInteger("PIN", rand.nextInt(9000) + 1000);
+				player.sendMessage(new TextComponentString(gold + "Hello, " + item.getTagCompound().getString("playerName") + 
+						", your unique PIN is " + green + item.getTagCompound().getInteger("PIN") + "."));
+				System.out.println(player.getDisplayName() + "'s PIN has been set to " + item.getTagCompound().getInteger("PIN"));
 			}
 		}
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void addInformation(ItemStack item, EntityPlayer player, List list, boolean par4) {
-		if (item.stackTagCompound != null) {
-			String playerName = item.stackTagCompound.getString("playerName");
-			if (playerName.equals(player.getDisplayName())) {
-				list.add(EnumChatFormatting.GREEN + "Owner: " + playerName);
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack item, @Nullable World worldIn, List<String> list, ITooltipFlag flagIn) {
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if (item.getTagCompound() != null) {
+			String playerName = item.getTagCompound().getString("playerName");
+			if (playerName.equals(player.getName())) {
+				list.add(TextFormatting.GREEN + "Owner: " + playerName);
 				list.add("PIN: " + getPinAsString(item));
 			} else {
-				list.add(EnumChatFormatting.RED + "Owner: " + playerName);
+				list.add(TextFormatting.RED + "Owner: " + playerName);
 			}
 			
 			if (player.capabilities.isCreativeMode) {
-				list.add(EnumChatFormatting.GOLD + playerName + "'s PIN is " + getPinAsString(item));
+				list.add(TextFormatting.GOLD + playerName + "'s PIN is " + getPinAsString(item));
 			}
 		}
 	}
 	
 	public String getPinAsString(ItemStack item) {
-		int pinInt = item.stackTagCompound.getInteger("PIN");
+		int pinInt = item.getTagCompound().getInteger("PIN");
 		String pin = "" + pinInt;
 		if (pinInt <= 0) {
 			pin = "0000";
@@ -80,21 +82,13 @@ public class DebitCardItem extends Item {
 		return pin;
 	}
 	
-	@Override
-	public boolean onItemUse(ItemStack item, EntityPlayer entityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
-		if (CityConfig.debugMode) {
-			System.out.println("Refreshing Inventory!");
-		}
-		return true;
-	}
-	
 	public static String checkCardPin(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
-		if (held.getItem() != CoreItems.debitCardNew) {
+		if (held.getItem() != CoreItems.debitCard) {
 			return "";
 		}
 		
-		int pinInt = held.stackTagCompound.getInteger("PIN");
+		int pinInt = held.getTagCompound().getInteger("PIN");
 		String pin = "" + pinInt;
 		if (pinInt <= 0) {
 			pin = "0000";
@@ -110,17 +104,10 @@ public class DebitCardItem extends Item {
 	
 	public static String checkCardOwner(EntityPlayer player, ItemStack held) {
 		if (held != null) {
-			if (held.getItem() == CoreItems.debitCardNew) {
-				return held.stackTagCompound.getString("playerUUID");
+			if (held.getItem() == CoreItems.debitCard) {
+				return held.getTagCompound().getString("playerUUID");
 			}
 		}
 		return "";
 	}
-	
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister iconRegister) {
-        itemIcon = iconRegister.registerIcon(FlenixCities_Core.modid + ":" + (this.getUnlocalizedName().substring(5)));
-	}
-	
-	
 }

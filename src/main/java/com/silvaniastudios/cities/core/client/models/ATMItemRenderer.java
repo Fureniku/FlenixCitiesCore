@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.models;
+/*package com.silvaniastudios.cities.core.client.models;
 
 import org.lwjgl.opengl.GL11;
 
@@ -71,5 +71,4 @@ public class ATMItemRenderer implements IItemRenderer {
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
 	}
-
-}
+}*/

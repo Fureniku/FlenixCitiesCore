@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import org.lwjgl.opengl.GL11;
 
@@ -1417,4 +1417,4 @@ public class WalkwayStairsRenderer implements ISimpleBlockRenderingHandler {
 		}
 	}
 
-}
+}*/

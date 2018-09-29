@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks.decorative;
+/*package com.silvaniastudios.cities.core.blocks.decorative;
 
 import com.silvaniastudios.cities.core.client.ClientProxy;
 
@@ -92,4 +92,4 @@ public class Slope45FCC extends BlockStairsFCC {
 		//No criteria met? They're probably in the middle somewhere. Divide 50/50, pick lower or upper.
         return side != 0 && (side == 1 || (double)hitY <= 0.5D) ? meta : meta | 4;
     }
-}
+}*/

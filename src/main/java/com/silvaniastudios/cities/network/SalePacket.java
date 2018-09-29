@@ -1,24 +1,15 @@
 package com.silvaniastudios.cities.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.World;
-
 import com.silvaniastudios.cities.core.CityConfig;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
-import com.silvaniastudios.cities.econ.EconUtils;
 import com.silvaniastudios.cities.econ.store.container.ContainerAdminShop;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityAdminShop;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class SalePacket implements IMessage {
 	
@@ -54,13 +45,12 @@ public class SalePacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(SalePacket message, MessageContext ctx) {
-			String pktId = message.packetId;
-			int slotId = message.slotId;
-			int x = message.x;
-			int y = message.y;
-			int z = message.z;
-			World world = ctx.getServerHandler().playerEntity.worldObj;
-			EntityPlayer player = ctx.getServerHandler().playerEntity;
+			String pktId = SalePacket.packetId;
+			int slotId = SalePacket.slotId;
+			int x = SalePacket.x;
+			int y = SalePacket.y;
+			int z = SalePacket.z;
+			EntityPlayer player = ctx.getServerHandler().player;
 
 			if (CityConfig.debugMode) {
 				System.out.println("Pkt ID: " + pktId);
@@ -72,11 +62,11 @@ public class SalePacket implements IMessage {
 
 				TileEntityAdminShop tileAdmin = container.te;//(TileEntityAdminShop) world.getTileEntity(x, y, z);
 				if (tileAdmin != null) {
-					if (pktId.equalsIgnoreCase("salePacket")) {
+					/* TODO if (pktId.equalsIgnoreCase("salePacket")) {
 						tileAdmin.sellItem(slotId, player);
 					} else if (pktId.equalsIgnoreCase("buyPacket")) {
 						tileAdmin.buyItem(slotId, player);
-					}
+					}*/
 				}
 			}
 			return null;

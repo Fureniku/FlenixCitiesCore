@@ -1,4 +1,4 @@
-//CLONED FROM FLENIXCITIES Walkway Renderer, then modified.
+/*//CLONED FROM FLENIXCITIES Walkway Renderer, then modified.
 //Taken with permission, as it's my own damn mod. :D
 package com.silvaniastudios.cities.core.client.renders;
 
@@ -363,4 +363,4 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 	public int getRenderId() {
 		return ClientProxy.walkwayFenceRenderID;
 	}
-}
+}*/

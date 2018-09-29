@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import com.silvaniastudios.cities.core.blocks.decorative.CornerPostFCC;
 import com.silvaniastudios.cities.core.blocks.decorative.WalkwayFenceFCC;
@@ -381,4 +381,4 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 	public int getRenderId() {
 		return ClientProxy.walkwayFenceRenderID;
 	}
-}
+}*/

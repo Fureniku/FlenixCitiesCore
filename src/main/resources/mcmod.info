@@ -1,12 +1,12 @@
 [
 {
-  "modid": "FlenixCities",
-  "name": "FlenixCitiesCore",
-  "description": "Core aspect of FlenixCities, providing basic blocks, money, and soon other things like power and world gen.",
+  "modid": "flenixcities",
+  "name": "FlenixCities",
+  "description": "Adding blocks and decorations used to build cities, as well as an economy system.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "logoFile": "/cities.png",
-  "url": "http://www.silvania.co.uk/mods/",
+  "url": "http://www.silvaniastudios.com/mods/",
   "updateUrl": "",
   "authors": ["Flenix"],
   "credits": "Silvania Studios",

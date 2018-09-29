@@ -1,27 +1,18 @@
 package com.silvaniastudios.cities.econ.atm;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-
 import org.lwjgl.opengl.GL11;
 
-import com.silvaniastudios.cities.core.FlenixCities_Core;
-import com.silvaniastudios.cities.econ.EconUtils;
-import com.silvaniastudios.cities.network.ServerBalancePacket;
+import com.silvaniastudios.cities.core.FlenixCities;
 import com.silvaniastudios.cities.network.SoundPacket;
 
-public class GuiATMNoCard extends GuiContainer {
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
+
+public class GuiATMNoCard extends GuiScreen {
 
     private static final ResourceLocation texture = new ResourceLocation("flenixcities", "textures/gui/atm.png");
-
-    
-    public GuiATMNoCard (InventoryPlayer inventoryPlayer, TileEntityATMEntity tileEntity) {
-    	super(new ContainerATM(inventoryPlayer, tileEntity));
-    }
     
     protected int xSize = 232;
     protected int ySize = 242;
@@ -29,6 +20,8 @@ public class GuiATMNoCard extends GuiContainer {
     @Override
     public void initGui() {
     	super.initGui();
+    	int guiLeft = width / 2;
+    	int guiTop = height / 2;
     	buttonList.add(new ATMButton(1, guiLeft + 21, guiTop + 109, 24, 15, "7")); // 7
     	buttonList.add(new ATMButton(2, guiLeft + 53, guiTop + 109, 24, 15, "8")); // 8
     	buttonList.add(new ATMButton(3, guiLeft + 85, guiTop + 109, 24, 15, "9")); // 9
@@ -55,22 +48,19 @@ public class GuiATMNoCard extends GuiContainer {
     }
     
     public void actionPerformed(GuiButton guibutton) {
-    	FlenixCities_Core.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
+    	FlenixCities.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int param1, int param2) {
-    	fontRendererObj.drawString("ATM", -21, -30, 0x404040);
-    	fontRendererObj.drawString("Welcome!", 68, -2, 0x007F0E);
-    	fontRendererObj.drawString("Please insert your card.", 28, 8, 0x007F0E);
-    }
-    
-    @Override
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     	Minecraft.getMinecraft().renderEngine.bindTexture(texture);
     	int x = (width - xSize) / 2;
     	int y = (height - ySize) / 2;
     	this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+    	
+    	fontRenderer.drawString("ATM", -21, -30, 0x404040);
+    	fontRenderer.drawString("Welcome!", 68, -2, 0x007F0E);
+    	fontRenderer.drawString("Please insert your card.", 28, 8, 0x007F0E);
     }
 }

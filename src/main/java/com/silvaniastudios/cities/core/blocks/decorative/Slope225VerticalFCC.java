@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks.decorative;
+/*package com.silvaniastudios.cities.core.blocks.decorative;
 
 import java.util.List;
 
@@ -133,4 +133,4 @@ public class Slope225VerticalFCC extends Block {
 		list.add(new ItemStack(item, 1, 0));
 		list.add(new ItemStack(item, 1, 8));
 	}
-}
+}*/

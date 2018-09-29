@@ -1,16 +1,16 @@
 package com.silvaniastudios.cities.network;
 
+import com.silvaniastudios.cities.core.FlenixCities;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
-import com.silvaniastudios.cities.core.CityConfig;
-import com.silvaniastudios.cities.econ.EconUtils;
-
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class SoundPacket implements IMessage {
 	
@@ -36,9 +36,9 @@ public class SoundPacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(SoundPacket message, MessageContext ctx) {
-			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
-			World world = ctx.getServerHandler().playerEntity.worldObj;
-			player.worldObj.playSoundAtEntity(player, message.soundName, 1, 1);
+			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().player;
+			SoundEvent sound = new SoundEvent(new ResourceLocation(FlenixCities.MODID, message.soundName));
+			player.world.playSound(player, player.getPosition(), sound, SoundCategory.MASTER, 1.0F, 1.0F);
 			return null;
 		}
 	}

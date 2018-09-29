@@ -24,7 +24,6 @@ public class NPCAITempt extends EntityAIBase {
     private Item temptItem;
 
     private boolean scaredByPlayerMovement;
-    private boolean avoidWater;
 
     public NPCAITempt(EntityCreature creature, double speed, Item item, boolean fear) {
         this.temptedEntity = creature;
@@ -43,7 +42,7 @@ public class NPCAITempt extends EntityAIBase {
         }
         else
         {
-            this.temptingPlayer = this.temptedEntity.worldObj.getClosestPlayerToEntity(this.temptedEntity, 10.0D);
+            this.temptingPlayer = this.temptedEntity.world.getClosestPlayerToEntity(this.temptedEntity, 10.0D);
 
             if (this.temptingPlayer == null)
             {
@@ -51,7 +50,7 @@ public class NPCAITempt extends EntityAIBase {
             }
             else
             {
-                ItemStack itemstack = this.temptingPlayer.getCurrentEquippedItem();
+                ItemStack itemstack = this.temptingPlayer.getHeldItemMainhand();
                 return itemstack == null ? false : itemstack.getItem() == this.temptItem;
             }
         }
@@ -61,7 +60,7 @@ public class NPCAITempt extends EntityAIBase {
     {
         if (this.scaredByPlayerMovement)
         {
-            if (this.temptedEntity.getDistanceSqToEntity(this.temptingPlayer) < 36.0D)
+            if (this.temptedEntity.getDistanceSq(this.temptingPlayer) < 36.0D)
             {
                 if (this.temptingPlayer.getDistanceSq(this.playerPosX, this.playerPosY, this.playerPosZ) > 0.010000000000000002D)
                 {
@@ -92,23 +91,20 @@ public class NPCAITempt extends EntityAIBase {
         this.playerPosY = this.temptingPlayer.posY;
         this.playerPosZ = this.temptingPlayer.posZ;
         this.field_75287_j = true;
-        this.avoidWater = this.temptedEntity.getNavigator().getAvoidsWater();
-        this.temptedEntity.getNavigator().setAvoidsWater(true);
     }
 
     public void resetTask() {
         this.temptingPlayer = null;
-        this.temptedEntity.getNavigator().clearPathEntity();
+        this.temptedEntity.getNavigator().clearPath();
         this.delayTemptCounter = 100;
         this.field_75287_j = false;
-        this.temptedEntity.getNavigator().setAvoidsWater(this.avoidWater);
     }
 
     public void updateTask() {
         //this.temptedEntity.getLookHelper().setLookPositionWithEntity(this.temptingPlayer, 30.0F, (float)this.temptedEntity.getVerticalFaceSpeed());
 
-        if (this.temptedEntity.getDistanceSqToEntity(this.temptingPlayer) < 6.25D) {
-            this.temptedEntity.getNavigator().clearPathEntity();
+        if (this.temptedEntity.getDistanceSq(this.temptingPlayer) < 6.25D) {
+            this.temptedEntity.getNavigator().clearPath();
         } else {
             this.temptedEntity.getNavigator().tryMoveToEntityLiving(this.temptingPlayer, this.temptedSpeed);
         }

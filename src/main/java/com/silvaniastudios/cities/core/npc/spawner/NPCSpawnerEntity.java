@@ -28,12 +28,13 @@ public class NPCSpawnerEntity extends TileEntity {
 	public boolean invincible = true;
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setDouble("offsetX", offsetX);
 		nbt.setDouble("offsetY", offsetY);
 		nbt.setDouble("offsetZ", offsetZ);
 		nbt.setBoolean("canWander", true);
+		return nbt;
 	}
 	
 	@Override

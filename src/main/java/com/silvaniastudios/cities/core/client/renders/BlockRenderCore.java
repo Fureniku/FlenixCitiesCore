@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import org.lwjgl.opengl.GL11;
 
@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockRenderCore implements ISimpleBlockRenderingHandler {
 	
-	Tessellator tess = Tessellator.instance;
+	Tessellator tess = Tessellator.getInstance();
 	
 	public boolean checkConnections(IBlockAccess world, int x, int y, int z, int targetMeta, int meta, boolean checkBelow) {	
 		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z)) {
@@ -49,7 +49,7 @@ public class BlockRenderCore implements ISimpleBlockRenderingHandler {
 		if (existsInWorld) {
 			renderer.renderStandardBlock(block, x, y, z);
 		} else {
-			Tessellator tess = Tessellator.instance;
+			Tessellator tess = Tessellator.getInstance();
 			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 			
 			tess.startDrawingQuads();
@@ -176,9 +176,6 @@ public class BlockRenderCore implements ISimpleBlockRenderingHandler {
 	@Override public int getRenderId() { return 0; }
 	
 	
-	/**
-	 * Custom shit stolen from vanilla RenderBlocks and modified. Much easier way to use Ambient Occlusion than rewriting the whole damn thing.
-	 */
 	public void renderBottomFace(double x1, double x2, double x3, double x4, double y1, double y2, double y3, double y4, double z1, double z2, double z3, double z4, IIcon icon, RenderBlocks renderer, int x, int y, int z) {
         Tessellator tessellator = Tessellator.instance;
 
@@ -270,7 +267,7 @@ public class BlockRenderCore implements ISimpleBlockRenderingHandler {
             tessellator.addVertexWithUV(x+1, y+0, z+1, d7, d9);
             tessellator.addVertexWithUV(x+0, y+0, z+1, d3, d5);
             tessellator.addVertexWithUV(x+0, y+0, z+0, d8, d10);
-        }
+        }*/
 
         /*double xA = x1 + x;
         double xB = x2 + x;
@@ -314,5 +311,5 @@ public class BlockRenderCore implements ISimpleBlockRenderingHandler {
             tessellator.addVertexWithUV(xC, yC, zC, d7, d9);
             tessellator.addVertexWithUV(xD, yD, zD, d4, d6);
         }*/
-    }
-}
+  //  }
+//}

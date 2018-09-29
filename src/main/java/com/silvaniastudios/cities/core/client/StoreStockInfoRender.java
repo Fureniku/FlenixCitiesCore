@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client;
+/*package com.silvaniastudios.cities.core.client;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -15,22 +15,19 @@ import com.silvaniastudios.cities.econ.store.entity.TileEntityAdminShop;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityFloatingShelves;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityStockChest;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class StoreStockInfoRender extends Gui {
 
@@ -45,11 +42,11 @@ public class StoreStockInfoRender extends Gui {
 	
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onRenderStock(RenderGameOverlayEvent.Pre event) {
-		EntityClientPlayerMP player = mc.thePlayer;
-		WorldClient world = mc.theWorld;
+		EntityClientPlayerMP player = mc.player;
+		WorldClient world = mc.world;
 		
-		Vec3 vec3 = player.getPosition(1.0F);
-		Vec3 lookVec = player.getLookVec();
+		Vec3d vec3 = player.getPosition(1.0F);
+		Vec3d lookVec = player.getLookVec();
 		MovingObjectPosition mop = mc.renderViewEntity.rayTrace(7, 1.0F);
 		
 		ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
@@ -380,4 +377,4 @@ public class StoreStockInfoRender extends Gui {
             }
         }
     }
-}
+}*/

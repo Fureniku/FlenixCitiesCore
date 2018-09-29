@@ -1,17 +1,16 @@
 package com.silvaniastudios.cities.network;
 
+import com.silvaniastudios.cities.core.CityConfig;
+import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.econ.EconUtils;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-
-import com.silvaniastudios.cities.core.CityConfig;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
-import com.silvaniastudios.cities.econ.EconUtils;
-
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ATMWithdrawPacket implements IMessage {
 	
@@ -39,11 +38,11 @@ public class ATMWithdrawPacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(ATMWithdrawPacket message, MessageContext ctx) {
-			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().playerEntity;
+			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().player;
 			econ.withdrawFunds(message.withdrawAmount, player);
-			FlenixCities_Core.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), (EntityPlayerMP) player);
+			FlenixCities.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), (EntityPlayerMP) player);
 			if (CityConfig.debugMode) {
-				System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().playerEntity.getDisplayName()));
+				System.out.println(String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().player.getDisplayName()));
 			}
 			return null;
 		}

@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.models;
+/*package com.silvaniastudios.cities.core.client.models;
 
 import org.lwjgl.opengl.GL11;
 
@@ -93,4 +93,4 @@ public class TileEntityATMRenderer extends TileEntitySpecialRenderer {
 		tess.setColorOpaque_F(brightness, brightness, brightness);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit,  (float) modulousModifier,  divModifier);
 	}
-}
+}*/

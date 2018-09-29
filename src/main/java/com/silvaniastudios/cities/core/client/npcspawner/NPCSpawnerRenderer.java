@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.npcspawner;
+/*package com.silvaniastudios.cities.core.client.npcspawner;
 
 import org.lwjgl.opengl.GL11;
 
@@ -40,5 +40,4 @@ public class NPCSpawnerRenderer extends TileEntitySpecialRenderer {
 		tess.setColorOpaque_F(brightness, brightness, brightness);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit,  (float) modulousModifier,  divModifier);
 	}
-
-}
+}*/

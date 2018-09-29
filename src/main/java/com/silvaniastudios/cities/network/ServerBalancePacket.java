@@ -1,15 +1,12 @@
 package com.silvaniastudios.cities.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-
 import com.silvaniastudios.cities.core.CityConfig;
-import com.silvaniastudios.cities.econ.EconUtils;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ServerBalancePacket implements IMessage {
 	
@@ -37,7 +34,7 @@ public class ServerBalancePacket implements IMessage {
 		@Override
 		public IMessage onMessage(ServerBalancePacket message, MessageContext ctx) {
 			if (CityConfig.debugMode) {
-				System.out.println(String.format("Received %s", message.balanceAmount));
+				System.out.println(String.format("Received %s", ServerBalancePacket.balanceAmount));
 			}
 			return null;
 		}

@@ -1,18 +1,16 @@
 package com.silvaniastudios.cities.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
 import com.silvaniastudios.cities.core.CityConfig;
 import com.silvaniastudios.cities.econ.EconUtils;
 import com.silvaniastudios.cities.econ.store.container.ContainerAdminShop;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityAdminShop;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class AdminShopClientPacket implements IMessage {
 	
@@ -78,20 +76,17 @@ public class AdminShopClientPacket implements IMessage {
 			if (CityConfig.debugMode) {
 				System.out.println("Packet recieved from client regarding prices in shops!");
 			}
-			World world = ctx.getServerHandler().playerEntity.worldObj;
-			EntityPlayer player = ctx.getServerHandler().playerEntity;
+			EntityPlayer player = ctx.getServerHandler().player;
 			
-			String str1 = "" + message.buyPrice1;
-			String str2 = "" + message.sellPrice1;
-			String str3 = "" + message.buyPrice2;
-			String str4 = "" + message.sellPrice2;
-			String str5 = "" + message.buyPrice3;
-			String str6 = "" + message.sellPrice3;
-			String str7 = "" + message.buyPrice4;
-			String str8 = "" + message.sellPrice4;
-			int x = message.x;
-			int y = message.y;
-			int z = message.z;
+			String str1 = "" + AdminShopClientPacket.buyPrice1;
+			String str2 = "" + AdminShopClientPacket.sellPrice1;
+			String str3 = "" + AdminShopClientPacket.buyPrice2;
+			String str4 = "" + AdminShopClientPacket.sellPrice2;
+			String str5 = "" + AdminShopClientPacket.buyPrice3;
+			String str6 = "" + AdminShopClientPacket.sellPrice3;
+			String str7 = "" + AdminShopClientPacket.buyPrice4;
+			String str8 = "" + AdminShopClientPacket.sellPrice4;
+			
 			if (player.openContainer instanceof ContainerAdminShop) {
 				ContainerAdminShop container = (ContainerAdminShop) player.openContainer;
 				TileEntityAdminShop tileAdmin = container.te;
@@ -107,7 +102,7 @@ public class AdminShopClientPacket implements IMessage {
 					tileAdmin.sellPrice4 = econ.parseDouble(str8);
 					
 					//Update all players nearby of shop changes (Avoids localized scamming by bumping the price after players come into range)
-					tileAdmin.getDescriptionPacket();
+					//TODO tileAdmin.getDescriptionPacket();
 					if (CityConfig.debugMode) {
 						System.out.println("Prices have been set, and description packet triggered.");
 					}

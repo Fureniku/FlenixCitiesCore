@@ -1,144 +1,273 @@
 package com.silvaniastudios.cities.core;
 
-import java.util.ArrayList;
-
-import com.silvaniastudios.cities.core.blocks.BlockMulti;
+import com.silvaniastudios.cities.core.blocks.BlockRebar;
 import com.silvaniastudios.cities.core.blocks.BlockWalkway;
-import com.silvaniastudios.cities.core.blocks.BlockWalkwayStairs;
-import com.silvaniastudios.cities.core.blocks.FloorBlocks;
-import com.silvaniastudios.cities.core.blocks.LightingBlocks;
-import com.silvaniastudios.cities.core.blocks.LightingRotateBlocks;
-import com.silvaniastudios.cities.core.blocks.PlasticBlocks;
-import com.silvaniastudios.cities.core.blocks.RebarBlock;
 import com.silvaniastudios.cities.core.blocks.SkyscraperBlocks;
-import com.silvaniastudios.cities.core.blocks.StainedGlass;
-import com.silvaniastudios.cities.core.blocks.StainedGlassLit;
-import com.silvaniastudios.cities.core.blocks.StainedGlassPane;
 import com.silvaniastudios.cities.core.blocks.StyledGlass;
-import com.silvaniastudios.cities.core.blocks.StyledGlassLit;
-import com.silvaniastudios.cities.core.blocks.WoolCeilingTile;
-import com.silvaniastudios.cities.core.blocks.WoolStone;
-import com.silvaniastudios.cities.core.blocks.WoolWood;
-import com.silvaniastudios.cities.core.blocks.decorative.BlockFenceFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.BlockStairsFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.CornerPostFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.ItemDecorativeBlock;
-import com.silvaniastudios.cities.core.blocks.decorative.OpenStairsFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.RailingFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.Slope225HorizontalAFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.Slope225HorizontalBFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.Slope225VerticalFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.Slope45FCC;
-import com.silvaniastudios.cities.core.blocks.decorative.WalkwayFenceFCC;
-import com.silvaniastudios.cities.core.blocks.decorative.WalkwayStairsFCC;
-import com.silvaniastudios.cities.core.npc.spawner.NPCSpawnerBlock;
-import com.silvaniastudios.cities.econ.atm.TileEntityATMBlock;
-import com.silvaniastudios.cities.econ.store.entity.AdminShopBlock;
-import com.silvaniastudios.cities.econ.store.entity.FloatingShelvesBlock;
-import com.silvaniastudios.cities.econ.store.entity.StockChestBlock;
+import com.silvaniastudios.cities.core.items.CitiesItemBlock;
+import com.silvaniastudios.cities.econ.atm.ATMBlock;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class CoreBlocks {
-	private static CityConfig config;
 	
-	public static Block atmBlock;
+	/** BASE **/
+	public static SkyscraperBlocks skyscraper_blocks_1 = new SkyscraperBlocks("skyscraper_blocks_1", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks skyscraper_blocks_2 = new SkyscraperBlocks("skyscraper_blocks_2", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks skyscraper_blocks_3 = new SkyscraperBlocks("skyscraper_blocks_3", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks skyscraper_blocks_4 = new SkyscraperBlocks("skyscraper_blocks_4", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks skyscraper_blocks_5 = new SkyscraperBlocks("skyscraper_blocks_5", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks skyscraper_blocks_6 = new SkyscraperBlocks("skyscraper_blocks_6", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks skyscraper_blocks_7 = new SkyscraperBlocks("skyscraper_blocks_7", FlenixCities.tabDecorative);
+	
+	public static BlockRebar rebar = new BlockRebar("rebar", Material.IRON);
+	
+	public static SkyscraperBlocks white_ornate = new SkyscraperBlocks("white_ornate", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks dark_ornate = new SkyscraperBlocks("dark_ornate", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks floor_block = new SkyscraperBlocks("floor_block", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks plastic_block = new SkyscraperBlocks("plastic_block", FlenixCities.tabDecorative);
+	
+	public static SkyscraperBlocks floor_ceiling_tile = new SkyscraperBlocks("floor_ceiling_tile", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_ceiling_tile = new SkyscraperBlocks("wool_ceiling_tile", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_wood_oak = new SkyscraperBlocks("wool_wood_oak", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_wood_spruce = new SkyscraperBlocks("wool_wood_spruce", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_wood_birch = new SkyscraperBlocks("wool_wood_birch", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_wood_jungle = new SkyscraperBlocks("wool_wood_jungle", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_wood_acacia = new SkyscraperBlocks("wool_wood_acacia", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_wood_dark_oak = new SkyscraperBlocks("wool_wood_dark_oak", FlenixCities.tabDecorative);
+	public static SkyscraperBlocks wool_stone = new SkyscraperBlocks("wool_stone", FlenixCities.tabDecorative);
+	
+	public static StyledGlass styled_glass = new StyledGlass("styled_glass", FlenixCities.tabDecorative);
+	public static StyledGlass styled_glass_white = new StyledGlass("styled_glass_white", FlenixCities.tabDecorative);
+	
+	public static BlockWalkway walkway_oak_laminate = new BlockWalkway("walkway_oak_laminate", Material.WOOD);
+	public static BlockWalkway walkway_spruce_laminate = new BlockWalkway("walkway_spruce_laminate", Material.WOOD);
+	public static BlockWalkway walkway_birch_laminate = new BlockWalkway("walkway_birch_laminate", Material.WOOD);
+	public static BlockWalkway walkway_jungle_laminate = new BlockWalkway("walkway_jungle_laminate", Material.WOOD);
+	public static BlockWalkway walkway_acacia_laminate = new BlockWalkway("walkway_acacia_laminate", Material.WOOD);
+	public static BlockWalkway walkway_dark_oak_laminate = new BlockWalkway("walkway_dark_oak_laminate", Material.WOOD);
+	
+	public static BlockWalkway walkway_oak_brick = new BlockWalkway("walkway_oak_brick", Material.WOOD);
+	public static BlockWalkway walkway_spruce_brick = new BlockWalkway("walkway_spruce_brick", Material.WOOD);
+	public static BlockWalkway walkway_birch_brick = new BlockWalkway("walkway_birch_brick", Material.WOOD);
+	public static BlockWalkway walkway_jungle_brick = new BlockWalkway("walkway_jungle_brick", Material.WOOD);
+	public static BlockWalkway walkway_acacia_brick = new BlockWalkway("walkway_acacia_brick", Material.WOOD);
+	public static BlockWalkway walkway_dark_oak_brick = new BlockWalkway("walkway_dark_oak_brick", Material.WOOD);
+
+	public static BlockWalkway walkway_skyscraper_white = new BlockWalkway("walkway_skyscraper_white", Material.WOOD);
+	public static BlockWalkway walkway_skyscraper_light_grey = new BlockWalkway("walkway_skyscraper_light_grey", Material.WOOD);
+	public static BlockWalkway walkway_skyscraper_dark_grey = new BlockWalkway("walkway_skyscraper_dark_grey", Material.WOOD);
+	public static BlockWalkway walkway_skyscraper_black = new BlockWalkway("walkway_skyscraper_black", Material.WOOD);
+	
+	public static ATMBlock atmBlock = new ATMBlock("atmBlock");
+	
+	/**RESEARCH**/
+	public static SkyscraperBlocks rsch_ceramic_tile = new SkyscraperBlocks("rsch_ceramic_tile", FlenixCities.tabResearch);
+	public static SkyscraperBlocks rsch_ceramic_wall = new SkyscraperBlocks("rsch_ceramic_wall", FlenixCities.tabResearch);
+	public static SkyscraperBlocks rsch_decorative = new SkyscraperBlocks("rsch_decorative", FlenixCities.tabResearch);
+	public static SkyscraperBlocks rsch_grill = new SkyscraperBlocks("rsch_grill", FlenixCities.tabResearch);
+	
+	public static BlockWalkway walkway_steel_checkerplate = new BlockWalkway("walkway_steel_checkerplate", Material.WOOD);
+	public static BlockWalkway walkway_steel_hazard = new BlockWalkway("walkway_steel_hazard", Material.WOOD);
+	
+	
+	
+	
+	public static void register(IForgeRegistry<Block> registry) {
+		//Base stuff
+		registry.registerAll(
+				skyscraper_blocks_1,
+				skyscraper_blocks_2,
+				skyscraper_blocks_3,
+				skyscraper_blocks_4,
+				skyscraper_blocks_5,
+				skyscraper_blocks_6,
+				skyscraper_blocks_7,
+				rebar,
+				white_ornate,
+				dark_ornate,
+				floor_block,
+				plastic_block,
+				floor_ceiling_tile,
+				wool_ceiling_tile,
+				wool_wood_oak,
+				wool_wood_spruce,
+				wool_wood_birch,
+				wool_wood_jungle,
+				wool_wood_acacia,
+				wool_wood_dark_oak,
+				wool_stone,
+				styled_glass,
+				styled_glass_white,
+				
+				walkway_oak_laminate,
+				walkway_spruce_laminate,
+				walkway_birch_laminate,
+				walkway_jungle_laminate,
+				walkway_acacia_laminate,
+				walkway_dark_oak_laminate,
+				walkway_oak_brick,
+				walkway_spruce_brick,
+				walkway_birch_brick,
+				walkway_jungle_brick,
+				walkway_acacia_brick,
+				walkway_dark_oak_brick,
+				walkway_skyscraper_white,
+				walkway_skyscraper_light_grey,
+				walkway_skyscraper_dark_grey,
+				walkway_skyscraper_black,
+				atmBlock
+		);
+		//research stuff
+		registry.registerAll(
+				rsch_ceramic_tile,
+				rsch_ceramic_wall,
+				rsch_decorative,
+				rsch_grill,
+				walkway_steel_checkerplate,
+				walkway_steel_hazard
+		);
+	}
+	
+	public static void registerItemBlocks(IForgeRegistry<Item> registry) {
+		//base stuff
+		registry.register(new CitiesItemBlock(skyscraper_blocks_1).setRegistryName(skyscraper_blocks_1.getRegistryName()));
+		registry.register(new CitiesItemBlock(skyscraper_blocks_2).setRegistryName(skyscraper_blocks_2.getRegistryName()));
+		registry.register(new CitiesItemBlock(skyscraper_blocks_3).setRegistryName(skyscraper_blocks_3.getRegistryName()));
+		registry.register(new CitiesItemBlock(skyscraper_blocks_4).setRegistryName(skyscraper_blocks_4.getRegistryName()));
+		registry.register(new CitiesItemBlock(skyscraper_blocks_5).setRegistryName(skyscraper_blocks_5.getRegistryName()));
+		registry.register(new CitiesItemBlock(skyscraper_blocks_6).setRegistryName(skyscraper_blocks_6.getRegistryName()));
+		registry.register(new CitiesItemBlock(skyscraper_blocks_7).setRegistryName(skyscraper_blocks_7.getRegistryName()));
+		registry.register(new CitiesItemBlock(rebar).setRegistryName(rebar.getRegistryName()));
+		
+		registry.register(new CitiesItemBlock(white_ornate).setRegistryName(white_ornate.getRegistryName()));
+		registry.register(new CitiesItemBlock(dark_ornate).setRegistryName(dark_ornate.getRegistryName()));
+		registry.register(new CitiesItemBlock(floor_block).setRegistryName(floor_block.getRegistryName()));
+		registry.register(new CitiesItemBlock(plastic_block).setRegistryName(plastic_block.getRegistryName()));
+		registry.register(new CitiesItemBlock(floor_ceiling_tile).setRegistryName(floor_ceiling_tile.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_ceiling_tile).setRegistryName(wool_ceiling_tile.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_wood_oak).setRegistryName(wool_wood_oak.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_wood_spruce).setRegistryName(wool_wood_spruce.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_wood_birch).setRegistryName(wool_wood_birch.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_wood_jungle).setRegistryName(wool_wood_jungle.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_wood_acacia).setRegistryName(wool_wood_acacia.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_wood_dark_oak).setRegistryName(wool_wood_dark_oak.getRegistryName()));
+		registry.register(new CitiesItemBlock(wool_stone).setRegistryName(wool_stone.getRegistryName()));
+		
+		registry.register(new CitiesItemBlock(styled_glass).setRegistryName(styled_glass.getRegistryName()));
+		registry.register(new CitiesItemBlock(styled_glass_white).setRegistryName(styled_glass_white.getRegistryName()));
+		
+		registry.register(new CitiesItemBlock(walkway_oak_laminate).setRegistryName(walkway_oak_laminate.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_spruce_laminate).setRegistryName(walkway_spruce_laminate.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_birch_laminate).setRegistryName(walkway_birch_laminate.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_jungle_laminate).setRegistryName(walkway_jungle_laminate.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_acacia_laminate).setRegistryName(walkway_acacia_laminate.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_dark_oak_laminate).setRegistryName(walkway_dark_oak_laminate.getRegistryName()));
+		
+		registry.register(new CitiesItemBlock(walkway_oak_brick).setRegistryName(walkway_oak_brick.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_spruce_brick).setRegistryName(walkway_spruce_brick.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_birch_brick).setRegistryName(walkway_birch_brick.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_jungle_brick).setRegistryName(walkway_jungle_brick.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_acacia_brick).setRegistryName(walkway_acacia_brick.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_dark_oak_brick).setRegistryName(walkway_dark_oak_brick.getRegistryName()));
+		
+		registry.register(new CitiesItemBlock(walkway_skyscraper_white).setRegistryName(walkway_skyscraper_white.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_skyscraper_light_grey).setRegistryName(walkway_skyscraper_light_grey.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_skyscraper_dark_grey).setRegistryName(walkway_skyscraper_dark_grey.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_skyscraper_black).setRegistryName(walkway_skyscraper_black.getRegistryName()));
+		
+		registry.register(new CitiesItemBlock(atmBlock).setRegistryName(atmBlock.getRegistryName()));
+		
+		//research stuff
+		registry.register(new CitiesItemBlock(rsch_ceramic_tile).setRegistryName(rsch_ceramic_tile.getRegistryName()));
+		registry.register(new CitiesItemBlock(rsch_ceramic_wall).setRegistryName(rsch_ceramic_wall.getRegistryName()));
+		registry.register(new CitiesItemBlock(rsch_decorative).setRegistryName(rsch_decorative.getRegistryName()));
+		registry.register(new CitiesItemBlock(rsch_grill).setRegistryName(rsch_grill.getRegistryName()));
+		
+		registry.register(new CitiesItemBlock(walkway_steel_checkerplate).setRegistryName(walkway_steel_checkerplate.getRegistryName()));
+		registry.register(new CitiesItemBlock(walkway_steel_hazard).setRegistryName(walkway_steel_hazard.getRegistryName()));
+	}
+	
+	public static void registerModels() {
+		//base stuff
+		skyscraper_blocks_1.initModel();
+		skyscraper_blocks_2.initModel();
+		skyscraper_blocks_3.initModel();
+		skyscraper_blocks_4.initModel();
+		skyscraper_blocks_5.initModel();
+		skyscraper_blocks_6.initModel();
+		skyscraper_blocks_7.initModel();
+		rebar.initModel();
+		
+		white_ornate.initModel();
+		dark_ornate.initModel();
+		floor_block.initModel();
+		plastic_block.initModel();
+		
+		floor_ceiling_tile.initModel();
+		wool_ceiling_tile.initModel();
+		wool_wood_oak.initModel();
+		wool_wood_spruce.initModel();
+		wool_wood_birch.initModel();
+		wool_wood_jungle.initModel();
+		wool_wood_acacia.initModel();
+		wool_wood_dark_oak.initModel();
+		wool_stone.initModel();
+		
+		styled_glass.initModel();
+		styled_glass_white.initModel();
+		
+		walkway_oak_laminate.initModel();
+		walkway_spruce_laminate.initModel();
+		walkway_birch_laminate.initModel();
+		walkway_jungle_laminate.initModel();
+		walkway_acacia_laminate.initModel();
+		walkway_dark_oak_laminate.initModel();
+		
+		walkway_oak_brick.initModel();
+		walkway_spruce_brick.initModel();
+		walkway_birch_brick.initModel();
+		walkway_jungle_brick.initModel();
+		walkway_acacia_brick.initModel();
+		walkway_dark_oak_brick.initModel();
+		
+		walkway_skyscraper_white.initModel();
+		walkway_skyscraper_light_grey.initModel();
+		walkway_skyscraper_dark_grey.initModel();
+		walkway_skyscraper_black.initModel();
+		
+		atmBlock.initModel();
+		
+		//research stuff
+		rsch_ceramic_tile.initModel();
+		rsch_ceramic_wall.initModel();
+		rsch_decorative.initModel();
+		rsch_grill.initModel();
+		
+		walkway_steel_checkerplate.initModel();
+		walkway_steel_hazard.initModel();
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void initModel(Block block) {
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(FlenixCities.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
+	}
+
+	
+	/*private static CityConfig config;
+	
 	public static Block floatingShelvesBlock;
 	public static Block npcSpawnerBlock;
 	public static Block adminShopBlock;
 	public static Block stockChest;
-	
-	public static Block skyscraperBlocks;
-	public static Block skyscraperBlocks2;
-	public static Block skyscraperBlocks3;
-	public static Block skyscraperBlocks4;
-	public static Block skyscraperBlocks5;
-	public static Block skyscraperBlocks6;
-	public static Block skyscraperBlocks7;
 		
-	public static Block stainedGlass;
-	public static Block stainedGlassLit;
-	public static Block styledGlass;
-	public static Block styledGlassWhite;
-	public static Block woolCeilingTile;
-	public static Block woolStone;
-	public static Block woolWood;
-	public static Block plasticBlock;
-	public static Block floorBlocks;
-	public static Block floorBlocks2;
-	public static Block lightingBlocks;
-	public static Block lightingRotateBlocks;
-	public static Block stainedGlassPane;
-	public static Block styledGlassPane;
-	public static Block styledGlassWhitePane;
-	
-	public static Block ironPanel;
-	public static Block blockSilk;
-	public static Block blockCloth;
-	public static Block polishedStone;
-	public static Block polishedBrick;
-	public static Block polishedSmallBrick;
-	public static Block polishedSlab;
-	public static Block dulledStone;
-	public static Block dulledBrick;
-	public static Block dulledSmallBrick;
-	public static Block dulledSlab;
-	public static Block brickMulti;
-	public static Block quartzDecorBlocks;
-	
-	public static Block rebarBlock;
-	
-	public static Block oakWalkway;
-	public static Block spruceWalkway;
-	public static Block birchWalkway;
-	public static Block jungleWalkway;
-	public static Block acaciaWalkway;
-	public static Block darkOakWalkway;
-	
-	public static Block whiteWalkway;
-	public static Block lightGreyWalkway;
-	public static Block darkGreyWalkway;
-	public static Block blackWalkway;
-	
-	public static Block lightGreenWalkway;
-	public static Block cyanWalkway;
-	public static Block purpleWalkway;
-	public static Block pinkWalkway;
-	
-	public static Block blueWalkway;
-	public static Block brownWalkway;
-	public static Block greenWalkway;
-	public static Block redWalkway;
-	
-	public static Block orangeWalkway;
-	public static Block magentaWalkway;
-	public static Block lightBlueWalkway;
-	public static Block yellowWalkway;
-	
-	public static Block pastelDarkBlueWalkway;
-	public static Block pastelBrownWalkway;
-	public static Block pastelGreenWalkway;
-	public static Block pastelPinkWalkway;
-	
-	public static Block pastelOrangeWalkway;
-	public static Block pastelMagentaWalkway;
-	public static Block pastelRedWalkway;
-	public static Block pastelYellowWalkway;
-	
-	public static Block pastelLightBlueWalkway;
-	public static Block pastelLightGreenWalkway;
-	public static Block pastelCyanWalkway;
-	public static Block pastelPurpleWalkway;
-	
-	public static Block oakLaminateWalkway;
-	public static Block spruceLaminateWalkway;
-	public static Block birchLaminateWalkway;
-	public static Block jungleLaminateWalkway;
-	public static Block acaciaLaminateWalkway;
-	public static Block darkOakLaminateWalkway;
-	
 	public static Block oakWalkwayStairs;
 	public static Block spruceWalkwayStairs;
 	public static Block birchWalkwayStairs;
@@ -151,193 +280,9 @@ public class CoreBlocks {
 	public static Block darkGreyWalkwayStairs;
 	public static Block blackWalkwayStairs;
 	
-	public static Block lightGreenWalkwayStairs;
-	public static Block cyanWalkwayStairs;
-	public static Block purpleWalkwayStairs;
-	public static Block pinkWalkwayStairs;
-	
-	public static Block blueWalkwayStairs;
-	public static Block brownWalkwayStairs;
-	public static Block greenWalkwayStairs;
-	public static Block redWalkwayStairs;
-	
-	public static Block orangeWalkwayStairs;
-	public static Block magentaWalkwayStairs;
-	public static Block lightBlueWalkwayStairs;
-	public static Block yellowWalkwayStairs;
-	
-	public static Block pastelDarkBlueWalkwayStairs;
-	public static Block pastelBrownWalkwayStairs;
-	public static Block pastelGreenWalkwayStairs;
-	public static Block pastelPinkWalkwayStairs;
-	
-	public static Block pastelOrangeWalkwayStairs;
-	public static Block pastelMagentaWalkwayStairs;
-	public static Block pastelRedWalkwayStairs;
-	public static Block pastelYellowWalkwayStairs;
-	
-	public static Block pastelLightBlueWalkwayStairs;
-	public static Block pastelLightGreenWalkwayStairs;
-	public static Block pastelCyanWalkwayStairs;
-	public static Block pastelPurpleWalkwayStairs;
-	
-	public static Block oakLaminateWalkwayStairs;
-	public static Block spruceLaminateWalkwayStairs;
-	public static Block birchLaminateWalkwayStairs;
-	public static Block jungleLaminateWalkwayStairs;
-	public static Block acaciaLaminateWalkwayStairs;
-	public static Block darkOakLaminateWalkwayStairs;
-	
-	public static void init() {
-		initBlocks();
-		initEconBlocks();
-		initSpecialBlocks();
-		initDecorativeGennedBlocks();
-	}
-
-	
 	public static void initEconBlocks() {
-		atmBlock = new TileEntityATMBlock().setBlockName("atmBlock");
 		floatingShelvesBlock = new FloatingShelvesBlock().setBlockName("floatingShelvesBlock");	
 		stockChest = new StockChestBlock().setBlockName("stockChest");
-	}
-	
-	public static void initBlocks() {
-		skyscraperBlocks = new SkyscraperBlocks().setBlockName("skyscraperBlocks");
-		skyscraperBlocks2 = new SkyscraperBlocks().setBlockName("skyscraperBlocks2");
-		skyscraperBlocks3 = new SkyscraperBlocks().setBlockName("skyscraperBlocks3");
-		skyscraperBlocks4 = new SkyscraperBlocks().setBlockName("skyscraperBlocks4");
-		skyscraperBlocks5 = new SkyscraperBlocks().setBlockName("skyscraperBlocks5");
-		skyscraperBlocks6 = new SkyscraperBlocks().setBlockName("skyscraperBlocks6");
-		skyscraperBlocks7 = new SkyscraperBlocks().setBlockName("skyscraperBlocks7");
-		
-    	stainedGlass = new StainedGlass().setBlockName("stainedGlass");
-    	stainedGlassLit = new StainedGlassLit().setBlockName("stainedGlassLit");
-    	styledGlass = new StyledGlass().setBlockName("styledGlass");
-    	styledGlassWhite = new StyledGlassLit().setBlockName("styledGlassWhite");
-    	woolCeilingTile = new WoolCeilingTile().setBlockName("woolCeilingTile");
-    	woolStone = new WoolStone().setBlockName("woolStone");
-    	woolWood = new WoolWood().setBlockName("woolWood");
-    	plasticBlock = new PlasticBlocks().setBlockName("plasticBlock");
-    	floorBlocks = new FloorBlocks().setBlockName("floorBlocks");
-    	floorBlocks2 = new FloorBlocks().setBlockName("floorBlocks2");
-    	lightingBlocks = new LightingBlocks().setBlockName("lightingBlocks");
-    	lightingRotateBlocks = new LightingRotateBlocks().setBlockName("lightingRotateBlocks");
-    	styledGlassPane = new StainedGlassPane(FlenixCities_Core.modid + ":styledGlass0", FlenixCities_Core.modid + ":styledGlass0", false).setBlockName("styledGlassPane");
-    	styledGlassWhitePane = new StainedGlassPane(FlenixCities_Core.modid + ":styledGlassWhite0", FlenixCities_Core.modid + ":styledGlassWhite0", false).setBlockName("styledGlassWhitePane");
-    	quartzDecorBlocks = new BlockMulti(Material.rock).setBlockName("quartzDecorBlocks");
-    	
-    	
-    	rebarBlock = new RebarBlock().setBlockName("rebarBlock");
-    	
-    	oakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks11", "floorBlocks11").setBlockName("oakWalkway");
-    	spruceWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks12", "floorBlocks12").setBlockName("spruceWalkway");
-    	birchWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks13", "floorBlocks13").setBlockName("birchWalkway");
-    	jungleWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks14", "floorBlocks14").setBlockName("jungleWalkway");
-    	acaciaWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks15", "floorBlocks15").setBlockName("acaciaWalkway");
-    	darkOakWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks20", "floorBlocks20").setBlockName("darkOakWalkway");
-    	
-    	whiteWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks0", "skyscraperBlocks0").setBlockName("whiteWalkway");
-    	lightGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks1", "skyscraperBlocks1").setBlockName("lightGreyWalkway");
-    	darkGreyWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks2", "skyscraperBlocks2").setBlockName("darkGreyWalkway");
-    	blackWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks3", "skyscraperBlocks3").setBlockName("blackWalkway");
-    	
-    	lightGreenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks20", "skyscraperBlocks20").setBlockName("lightGreenWalkway");
-    	cyanWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks21", "skyscraperBlocks21").setBlockName("cyanWalkway");
-    	purpleWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks22", "skyscraperBlocks22").setBlockName("purpleWalkway");
-    	pinkWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks23", "skyscraperBlocks23").setBlockName("pinkWalkway");
-    	
-    	blueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks30", "skyscraperBlocks30").setBlockName("blueWalkway");
-    	brownWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks31", "skyscraperBlocks31").setBlockName("brownWalkway");
-    	greenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks32", "skyscraperBlocks32").setBlockName("greenWalkway");
-    	redWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks33", "skyscraperBlocks33").setBlockName("redWalkway");
-    	
-    	orangeWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks40", "skyscraperBlocks40").setBlockName("orangeWalkway");
-    	magentaWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks41", "skyscraperBlocks41").setBlockName("magentaWalkway");
-    	lightBlueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks42", "skyscraperBlocks42").setBlockName("lightBlueWalkway");
-    	yellowWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks43", "skyscraperBlocks43").setBlockName("yellowWalkway");
-    	
-    	pastelDarkBlueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks50", "skyscraperBlocks50").setBlockName("pastelDarkBlueWalkway");
-    	pastelBrownWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks51", "skyscraperBlocks51").setBlockName("pastelBrownWalkway");
-    	pastelGreenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks52", "skyscraperBlocks52").setBlockName("pastelGreenWalkway");
-    	pastelPinkWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks53", "skyscraperBlocks53").setBlockName("pastelPinkWalkway");
-    	
-    	pastelOrangeWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks60", "skyscraperBlocks60").setBlockName("pastelOrangeWalkway");
-    	pastelMagentaWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks61", "skyscraperBlocks61").setBlockName("pastelMagentaWalkway");
-    	pastelRedWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks62", "skyscraperBlocks62").setBlockName("pastelRedWalkway");
-    	pastelYellowWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks63", "skyscraperBlocks63").setBlockName("pastelYellowWalkway");
-    	
-    	pastelLightBlueWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks70", "skyscraperBlocks70").setBlockName("pastelLightBlueWalkway");
-    	pastelLightGreenWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks71", "skyscraperBlocks71").setBlockName("pastelLightGreenWalkway");
-    	pastelCyanWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks72", "skyscraperBlocks72").setBlockName("pastelCyanWalkway");
-    	pastelPurpleWalkway = new BlockWalkway(Material.rock, Block.soundTypeStone, "skyscraperBlocks73", "skyscraperBlocks73").setBlockName("pastelPurpleWalkway");
-    	
-    	oakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks4", "oakLaminateWalkway").setBlockName("oakLaminateWalkway");
-    	spruceLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks5", "spruceLaminateWalkway").setBlockName("spruceLaminateWalkway");
-    	birchLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks6", "birchLaminateWalkway").setBlockName("birchLaminateWalkway");
-    	jungleLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks7", "jungleLaminateWalkway").setBlockName("jungleLaminateWalkway");
-    	acaciaLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks9", "acaciaLaminateWalkway").setBlockName("acaciaLaminateWalkway");
-    	darkOakLaminateWalkway = new BlockWalkway(Material.wood, Block.soundTypeWood, "floorBlocks10", "darkOakLaminateWalkway").setBlockName("darkOakLaminateWalkway");
-    	
-    	oakWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks11", "floorBlocks11").setBlockName("oakWalkwayStairs");
-    	spruceWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks12", "floorBlocks12").setBlockName("spruceWalkwayStairs");
-    	birchWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks13", "floorBlocks13").setBlockName("birchWalkwayStairs");
-    	jungleWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks14", "floorBlocks14").setBlockName("jungleWalkwayStairs");
-    	acaciaWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks15", "floorBlocks15").setBlockName("acaciaWalkwayStairs");
-    	darkOakWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks20", "floorBlocks20").setBlockName("darkOakWalkwayStairs");
-    	
-    	whiteWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks0", "skyscraperBlocks0").setBlockName("whiteWalkwayStairs");
-    	lightGreyWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks1", "skyscraperBlocks1").setBlockName("lightGreyWalkwayStairs");
-    	darkGreyWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks2", "skyscraperBlocks2").setBlockName("darkGreyWalkwayStairs");
-    	blackWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks3", "skyscraperBlocks3").setBlockName("blackWalkwayStairs");
-    	
-    	lightGreenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks20", "skyscraperBlocks20").setBlockName("lightGreenWalkwayStairs");
-    	cyanWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks21", "skyscraperBlocks21").setBlockName("cyanWalkwayStairs");
-    	purpleWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks22", "skyscraperBlocks22").setBlockName("purpleWalkwayStairs");
-    	pinkWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks23", "skyscraperBlocks23").setBlockName("pinkWalkwayStairs");
-    	
-    	blueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks30", "skyscraperBlocks30").setBlockName("blueWalkwayStairs");
-    	brownWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks31", "skyscraperBlocks31").setBlockName("brownWalkwayStairs");
-    	greenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks32", "skyscraperBlocks32").setBlockName("greenWalkwayStairs");
-    	redWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks33", "skyscraperBlocks33").setBlockName("redWalkwayStairs");
-    	
-    	orangeWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks40", "skyscraperBlocks40").setBlockName("orangeWalkwayStairs");
-    	magentaWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks41", "skyscraperBlocks41").setBlockName("magentaWalkwayStairs");
-    	lightBlueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks42", "skyscraperBlocks42").setBlockName("lightBlueWalkwayStairs");
-    	yellowWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks43", "skyscraperBlocks43").setBlockName("yellowWalkwayStairs");
-    	
-    	pastelDarkBlueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks50", "skyscraperBlocks50").setBlockName("pastelDarkBlueWalkwayStairs");
-    	pastelBrownWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks51", "skyscraperBlocks51").setBlockName("pastelBrownWalkwayStairs");
-    	pastelGreenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks52", "skyscraperBlocks52").setBlockName("pastelGreenWalkwayStairs");
-    	pastelPinkWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks53", "skyscraperBlocks53").setBlockName("pastelPinkWalkwayStairs");
-    	
-    	pastelOrangeWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks60", "skyscraperBlocks60").setBlockName("pastelOrangeWalkwayStairs");
-    	pastelMagentaWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks61", "skyscraperBlocks61").setBlockName("pastelMagentaWalkwayStairs");
-    	pastelRedWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks62", "skyscraperBlocks62").setBlockName("pastelRedWalkwayStairs");
-    	pastelYellowWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks63", "skyscraperBlocks63").setBlockName("pastelYellowWalkwayStairs");
-    	
-    	pastelLightBlueWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks70", "skyscraperBlocks70").setBlockName("pastelLightBlueWalkwayStairs");
-    	pastelLightGreenWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks71", "skyscraperBlocks71").setBlockName("pastelLightGreenWalkwayStairs");
-    	pastelCyanWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks72", "skyscraperBlocks72").setBlockName("pastelCyanWalkwayStairs");
-    	pastelPurpleWalkwayStairs = new BlockWalkwayStairs(Material.rock, Block.soundTypeStone, "skyscraperBlocks73", "skyscraperBlocks73").setBlockName("pastelPurpleWalkwayStairs");
-    	
-    	oakLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks4", "oakLaminateWalkway").setBlockName("oakLaminateWalkwayStairs");
-    	spruceLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks5", "spruceLaminateWalkway").setBlockName("spruceLaminateWalkwayStairs");
-    	birchLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks6", "birchLaminateWalkway").setBlockName("birchLaminateWalkwayStairs");
-    	jungleLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks7", "jungleLaminateWalkway").setBlockName("jungleLaminateWalkwayStairs");
-    	acaciaLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks9", "acaciaLaminateWalkway").setBlockName("acaciaLaminateWalkwayStairs");
-    	darkOakLaminateWalkwayStairs = new BlockWalkwayStairs(Material.wood, Block.soundTypeWood, "floorBlocks10", "darkOakLaminateWalkway").setBlockName("darkOakLaminateWalkwayStairs");
-    	/*blockSilk = new BlockMulti(config.blockSilkID, Material.cloth).setBlockName("blockSilk");
-    	blockCloth = new BlockMulti(config.blockClothID, Material.cloth).setBlockName("blockCloth");
-    	polishedStone = new BlockMulti(config.polishedStoneID, Material.rock).setBlockName("polishedStone");
-    	polishedBrick = new BlockMulti(config.polishedBrickID, Material.rock).setBlockName("polishedBrick");
-    	polishedSmallBrick = new BlockMulti(config.polishedSmallBrickID, Material.rock).setBlockName("polishedSmallBrick");
-    	polishedSlab = new BlockMulti(config.polishedSlabID, Material.rock).setBlockName("polishedSlab");
-    	dulledStone = new BlockMulti(config.dulledStoneID, Material.rock).setBlockName("dulledStone");
-    	dulledBrick = new BlockMulti(config.dulledBrickID, Material.rock).setBlockName("dulledBrick");
-    	dulledSmallBrick = new BlockMulti(config.dulledSmallBrickID, Material.rock).setBlockName("dulledSmallBrick");
-    	dulledSlab = new BlockMulti(config.dulledSlabID, Material.rock).setBlockName("dulledSlab");
-    	brickMulti = new BlockMulti(config.brickMultiID, Material.rock).setBlockName("brickMulti");*/
 	}
 	
 	public static void initSpecialBlocks() {
@@ -384,7 +329,6 @@ public class CoreBlocks {
 				Block fence = new BlockFenceFCC(mat).setBlockName(mat + "Fence");
 				Block stairs = new BlockStairsFCC(block, mat).setBlockName(mat + "Stairs");
 				//Block panel = new BlockSlabFCC(mat).setBlockName(mat + "Panel");
-				Block walkwayFence = new WalkwayFenceFCC(mat, "walkwayFence").setBlockName(mat + "WalkwayFence");
 				Block walkwayStairs = new WalkwayStairsFCC(mat, "walkwayStairs").setBlockName(mat + "WalkwayStairs");
 				Block railing = new RailingFCC(mat, "railing").setBlockName(mat + "Railing");
 				Block openStairs = new OpenStairsFCC(mat, "openStairs").setBlockName(mat + "OpenStairs");
@@ -393,20 +337,7 @@ public class CoreBlocks {
 				Block slope225High = new Slope225HorizontalBFCC(mat).setBlockName(mat + "Slope225High");
 				Block slope225Vertical = new Slope225VerticalFCC(mat).setBlockName(mat + "Slope225Vertical");
 				Block cornerPost = new CornerPostFCC(mat, "cornerPost").setBlockName(mat + "CornerPost");
-				
-				GameRegistry.registerBlock(fence, ItemDecorativeBlock.class, mat + "Fence");
-				GameRegistry.registerBlock(stairs, ItemDecorativeBlock.class, mat + "Stairs");
-				//GameRegistry.registerBlock(panel, ItemDecorativeBlock.class, mat + "Panel");
-				GameRegistry.registerBlock(walkwayFence, ItemDecorativeBlock.class, mat + "WalkwayFence");
-				GameRegistry.registerBlock(walkwayStairs, ItemDecorativeBlock.class, mat + "WalkwayStairsNew");
-				GameRegistry.registerBlock(railing, ItemDecorativeBlock.class, mat + "Railing");
-				GameRegistry.registerBlock(openStairs, ItemDecorativeBlock.class, mat + "OpenStairs");
-				GameRegistry.registerBlock(slope45, ItemDecorativeBlock.class, mat + "Slope45");
-				GameRegistry.registerBlock(slope225Low, ItemDecorativeBlock.class, mat + "Slope225Low");
-				GameRegistry.registerBlock(slope225High, ItemDecorativeBlock.class, mat + "Slope225High");
-				GameRegistry.registerBlock(slope225Vertical, ItemDecorativeBlock.class, mat + "Slope225Vertical");
-				GameRegistry.registerBlock(cornerPost, ItemDecorativeBlock.class, mat + "CornerPost");
 			}
 		}
-	}
+	}*/
 }

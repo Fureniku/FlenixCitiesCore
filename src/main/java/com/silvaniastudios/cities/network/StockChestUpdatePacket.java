@@ -1,18 +1,16 @@
 package com.silvaniastudios.cities.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
 import com.silvaniastudios.cities.core.CityConfig;
 import com.silvaniastudios.cities.econ.EconUtils;
 import com.silvaniastudios.cities.econ.store.container.ContainerStockChest;
 import com.silvaniastudios.cities.econ.store.entity.TileEntityStockChest;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class StockChestUpdatePacket implements IMessage {
 	
@@ -49,16 +47,16 @@ public class StockChestUpdatePacket implements IMessage {
 		public IMessage onMessage(StockChestUpdatePacket message, MessageContext ctx) {
 			if (CityConfig.debugMode) {
 				System.out.println("Packet recieved from client regarding Stock Chests!");
-				System.out.println("String 1: " + message.toggleBuy); 
-				System.out.println("String 2: " + message.toggleSell); 
-				System.out.println("String 3: " + message.buyFundLimit); 
+				System.out.println("String 1: " + StockChestUpdatePacket.toggleBuy); 
+				System.out.println("String 2: " + StockChestUpdatePacket.toggleSell); 
+				System.out.println("String 3: " + StockChestUpdatePacket.buyFundLimit); 
 			}
-			World world = ctx.getServerHandler().playerEntity.worldObj;
-			EntityPlayer player = ctx.getServerHandler().playerEntity;
 			
-			String str1 = "" + message.toggleBuy;
-			String str2 = "" + message.toggleSell;
-			String str3 = "" + message.buyFundLimit;
+			EntityPlayer player = ctx.getServerHandler().player;
+			
+			String str1 = "" + StockChestUpdatePacket.toggleBuy;
+			String str2 = "" + StockChestUpdatePacket.toggleSell;
+			String str3 = "" + StockChestUpdatePacket.buyFundLimit;
 			
 			if (player.openContainer instanceof ContainerStockChest) {
 				ContainerStockChest container = (ContainerStockChest) player.openContainer;
@@ -69,7 +67,7 @@ public class StockChestUpdatePacket implements IMessage {
 					tileEntity.selling = Boolean.valueOf(str2);
 					tileEntity.buyFundLimit = econ.parseDouble(str3);
 
-					tileEntity.getDescriptionPacket();
+					//TODO tileEntity.getDescriptionPacket();
 					
 					if (CityConfig.debugMode) {
 						System.out.println("Stock Chest description packet triggered.");

@@ -1,31 +1,17 @@
 package com.silvaniastudios.cities.econ.store.entity;
 
-import java.util.List;
-import java.util.Random;
-
-import com.silvaniastudios.cities.core.CoreItems;
-import com.silvaniastudios.cities.core.FlenixCities_Core;
+import com.silvaniastudios.cities.core.FlenixCities;
 import com.silvaniastudios.cities.econ.EconUtils;
-import com.silvaniastudios.cities.network.FloatingShelvesPricePacket;
-import com.silvaniastudios.cities.network.ServerBalancePacket;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock {
@@ -40,59 +26,17 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
 	float maxZ = 1.0F;
 	
 	public FloatingShelvesBlock() {
-		super(Material.iron);
-		this.setCreativeTab(FlenixCities_Core.tabEcon);
+		super(Material.IRON);
+		this.setCreativeTab(FlenixCities.tabEcon);
 		this.setHardness(2.0F);
 	}
 	
 	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess block, int x, int y, int z) {
-		int meta = block.getBlockMetadata(x, y, z);
-		if (meta == 0) {
-			minX = 0.0F;
-			minZ = 0.0F;
-			maxX = 1.0F;
-			maxZ = 0.5F;
-		} else if (meta == 1) {
-			minZ = 0.0F;
-			minX = 0.5F;
-			maxZ = 1.0F;
-			maxX = 1.0F;
-		} else if (meta == 2) {
-			minZ = 0.5F;
-			minX = 0.0F;
-			maxZ = 1.0F;
-			maxX = 1.0F;
-		} else {
-			minX = 0.0F;
-			minZ = 0.0F;
-			maxX = 0.5F;
-			maxZ = 1.0F;
-		}
-		this.setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
-	}
-	
-	@Override
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
-		this.setBlockBoundsBasedOnState(world, x, y, z);
-		return super.getCollisionBoundingBoxFromPool(world, x, y, z);
-	}
-	
-	@Override
-	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axis, List list, Entity entity) {
-        AxisAlignedBB axisalignedbb1 = this.getCollisionBoundingBoxFromPool(world, x, y, z);
-
-        if (axisalignedbb1 != null && axis.intersectsWith(axisalignedbb1)) {
-            list.add(axisalignedbb1);
-        }
-	}
-	
-	@Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float j, float k, float l) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-			TileEntityFloatingShelves tileEntity = (TileEntityFloatingShelves) world.getTileEntity(x, y, z);
-	    	ItemStack item = player.getHeldItem();
-			if (item != null && item.getItem() == CoreItems.storeStockPairer) {
+			TileEntityFloatingShelves tileEntity = (TileEntityFloatingShelves) world.getTileEntity(pos);
+	    	ItemStack item = player.getHeldItemMainhand();
+			/*if (item != null && item.getItem() == CoreItems.storeStockPairer) {
 	        	if (player.getUniqueID().toString().equals(tileEntity.ownerUuid)) {
 		        	if (item.stackTagCompound == null) {
 		        		player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "Link it with a stock chest first!"));
@@ -131,62 +75,33 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
 	        }
 			if ((item != null && item.getItem() != CoreItems.storeStockPairer) || item == null) {
 				player.openGui(FlenixCities_Core.instance, 1, world, x, y, z);
-			}
+			}*/
 		}
         return true;
     }
 	
-	
 	@Override
-	public int getRenderType() {
-		return -1;
-	}
-		
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
 	
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
 	
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack par6ItemStack) {
-        int l = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
-        world.setBlockMetadataWithNotify(x, y, z, l, 2);
-
-		if (l == 0) {
-			world.setBlockMetadataWithNotify(x, y, z, 0, 0);
-		}
-
-		if (l == 1) {
-			world.setBlockMetadataWithNotify(x, y, z, 1, 0);
-		}
-
-		if (l == 2) {
-			world.setBlockMetadataWithNotify(x, y, z, 2, 0);
-		}
-
-		if (l == 3) {
-			world.setBlockMetadataWithNotify(x, y, z, 3, 0);
-		}
-		
-		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			String name = player.getDisplayName();
-			String uuid = player.getUniqueID().toString();
-			TileEntityFloatingShelves tileEntity = (TileEntityFloatingShelves) world.getTileEntity(x, y, z);
-			tileEntity.ownerName = name;
-			tileEntity.ownerUuid = uuid;
-		}
-	}	
+	//TODO rotation
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int id) {
 		return new TileEntityFloatingShelves();
 	}
 	
-	@Override
+	/*@Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6) {
 		dropItems(world, x, y, z);
 		super.breakBlock(world, x, y, z, block, par6);
@@ -223,6 +138,5 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
     			item.stackSize = 0;
     		}
     	}
-    }
-
+    }*/
 }

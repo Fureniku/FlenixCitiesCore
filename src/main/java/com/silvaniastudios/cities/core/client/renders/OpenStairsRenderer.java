@@ -1,4 +1,4 @@
-//CLONED FROM FLENIXCITIES Walkway Stairs Renderer, then modified.
+/*//CLONED FROM FLENIXCITIES Walkway Stairs Renderer, then modified.
 //Taken with permission, as it's my own damn mod. :D
 package com.silvaniastudios.cities.core.client.renders;
 
@@ -821,5 +821,4 @@ public class OpenStairsRenderer implements ISimpleBlockRenderingHandler {
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 		}
 	}
-
-}
+}*/

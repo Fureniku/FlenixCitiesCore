@@ -4,6 +4,17 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+
+import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.econ.EconUtils;
+import com.silvaniastudios.cities.econ.store.entity.TileEntityFloatingShelves;
+import com.silvaniastudios.cities.econ.store.entity.TileEntityStockChest;
+import com.silvaniastudios.cities.network.FloatingShelvesClientPacket;
+import com.silvaniastudios.cities.network.FloatingShelvesPricePacket;
+import com.silvaniastudios.cities.network.FloatingShelvesSalePacket;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -11,21 +22,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-
-import com.silvaniastudios.cities.core.FlenixCities_Core;
-import com.silvaniastudios.cities.econ.EconUtils;
-import com.silvaniastudios.cities.econ.store.entity.TileEntityFloatingShelves;
-import com.silvaniastudios.cities.econ.store.entity.TileEntityStockChest;
-import com.silvaniastudios.cities.network.FloatingShelvesClientPacket;
-import com.silvaniastudios.cities.network.FloatingShelvesPricePacket;
-import com.silvaniastudios.cities.network.FloatingShelvesSalePacket;
-import com.silvaniastudios.cities.network.SalePacket;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiFloatingShelves extends GuiContainer {
@@ -71,9 +69,9 @@ public class GuiFloatingShelves extends GuiContainer {
 		super(new ContainerFloatingShelves(invPlayer, shelvesEntity));
 		this.shelvesEntity = shelvesEntity;
 		
-		x = shelvesEntity.xCoord;
-		y = shelvesEntity.yCoord;
-		z = shelvesEntity.zCoord;
+		x = shelvesEntity.getPos().getX();
+		y = shelvesEntity.getPos().getY();
+		z = shelvesEntity.getPos().getZ();
 		
 		displayBuy1 = "" + shelvesEntity.buyPrice1;
 		displayBuy2 = "" + shelvesEntity.buyPrice2;
@@ -84,8 +82,8 @@ public class GuiFloatingShelves extends GuiContainer {
 		displaySell3 = "" + shelvesEntity.sellPrice3;
 		displaySell4 = "" + shelvesEntity.sellPrice4;
 		
-		if (invPlayer.player.worldObj.getTileEntity(shelvesEntity.stockXPos, shelvesEntity.stockYPos, shelvesEntity.stockZPos) instanceof TileEntityStockChest) {
-			stockEntity = (TileEntityStockChest) invPlayer.player.worldObj.getTileEntity(shelvesEntity.stockXPos, shelvesEntity.stockYPos, shelvesEntity.stockZPos);
+		if (invPlayer.player.world.getTileEntity(shelvesEntity.getPos()) instanceof TileEntityStockChest) {
+			stockEntity = (TileEntityStockChest) invPlayer.player.world.getTileEntity(shelvesEntity.getPos());
 			
 			buying = stockEntity.buying;
 			selling = stockEntity.selling;
@@ -126,7 +124,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	int slot4Qty = 1;
 	
 	public boolean isShopOwner() {
-		if (mc.thePlayer.getDisplayName().equalsIgnoreCase(FloatingShelvesPricePacket.ownerName)) {
+		if (mc.player.getName().equalsIgnoreCase(FloatingShelvesPricePacket.ownerName)) {
 			return true;
 		}
 		return false;
@@ -181,14 +179,14 @@ public class GuiFloatingShelves extends GuiContainer {
 		buttonList.add(buyButton4);
 		buttonList.add(sellButton4);
 		
-		buy1Text = new GuiTextField(this.fontRendererObj, 34, 51, 38, 14);
-		buy2Text = new GuiTextField(this.fontRendererObj, 34, 73, 38, 14);
-		buy3Text = new GuiTextField(this.fontRendererObj, 34, 95, 38, 14);
-		buy4Text = new GuiTextField(this.fontRendererObj, 34, 117, 38, 14);
-		sell1Text = new GuiTextField(this.fontRendererObj, 90, 51, 38, 14);
-		sell2Text = new GuiTextField(this.fontRendererObj, 90, 73, 38, 14);
-		sell3Text = new GuiTextField(this.fontRendererObj, 90, 95, 38, 14);
-		sell4Text = new GuiTextField(this.fontRendererObj, 90, 117, 38, 14);
+		buy1Text = new GuiTextField(0, this.fontRenderer, 34, 51, 38, 14);
+		buy2Text = new GuiTextField(1, this.fontRenderer, 34, 73, 38, 14);
+		buy3Text = new GuiTextField(2, this.fontRenderer, 34, 95, 38, 14);
+		buy4Text = new GuiTextField(3, this.fontRenderer, 34, 117, 38, 14);
+		sell1Text = new GuiTextField(4, this.fontRenderer, 90, 51, 38, 14);
+		sell2Text = new GuiTextField(5, this.fontRenderer, 90, 73, 38, 14);
+		sell3Text = new GuiTextField(6, this.fontRenderer, 90, 95, 38, 14);
+		sell4Text = new GuiTextField(7, this.fontRenderer, 90, 117, 38, 14);
 		
 		buy1Text.setFocused(true);
 		buy1Text.setText("" + buyPrice1);
@@ -320,8 +318,8 @@ public class GuiFloatingShelves extends GuiContainer {
 			mode = "Store Owner Interface";
 		}
 		
-    	fontRendererObj.drawString("Buy", 44, 39, 0x00A012);
-    	fontRendererObj.drawString("Sell", 101, 39, 0xA80000);
+    	fontRenderer.drawString("Buy", 44, 39, 0x00A012);
+    	fontRenderer.drawString("Sell", 101, 39, 0xA80000);
     	
 		if (sellMode == 1) {
 			buy1Text.drawTextBox();
@@ -349,21 +347,21 @@ public class GuiFloatingShelves extends GuiContainer {
 			String sell4 = nf.format(econ.parseDouble("" + displaySell4));
 			
 			
-			fontRendererObj.drawString("$" + buy1, 51 - fontRendererObj.getStringWidth(buy1) / 2, 54, 4210752);
-			fontRendererObj.drawString("$" + buy2, 51 - fontRendererObj.getStringWidth(buy2) / 2, 77, 4210752);
-			fontRendererObj.drawString("$" + buy3, 51 - fontRendererObj.getStringWidth(buy3) / 2, 99, 4210752);
-			fontRendererObj.drawString("$" + buy4, 51 - fontRendererObj.getStringWidth(buy4) / 2, 121, 4210752);
+			fontRenderer.drawString("$" + buy1, 51 - fontRenderer.getStringWidth(buy1) / 2, 54, 4210752);
+			fontRenderer.drawString("$" + buy2, 51 - fontRenderer.getStringWidth(buy2) / 2, 77, 4210752);
+			fontRenderer.drawString("$" + buy3, 51 - fontRenderer.getStringWidth(buy3) / 2, 99, 4210752);
+			fontRenderer.drawString("$" + buy4, 51 - fontRenderer.getStringWidth(buy4) / 2, 121, 4210752);
 			
-			fontRendererObj.drawString("$" + sell1, 107 - fontRendererObj.getStringWidth(sell1) / 2, 54, 4210752);
-			fontRendererObj.drawString("$" + sell2, 107 - fontRendererObj.getStringWidth(sell2) / 2, 77, 4210752);
-			fontRendererObj.drawString("$" + sell3, 107 - fontRendererObj.getStringWidth(sell3) / 2, 99, 4210752);
-			fontRendererObj.drawString("$" + sell4, 107 - fontRendererObj.getStringWidth(sell4) / 2, 121, 4210752);
+			fontRenderer.drawString("$" + sell1, 107 - fontRenderer.getStringWidth(sell1) / 2, 54, 4210752);
+			fontRenderer.drawString("$" + sell2, 107 - fontRenderer.getStringWidth(sell2) / 2, 77, 4210752);
+			fontRenderer.drawString("$" + sell3, 107 - fontRenderer.getStringWidth(sell3) / 2, 99, 4210752);
+			fontRenderer.drawString("$" + sell4, 107 - fontRenderer.getStringWidth(sell4) / 2, 121, 4210752);
 
 		}
 	    
-		fontRendererObj.drawString(mode, 5, 19, 4210752);
-		fontRendererObj.drawString(FloatingShelvesPricePacket.ownerName + "'s Shop", 36, 5, 4210752);
-    	//fontRendererObj.drawString("You have: " + econ.reqClientInventoryBalance(), 100, 5, 4210752);
+		fontRenderer.drawString(mode, 5, 19, 4210752);
+		fontRenderer.drawString(FloatingShelvesPricePacket.ownerName + "'s Shop", 36, 5, 4210752);
+    	//fontRenderer.drawString("You have: " + econ.reqClientInventoryBalance(), 100, 5, 4210752);
 	}
 	
 	public int focus() {
@@ -473,7 +471,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	
 	public void updateTileEntity() {
         if (isShopOwner()) {
-        	FlenixCities_Core.network.sendToServer(new FloatingShelvesClientPacket(
+        	FlenixCities.network.sendToServer(new FloatingShelvesClientPacket(
         			buy1Text.getText(), 
         			sell1Text.getText(), 
         			buy2Text.getText(), 
@@ -488,7 +486,7 @@ public class GuiFloatingShelves extends GuiContainer {
 	
 	public void sendSalePacket(String pktId, int slotId) {
 		System.out.println("sending sale packet: " + pktId + ", slot: " + slotId);
-		FlenixCities_Core.network.sendToServer(new FloatingShelvesSalePacket(
+		FlenixCities.network.sendToServer(new FloatingShelvesSalePacket(
 				pktId, 
 				slotId, 
 				x, y, z));

@@ -1,0 +1,17 @@
+{
+    "multipart": [
+        {   "apply": { "model": "flenixcities:rebar_pole" }},
+        {   "when": { "north": "true" },
+            "apply": { "model": "flenixcities:rebar_north", "uvlock": true }
+        },
+        {   "when": { "east": "true" },
+            "apply": { "model": "flenixcities:rebar_north", "y": 90, "uvlock": true }
+        },
+        {   "when": { "south": "true" },
+            "apply": { "model": "flenixcities:rebar_north", "y": 180, "uvlock": true }
+        },
+        {   "when": { "west": "true" },
+            "apply": { "model": "flenixcities:rebar_north", "y": 270, "uvlock": true }
+        }
+    ]
+}

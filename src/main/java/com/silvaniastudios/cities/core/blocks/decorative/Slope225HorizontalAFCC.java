@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.blocks.decorative;
+/*package com.silvaniastudios.cities.core.blocks.decorative;
 
 import java.util.List;
 
@@ -156,4 +156,4 @@ public class Slope225HorizontalAFCC extends Block {
 	public float getExplosionResistance(Entity p_149638_1_) {
         return 50F;
     }
-}
+}*/

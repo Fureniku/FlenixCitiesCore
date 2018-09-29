@@ -1,4 +1,4 @@
-package com.silvaniastudios.cities.core.client.renders;
+/*package com.silvaniastudios.cities.core.client.renders;
 
 import com.silvaniastudios.cities.core.blocks.decorative.CornerPostFCC;
 import com.silvaniastudios.cities.core.client.ClientProxy;
@@ -98,11 +98,7 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 		
 		if (world.getBlock(x, y+1, z) instanceof CornerPostFCC) { cornerPostRenderer.renderCornerPosts(world, x, y, z,  1, renderer, world.getBlock(x, y+1, z), -1, true); }
 		if (world.getBlock(x, y-1, z) instanceof CornerPostFCC) { cornerPostRenderer.renderCornerPosts(world, x, y, z, -1, renderer, world.getBlock(x, y-1, z), -1, true); }
-		
-		/*
-    	 *   AO code shamelessly taken directly from RenderBlocks with a few cleanups.
-    	 */
-    	
+		    	
     	renderer.enableAO = true;
         boolean flag = false;
         float f3_2 = 0.0F;
@@ -195,10 +191,6 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
         renderer.colorGreenTopRight *= f6;
         renderer.colorBlueTopRight *= f6;
         flag = true;
-        
-        /*
-         *   End AO code
-         */
 		
 		tess.draw();
 		if (meta == 0) {
@@ -821,4 +813,4 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 	public int getRenderId() {
 		return ClientProxy.slope45RenderID;
 	}
-}
+}*/
