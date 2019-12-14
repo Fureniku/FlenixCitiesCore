@@ -1,0 +1,28 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": { "shade": "blocks/wool_colored_black" },
+		"model": "furenikuscities:light_ceiling_shade_cone_down"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"light":
+		{
+			"1_floor": { "model": "furenikuscities:light_standing_shade_cone_up" },
+			"1_n": { "model": "furenikuscities:light_wall_shade_cone_up" },
+			"1_e": { "model": "furenikuscities:light_wall_shade_cone_up", "y": 90 },
+			"1_s": { "model": "furenikuscities:light_wall_shade_cone_up", "y": 180 },
+			"1_w": { "model": "furenikuscities:light_wall_shade_cone_up", "y": 270 },
+			"1_top": { "model": "furenikuscities:light_ceiling_shade_cone_up" },
+			"2_floor": { "model": "furenikuscities:light_standing_shade_cone_down" },
+			"2_n": { "model": "furenikuscities:light_wall_shade_cone_down" },
+			"2_e": { "model": "furenikuscities:light_wall_shade_cone_down", "y": 90 },
+			"2_s": { "model": "furenikuscities:light_wall_shade_cone_down", "y": 180 },
+			"2_w": { "model": "furenikuscities:light_wall_shade_cone_down", "y": 270 },
+			"2_top": { "model": "furenikuscities:light_ceiling_shade_cone_down" }
+		}
+	}
+}

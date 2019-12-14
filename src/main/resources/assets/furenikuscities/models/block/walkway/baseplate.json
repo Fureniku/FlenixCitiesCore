@@ -1,0 +1,35 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"3": "furenikuscities:blocks/snow",
+		"7": "furenikuscities:blocks/skyscraper_blocks_1_2"
+	},
+	"elements": [
+		{
+			"name": "baseplate",
+			"from": [0, -1, 0],
+			"to": [16, 0, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 1], "texture": "#7"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#7"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#7"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#7"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#7"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#7"}
+			}
+		},
+		{
+			"name": "snow_base",
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"east": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"south": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"west": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#3"}
+			}
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "furenikuscities:wall_decor_sign_nosmoke"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"block":
+		{
+			"0":  { "model": "furenikuscities:wall_decor_sign_nosmoke"   },
+			"1":  { "model": "furenikuscities:wall_decor_sign_nosmoke", "y": 90  },
+			"2":  { "model": "furenikuscities:wall_decor_sign_nosmoke", "y": 180 },
+			"3":  { "model": "furenikuscities:wall_decor_sign_nosmoke", "y": 270 }
+		}
+	}
+}

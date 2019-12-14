@@ -1,0 +1,50 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"0": "furenikuscities:blocks/rebar_side",
+			"1": "furenikuscities:blocks/rebar_top",
+			"particle": "furenikuscities:blocks/rebar_side"
+		},
+		"model": "furenikuscities:rebar_pole",
+		"uvlock": true
+	},
+	"variants": {
+		"inventory": [{
+			"model": "furenikuscities:rebar_pole",
+			"transform": "forge:default-block"
+		}],
+        "east": {
+        	"true": {
+        		"submodel": {
+        			"pole_e": { "model": "furenikuscities:rebar_north", "y": 90 }
+        		}
+        	},
+        	"false": {}
+        },
+        "north": {
+        	"true": {
+	        	"submodel": {
+        			"barrier_n": { "model": "furenikuscities:rebar_north" }
+        		}
+        	},
+        	"false": {}
+        },
+        "south": {
+        	"true": {
+        		"submodel": {
+        			"barrier_s": { "model": "furenikuscities:rebar_north", "y": 180 }
+        		}
+        	},
+        	"false": {}
+        },
+        "west": {
+        	"true": {
+        		"submodel": {
+	        		"barrier_w": { "model": "furenikuscities:rebar_north", "y": 270 }
+	        	}
+        	},
+        	"false": {}
+        }
+	}   	
+}

@@ -1,7 +1,7 @@
 package com.silvaniastudios.cities.core.blocks;
 
 import com.google.common.collect.ImmutableList;
-import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.core.FurenikusCities;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -23,15 +23,14 @@ public class CitiesBlockBase extends Block {
 	public CitiesBlockBase(String name, Material mat) {
 		super(mat);
 		this.name = name;
-		
-		setUnlocalizedName(FlenixCities.MODID + "." + name);
+		setUnlocalizedName(FurenikusCities.MODID + "." + name);
 		setRegistryName(name);
-		setCreativeTab(FlenixCities.tabCity);
+		setCreativeTab(FurenikusCities.tabCity);
 		this.setHardness(3.0F);
 	}
 	
 	public void registerItemModel(Item itemBlock) {
-		FlenixCities.proxy.registerItemRenderer(itemBlock, 0, name);
+		FurenikusCities.proxy.registerItemRenderer(itemBlock, 0, name);
 	}
 	
 	public Item createItemBlock() {

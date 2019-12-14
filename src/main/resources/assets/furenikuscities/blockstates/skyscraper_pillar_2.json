@@ -1,0 +1,31 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "furenikuscities:block_pillar"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"skyscraper_1":
+		{
+			"0": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_5_0" }},
+			"1": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_5_1" }},
+			"2": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_5_2" }},
+			"3": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_5_3" }},
+			"4": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_6_0" }},
+			"5": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_6_1" }},
+			"6": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_6_2" }},
+			"7": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_6_3" }},
+			"8": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_7_0" }},
+			"9": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_7_1" }},
+			"10": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_7_2" }},
+			"11": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_7_3" }},
+			"12": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_8" }},
+			"13": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_9" }},
+			"14": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_10" }},
+			"15": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_11" }}
+		}
+	}
+}

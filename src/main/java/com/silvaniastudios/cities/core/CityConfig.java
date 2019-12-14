@@ -27,28 +27,16 @@ public class CityConfig {
 	
 	public static boolean mobsDropMoney;
 	
-	
-	//public static void loadConfig(FMLPreInitializationEvent event) {
-	//Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 	public static void initConfig (File configFile) {
 		config = new Configuration(configFile);
 		
 		try {
 			config.load();	
-			currencySmall = config.get("Currency Small", Configuration.CATEGORY_GENERAL, "Cent").getString();
-			currencyLarge = config.get("Currency Large", Configuration.CATEGORY_GENERAL, "Dollar").getString();
-			currencySmallPlural = config.get("Currency Small (Plural)", Configuration.CATEGORY_GENERAL, "Cents").getString();
-			currencyLargePlural = config.get("Currency Large (Plural)", Configuration.CATEGORY_GENERAL, "Dollars").getString();
-
-			playerOwnedShops = config.get(Configuration.CATEGORY_GENERAL, "Enable player-owned shops", true).getBoolean(true);
 			debugMode = config.get(Configuration.CATEGORY_GENERAL, "debug mode", false).getBoolean(false);
-			allowCardPurchases = config.get(Configuration.CATEGORY_GENERAL, "Enable player-owned shops", true).getBoolean(true);
-			mobsDropMoney = config.get(Configuration.CATEGORY_GENERAL, "Allow mobs dropping money (Only when killed by players directly!)", true).getBoolean(true);
 			extraDecorativeBlocks = config.get(Configuration.CATEGORY_GENERAL, "Add loads of extra decorative blocks (Uses an additional 170 block IDs)", true).getBoolean(true);
 		}
 		catch (Exception e) {
-			System.out.println("### Warning! FlenixCities Core could not load it's config file! ###");
-			//FMLLog.log(Level.SEVERE, e, "### Warning! FlenixCities Core could not load it's config file! ###");
+			System.out.println("### Warning! Fureniku's Cities could not load it's config file! ###");
 		}
 		
 		finally {

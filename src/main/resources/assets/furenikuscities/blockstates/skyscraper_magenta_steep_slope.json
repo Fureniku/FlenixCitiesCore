@@ -1,0 +1,32 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_1" },
+		"model": "cube_bottom_top"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"rotation":
+		{
+			"a_floor_north": { "model": "furenikuscities:block_steep_slope_a" },
+			"a_floor_east":  { "model": "furenikuscities:block_steep_slope_a", "y": 90 },
+			"a_floor_south": { "model": "furenikuscities:block_steep_slope_a", "y": 180 },
+			"a_floor_west":  { "model": "furenikuscities:block_steep_slope_a", "y": 270 },
+			"b_floor_north": { "model": "furenikuscities:block_steep_slope_b" },
+			"b_floor_east":  { "model": "furenikuscities:block_steep_slope_b", "y": 90 },
+			"b_floor_south": { "model": "furenikuscities:block_steep_slope_b", "y": 180 },
+			"b_floor_west":  { "model": "furenikuscities:block_steep_slope_b", "y": 270 },
+			"a_top_north": { "model": "furenikuscities:block_steep_slope_a_top" },
+			"a_top_east":  { "model": "furenikuscities:block_steep_slope_a_top", "y": 90 },
+			"a_top_south": { "model": "furenikuscities:block_steep_slope_a_top", "y": 180 },
+			"a_top_west":  { "model": "furenikuscities:block_steep_slope_a_top", "y": 270 },
+			"b_top_north": { "model": "furenikuscities:block_steep_slope_b_top" },
+			"b_top_east":  { "model": "furenikuscities:block_steep_slope_b_top", "y": 90 },
+			"b_top_south": { "model": "furenikuscities:block_steep_slope_b_top", "y": 180 },
+			"b_top_west":  { "model": "furenikuscities:block_steep_slope_b_top", "y": 270 }
+		}
+	}
+}

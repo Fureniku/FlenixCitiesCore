@@ -1,0 +1,32 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": { "all": "blocks/planks_oak" },
+		"model": "cube_bottom_top"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"skyscraper_1":
+		{
+			"0": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_white" }},
+			"1": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_orange" }},
+			"2": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_magenta" }},
+			"3": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_light_blue" }},
+			"4": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_yellow" }},
+			"5": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_lime" }},
+			"6": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_pink" }},
+			"7": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_gray" }},
+			"8": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_silver" }},
+			"9": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_cyan" }},
+			"10": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_purple" }},
+			"11": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_blue" }},
+			"12": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_brown" }},
+			"13": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_green" }},
+			"14": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_red" }},
+			"15": { "textures": { "side": "blocks/planks_oak", "bottom": "blocks/planks_oak", "top": "blocks/wool_colored_black" }}
+		}
+	}
+}

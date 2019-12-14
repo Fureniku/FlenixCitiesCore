@@ -1,0 +1,31 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "cube_bottom_top"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"light":
+		{
+			"0": { "model": "furenikuscities:light_simple_strip" },
+			"1": { "model": "furenikuscities:light_simple_strip", "y": 90 },
+			"2": { "model": "furenikuscities:light_simple_strip_short" },
+			"3": { "model": "furenikuscities:light_simple_strip_short", "y": 90 },
+			"4": { "model": "furenikuscities:light_simple_spots_down" },
+			"5": { "model": "furenikuscities:light_simple_spots_down", "y": 90 },
+			"6": { "model": "furenikuscities:light_simple_spots_angled" },
+			"7": { "model": "furenikuscities:light_simple_spots_angled", "y": 90 },
+			"8": { "model": "furenikuscities:light_simple_industrial" },
+			"9": { "model": "furenikuscities:light_simple_industrial", "y": 90 },
+			"10": { "model": "furenikuscities:light_simple_industrial_large" },
+			"11": { "model": "furenikuscities:light_simple_industrial_large", "y": 90 },
+			"12": { "model": "furenikuscities:light_simple_hanging_large" },
+			"13": { "model": "furenikuscities:light_simple_hanging_large", "y": 90 },
+			"14": { "model": "furenikuscities:light_simple_hanging_large_white" },
+			"15": { "model": "furenikuscities:light_simple_hanging_large_white", "y": 90 }
+		}
+	}
+}

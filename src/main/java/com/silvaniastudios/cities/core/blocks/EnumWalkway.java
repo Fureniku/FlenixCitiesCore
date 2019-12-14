@@ -6,9 +6,7 @@ public enum EnumWalkway implements IStringSerializable {
 	STANDARD(0, "standard"),
 	SNOW(1, "snow"),
 	LEAF(2, "leaf"),
-	LIGHT(3, "light"),
-	LEAF_LIGHT(4, "leaf_light"),
-	LEAF_SNOW(5, "leaf_snow");
+	LIGHT(3, "light");
 	
 	private static final EnumWalkway[] META_LOOKUP = new EnumWalkway[values().length];
 	private final int meta;

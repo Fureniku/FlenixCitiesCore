@@ -1,0 +1,26 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "furenikuscities:blocks/skyscraper_blocks_1_0",
+		"1": "furenikuscities:blocks/skyscraper_blocks_1_1",
+		"2": "furenikuscities:blocks/skyscraper_blocks_1_2",
+		"3": "blocks/snow",
+		"4": "furenikuscities:blocks/leaves",
+		"6": "furenikuscities:blocks/light_core",
+		"particle": "furenikuscities:blocks/skyscraper_blocks_1_0"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"east": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"south": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"west": {"uv": [0, 0, 16, 2], "texture": "#3"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#3"}
+			}
+		}
+	]
+}

@@ -1,0 +1,127 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "furenikuscities:block_pillar_top_bottom"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"skyscraper_1":
+		{
+			"0": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_3",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_3",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_3"
+				}
+			},
+			"1": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_11",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_11",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_11"
+				}
+			},
+			"2": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_15",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_15",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_15"
+				}
+			},
+			"3": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_14",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_14",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_14"
+				}
+			},
+			"4": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_pillar_4",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_3",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_3"
+				}
+			},
+			"5": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_pillar_5",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_11",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_11"
+				}
+			},
+			"6": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_pillar_6",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_15",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_15"
+				}
+			},
+			"7": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_pillar_7",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_14",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_14"
+				}
+			},
+			"8": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_wall_0",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_3",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_15"
+				}
+			},
+			"9": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_wall_7",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_15",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_3"
+				}
+			},
+			"10": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_8",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_3",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_3"
+				}
+			},
+			"11": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_ceramic_tile_pillar_11",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_3",
+					"bottom": "furenikuscities:blocks/rsch_ceramic_tile_3"
+				}
+			},
+			"12": {
+				"model": "furenikuscities:block_pillar_top_bottom_vent",
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_pillar_grill_2",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_15"
+				}
+			},
+			"13": {
+				"model": "furenikuscities:block_pillar_top_bottom_vent",
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_pillar_grill_1",
+					"top": "furenikuscities:blocks/rsch_ceramic_tile_3"
+				}
+			},
+			"14": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_decorative_2",
+					"top": "furenikuscities:blocks/rsch_decorative_2",
+					"bottom": "furenikuscities:blocks/rsch_decorative_2"
+				}
+			},
+			"15": {
+				"textures": {
+					"side": "furenikuscities:blocks/rsch_decorative_3",
+					"top": "furenikuscities:blocks/rsch_decorative_3",
+					"bottom": "furenikuscities:blocks/rsch_decorative_3"
+				}
+			}
+		}
+	}
+}

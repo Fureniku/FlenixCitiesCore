@@ -1,0 +1,80 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": { "wall": "furenikuscities:blocks/fake_glass_inside_on" },
+		"model": "furenikuscities:glass_fake_wall"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"styled_glass":
+		{
+			"0": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_0" }},
+			"1": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_1" }},
+			"2": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_2" }},
+			"3": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_3" }},
+			"4": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_4" }},
+			"5": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_5" }},
+			"6": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_6" }},
+			"7": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_7" }},
+			"8": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_8" }},
+			"9": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_9" }},
+			"10": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_10" }},
+			"11": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_11" }},
+			"12": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_12" }},
+			"13": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_13" }},
+			"14": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_14" }},
+			"15": { "textures": { "glass": "furenikuscities:blocks/styled_glass_white_15" }}
+		},
+		"north": {
+			"true": {
+				"submodel": {
+	        		"wall_n": { "model": "furenikuscities:glass_fake_wall_n" }
+	        	}
+			},
+			"false": {
+				"submodel": {
+	        		"wall_n": { "model": "furenikuscities:glass_fake_wall_glass" }
+	        	}
+	        }
+		},
+		"east": {
+			"true": {
+				"submodel": {
+	        		"wall_e": { "model": "furenikuscities:glass_fake_wall_n", "y": 90 }
+	        	}
+			},
+			"false": {
+				"submodel": {
+	        		"wall_e": { "model": "furenikuscities:glass_fake_wall_glass", "y": 90 }
+	        	}
+	        }
+		},
+		"south": {
+			"true": {
+				"submodel": {
+	        		"wall_s": { "model": "furenikuscities:glass_fake_wall_n", "y": 180 }
+	        	}
+			},
+			"false": {
+				"submodel": {
+	        		"wall_s": { "model": "furenikuscities:glass_fake_wall_glass", "y": 180 }
+	        	}
+	        }
+		},
+		"west": {
+			"true": {
+				"submodel": {
+	        		"wall_w": { "model": "furenikuscities:glass_fake_wall_n", "y": 270 }
+	        	}
+			},
+			"false": {
+				"submodel": {
+	        		"wall_w": { "model": "furenikuscities:glass_fake_wall_glass", "y": 270 }
+	        	}
+	        }
+		}
+	}
+}

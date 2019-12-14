@@ -1,6 +1,6 @@
 package com.silvaniastudios.cities.core.items;
 
-import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.core.FurenikusCities;
 
 import net.minecraft.item.Item;
 
@@ -13,10 +13,10 @@ public class CitiesItemBase extends Item {
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 		this.maxStackSize = stackSize;
-		this.setCreativeTab(FlenixCities.tabCity);
+		this.setCreativeTab(FurenikusCities.tabCity);
 	}
 
 	public void registerItemModel() {
-		FlenixCities.proxy.registerItemRenderer(this, 0, name);
+		FurenikusCities.proxy.registerItemRenderer(this, 0, name);
 	}
 }

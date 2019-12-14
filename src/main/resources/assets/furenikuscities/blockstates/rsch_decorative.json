@@ -1,0 +1,32 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": { "all": "furenikuscities:blocks/rsch_decorative_0" },
+		"model": "cube_all"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"skyscraper_1":
+		{
+			"0": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_0" }},
+			"1": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_1" }},
+			"2": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_2" }},
+			"3": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_3" }},
+			"4": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_4" }},
+			"5": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_5" }},
+			"6": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_6" }},
+			"7": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_7" }},
+			"8": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_8" }},
+			"9": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_9" }},
+			"10": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_10" }},
+			"11": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_11" }},
+			"12": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_12" }},
+			"13": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_13" }},
+			"14": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_14" }},
+			"15": { "textures": { "all": "furenikuscities:blocks/rsch_decorative_15" }}
+		}
+	}
+}

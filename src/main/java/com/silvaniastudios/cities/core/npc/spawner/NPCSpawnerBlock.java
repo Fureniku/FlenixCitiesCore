@@ -1,6 +1,6 @@
 package com.silvaniastudios.cities.core.npc.spawner;
 
-import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.core.FurenikusCities;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -17,7 +17,7 @@ public class NPCSpawnerBlock extends BlockContainer {
 
 	public NPCSpawnerBlock() {
 		super(Material.IRON);
-		this.setCreativeTab(FlenixCities.tabCity);
+		this.setCreativeTab(FurenikusCities.tabCity);
 		this.setHardness(2.0F);
 	}
 	

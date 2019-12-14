@@ -1,7 +1,7 @@
 package com.silvaniastudios.cities.core.blocks;
 
 import com.google.common.collect.ImmutableList;
-import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.core.FurenikusCities;
 
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
@@ -37,7 +37,7 @@ public class StyledGlass extends BlockGlass implements IMetaBlockName {
 		this.setHardness(2.2F);
 		this.name = name;
 		
-		setUnlocalizedName(FlenixCities.MODID + "." + name);
+		setUnlocalizedName(FurenikusCities.MODID + "." + name);
 		setRegistryName(name);
 		setDefaultState(this.blockState.getBaseState().withProperty(META_ID, EnumMeta.id0));
 		this.setHardness(3.0F);
@@ -72,7 +72,7 @@ public class StyledGlass extends BlockGlass implements IMetaBlockName {
     }
 
     public void registerItemModel(Item itemBlock) {
-		FlenixCities.proxy.registerItemRenderer(itemBlock, 0, name);
+		FurenikusCities.proxy.registerItemRenderer(itemBlock, 0, name);
 	}
 	
 	public Item createItemBlock() {

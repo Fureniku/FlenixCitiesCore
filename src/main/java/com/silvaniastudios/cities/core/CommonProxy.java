@@ -8,11 +8,14 @@ import net.minecraftforge.fml.common.Mod.Instance;
 public class CommonProxy {
 	
 	@Instance
-	public static FlenixCities instance;
+	public static FurenikusCities instance;
 	
 	public void registerItemRenderer(Item item, int meta, String id) {}
 	
 	public void openGui(int guiId) {}
+	
+	public void preInit() {}
+	
 	
     /*public void entityStuff() {
     	EntityRegistry.registerModEntity(EntityBanker.class, "Banker", 1, FlenixCities_Core.instance, 32, 5, true);

@@ -1,0 +1,113 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"step": "furenikuscities:blocks/skyscraper_blocks_1_1",
+		"snow": "blocks/snow"
+	},
+	"elements": [
+		{
+			"name": "snow",
+			"from": [0, 12.5, 0],
+			"to": [16, 13.5, 4],
+			"faces": {
+				"north": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"east": {"uv": [11, 4, 13, 5], "texture": "#snow"},
+				"south": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"west": {"uv": [3, 4, 5, 5], "texture": "#snow"},
+				"up": {"uv": [2, 3, 14, 5], "texture": "#snow"},
+				"down": {"uv": [2, 11, 14, 13], "texture": "#snow"}
+			}
+		},
+		{
+			"name": "rail_n_4",
+			"from": [0, 0, 12],
+			"to": [16, 0.5, 16],
+			"faces": {
+				"north": {"uv": [0, 15.5, 16, 16], "texture": "#step"},
+				"east": {"uv": [0, 15.5, 4, 16], "texture": "#step"},
+				"south": {"uv": [0, 15.5, 16, 16], "texture": "#step"},
+				"west": {"uv": [12, 15.5, 16, 16], "texture": "#step"},
+				"up": {"uv": [0, 12, 16, 16], "texture": "#step"},
+				"down": {"uv": [0, 0, 16, 4], "texture": "#step"}
+			}
+		},
+		{
+			"name": "rail_n_5",
+			"from": [0, 4, 8],
+			"to": [16, 4.5, 12],
+			"faces": {
+				"north": {"uv": [0, 12.5, 16, 13], "texture": "#step"},
+				"east": {"uv": [4, 12.5, 8, 13], "texture": "#step"},
+				"south": {"uv": [0, 12.5, 16, 13], "texture": "#step"},
+				"west": {"uv": [8, 12.5, 12, 13], "texture": "#step"},
+				"up": {"uv": [0, 8, 16, 12], "texture": "#step"},
+				"down": {"uv": [0, 4, 16, 8], "texture": "#step"}
+			}
+		},
+		{
+			"name": "rail_n_6",
+			"from": [0, 8, 4],
+			"to": [16, 8.5, 8],
+			"faces": {
+				"north": {"uv": [0, 8.5, 16, 9], "texture": "#step"},
+				"east": {"uv": [8, 8.5, 12, 9], "texture": "#step"},
+				"south": {"uv": [0, 8.5, 16, 9], "texture": "#step"},
+				"west": {"uv": [4, 8.5, 8, 9], "texture": "#step"},
+				"up": {"uv": [0, 4, 16, 8], "texture": "#step"},
+				"down": {"uv": [0, 8, 16, 12], "texture": "#step"}
+			}
+		},
+		{
+			"name": "rail_n_3",
+			"from": [0, 12, 0],
+			"to": [16, 12.5, 4],
+			"faces": {
+				"north": {"uv": [0, 4.5, 16, 5], "texture": "#step"},
+				"east": {"uv": [12, 4.5, 16, 5], "texture": "#step"},
+				"south": {"uv": [0, 4.5, 16, 5], "texture": "#step"},
+				"west": {"uv": [0, 4.5, 4, 5], "texture": "#step"},
+				"up": {"uv": [0, 0, 16, 4], "texture": "#step"},
+				"down": {"uv": [0, 12, 16, 16], "texture": "#step"}
+			}
+		},
+		{
+			"name": "snow",
+			"from": [0, 8.5, 4],
+			"to": [16, 9.5, 8],
+			"faces": {
+				"north": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"east": {"uv": [11, 4, 13, 5], "texture": "#snow"},
+				"south": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"west": {"uv": [3, 4, 5, 5], "texture": "#snow"},
+				"up": {"uv": [2, 3, 14, 5], "texture": "#snow"},
+				"down": {"uv": [2, 11, 14, 13], "texture": "#snow"}
+			}
+		},
+		{
+			"name": "snow",
+			"from": [0, 4.5, 8],
+			"to": [16, 5.5, 12],
+			"faces": {
+				"north": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"east": {"uv": [11, 4, 13, 5], "texture": "#snow"},
+				"south": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"west": {"uv": [3, 4, 5, 5], "texture": "#snow"},
+				"up": {"uv": [2, 3, 14, 5], "texture": "#snow"},
+				"down": {"uv": [2, 11, 14, 13], "texture": "#snow"}
+			}
+		},
+		{
+			"name": "snow",
+			"from": [0, 0.5, 12],
+			"to": [16, 1.5, 16],
+			"faces": {
+				"north": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"east": {"uv": [11, 4, 13, 5], "texture": "#snow"},
+				"south": {"uv": [2, 4, 14, 5], "texture": "#snow"},
+				"west": {"uv": [3, 4, 5, 5], "texture": "#snow"},
+				"up": {"uv": [2, 3, 14, 5], "texture": "#snow"},
+				"down": {"uv": [2, 11, 14, 13], "texture": "#snow"}
+			}
+		}
+	]
+}

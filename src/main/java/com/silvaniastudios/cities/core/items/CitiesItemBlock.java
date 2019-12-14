@@ -20,8 +20,12 @@ public class CitiesItemBlock extends ItemBlock {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		if (stack.getItem() instanceof IMetaBlockName) {
-			return super.getUnlocalizedName(stack) + "." + ((IMetaBlockName) this.block).getSpecialName(stack);
+		if (stack.getItem() instanceof ItemBlock) {
+			ItemBlock ib = (ItemBlock) stack.getItem();
+			Block block = ib.getBlock();
+			if (block instanceof IMetaBlockName) {
+				return super.getUnlocalizedName(stack) + "." + ((IMetaBlockName) this.block).getSpecialName(stack);
+			}
 		}
 		return super.getUnlocalizedName(stack);
 	}

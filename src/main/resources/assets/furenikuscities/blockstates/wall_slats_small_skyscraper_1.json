@@ -1,0 +1,164 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"0": "furenikuscities:blocks/skyscraper_blocks_1_0",
+			"particle": "furenikuscities:blocks/skyscraper_blocks_1_0"
+		},
+		"model": "furenikuscities:nomodel",
+		"uvlock": true
+	},
+	"variants": {
+		"block": {
+			"0":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_0" }},
+			"1":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_1" }},
+			"2":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_2" }},
+			"3":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_3" }},
+			"4":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_0" }},
+			"5":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_1" }},
+			"6":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_2" }},
+			"7":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_3" }},
+			"8":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_0" }},
+			"9":  { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_1" }},
+			"10": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_2" }},
+			"11": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_3" }},
+			"12": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_0" }},
+			"13": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_1" }},
+			"14": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_2" }},
+			"15": { "textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_3" }}
+		},
+		"inventory_0": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_0" }
+		}],
+		"inventory_1": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_1" }
+		}],
+		"inventory_2": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_2" }
+		}],
+		"inventory_3": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_1_3" }
+		}],
+		"inventory_4": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_0" }
+		}],
+		"inventory_5": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_1" }
+		}],
+		"inventory_6": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_2" }
+		}],
+		"inventory_7": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_2_3" }
+		}],
+		"inventory_8": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_0" }
+		}],
+		"inventory_9": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_1" }
+		}],
+		"inventory_10": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_2" }
+		}],
+		"inventory_11": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_3_3" }
+		}],
+		"inventory_12": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_0" }
+		}],
+		"inventory_13": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_1" }
+		}],
+		"inventory_14": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_2" }
+		}],
+		"inventory_15": [{
+			"model": "furenikuscities:wall_decor_slats_2",
+			"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_4_3" }
+		}],
+		"north": {
+        	"true": {
+        		"submodel": {
+	        		"n": { "model": "furenikuscities:wall_decor_slats_2" }
+	        	}
+        	},
+        	"false":  {
+        		"submodel": {
+	        		"n": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "east": {
+        	"true": {
+        		"submodel": {
+	        		"e": { "model": "furenikuscities:wall_decor_slats_2", "y": 90 }
+	        	}
+        	},
+        	"false":  {
+        		"submodel": {
+	        		"e": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+		"south": {
+        	"true": {
+        		"submodel": {
+	        		"s": { "model": "furenikuscities:wall_decor_slats_2", "y": 180 }
+	        	}
+        	},
+        	"false":  {
+        		"submodel": {
+	        		"s": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "west": {
+        	"true": {
+        		"submodel": {
+	        		"w": { "model": "furenikuscities:wall_decor_slats_2", "y": 270 }
+	        	}
+        	},
+        	"false":  {
+        		"submodel": {
+	        		"w": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "up": {
+        	"true": {
+        		"submodel": {
+	        		"up": { "model": "furenikuscities:wall_decor_slats_2_top" }
+	        	}
+        	},
+        	"false":  {
+        		"submodel": {
+	        		"up": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "r_up": {
+        	"true": {
+        		"submodel": {
+	        		"up": { "model": "furenikuscities:wall_decor_slats_2_top", "y": 90 }
+	        	}
+        	},
+        	"false":  {
+	        }
+        }
+	}   	
+}

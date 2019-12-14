@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "furenikuscities:blocks/light_tile_back",
+		"2": "furenikuscities:blocks/light_tile_parts"
+	},
+	"elements": [
+		{
+			"from": [7, 15, 0],
+			"to": [9, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 2, 1], "texture": "#1"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#1"},
+				"up": {"uv": [0, 0, 2, 16], "texture": "#1"},
+				"down": {"uv": [14, 0, 16, 16], "texture": "#2"}
+			}
+		}
+	]
+}

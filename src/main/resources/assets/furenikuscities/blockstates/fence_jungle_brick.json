@@ -1,0 +1,145 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"__comment": "0: Handrail, 1: bars, 2: plate",
+			"0": "blocks/planks_jungle",
+			"1": "blocks/planks_jungle",
+			"2": "blocks/planks_jungle",
+			"7": "blocks/planks_jungle",
+			"particle": "blocks/planks_jungle"
+		},
+		"model": "furenikuscities:walkway_plate",
+		"uvlock": true
+	},
+	"variants": {
+		"standard": [{
+			"model": "furenikuscities:walkway/walkway_inv",
+			"transform": "forge:default-block"
+		}],
+		"snow": [{
+			"model": "furenikuscities:walkway/walkway_snow_inv",
+			"transform": "forge:default-block"
+		}],
+		"leaf": [{
+			"model": "furenikuscities:walkway/walkway_leaf_inv",
+			"transform": "forge:default-block"
+		}],
+		"light": [{
+			"model": "furenikuscities:walkway/walkway_light_inv",
+			"transform": "forge:default-block"
+		}],
+		"left": {
+        	"normal": {
+        		"submodel": {
+	        		"corner_l": { "model": "furenikuscities:walkway/barrier_corner" },
+	        		"main": { "model": "furenikuscities:walkway/barrier" },
+	        		"side_l": { "model": "furenikuscities:nomodel" },
+	        		"side_end_l": { "model": "furenikuscities:nomodel" }
+	        	}
+        	},
+        	"down":  {
+        		"submodel": {
+	        		"corner_l": { "model": "furenikuscities:walkway/barrier_corner" },
+	        		"main": { "model": "furenikuscities:walkway/barrier" },
+	        		"side_l": { "model": "furenikuscities:walkway/barrier", "y": 270 },
+	        		"side_end_l": { "model": "furenikuscities:walkway/barrier_corner", "y": 270 }
+	        	}
+	        },
+        	"corner": {
+        		"submodel": {
+	        		"corner_l": { "model": "furenikuscities:walkway/barrier_corner" },
+	        		"main": { "model": "furenikuscities:nomodel" },
+	        		"side_l": { "model": "furenikuscities:nomodel" },
+	        		"side_end_l": { "model": "furenikuscities:nomodel" }
+	        	}
+	        },
+	        "none": {
+	        	"submodel": {
+	        		"corner_l": { "model": "furenikuscities:nomodel" },
+	        		"main": { "model": "furenikuscities:nomodel" },
+	        		"side_l": { "model": "furenikuscities:nomodel" },
+	        		"side_end_l": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "right": {
+        	"normal": {
+        		"submodel": {
+	        		"corner_r": { "model": "furenikuscities:walkway/barrier_corner", "y": 90 },
+	        		"main": { "model": "furenikuscities:walkway/barrier" },
+	        		"side_r": { "model": "furenikuscities:nomodel", "y": 90 },
+	        		"side_end_r": { "model": "furenikuscities:nomodel" }
+	        	}
+        	},
+        	"down":  {
+        		"submodel": {
+	        		"corner_r": { "model": "furenikuscities:walkway/barrier_corner", "y": 90 },
+	        		"main": { "model": "furenikuscities:walkway/barrier" },
+	        		"side_r": { "model": "furenikuscities:walkway/barrier", "y": 90 },
+	        		"side_end_r": { "model": "furenikuscities:walkway/barrier_corner", "y": 180 }
+	        	}
+	        },
+        	"corner": {
+        		"submodel": {
+	        		"corner_r": { "model": "furenikuscities:walkway/barrier_corner", "y": 90 },
+	        		"main": { "model": "furenikuscities:nomodel" },
+	        		"side_r": { "model": "furenikuscities:nomodel", "y": 90 },
+	        		"side_end_r": { "model": "furenikuscities:nomodel" }
+	        	}
+	        },
+	        "none": {
+	        	"submodel": {
+	        		"corner_l": { "model": "furenikuscities:nomodel" },
+	        		"main": { "model": "furenikuscities:nomodel" },
+	        		"side_l": { "model": "furenikuscities:nomodel" },
+	        		"side_end_l": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "rotation": {
+        	"north": { "model": "furenikuscities:nomodel" },
+        	"east":  { "model": "furenikuscities:nomodel", "y": 90  },
+        	"south": { "model": "furenikuscities:nomodel", "y": 180 },
+        	"west":  { "model": "furenikuscities:nomodel", "y": 270 }
+        },
+        "walkway_type": {
+        	"standard": {
+        		"model": "furenikuscities:nomodel",
+        		"textures": {
+					"0": "furenikuscities:blocks/blank",
+					"3": "furenikuscities:blocks/blank",
+					"4": "furenikuscities:blocks/blank",
+					"6": "furenikuscities:blocks/blank"
+				}
+        	},
+        	"snow": {
+        		"model": "furenikuscities:nomodel",
+        		"textures": {
+					"0": "furenikuscities:blocks/blank",
+					"3": "blocks/snow",
+					"4": "furenikuscities:blocks/blank",
+					"6": "furenikuscities:blocks/blank"
+				}
+        	},
+        	"leaf": {
+        		"model": "furenikuscities:nomodel",
+        		"textures": {
+					"0": "furenikuscities:blocks/blank",
+					"3": "furenikuscities:blocks/blank",
+					"4": "furenikuscities:blocks/leaves",
+					"6": "furenikuscities:blocks/blank"
+				}
+        	},
+        	"light": {
+        		"model": "furenikuscities:nomodel",
+        		"textures": {
+					"0": "furenikuscities:blocks/floor_block_13",
+					"3": "furenikuscities:blocks/blank",
+					"4": "furenikuscities:blocks/blank",
+					"6": "furenikuscities:blocks/light_core"
+				}
+        	}
+        }
+	}   	
+}

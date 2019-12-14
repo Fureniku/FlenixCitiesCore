@@ -1,0 +1,25 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": {
+			"0": "furenikuscities:blocks/skyscraper_blocks_1_3",
+			"2": "furenikuscities:blocks/skyscraper_blocks_1_2"
+		},
+		"model": "furenikuscities:lamp_standing"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"light":
+		{
+			"floor": { "model": "furenikuscities:lamp_standing" },
+			"n": { "model": "furenikuscities:lamp_wall" },
+			"e": { "model": "furenikuscities:lamp_wall", "y": 90 },
+			"s": { "model": "furenikuscities:lamp_wall", "y": 180 },
+			"w": { "model": "furenikuscities:lamp_wall", "y": 270 },
+			"top": { "model": "furenikuscities:lamp_ceiling" }
+		}
+	}
+}

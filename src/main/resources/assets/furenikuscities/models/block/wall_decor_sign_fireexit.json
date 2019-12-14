@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "furenikuscities:blocks/skyscraper_blocks_1_0",
+		"1": "furenikuscities:blocks/sign_fire_exit",
+		"particle": "furenikuscities:blocks/skyscraper_blocks_1_0"
+	},
+	"elements": [
+		{
+			"from": [3, 1, 0],
+			"to": [13, 4.25, 0.1],
+			"faces": {
+				"north": {"uv": [6, 5.5, 10, 10.5], "texture": "#0"},
+				"east": {"uv": [15.9, 5.5, 16, 10.5], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 5.25], "texture": "#1"},
+				"west": {"uv": [0, 5.5, 0.1, 10.5], "texture": "#0"},
+				"up": {"uv": [6, 0, 10, 0.1], "texture": "#0"},
+				"down": {"uv": [6, 15.9, 10, 16], "texture": "#0"}
+			}
+		}
+	]
+}

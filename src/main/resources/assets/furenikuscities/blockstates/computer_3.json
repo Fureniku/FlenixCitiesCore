@@ -1,0 +1,35 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": {
+			"0": "furenikuscities:blocks/computer_keyboard_black",
+			"2": "furenikuscities:blocks/computer_code"
+		},
+		"model": "furenikuscities:computer_0"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"block":
+		{
+			"0":  { "model": "furenikuscities:computer_0",   "y": 180 },
+			"1":  { "model": "furenikuscities:computer_225", "y": 180 },
+			"2":  { "model": "furenikuscities:computer_45",  "y": 180 },
+			"3":  { "model": "furenikuscities:computer_675", "y": 180 },
+			"4":  { "model": "furenikuscities:computer_0",   "y": 270 },
+			"5":  { "model": "furenikuscities:computer_225", "y": 270 },
+			"6":  { "model": "furenikuscities:computer_45",  "y": 270 },
+			"7":  { "model": "furenikuscities:computer_675", "y": 270 },
+			"8":  { "model": "furenikuscities:computer_0"   },
+			"9":  { "model": "furenikuscities:computer_225" },
+			"10": { "model": "furenikuscities:computer_45"  },
+			"11": { "model": "furenikuscities:computer_675" },
+			"12": { "model": "furenikuscities:computer_0",   "y": 90 },
+			"13": { "model": "furenikuscities:computer_225", "y": 90 },
+			"14": { "model": "furenikuscities:computer_45",  "y": 90 },
+			"15": { "model": "furenikuscities:computer_675", "y": 90 }
+		}
+	}
+}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.silvaniastudios.cities.core.FlenixCities;
+import com.silvaniastudios.cities.core.FurenikusCities;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -36,7 +36,7 @@ public class BlockRebar extends CitiesBlockBase {
 
 	public BlockRebar(String name, Material mat) {
 		super(name, mat);
-		this.setCreativeTab(FlenixCities.tabCity);
+		this.setCreativeTab(FurenikusCities.tabCity);
 		this.setHardness(3.0F);
 		this.setResistance(12.0F);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, Boolean.valueOf(false)).withProperty(EAST, Boolean.valueOf(false)).withProperty(SOUTH, Boolean.valueOf(false)).withProperty(WEST, Boolean.valueOf(false)));
@@ -114,6 +114,11 @@ public class BlockRebar extends CitiesBlockBase {
             addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
         }
     }
+    
+    @Override
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+		return BlockFaceShape.UNDEFINED;
+	}
 
    /* public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {

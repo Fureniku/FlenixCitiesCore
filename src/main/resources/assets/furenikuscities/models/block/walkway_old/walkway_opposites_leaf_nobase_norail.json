@@ -1,0 +1,152 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "furenikuscities:blocks/skyscraper_blocks_1_0",
+		"1": "furenikuscities:blocks/skyscraper_blocks_1_1",
+		"2": "furenikuscities:blocks/skyscraper_blocks_1_2",
+		"3": "blocks/snow",
+		"4": "furenikuscities:blocks/leaves",
+		"6": "furenikuscities:blocks/light_core",
+		"particle": "furenikuscities:blocks/skyscraper_blocks_1_0"
+	},
+	"elements": [
+		{
+			"name": "leaves",
+			"from": [0, 0, -0.25],
+			"to": [16, 16, -0.25],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"east": {"uv": [0, 0, 0, 16], "texture": "#4"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"west": {"uv": [0, 0, 0, 16], "texture": "#4"},
+				"up": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"down": {"uv": [0, 0, 16, 0], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "rail_n_4",
+			"from": [9.5, 0, 14.5],
+			"to": [10.5, 16, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [17.5, 11.9, 6.75]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "leaves",
+			"from": [0, 0, 16.25],
+			"to": [16, 16, 16.25],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"east": {"uv": [0, 0, 0, 16], "texture": "#4"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"west": {"uv": [0, 0, 0, 16], "texture": "#4"},
+				"up": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"down": {"uv": [0, 0, 16, 0], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "rail_n_5",
+			"from": [13.5, 0, 14.5],
+			"to": [14.5, 16, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [21.5, 11.9, 6.75]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "rail_n_6",
+			"from": [5.5, 0, 14.5],
+			"to": [6.5, 16, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13.5, 11.9, 6.75]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "rail_n_7",
+			"from": [1.5, 0, 14.5],
+			"to": [2.5, 16, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9.5, 11.9, 6.75]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "rail_n_6",
+			"from": [13.5, 0, 0.5],
+			"to": [14.5, 16, 1.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [21.5, 11.9, -7.25]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "rail_n_5",
+			"from": [9.5, 0, 0.5],
+			"to": [10.5, 16, 1.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [17.5, 11.9, -7.25]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "rail_n_6",
+			"from": [5.5, 0, 0.5],
+			"to": [6.5, 16, 1.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13.5, 11.9, -7.25]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "rail_n_7",
+			"from": [1.5, 0, 0.5],
+			"to": [2.5, 16, 1.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9.5, 11.9, -7.25]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#1"},
+				"east": {"uv": [3, 0, 4, 16], "texture": "#1"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#1"},
+				"west": {"uv": [1, 0, 2, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#1"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
+			}
+		}
+	]
+}

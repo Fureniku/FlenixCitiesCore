@@ -1,0 +1,69 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"#Material": "furenikuscities:blocks/slope_45"
+		},
+		"model": "furenikuscities:nomodel"
+	},
+	"variants": {
+		"type": {
+			"standard": {
+				"submodel": {
+					"model_type": { 
+						"model": "furenikuscities:nomodel"
+					}
+				}
+			},
+			"corner_out": {
+				"submodel": {
+					"model_type": { 
+						"model": "furenikuscities:nomodel"
+					}
+				}
+			},
+			"corner_in": {
+				"submodel": {
+					"model_type": { 
+						"model": "furenikuscities:nomodel"
+					}
+				}
+			},
+			"side": {
+				"submodel": {
+					"model_type": { 
+						"model": "furenikuscities:nomodel"
+					}
+				}
+			}
+		},
+		"rotation": {
+			"floor_north": { "model": "furenikuscities:nomodel" },
+			"floor_east":  { "model": "furenikuscities:nomodel", "y": 90 },
+			"floor_south": { "model": "furenikuscities:nomodel", "y": 180 },
+			"floor_west":  { "model": "furenikuscities:nomodel", "y": 270 },
+			
+			"side_north": {
+				"model": "furenikuscities:nomodel",
+				"textures": { "#Material": "furenikuscities:blocks/slope_45_side" }
+			},
+			"side_east":  {
+				"model": "furenikuscities:nomodel", "y": 90,
+				"textures": { "#Material": "furenikuscities:blocks/slope_45_side" }
+			},
+			"side_south": {
+				"model": "furenikuscities:nomodel", "y": 180,
+				"textures": { "#Material": "furenikuscities:blocks/slope_45_side" }
+			},
+			"side_west":  {
+				"model": "furenikuscities:nomodel", "y": 270,
+				"textures": { "#Material": "furenikuscities:blocks/slope_45_side" }
+			},
+			
+			"top_north": { "model": "furenikuscities:nomodel", "x": 180, "y": 180 },
+			"top_east":  { "model": "furenikuscities:nomodel", "x": 180, "y": 270 },
+			"top_south": { "model": "furenikuscities:nomodel", "x": 180           },
+			"top_west":  { "model": "furenikuscities:nomodel", "x": 180, "y": 90  }
+		}
+	}	
+}

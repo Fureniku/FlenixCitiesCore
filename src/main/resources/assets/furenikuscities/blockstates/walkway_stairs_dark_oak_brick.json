@@ -1,0 +1,99 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"handrail": "blocks/planks_big_oak",
+			"rail": "furenikuscities:blocks/floor_block_15",
+			"step": "blocks/planks_big_oak",
+			"particle": "blocks/planks_big_oak"
+		},
+		"model": "furenikuscities:walkway_plate",
+		"uvlock": true
+	},
+	"variants": {
+		"standard": [{
+			"model": "furenikuscities:stairs_inv", "y": 90,
+			"transform": "forge:default-block"
+		}],
+		"snow": [{
+			"model": "furenikuscities:stairs_snow_inv",
+			"transform": "forge:default-block"
+		}],
+		"leaf": [{
+			"model": "furenikuscities:stairs_leaf_inv",
+			"transform": "forge:default-block"
+		}],
+		"light": [{
+			"model": "furenikuscities:stairs_light_inv",
+			"transform": "forge:default-block"
+		}],
+		"left": {
+        	"yes": {
+        		"submodel": {
+	        		"barrier_l": { "model": "furenikuscities:stairs_left" }
+	        	}
+        	},
+        	"no":  {
+        		"submodel": {
+	        		"barrier_l": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "right": {
+        	"yes": {
+        		"submodel": {
+	        		"barrier_r": { "model": "furenikuscities:stairs_right" }
+	        	}
+        	},
+        	"no":  {
+        		"submodel": {
+	        		"barrier_r": { "model": "furenikuscities:nomodel" }
+	        	}
+	        }
+        },
+        "rotation": {
+        	"north": { "model": "furenikuscities:stairs_base" },
+        	"east":  { "model": "furenikuscities:stairs_base", "y": 90  },
+        	"south": { "model": "furenikuscities:stairs_base", "y": 180 },
+        	"west":  { "model": "furenikuscities:stairs_base", "y": 270 }
+        },
+        "walkway_type": {
+        	"standard": {
+        		"model": "furenikuscities:stairs_base",
+        		"textures": {
+					"lightframe": "furenikuscities:blocks/blank",
+					"snow": "furenikuscities:blocks/blank",
+					"leaves": "furenikuscities:blocks/blank",
+					"lightcore": "furenikuscities:blocks/blank"
+				}
+        	},
+        	"snow": {
+        		"model": "furenikuscities:stairs_base",
+        		"textures": {
+					"lightframe": "furenikuscities:blocks/blank",
+					"snow": "blocks/snow",
+					"leaves": "furenikuscities:blocks/blank",
+					"lightcore": "furenikuscities:blocks/blank"
+				}
+        	},
+        	"leaf": {
+        		"model": "furenikuscities:stairs_base",
+        		"textures": {
+					"lightframe": "furenikuscities:blocks/blank",
+					"snow": "furenikuscities:blocks/blank",
+					"leaves": "furenikuscities:blocks/leaves",
+					"lightcore": "furenikuscities:blocks/blank"
+				}
+        	},
+        	"light": {
+        		"model": "furenikuscities:stairs_base",
+        		"textures": {
+					"lightframe": "furenikuscities:blocks/floor_block_15",
+					"snow": "furenikuscities:blocks/blank",
+					"leaves": "furenikuscities:blocks/blank",
+					"lightcore": "furenikuscities:blocks/light_core"
+				}
+        	}
+        }
+	}   	
+}

@@ -1,0 +1,32 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": { "all": "furenikuscities:blocks/dark_ornate_0" },
+		"model": "cube_bottom_top"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"skyscraper_1":
+		{
+			"0": { "textures": { "side": "furenikuscities:blocks/dark_ornate_0", "bottom": "furenikuscities:blocks/dark_ornate_0", "top": "furenikuscities:blocks/dark_ornate_0" }},
+			"1": { "textures": { "side": "furenikuscities:blocks/dark_ornate_1", "bottom": "furenikuscities:blocks/dark_ornate_1", "top": "furenikuscities:blocks/dark_ornate_1" }},
+			"2": { "textures": { "side": "furenikuscities:blocks/dark_ornate_2", "bottom": "furenikuscities:blocks/dark_ornate_1", "top": "furenikuscities:blocks/white_ornate_2_top" }},
+			"3": { "textures": { "side": "furenikuscities:blocks/dark_ornate_3", "bottom": "furenikuscities:blocks/dark_ornate_3", "top": "furenikuscities:blocks/dark_ornate_3" }},
+			"4": { "textures": { "side": "furenikuscities:blocks/dark_ornate_4", "bottom": "furenikuscities:blocks/dark_ornate_4", "top": "furenikuscities:blocks/dark_ornate_4" }},
+			"5": { "textures": { "side": "furenikuscities:blocks/dark_ornate_5", "bottom": "furenikuscities:blocks/dark_ornate_4", "top": "furenikuscities:blocks/white_ornate_2_top" }},
+			"6": { "textures": { "side": "furenikuscities:blocks/dark_ornate_6", "bottom": "furenikuscities:blocks/dark_ornate_6", "top": "furenikuscities:blocks/dark_ornate_6" }},
+			"7": { "textures": { "side": "furenikuscities:blocks/dark_ornate_7", "bottom": "furenikuscities:blocks/dark_ornate_7", "top": "furenikuscities:blocks/dark_ornate_7" }},
+			"8": { "textures": { "side": "furenikuscities:blocks/dark_ornate_8", "bottom": "furenikuscities:blocks/dark_ornate_8", "top": "furenikuscities:blocks/dark_ornate_8" }},
+			"9": { "textures": { "side": "furenikuscities:blocks/dark_ornate_9", "bottom": "furenikuscities:blocks/dark_ornate_9", "top": "furenikuscities:blocks/dark_ornate_9" }},
+			"10": { "textures": { "side": "furenikuscities:blocks/dark_ornate_10", "bottom": "furenikuscities:blocks/dark_ornate_9", "top": "furenikuscities:blocks/white_ornate_2_top" }},
+			"11": { "textures": { "side": "furenikuscities:blocks/dark_ornate_11", "bottom": "furenikuscities:blocks/dark_ornate_11", "top": "furenikuscities:blocks/dark_ornate_11" }},
+			"12": { "textures": { "side": "furenikuscities:blocks/dark_ornate_12", "bottom": "furenikuscities:blocks/dark_ornate_13", "top": "furenikuscities:blocks/dark_ornate_13" }},
+			"13": { "textures": { "side": "furenikuscities:blocks/dark_ornate_13", "bottom": "furenikuscities:blocks/dark_ornate_13", "top": "furenikuscities:blocks/dark_ornate_13" }},
+			"14": { "textures": { "side": "furenikuscities:blocks/dark_ornate_14", "bottom": "furenikuscities:blocks/dark_ornate_14", "top": "furenikuscities:blocks/dark_ornate_14" }},
+			"15": { "textures": { "side": "furenikuscities:blocks/dark_ornate_15", "bottom": "furenikuscities:blocks/dark_ornate_15", "top": "furenikuscities:blocks/dark_ornate_15" }}
+		}
+	}
+}

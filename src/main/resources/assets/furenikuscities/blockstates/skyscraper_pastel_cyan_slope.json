@@ -1,0 +1,28 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"textures": { "0": "furenikuscities:blocks/skyscraper_blocks_7_2" },
+		"model": "cube_bottom_top"
+	},
+	"variants": {
+		"inventory": [{
+			"transform": "forge:default-block"
+		}],
+		"rotation":
+		{
+			"floor_north": { "model": "furenikuscities:block_slope_floor" },
+			"floor_east":  { "model": "furenikuscities:block_slope_floor", "y": 90 },
+			"floor_south": { "model": "furenikuscities:block_slope_floor", "y": 180 },
+			"floor_west":  { "model": "furenikuscities:block_slope_floor", "y": 270 },
+			"ceiling_north": { "model": "furenikuscities:block_slope_ceiling" },
+			"ceiling_east":  { "model": "furenikuscities:block_slope_ceiling", "y": 90 },
+			"ceiling_south": { "model": "furenikuscities:block_slope_ceiling", "y": 180 },
+			"ceiling_west":  { "model": "furenikuscities:block_slope_ceiling", "y": 270 },
+			"side_ne": { "model": "furenikuscities:block_slope_side" },
+			"side_se": { "model": "furenikuscities:block_slope_side", "y": 90 },
+			"side_sw": { "model": "furenikuscities:block_slope_side", "y": 180 },
+			"side_nw": { "model": "furenikuscities:block_slope_side", "y": 270 }
+		}
+	}
+}
